@@ -15,9 +15,13 @@ public abstract class Character : MonoBehaviour
 
     // Référence sur l'animator
     private Animator animator;
-    
+
+    // Référence sur le rigibody
+    private Rigidbody2D rigibody;
+
     // Direction du personnage
     protected Vector2 direction;
+
 
 
     /// <summary>
