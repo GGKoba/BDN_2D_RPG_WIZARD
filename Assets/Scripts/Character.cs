@@ -22,6 +22,13 @@ public abstract class Character : MonoBehaviour
     // Direction du personnage
     protected Vector2 direction;
 
+    // Indique si le personnage est en déplacement ou non
+    public bool isMoving
+    {
+        get { return direction.x != 0 || direction.y != 0; }
+        set {}
+    }
+
 
 
     /// <summary>
@@ -29,7 +36,11 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
+        // Référence sur l'animator du personnage
         animator = GetComponent<Animator>();
+
+        // Référence sur le rigibody du personnage
+        rigibody = GetComponent<Rigidbody2D>();
     }
 
 
@@ -38,8 +49,17 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected virtual void Update()
     {
+        HandleLayers();
+    }
+
+    /// <summary>
+    /// FixedUpdate : Update utilisé pour le Rigibody
+    /// </summary>
+    private void FixedUpdate()
+    {
         Move();
     }
+
 
     /// <summary>
     /// Mouvement du personnage
@@ -47,32 +67,47 @@ public abstract class Character : MonoBehaviour
     public void Move()
     {
         // Mouvement du personnage
-        transform.Translate(direction * speed * Time.deltaTime);
+        // transform.Translate(direction * speed * Time.deltaTime);
+        rigibody.velocity = direction.normalized * speed;
+    }
 
+    /// <summary>
+    /// Utilise le layer d'animation adapté
+    /// </summary>
+    public void HandleLayers()
+    {
         // Vérifie si le personnage bouge ou pas. S'il bouge, alors il faut jouer l'animation
-        if (direction.x != 0 || direction.y != 0)
+        if (isMoving)
         {
-            // Animation du mouvement du personnage
-            AnimateMovement();
+            // Utilise le layer "WALK"
+            ActivateLayer("WalkLayer");
+
+            // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
+            animator.SetFloat("x", direction.x);
+            animator.SetFloat("y", direction.y);
         }
         else
         {
             // Utilise le layer "IDLE" s'il n'y a plus de mouvement
-            animator.SetLayerWeight(1, 0);
+            ActivateLayer("IdleLayer");
         }
     }
 
     /// <summary>
-    /// Animation du mouvement
+    /// Active un Layer d'animation (Idle/Walk)
     /// </summary>
-    private void AnimateMovement()
+    public void ActivateLayer(string layerName)
     {
-        // Utilise le layer "WALK"
-        animator.SetLayerWeight(1, 1);
+        // Boucle sur les layers d'animations
+        for (int i = 0; i < animator.layerCount; i++)
+		{
+            // Reset le layer courant
+            animator.SetLayerWeight(i, 0);
+		}
 
-        // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
-        animator.SetFloat("x", direction.x);
-        animator.SetFloat("y", direction.y);
+        // Active le layer correspond au nom passé en paramètre
+        animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
     }
+
 
 }

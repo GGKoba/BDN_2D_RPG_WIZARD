@@ -66,7 +66,6 @@ public class Player : Character
             mana.MyCurrentValue += 10;
         }
 
-        Debug.Log("[H : " + health.MyCurrentValue + " / " + health.MyMaxValue + "] & [M : " + mana.MyCurrentValue + " / " + mana.MyMaxValue + "]");
 
         // Déplacement en Haut
         if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))
