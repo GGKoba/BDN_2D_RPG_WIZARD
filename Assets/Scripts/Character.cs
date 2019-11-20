@@ -13,8 +13,12 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     private float speed = default;
 
-    // Référence sur le rigibody
-    private Rigidbody2D rigibody;
+    // Préfab des sorts
+    [SerializeField]
+    private GameObject[] spellPrefab = default;
+
+    // Référence sur le rigidbody
+    private Rigidbody2D myRigidbody;
 
     // Référence sur l'animator
     protected Animator animator;
@@ -43,8 +47,8 @@ public abstract class Character : MonoBehaviour
         // Référence sur l'animator du personnage
         animator = GetComponent<Animator>();
 
-        // Référence sur le rigibody du personnage
-        rigibody = GetComponent<Rigidbody2D>();
+        // Référence sur le rigidbody du personnage
+        myRigidbody = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -64,13 +68,12 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Mouvement du personnage
+    /// Déplacement du personnage
     /// </summary>
     public void Move()
     {
-        // Mouvement du personnage
-        // transform.Translate(direction * speed * Time.deltaTime);
-        rigibody.velocity = direction.normalized * speed;
+        // Déplace le personnage
+        myRigidbody.velocity = direction.normalized * speed;
     }
 
     /// <summary>
@@ -125,17 +128,26 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     public void StopAttack()
     {
+        // Indique que l'on n'attaque pas
+        isAttacking = false;
+
+        // Arrête l'animation d'attaque
+        animator.SetBool("attack", isAttacking);
+
         // Vérifie qu'il existe une référence à la routine d'attaque
         if (attackRoutine != null)
         {
             // Arrête la routine d'attaque
             StopCoroutine(attackRoutine);
-
-            // Indique que l'on n'attaque pas
-            isAttacking = false;
-
-            // Arrête l'animation d'attaque
-            animator.SetBool("attack", isAttacking);
         }
+    }
+
+    /// <summary>
+    /// Incante un sort
+    /// </summary>
+    public void CastSpell()
+    {
+        // Instantie le sort
+        Instantiate(spellPrefab[0], transform.position, Quaternion.identity);
     }
 }

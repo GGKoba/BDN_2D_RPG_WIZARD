@@ -105,7 +105,6 @@ public class Player : Character
     /// <summary>
     /// Routine d'attaque
     /// </summary>
-    /// <returns></returns>
     private IEnumerator Attack()
     {
         // Indique que l'on attaque
@@ -114,8 +113,11 @@ public class Player : Character
         // Lance l'animation d'attaque
         animator.SetBool("attack", isAttacking);
 
-        // Durée de cast [DEBUG]
+        // [DEBUG] : Durée de cast
         yield return new WaitForSeconds(1);
+
+        // Lance le sort
+        CastSpell();
 
         Debug.Log("Cast terminé");
 
