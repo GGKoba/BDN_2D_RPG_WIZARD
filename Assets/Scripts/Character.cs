@@ -11,24 +11,28 @@ public abstract class Character : MonoBehaviour
 {
     // Vitesse de déplacement
     [SerializeField]
-    private float speed;
-
-    // Référence sur l'animator
-    private Animator animator;
+    private float speed = default;
 
     // Référence sur le rigibody
     private Rigidbody2D rigibody;
 
+    // Référence sur l'animator
+    protected Animator animator;
+
+    // Référence sur la routine d'attaque
+    protected Coroutine attackRoutine;
+
     // Direction du personnage
     protected Vector2 direction;
 
+    // Indique si le personnage attaque ou non
+    protected bool isAttacking = false;
+
     // Indique si le personnage est en déplacement ou non
-    public bool isMoving
+    public bool IsMoving
     {
         get { return direction.x != 0 || direction.y != 0; }
-        set {}
     }
-
 
 
     /// <summary>
@@ -42,7 +46,6 @@ public abstract class Character : MonoBehaviour
         // Référence sur le rigibody du personnage
         rigibody = GetComponent<Rigidbody2D>();
     }
-
 
     /// <summary>
     /// Update : virtual pour être écrasée pour les sous-classes
@@ -60,7 +63,6 @@ public abstract class Character : MonoBehaviour
         Move();
     }
 
-
     /// <summary>
     /// Mouvement du personnage
     /// </summary>
@@ -77,7 +79,7 @@ public abstract class Character : MonoBehaviour
     public void HandleLayers()
     {
         // Vérifie si le personnage bouge ou pas. S'il bouge, alors il faut jouer l'animation
-        if (isMoving)
+        if (IsMoving)
         {
             // Utilise le layer "WALK"
             ActivateLayer("WalkLayer");
@@ -85,10 +87,19 @@ public abstract class Character : MonoBehaviour
             // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
             animator.SetFloat("x", direction.x);
             animator.SetFloat("y", direction.y);
+
+            // Stoppe l'attaque s'il y a un déplacent
+            StopAttack();
+
         }
+        else if (isAttacking)
+	    {
+            // Utilise le layer "ATTACK"
+            ActivateLayer("AttackLayer");
+	    }
         else
         {
-            // Utilise le layer "IDLE" s'il n'y a plus de mouvement
+            // Utilise le layer "IDLE" s'il n'y a plus de mouvement ou d'attaque
             ActivateLayer("IdleLayer");
         }
     }
@@ -109,5 +120,22 @@ public abstract class Character : MonoBehaviour
         animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
     }
 
+    /// <summary>
+    /// Fin de l'attaque
+    /// </summary>
+    public void StopAttack()
+    {
+        // Vérifie qu'il existe une référence à la routine d'attaque
+        if (attackRoutine != null)
+        {
+            // Arrête la routine d'attaque
+            StopCoroutine(attackRoutine);
 
+            // Indique que l'on n'attaque pas
+            isAttacking = false;
+
+            // Arrête l'animation d'attaque
+            animator.SetBool("attack", isAttacking);
+        }
+    }
 }

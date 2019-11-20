@@ -11,17 +11,17 @@ public class Player : Character
 {
     // Vie du joueur
     [SerializeField]
-    private Stat health;
+    private Stat health = default;
 
     // Mana du joueur
     [SerializeField]
-    private Stat mana;
+    private Stat mana = default;
     
-    // Vie initiale du joueur
-    private float initHealth = 100;
+    // Vie initiale du joueur (readonly)
+    private readonly float initHealth = 100;
 
-    // Mana initiale du joueur
-    private float initMana = 50;
+    // Mana initiale du joueur (readonly)
+    private readonly float initMana = 50;
 
 
     /// <summary>
@@ -54,7 +54,7 @@ public class Player : Character
     {
         direction = Vector2.zero;
 
-        // TEST
+        // [DEBUG] : Test Vie/Mana
         if (Input.GetKeyDown(KeyCode.I))
         {
             health.MyCurrentValue -= 10;
@@ -90,5 +90,36 @@ public class Player : Character
         {
             direction += Vector2.right;
         }
+
+        // Attaque du joueur
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // Vérifie si l'on peut attaquer
+            if (!isAttacking && !IsMoving)
+            {
+                attackRoutine = StartCoroutine(Attack());
+            }
+        }
+    }
+
+    /// <summary>
+    /// Routine d'attaque
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Attack()
+    {
+        // Indique que l'on attaque
+        isAttacking = true;
+
+        // Lance l'animation d'attaque
+        animator.SetBool("attack", isAttacking);
+
+        // Durée de cast [DEBUG]
+        yield return new WaitForSeconds(1);
+
+        Debug.Log("Cast terminé");
+
+        // Termine l'attaque
+        StopAttack();
     }
 }
