@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+/// <summary>
+/// Classe Spell pour la gestion des sorts
+/// </summary>
 public class Spell : MonoBehaviour
 {
     // Vitesse du sort
@@ -11,7 +16,7 @@ public class Spell : MonoBehaviour
     // Référence sur le rigidbody du sort
     private Rigidbody2D myRigidbody;
 
-    // La cible du sort
+    // Cible du sort
     private Transform target;
 
 

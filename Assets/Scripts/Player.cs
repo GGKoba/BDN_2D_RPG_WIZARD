@@ -21,18 +21,25 @@ public class Player : Character
     [SerializeField]
     private GameObject[] spellPrefab = default;
 
-    /// Positions pour lancer les sorts
+    // Tableau des positions pour lancer les sorts
     [SerializeField]
     private Transform[] exitPoints = default;
 
-    /// Index de la position d'attaque (2 = down)
-    private int exitIndex = 2;
+    // Tableau des paires de blocs pour bloquer la ligne de mire
+    [SerializeField]
+    private Block[] blocks = default;
 
     // Vie initiale du joueur (readonly)
     private readonly float initHealth = 100;
 
     // Mana initiale du joueur (readonly)
     private readonly float initMana = 50;
+    
+    // Index de la position d'attaque (2 = down)
+    private int exitIndex = 2;
+
+    // Cible du joueur
+    private Transform target;
 
 
     /// <summary>
@@ -44,6 +51,10 @@ public class Player : Character
         health.Initialize(initHealth, initHealth);
         mana.Initialize(initMana, initMana);
 
+        // [DEBUG] : Retrouve la cible
+        target = GameObject.Find("Target").transform;
+        
+        // Appel Start sur la classe abstraite
         base.Start();
     }
 
@@ -52,6 +63,7 @@ public class Player : Character
     /// </summary>
     protected override void Update()
     {
+        // Vérifie les interactions
         GetInput();
 
         // Appel Update sur la classe abstraite
@@ -59,7 +71,7 @@ public class Player : Character
     }
 
     /// <summary>
-    /// Déplacement du joueur
+    /// Interactions du joueur
     /// </summary>
     private void GetInput()
     {
@@ -109,8 +121,11 @@ public class Player : Character
         // Attaque du joueur
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            // Actualise les blocs
+            Block();
+
             // Vérifie si l'on peut attaquer
-            if (!isAttacking && !IsMoving)
+            if (!isAttacking && !IsMoving && InLineOfSight())
             {
                 attackRoutine = StartCoroutine(Attack());
             }
@@ -147,5 +162,43 @@ public class Player : Character
     {
         // Instantie le sort
         Instantiate(spellPrefab[0], exitPoints[exitIndex].position, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// Verifie si la cible est dans la ligne de mire
+    /// </summary>
+    /// <returns></returns>
+    private bool InLineOfSight()
+    {
+        // Calcule la direction de la cible
+        Vector2 targetDirection = (target.position - transform.position).normalized;
+
+        // Lance un raycast dans la direction de la cible
+        Debug.DrawRay(transform.position, targetDirection, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, target.transform.position), LayerMask.GetMask("Block"));
+
+        // S'il n'y a pas de collision, on peut lancer le sort
+        if (hit.collider == null)
+        {
+            return true;
+        }
+
+        // En cas de collision, on ne peut pas lancer le sort
+        return false;
+    }
+
+    /// <summary>
+    /// Change la paire de blocs en fonction de la direction du joueur
+    /// </summary>
+    private void Block()
+    {
+        foreach (Block bloc in blocks)
+	    {
+            // Désactive toutes les paires blocs
+            bloc.Deactivate();
+	    }
+
+        // Active la paire de bloc correspondante à la direction du joueur
+        blocks[exitIndex].Activate();
     }
 }
