@@ -17,6 +17,17 @@ public class Player : Character
     [SerializeField]
     private Stat mana = default;
     
+    // Préfab des sorts
+    [SerializeField]
+    private GameObject[] spellPrefab = default;
+
+    /// Positions pour lancer les sorts
+    [SerializeField]
+    private Transform[] exitPoints = default;
+
+    /// Index de la position d'attaque (2 = down)
+    private int exitIndex = 2;
+
     // Vie initiale du joueur (readonly)
     private readonly float initHealth = 100;
 
@@ -70,24 +81,28 @@ public class Player : Character
         // Déplacement en Haut
         if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))
         {
+            exitIndex = 0;
             direction += Vector2.up;
         }
 
         // Déplacement en Bas
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
+            exitIndex = 2;
             direction += Vector2.down;
         }
 
         // Déplacement à Gauche
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
         {
+            exitIndex = 3;
             direction += Vector2.left;
         }
 
         // Déplacement à Droite
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
+            exitIndex = 1;
             direction += Vector2.right;
         }
 
@@ -123,5 +138,14 @@ public class Player : Character
 
         // Termine l'attaque
         StopAttack();
+    }
+
+    /// <summary>
+    /// Incante un sort
+    /// </summary>
+    public void CastSpell()
+    {
+        // Instantie le sort
+        Instantiate(spellPrefab[0], exitPoints[exitIndex].position, Quaternion.identity);
     }
 }

@@ -13,10 +13,6 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     private float speed = default;
 
-    // Préfab des sorts
-    [SerializeField]
-    private GameObject[] spellPrefab = default;
-
     // Référence sur le rigidbody
     private Rigidbody2D myRigidbody;
 
@@ -140,14 +136,5 @@ public abstract class Character : MonoBehaviour
             // Arrête la routine d'attaque
             StopCoroutine(attackRoutine);
         }
-    }
-
-    /// <summary>
-    /// Incante un sort
-    /// </summary>
-    public void CastSpell()
-    {
-        // Instantie le sort
-        Instantiate(spellPrefab[0], transform.position, Quaternion.identity);
     }
 }
