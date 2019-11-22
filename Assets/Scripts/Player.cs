@@ -39,7 +39,7 @@ public class Player : Character
     private int exitIndex = 2;
 
     // Cible du joueur
-    private Transform target;
+    public Transform MyTarget { get; set; }
 
 
     /// <summary>
@@ -50,9 +50,6 @@ public class Player : Character
         // Initialise les barres
         health.Initialize(initHealth, initHealth);
         mana.Initialize(initMana, initMana);
-
-        // [DEBUG] : Retrouve la cible
-        target = GameObject.Find("Target").transform;
         
         // Appel Start sur la classe abstraite
         base.Start();
@@ -125,7 +122,7 @@ public class Player : Character
             Block();
 
             // Vérifie si l'on peut attaquer
-            if (!isAttacking && !IsMoving && InLineOfSight())
+            if (MyTarget != null && !isAttacking && !IsMoving && InLineOfSight())
             {
                 attackRoutine = StartCoroutine(Attack());
             }
@@ -171,11 +168,10 @@ public class Player : Character
     private bool InLineOfSight()
     {
         // Calcule la direction de la cible
-        Vector2 targetDirection = (target.position - transform.position).normalized;
+        Vector2 targetDirection = (MyTarget.position - transform.position).normalized;
 
-        // Lance un raycast dans la direction de la cible
-        Debug.DrawRay(transform.position, targetDirection, Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, target.transform.position), LayerMask.GetMask("Block"));
+        // Lance un raycast dans la direction de la cible  [Debug.DrawRay(transform.position, targetDirection, Color.red);]
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), LayerMask.GetMask("Block"));
 
         // S'il n'y a pas de collision, on peut lancer le sort
         if (hit.collider == null)
