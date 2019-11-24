@@ -30,7 +30,6 @@ public abstract class Character : MonoBehaviour
     }
 
 
-
     /// <summary>
     /// Start
     /// </summary>
@@ -42,7 +41,6 @@ public abstract class Character : MonoBehaviour
         // Référence sur le rigibody du personnage
         rigibody = GetComponent<Rigidbody2D>();
     }
-
 
     /// <summary>
     /// Update : virtual pour être écrasée pour les sous-classes
@@ -59,7 +57,6 @@ public abstract class Character : MonoBehaviour
     {
         Move();
     }
-
 
     /// <summary>
     /// Mouvement du personnage
@@ -108,6 +105,4 @@ public abstract class Character : MonoBehaviour
         // Active le layer correspond au nom passé en paramètre
         animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
     }
-
-
 }

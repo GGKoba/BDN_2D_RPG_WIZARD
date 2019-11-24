@@ -107,5 +107,4 @@ public class Stat : MonoBehaviour
             content.fillAmount = Mathf.Lerp(content.fillAmount, currentFill, Time.deltaTime * lerpSpeed);
         }
     }
-
 }
