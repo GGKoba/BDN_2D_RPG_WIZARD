@@ -12,12 +12,12 @@ public class Stat : MonoBehaviour
 {
     // Vitesse de remplissage
     [SerializeField]
-    private float lerpSpeed;
+    private float lerpSpeed = default;
 
     // Référence au texte de la barre
     [SerializeField]
-    private Text statValue;
-    
+    private Text statValue = default;
+
     // L'image que l'on va remplir
     private Image content;
 
