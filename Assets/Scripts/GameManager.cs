@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 
@@ -36,8 +37,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ClickTarget()
     {
-        // Clic droit
-        if (Input.GetMouseButtonDown(0))
+        // Clic droit et que l'on ne pointe pas sur un GameObject (par exemple un ennemi)
+        if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
             // Raycast depuis la position de la souris dans le jeu
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));

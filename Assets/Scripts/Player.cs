@@ -114,25 +114,12 @@ public class Player : Character
             exitIndex = 1;
             direction += Vector2.right;
         }
-
-        // Attaque du joueur
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Actualise les blocs
-            Block();
-
-            // Vérifie si l'on peut attaquer
-            if (MyTarget != null && !isAttacking && !IsMoving && InLineOfSight())
-            {
-                attackRoutine = StartCoroutine(Attack());
-            }
-        }
     }
 
     /// <summary>
     /// Routine d'attaque
     /// </summary>
-    private IEnumerator Attack()
+    private IEnumerator Attack(int spellIndex)
     {
         // Indique que l'on attaque
         isAttacking = true;
@@ -142,11 +129,10 @@ public class Player : Character
 
         // [DEBUG] : Durée de cast
         yield return new WaitForSeconds(1);
-
-        // Lance le sort
-        CastSpell();
-
         Debug.Log("Cast terminé");
+
+        // Instantie le sort
+        Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);
 
         // Termine l'attaque
         StopAttack();
@@ -155,10 +141,16 @@ public class Player : Character
     /// <summary>
     /// Incante un sort
     /// </summary>
-    public void CastSpell()
+    public void CastSpell(int spellIndex)
     {
-        // Instantie le sort
-        Instantiate(spellPrefab[0], exitPoints[exitIndex].position, Quaternion.identity);
+        // Actualise les blocs
+        Block();
+
+        // Vérifie si l'on peut attaquer
+        if (MyTarget != null && !isAttacking && !IsMoving && InLineOfSight())
+        {
+            attackRoutine = StartCoroutine(Attack(spellIndex));
+        }
     }
 
     /// <summary>
