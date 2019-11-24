@@ -1,0 +1,1 @@
+Assets/Sprites/Portrait/wizards_face.png
