@@ -129,10 +129,12 @@ public class Player : Character
 
         // [DEBUG] : Durée de cast
         yield return new WaitForSeconds(1);
-        Debug.Log("Cast terminé");
 
         // Instantie le sort
-        Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);
+        Spell spell = Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
+
+        // Affecte la cible au sort
+        spell.MyTarget = MyTarget;
 
         // Termine l'attaque
         StopAttack();

@@ -17,7 +17,7 @@ public class Spell : MonoBehaviour
     private Rigidbody2D myRigidbody;
 
     // Cible du sort
-    private Transform target;
+    public Transform MyTarget { get; set; }
 
 
     /// <summary>
@@ -27,18 +27,6 @@ public class Spell : MonoBehaviour
     {
         // Référence sur le rigidbody du sort
         myRigidbody = GetComponent<Rigidbody2D>();
-
-        // [DEBUG] : Retrouve la cible
-        target = GameObject.Find("Target").transform;
-
-    }
-
-    /// <summary>
-    /// Update
-    /// </summary>
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -46,16 +34,39 @@ public class Spell : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        // Calcule la direction du sort
-        Vector2 direction = target.position - transform.position;
+        // S'il y a une cible, le sort est en mouvement
+        if (MyTarget != null)
+        {
+            // Calcule la direction du sort
+            Vector2 direction = MyTarget.position - transform.position;
 
-        // Déplace le sort en utilisant le rigidboby
-        myRigidbody.velocity = direction.normalized * speed;
+            // Déplace le sort en utilisant le rigidboby
+            myRigidbody.velocity = direction.normalized * speed;
 
-        // Calcule l'angle de rotation
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            // Calcule l'angle de rotation
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // Fait pivoter le sort vers la cible
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // Fait pivoter le sort vers la cible
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+    }
+
+    /// <summary>
+    /// Detection de l'impact
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Si la collision de la cible a le tag Hitbox
+        if (collision.CompareTag("HitBox") && collision.transform == MyTarget)
+        {
+            // Activation du trigger "impact"
+            GetComponent<Animator>().SetTrigger("impact");
+
+            // Arrêt du mouvement du spell
+            myRigidbody.velocity = Vector2.zero;
+
+            // Reset de la cible du spell
+            MyTarget = null;
+        }
     }
 }

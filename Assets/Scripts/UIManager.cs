@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
 {
     // Tableau des boutons d'action
     [SerializeField]
-    private Button[] actionButtons;
+    private Button[] actionButtons = default;
     // Liste des touches liées aux actions
     private KeyCode action1, action2, action3;
 

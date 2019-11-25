@@ -16,14 +16,6 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
-    /// Start
-    /// </summary>
-    void Start()
-    {
-
-    }
-
-    /// <summary>
     /// Update
     /// </summary>
     void Update()
@@ -46,16 +38,16 @@ public class GameManager : MonoBehaviour
             // Si l'on touche quelque chose
             if (hit.collider != null)
             {
-                // On verifie que c'est un ennemi
-                if (hit.collider.tag == "Enemy")
+                // Vérifie que c'est un ennemi
+                if (hit.collider.CompareTag("Enemy"))
                 {
-                    // Si c'est un ennemi, on le cible
-                    player.MyTarget = hit.transform;
+                    // Assigne la hitbox comme cible
+                    player.MyTarget = hit.transform.GetChild(0);
                 }
             }
             else
             {
-                // On décible la cible
+                // Décible la cible
                 player.MyTarget = null;
             }
 
