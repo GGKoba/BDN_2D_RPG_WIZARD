@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -133,7 +132,7 @@ public class Player : Character
         // Lance l'animation d'attaque
         animator.SetBool("attack", isAttacking);
 
-        // [DEBUG] : Durée de cast
+        // Simule le temps d'incantation
         yield return new WaitForSeconds(mySpell.SpellCastTime);
 
         // Instantie le sort
@@ -196,5 +195,17 @@ public class Player : Character
 
         // Active la paire de bloc correspondante à la direction du joueur
         blocks[exitIndex].Activate();
+    }
+
+    /// <summary>
+    /// Fin de l'attaque : Ecrase la fonction StopAttack du script Character
+    /// </summary>
+    public override void StopAttack()
+    {
+        // Stoppe l'incantation du sort
+        spellBook.StopCasting();
+
+        // Appel StopAttack sur la classe abstraite pour mettre fin au statut d'attaque
+        base.StopAttack();
     }
 }

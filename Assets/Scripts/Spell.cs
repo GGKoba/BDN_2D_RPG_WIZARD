@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 
@@ -14,31 +11,31 @@ public class Spell
 {
     // Nom du sort
     [SerializeField]
-    private string name;
+    private string name = default;
 
     // Dégats du sort
     [SerializeField]
-    private int damage;
+    private int damage = default;
 
     // Icone du sort
     [SerializeField]
-    private Sprite icon;
+    private Sprite icon = default;
 
     // Vitesse du sort
     [SerializeField]
-    private float speed;
+    private float speed = default;
 
     // Temps d'incantation du sort
     [SerializeField]
-    private float castTime;
+    private float castTime = default;
 
     // Prefab du sort
     [SerializeField]
-    private GameObject prefab;
+    private GameObject prefab = default;
 
     // Couleur de la barre de sort
     [SerializeField]
-    private Color barColor;
+    private Color barColor = default;
 
 
     /// <summary>

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 
@@ -122,7 +120,7 @@ public abstract class Character : MonoBehaviour
     /// <summary>
     /// Fin de l'attaque
     /// </summary>
-    public void StopAttack()
+    public virtual void StopAttack()
     {
         // Indique que l'on n'attaque pas
         isAttacking = false;
@@ -135,6 +133,9 @@ public abstract class Character : MonoBehaviour
         {
             // Arrête la routine d'attaque
             StopCoroutine(attackRoutine);
+
+            // Reset la routine d'attaque
+            attackRoutine = null;
         }
     }
 }

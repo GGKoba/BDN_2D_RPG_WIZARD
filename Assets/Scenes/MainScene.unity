@@ -517,7 +517,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100/100
+  m_Text: Barre de mana
 --- !u!222 &555314407
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1819,7 +1819,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: fireball
+  m_Text: UN SORT
 --- !u!222 &1365127625
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2379,6 +2379,11 @@ MonoBehaviour:
     prefab: {fileID: 7147741476327212716, guid: 3acfca79a8fa6704d9c6e22786aff2be,
       type: 3}
     barColor: {r: 1, g: 0.9137255, b: 0.54509807, a: 1}
+  castingBar: {fileID: 1698985910}
+  icon: {fileID: 1664978082}
+  spellName: {fileID: 1365127624}
+  castTime: {fileID: 1757976687}
+  canvasGroup: {fileID: 1732394720}
 --- !u!1 &1664978080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,7 +2439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a63e1f16198d04847ab17dcd4e545b51, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2591,7 +2596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9622642, g: 0.382568, b: 0.24964403, a: 1}
+  m_Color: {r: 0.754717, g: 0.74027556, b: 0.7369171, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2625,6 +2630,7 @@ GameObject:
   - component: {fileID: 1732394717}
   - component: {fileID: 1732394719}
   - component: {fileID: 1732394718}
+  - component: {fileID: 1732394720}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -2691,6 +2697,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732394716}
   m_CullTransparentMesh: 0
+--- !u!225 &1732394720
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1732394716}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1757976684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2775,7 +2793,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 10.0
+  m_Text: 0.0
 --- !u!222 &1757976688
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2883,7 +2901,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 100/100
+  m_Text: Barre de vie
 --- !u!222 &1896591546
 CanvasRenderer:
   m_ObjectHideFlags: 0
