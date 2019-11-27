@@ -1,72 +1,68 @@
-﻿using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 
 
 /// <summary>
-/// Classe Spell pour la gestion des sorts
+/// Classe des sorts
 /// </summary>
-public class Spell : MonoBehaviour
+[Serializable]
+public class Spell
 {
+    // Nom du sort
+    [SerializeField]
+    private string name;
+
+    // D�gats du sort
+    [SerializeField]
+    private int damage;
+
+    // Icone du sort
+    [SerializeField]
+    private Sprite icon;
+
     // Vitesse du sort
     [SerializeField]
-    private float speed = default;
+    private float speed;
 
-    // Référence sur le rigidbody du sort
-    private Rigidbody2D myRigidbody;
+    // Temps d'incantation du sort
+    [SerializeField]
+    private float castTime;
 
-    // Cible du sort
-    public Transform MyTarget { get; set; }
+    // Prefab du sort
+    [SerializeField]
+    private GameObject prefab;
 
+    // Couleur de la barre de sort
+    [SerializeField]
+    private Color barColor;
 
-    /// <summary>
-    /// Start
-    /// </summary>
-    void Start()
-    {
-        // Référence sur le rigidbody du sort
-        myRigidbody = GetComponent<Rigidbody2D>();
-    }
 
     /// <summary>
-    /// FixedUpdate : Update utilisé pour le Rigibody
+    /// Accesseurs sur les propri�t�s du sort
     /// </summary>
-    private void FixedUpdate()
-    {
-        // S'il y a une cible, le sort est en mouvement
-        if (MyTarget != null)
-        {
-            // Calcule la direction du sort
-            Vector2 direction = MyTarget.position - transform.position;
 
-            // Déplace le sort en utilisant le rigidboby
-            myRigidbody.velocity = direction.normalized * speed;
+    // Nom 
+    public string SpellName { get => name; }
 
-            // Calcule l'angle de rotation
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    // D�gats 
+    public int SpellDamage { get => damage; }
 
-            // Fait pivoter le sort vers la cible
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-    }
+    // Icone 
+    public Sprite SpellIcon { get => icon; }
 
-    /// <summary>
-    /// Detection de l'impact
-    /// </summary>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Si la collision de la cible a le tag Hitbox
-        if (collision.CompareTag("HitBox") && collision.transform == MyTarget)
-        {
-            // Activation du trigger "impact"
-            GetComponent<Animator>().SetTrigger("impact");
+    // Vitesse 
+    public float SpellSpeed { get => speed; }
 
-            // Arrêt du mouvement du spell
-            myRigidbody.velocity = Vector2.zero;
+    // Temps d'incantation 
+    public float SpellCastTime { get => castTime; }
 
-            // Reset de la cible du spell
-            MyTarget = null;
-        }
-    }
+    // Prefab 
+    public GameObject SpellPrefab { get => prefab; }
+
+    // Couleur de la barre 
+    public Color SpellBarColor { get => barColor; }
 }

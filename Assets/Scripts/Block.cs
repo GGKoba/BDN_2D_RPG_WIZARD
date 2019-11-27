@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Classe Block pour la gestion de la ligne de mire
+/// Classe pour la gestion de la ligne de mire
 /// </summary>
 [Serializable]
 public class Block

@@ -16,10 +16,6 @@ public class Player : Character
     // Mana du joueur
     [SerializeField]
     private Stat mana = default;
-    
-    // Préfab des sorts
-    [SerializeField]
-    private GameObject[] spellPrefab = default;
 
     // Tableau des positions pour lancer les sorts
     [SerializeField]
@@ -38,8 +34,12 @@ public class Player : Character
     // Index de la position d'attaque (2 = down)
     private int exitIndex = 2;
 
+    // Bibliothèque des sorts
+    private SpellBook spellBook;
+
     // Cible du joueur
     public Transform MyTarget { get; set; }
+
 
 
     /// <summary>
@@ -50,7 +50,10 @@ public class Player : Character
         // Initialise les barres
         health.Initialize(initHealth, initHealth);
         mana.Initialize(initMana, initMana);
-        
+
+        // Référence sur la bibliothèque des sorts
+        spellBook = gameObject.GetComponent<SpellBook>();
+
         // Appel Start sur la classe abstraite
         base.Start();
     }
@@ -121,6 +124,9 @@ public class Player : Character
     /// </summary>
     private IEnumerator Attack(int spellIndex)
     {
+        // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
+        Spell mySpell = spellBook.CastSpell(spellIndex);
+
         // Indique que l'on attaque
         isAttacking = true;
 
@@ -128,10 +134,10 @@ public class Player : Character
         animator.SetBool("attack", isAttacking);
 
         // [DEBUG] : Durée de cast
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(mySpell.SpellCastTime);
 
         // Instantie le sort
-        Spell spell = Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
+        SpellManager spell = Instantiate(mySpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellManager>();
 
         // Affecte la cible au sort
         spell.MyTarget = MyTarget;
