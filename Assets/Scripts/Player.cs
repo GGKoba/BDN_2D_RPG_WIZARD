@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Classe Player contenant les fonctionnalités spécifiques au joueur
+/// Classe contenant les fonctionnalités spécifiques au joueur
 /// </summary>
 public class Player : Character
 {
@@ -53,7 +53,7 @@ public class Player : Character
         // Référence sur la bibliothèque des sorts
         spellBook = gameObject.GetComponent<SpellBook>();
 
-        // Appel Start sur la classe abstraite
+        // Appel Start sur la classe mère (abstraite)
         base.Start();
     }
 
@@ -65,7 +65,7 @@ public class Player : Character
         // Vérifie les interactions
         GetInput();
 
-        // Appel Update sur la classe abstraite
+        // Appel Update sur la classe mère (abstraite)
         base.Update();
     }
 
@@ -123,6 +123,9 @@ public class Player : Character
     /// </summary>
     private IEnumerator Attack(int spellIndex)
     {
+        // La cible de l'attaque est la cible sélectionnée
+        Transform attackTarget = MyTarget;
+
         // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
         Spell mySpell = spellBook.CastSpell(spellIndex);
 
@@ -135,11 +138,15 @@ public class Player : Character
         // Simule le temps d'incantation
         yield return new WaitForSeconds(mySpell.SpellCastTime);
 
-        // Instantie le sort
-        SpellManager spell = Instantiate(mySpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellManager>();
+        // Vérifie que la cible de l'attaque est toujours attaquable 
+        if (attackTarget != null && InLineOfSight())
+        {
+            // Instantie le sort
+            SpellManager spell = Instantiate(mySpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellManager>();
 
-        // Affecte la cible au sort
-        spell.MyTarget = MyTarget;
+            // Affecte la cible de l'attaque au sort
+            spell.MyTarget = attackTarget;
+        }
 
         // Termine l'attaque
         StopAttack();

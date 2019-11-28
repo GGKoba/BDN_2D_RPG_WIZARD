@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player = default;
 
+    // Cible courante
+    private NPC currentTarget;
+
 
     /// <summary>
     /// Update
@@ -27,13 +30,39 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ClickTarget()
     {
-        // Clic droit et que l'on ne pointe pas sur un GameObject (par exemple un ennemi)
+        // Clic droit et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log("CLIC");
             // Raycast depuis la position de la souris dans le jeu
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
-            
+
+            // S'il y a déjà une cible
+            if (currentTarget != null)
+            {
+                // Désélection de la cible courante
+                currentTarget.DeSelect();
+            }
+
             // Si l'on touche quelque chose
+            if (hit.collider != null)
+            {
+                // Sélection de la nouvelle cible
+                currentTarget = hit.collider.GetComponent<NPC>();
+
+                // Affecte la nouvelle cible au joueur
+                player.MyTarget = currentTarget.Select();
+
+            }
+            // Désélection de la cible
+            else
+            {
+                // Supprime les références à la cible
+                currentTarget = null;
+                player.MyTarget = null;
+            }
+
+            /*
             if (hit.collider != null)
             {
                 // Vérifie que c'est un ennemi
@@ -48,7 +77,7 @@ public class GameManager : MonoBehaviour
                 // Décible la cible
                 player.MyTarget = null;
             }
-
+            */
         }
     }
 }

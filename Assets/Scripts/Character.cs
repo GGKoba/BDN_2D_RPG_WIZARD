@@ -5,11 +5,17 @@
 /// <summary>
 /// Classe abstraite dont tous les personnages héritent
 /// </summary>
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Character : MonoBehaviour
 {
     // Vitesse de déplacement
     [SerializeField]
     private float speed = default;
+
+    // Référence sur la hitBox du personnage
+    [SerializeField]
+    protected Transform hitBox = default;
 
     // Référence sur le rigidbody
     private Rigidbody2D myRigidbody;

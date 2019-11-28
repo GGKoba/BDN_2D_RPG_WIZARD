@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 /// <summary>
-/// Classe Stat contenant les fonctionnalités spécifiques aux barres de vie / mana
+/// Classe contenant les fonctionnalités spécifiques aux barres de vie / mana
 /// </summary>
 public class Stat : MonoBehaviour
 {
