@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Update
     /// </summary>
-    void Update()
+    private void Update()
     {
         // Exécute le clic sur une cible
         ClickTarget();
@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
         // Clic droit et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log("CLIC");
             // Raycast depuis la position de la souris dans le jeu
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
 
@@ -61,23 +60,6 @@ public class GameManager : MonoBehaviour
                 currentTarget = null;
                 player.MyTarget = null;
             }
-
-            /*
-            if (hit.collider != null)
-            {
-                // Vérifie que c'est un ennemi
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    // Assigne la hitbox comme cible
-                    player.MyTarget = hit.transform.GetChild(0);
-                }
-            }
-            else
-            {
-                // Décible la cible
-                player.MyTarget = null;
-            }
-            */
         }
     }
 }

@@ -13,7 +13,7 @@ public class Spell
     [SerializeField]
     private string name = default;
 
-    // Dégats du sort
+    // Dégâts du sort
     [SerializeField]
     private int damage = default;
 
@@ -45,7 +45,7 @@ public class Spell
     // Nom 
     public string SpellName { get => name; }
 
-    // Dégats 
+    // Dégâts
     public int SpellDamage { get => damage; }
 
     // Icone 

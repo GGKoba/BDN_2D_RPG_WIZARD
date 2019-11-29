@@ -14,17 +14,34 @@ public class SpellManager : MonoBehaviour
     // Référence sur le rigidbody du sort
     private Rigidbody2D myRigidbody;
 
+    // Dégâts du sort
+    private int damage;
+
     // Cible du sort
-    public Transform MyTarget { get; set; }
+    public Transform MyTarget { get; private set; }
 
 
     /// <summary>
     /// Start
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Référence sur le rigidbody du sort
         myRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    /// <summary>
+    /// Initialisation des données du sort
+    /// </summary>
+    /// <param name="spellTarget">Cible du sort</param>
+    /// <param name="spellDamage">Dégâts du sort</param>
+    public void Initialize(Transform spellTarget, int spellDamage)
+    {
+        // Initialisation de la cible du sort
+        MyTarget = spellTarget;
+
+        // Initialisation des dégâts du sort
+        damage = spellDamage;
     }
 
     /// <summary>
@@ -50,13 +67,20 @@ public class SpellManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Detection de l'impact
+    /// Détection de l'impact
     /// </summary>
+    /// <param name="collision">L'objet de collision</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Si la collision de la cible a le tag Hitbox
         if (collision.CompareTag("HitBox") && collision.transform == MyTarget)
         {
+            // Stoppe le déplacement du sort
+            speed = 0;
+
+            // Appelle la fonction de dégats sur le personnage
+            collision.GetComponentInParent<Enemy>().TakeDamage(damage);
+
             // Activation du trigger "impact"
             GetComponent<Animator>().SetTrigger("impact");
 

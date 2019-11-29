@@ -8,10 +8,6 @@ using UnityEngine;
 /// </summary>
 public class Player : Character
 {
-    // Vie du joueur
-    [SerializeField]
-    private Stat health = default;
-
     // Mana du joueur
     [SerializeField]
     private Stat mana = default;
@@ -23,9 +19,6 @@ public class Player : Character
     // Tableau des paires de blocs pour bloquer la ligne de mire
     [SerializeField]
     private Block[] blocks = default;
-
-    // Vie initiale du joueur (readonly)
-    private readonly float initHealth = 100;
 
     // Mana initiale du joueur (readonly)
     private readonly float initMana = 50;
@@ -40,14 +33,12 @@ public class Player : Character
     public Transform MyTarget { get; set; }
 
 
-
     /// <summary>
     /// Start
     /// </summary>
     protected override void Start()
     {
         // Initialise les barres
-        health.Initialize(initHealth, initHealth);
         mana.Initialize(initMana, initMana);
 
         // Référence sur la bibliothèque des sorts
@@ -121,6 +112,7 @@ public class Player : Character
     /// <summary>
     /// Routine d'attaque
     /// </summary>
+    /// <param name="spellIndex">Index du sort</param>
     private IEnumerator Attack(int spellIndex)
     {
         // La cible de l'attaque est la cible sélectionnée
@@ -144,8 +136,8 @@ public class Player : Character
             // Instantie le sort
             SpellManager spell = Instantiate(mySpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellManager>();
 
-            // Affecte la cible de l'attaque au sort
-            spell.MyTarget = attackTarget;
+            // Affecte la cible et les dégâts du sort
+            spell.Initialize(attackTarget, mySpell.SpellDamage);
         }
 
         // Termine l'attaque
@@ -155,6 +147,7 @@ public class Player : Character
     /// <summary>
     /// Incante un sort
     /// </summary>
+    /// <param name="spellIndex">Index du sort</param>
     public void CastSpell(int spellIndex)
     {
         // Actualise les blocs
@@ -170,19 +163,22 @@ public class Player : Character
     /// <summary>
     /// Verifie si la cible est dans la ligne de mire
     /// </summary>
-    /// <returns></returns>
     private bool InLineOfSight()
     {
-        // Calcule la direction de la cible
-        Vector2 targetDirection = (MyTarget.position - transform.position).normalized;
-
-        // Lance un raycast dans la direction de la cible  [Debug.DrawRay(transform.position, targetDirection, Color.red);]
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), LayerMask.GetMask("Block"));
-
-        // S'il n'y a pas de collision, on peut lancer le sort
-        if (hit.collider == null)
+        // Si le joueur a une cible
+        if (MyTarget != null)
         {
-            return true;
+            // Calcule la direction de la cible
+            Vector2 targetDirection = (MyTarget.position - transform.position).normalized;
+
+            // Lance un raycast dans la direction de la cible  [Debug.DrawRay(transform.position, targetDirection, Color.red);]
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), LayerMask.GetMask("Block"));
+
+            // S'il n'y a pas de collision, on peut lancer le sort
+            if (hit.collider == null)
+            {
+                return true;
+            }
         }
 
         // En cas de collision, on ne peut pas lancer le sort

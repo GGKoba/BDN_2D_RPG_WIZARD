@@ -59,15 +59,19 @@ public class Stat : MonoBehaviour
             // Calcul le remplissage courante
             currentFill = currentValue / MyMaxValue;
 
-            // Mise à jour de la valeur textuelle
-            statValue.text = currentValue + " / " + MyMaxValue; 
+            // S'il y a une valeur textuelle à mettre à jour
+            if (statValue != null)
+            {
+                // Mise à jour de la valeur textuelle
+                statValue.text = currentValue + " / " + MyMaxValue;
+            }
         }
     }
 
     /// <summary>
     /// Start
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Référence à l'image de la barre
         content = gameObject.GetComponent<Image>();
@@ -76,7 +80,7 @@ public class Stat : MonoBehaviour
     /// <summary>
     /// Update
     /// </summary>
-    void Update()
+    private void Update()
     {
         // Mise à jour des barres
         HandleBar();

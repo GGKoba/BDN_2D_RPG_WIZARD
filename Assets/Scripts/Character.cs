@@ -9,16 +9,26 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class Character : MonoBehaviour
 {
+    // Référence sur le rigidbody
+    private Rigidbody2D myRigidbody;
+
+
+    
     // Vitesse de déplacement
     [SerializeField]
     private float speed = default;
 
+    // Vie initiale du personnage (readonly)
+    [SerializeField]
+    private float initHealth = default;
+
+    [SerializeField]
+    // Référence sur la vie du personnage
+    protected Stat health = default;
+
     // Référence sur la hitBox du personnage
     [SerializeField]
     protected Transform hitBox = default;
-
-    // Référence sur le rigidbody
-    private Rigidbody2D myRigidbody;
 
     // Référence sur l'animator
     protected Animator animator;
@@ -44,6 +54,9 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
+        // Initialise les barres
+        health.Initialize(initHealth, initHealth);
+
         // Référence sur l'animator du personnage
         animator = GetComponent<Animator>();
 
@@ -108,8 +121,9 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Active un Layer d'animation (Idle/Walk)
+    /// Active un Layer d'animation (Idle/Walk/Attack)
     /// </summary>
+    /// <param name="layerName">Nom du layer à activer</param>
     public void ActivateLayer(string layerName)
     {
         // Boucle sur les layers d'animations
@@ -142,6 +156,23 @@ public abstract class Character : MonoBehaviour
 
             // Reset la routine d'attaque
             attackRoutine = null;
+        }
+    }
+
+    /// <summary>
+    /// Dégâts liée à une attaque
+    /// </summary>
+    /// <param name="damage">Montant des dégâts</param>
+    public virtual void TakeDamage(float damage)
+    {
+        // Réduction de la vie du personnage
+        health.MyCurrentValue -= damage;
+          
+        // Si le personnage n'a plus de vie
+        if (health.MyCurrentValue <= 0)
+        {
+            // Activation du trigger "die"
+            animator.SetTrigger("die");
         }
     }
 }

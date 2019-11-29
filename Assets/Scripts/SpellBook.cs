@@ -44,7 +44,7 @@ public class SpellBook : MonoBehaviour
     /// <summary>
     /// Start
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Référence sur CanvasGroup de la barre de cast du joueur
         canvasGroup.alpha = 0;
@@ -53,6 +53,7 @@ public class SpellBook : MonoBehaviour
     /// <summary>
     /// Retourne un sort avec ses propriétés
     /// </summary>
+    /// <param name="spellIndex">Index du sort</param>
     public Spell CastSpell(int spellIndex)
     {
         // Sort correspondant à l'index dans le tableau
@@ -83,7 +84,7 @@ public class SpellBook : MonoBehaviour
     /// <summary>
     /// Routine de remplissage de la barre de cast en fonction de la progression du temps d'incantation
     /// </summary>
-    /// <param name="spellCastTime">Temps d'incantation</param>
+    /// <param name="spellCastTime">Temps d'incantation du sort</param>
     private IEnumerator Progress(float spellCastTime)
     {
         // Temps écoulé depuis le début de l'incantation du sort

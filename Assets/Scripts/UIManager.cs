@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Start
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Binding des touches
         action1 = KeyCode.Alpha1;
@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Update
     /// </summary>
-    void Update()
+    private void Update()
     {
         // Si on presse la touche d'action 1 (touche 1)
         if (Input.GetKeyDown(action1))
@@ -50,6 +50,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clic sur un bouton d'action
+    /// </summary>
+    /// <param name="buttonIndex">Index du bouton d'action</param>
     private void ActionButtonOnClick(int buttonIndex)
     {
         // Appelle la fonction Onclick du bouton lié à l'action
