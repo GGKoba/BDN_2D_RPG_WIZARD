@@ -47,5 +47,4 @@ public class Enemy : NPC
         // Appel Select sur la classe mère
         return base.Select();
     }
-
 }
