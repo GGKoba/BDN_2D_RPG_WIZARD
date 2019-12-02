@@ -21,8 +21,8 @@ public class DeathBehaviour : StateMachineBehaviour
         // MAJ du temps écoulé 
         timePassed += Time.deltaTime;
 
-        // Détruit l'objet après 5s
-        if (timePassed >= 5)
+        // Détruit l'objet après 4s
+        if (timePassed >= 4)
         {
             Destroy(animator.gameObject);
         }
