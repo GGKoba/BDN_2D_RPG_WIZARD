@@ -30,6 +30,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject targetFrame = default;
 
+    // Image de la cible
+    [SerializeField]
+    private Image targetPortrait = default;
+
     // Tableau des boutons d'action
     [SerializeField]
     private Button[] actionButtons = default;
@@ -39,7 +43,7 @@ public class UIManager : MonoBehaviour
 
     // Barre de vie de la cible
     private Stat healthStat;
-          
+
 
     /// <summary>
     /// Start
@@ -53,7 +57,6 @@ public class UIManager : MonoBehaviour
 
         // Référence sur la barre de vie de la cible
         healthStat = targetFrame.GetComponentInChildren<Stat>();
-
 
         // Masque la frame de la cible
         HideTargetFrame();
@@ -105,8 +108,14 @@ public class UIManager : MonoBehaviour
         // Initialise la barre de vie de la cible
         healthStat.Initialize(target.MyHealth.MyCurrentValue, target.MyHealth.MyMaxValue);
 
-        // Ecoute sur l'évènement de changement de vie
+        // Mise à jour de l'image de la cible (1er enfant de l'objet TargetFrame => face) ==> targetFrame.transform.GetChild(0).GetComponent<Image>();
+        targetPortrait.sprite = target.MyPortrait;
+
+        // Abonnement sur l'évènement de changement de vie
         target.HealthChanged += new HealthChanged(UpdateTargetFrame);
+
+        // Abonnement sur l'évènement de disparition du personnage
+        target.CharacterRemoved += new CharacterRemoved(HideTargetFrame);
     }
 
     /// <summary>

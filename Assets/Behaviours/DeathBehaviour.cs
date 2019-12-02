@@ -24,7 +24,8 @@ public class DeathBehaviour : StateMachineBehaviour
         // Détruit l'objet après 4s
         if (timePassed >= 4)
         {
-            Destroy(animator.gameObject);
+            // Déclenche l'évènement de disparition du personnage
+            animator.GetComponent<NPC>().OnCharacterRemoved();
         }
     }
 
