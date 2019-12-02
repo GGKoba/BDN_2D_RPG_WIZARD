@@ -12,8 +12,6 @@ public abstract class Character : MonoBehaviour
     // Référence sur le rigidbody
     private Rigidbody2D myRigidbody;
 
-
-    
     // Vitesse de déplacement
     [SerializeField]
     private float speed = default;
@@ -35,17 +33,26 @@ public abstract class Character : MonoBehaviour
 
     // Référence sur la routine d'attaque
     protected Coroutine attackRoutine;
+    
+    // Indique si le personnage attaque ou non
+    protected bool isAttacking = false;
 
     // Direction du personnage
     protected Vector2 direction;
-
-    // Indique si le personnage attaque ou non
-    protected bool isAttacking = false;
 
     // Indique si le personnage est en déplacement ou non
     public bool IsMoving
     {
         get { return direction.x != 0 || direction.y != 0; }
+    }
+
+    // Propriété d'accès à la vie du personnage
+    public Stat MyHealth
+    {
+        get
+        {
+            return health;
+        }
     }
 
 

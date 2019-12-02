@@ -8,12 +8,38 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : MonoBehaviour
 {
+    // Instance de classe (singleton)
+    private static UIManager instance;
+
+    // Propriété d'accès à l'instance
+    public static UIManager MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Retourne l'object de type UIManager (doit être unique)
+                instance = FindObjectOfType<UIManager>();
+            }
+
+            return instance;
+        }
+    }
+
+    // Frame de la cible
+    [SerializeField]
+    private GameObject targetFrame = default;
+
     // Tableau des boutons d'action
     [SerializeField]
     private Button[] actionButtons = default;
+
     // Liste des touches liées aux actions
     private KeyCode action1, action2, action3;
 
+    // Barre de vie de la cible
+    private Stat healthStat;
+          
 
     /// <summary>
     /// Start
@@ -24,6 +50,13 @@ public class UIManager : MonoBehaviour
         action1 = KeyCode.Alpha1;
         action2 = KeyCode.Alpha2;
         action3 = KeyCode.Alpha3;
+
+        // Référence sur la barre de vie de la cible
+        healthStat = targetFrame.GetComponentInChildren<Stat>();
+
+
+        // Masque la frame de la cible
+        HideTargetFrame();
     }
 
     /// <summary>
@@ -58,5 +91,39 @@ public class UIManager : MonoBehaviour
     {
         // Appelle la fonction Onclick du bouton lié à l'action
         actionButtons[buttonIndex].onClick.Invoke();
+    }
+
+    /// <summary>
+    /// Affichage la frame de la cible
+    /// </summary>
+    /// <param name="target">Cible de type NPC</param>
+    public void ShowTargetFrame(NPC target)
+    {
+        // Active la frame de la cible
+        targetFrame.SetActive(true);
+
+        // Initialise la barre de vie de la cible
+        healthStat.Initialize(target.MyHealth.MyCurrentValue, target.MyHealth.MyMaxValue);
+
+        // Ecoute sur l'évènement de changement de vie
+        target.HealthChanged += new HealthChanged(UpdateTargetFrame);
+    }
+
+    /// <summary>
+    /// Masquage la frame de la cible
+    /// </summary>
+    public void HideTargetFrame()
+    {
+        // Désactive la frame de la cible
+        targetFrame.SetActive(false);
+    }
+
+    /// <summary>
+    /// mise à jour de la frame de la cible
+    /// </summary>
+    /// <param name="health">Vie de la cible</param>
+    public void UpdateTargetFrame(float health)
+    {
+        healthStat.MyCurrentValue = health;
     }
 }
