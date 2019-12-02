@@ -128,7 +128,7 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// mise à jour de la frame de la cible
+    /// Mise à jour de la frame de la cible
     /// </summary>
     /// <param name="health">Vie de la cible</param>
     public void UpdateTargetFrame(float health)
