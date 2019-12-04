@@ -34,7 +34,7 @@ public class Player : Character
 
 
     /// <summary>
-    /// Start
+    /// Start : Ecrase la fonction Start du script Character
     /// </summary>
     protected override void Start()
     {
@@ -44,7 +44,7 @@ public class Player : Character
         // Référence sur la bibliothèque des sorts
         spellBook = gameObject.GetComponent<SpellBook>();
 
-        // Appel Start sur la classe mère (abstraite)
+        // Appelle Start sur la classe mère (abstraite)
         base.Start();
     }
 
@@ -56,7 +56,7 @@ public class Player : Character
         // Vérifie les interactions
         GetInput();
 
-        // Appel Update sur la classe mère (abstraite)
+        // Appelle Update sur la classe mère (abstraite)
         base.Update();
     }
 
@@ -208,7 +208,7 @@ public class Player : Character
         // Stoppe l'incantation du sort
         spellBook.StopCasting();
 
-        // Appel StopAttack sur la classe abstraite pour mettre fin au statut d'attaque
+        // Appelle StopAttack sur la classe abstraite pour mettre fin au statut d'attaque
         base.StopAttack();
     }
 }

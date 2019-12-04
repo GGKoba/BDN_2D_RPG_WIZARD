@@ -20,7 +20,7 @@ public class Enemy : NPC
         // Référence sur CanvasGroup de la barre de cast du joueur
         healthGroup.alpha = 0;
 
-        // Appel Start sur la classe mère
+        // Appelle Start sur la classe mère
         base.Start();
     }
 
@@ -32,7 +32,7 @@ public class Enemy : NPC
         // Masque la barre de vie
         healthGroup.alpha = 0;
 
-        // Appel DeSelect sur la classe mère
+        // Appelle DeSelect sur la classe mère
         base.DeSelect();    
     }
 
@@ -44,7 +44,20 @@ public class Enemy : NPC
         // Affiche la barre de vie
         healthGroup.alpha = 1;
 
-        // Appel Select sur la classe mère
+        // Appelle Select sur la classe mère
         return base.Select();
+    }
+
+    /// <summary>
+    /// Dégâts liée à une attaque : Ecrase la fonction TakeDamage du script Character
+    /// </summary>
+    /// <param name="damage">Montant des dégâts</param>
+    public override void TakeDamage(float damage)
+    {
+        // Appelle TakeDamage sur la classe mère
+        base.TakeDamage(damage);
+
+        // Déclenche l'évènement de changement de la vie
+        OnHealthChanged(health.MyCurrentValue);
     }
 }

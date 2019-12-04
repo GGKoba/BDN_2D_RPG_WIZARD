@@ -52,10 +52,15 @@ public class GameManager : MonoBehaviour
                 // Affecte la nouvelle cible au joueur
                 player.MyTarget = currentTarget.Select();
 
+                // Affiche la frame de la cible
+                UIManager.MyInstance.ShowTargetFrame(currentTarget);
             }
             // Désélection de la cible
             else
             {
+                // Affiche la frame de la cible
+                UIManager.MyInstance.HideTargetFrame();
+
                 // Supprime les références à la cible
                 currentTarget = null;
                 player.MyTarget = null;

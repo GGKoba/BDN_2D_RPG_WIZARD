@@ -95,6 +95,16 @@ public class Stat : MonoBehaviour
     {
         MyMaxValue = maxValue;
         MyCurrentValue = currentValue;
+
+        // Si l'image de la barre n'est pas référencée
+        if (content == null)
+        {
+            // Référence à l'image de la barre
+            content = gameObject.GetComponent<Image>();
+        }
+        
+        // Valeur de remplissage de la barre
+        content.fillAmount = MyCurrentValue / MyMaxValue;
     }
 
     /// <summary>
@@ -105,7 +115,7 @@ public class Stat : MonoBehaviour
         // Si on a une nouvelle valeur de remplissage, on doir mettre à jour les barres
         if (currentFill != content.fillAmount)
         {
-            // Renseigne le montant de remplissage afin d'obtenir un mouvement en douceur
+            // Actualise le montant de remplissage afin d'obtenir un mouvement en douceur
             content.fillAmount = Mathf.Lerp(content.fillAmount, currentFill, Time.deltaTime * lerpSpeed);
         }
     }
