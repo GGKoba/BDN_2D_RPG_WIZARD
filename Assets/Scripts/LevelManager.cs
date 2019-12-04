@@ -50,6 +50,12 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void GenerateMap()
     {
+        // Hauteur de la 1ère map
+        int height = mapData[0].height;
+
+        // Largeur de la 1ère map
+        int width = mapData[0].width;
+
         // Boucle sur tous les layers de map
         for (int i = 0; i < mapData.Length; i++)
         {
@@ -64,7 +70,7 @@ public class LevelManager : MonoBehaviour
    
                     // Vérification qu'il existe un élément qui a la couleur du pixel
                     MapElement newElement = Array.Find(mapElements, e => ColorUtility.ToHtmlStringRGB(e.MyTileColor) == ColorUtility.ToHtmlStringRGB(cellColor));
-                    Debug.Log(newElement);
+
                     // S'il y a un élément correspondant
                     if (newElement != null)
                     {
@@ -77,6 +83,14 @@ public class LevelManager : MonoBehaviour
 
                         // Placement de l'objet sur la map
                         gameObjectElement.transform.position = new Vector2(xPosition, yPosition);
+
+                        // Si l'objet est un arbre
+                        if (newElement.MyTileTag == "Tree")
+                        {
+                            // MAJ de son positionnement sur le layer (z-index)
+                            // Permet d'avoir un espace entre 2 arbres (height * 2 - y * 2) et que les arbres de derrière ne passent pas au-dessus des arbres de devant]
+                            gameObjectElement.GetComponent<SpriteRenderer>().sortingOrder = height * 2 - y * 2;   
+                        }
 
                         // Ajoute les objets comme des enfants de l'élement Map
                         gameObjectElement.transform.parent = map;
