@@ -867,6 +867,10 @@ MonoBehaviour:
     tileColor: {r: 0.6313726, g: 0.44313726, b: 0.28627452, a: 1}
     tilePrefab: {fileID: 8428046549632375522, guid: 67662f2b4f6faf24d9b4fbf5c96008e4,
       type: 3}
+  - tileTag: Tree
+    tileColor: {r: 0.84705883, g: 0.40784314, b: 0.16470589, a: 1}
+    tilePrefab: {fileID: 364174692592471642, guid: c617ae22fc384f8418d7e710beffb6fd,
+      type: 3}
 --- !u!1 &821852030
 GameObject:
   m_ObjectHideFlags: 0
