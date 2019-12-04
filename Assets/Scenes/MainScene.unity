@@ -2677,7 +2677,7 @@ PrefabInstance:
     - target: {fileID: 7683267644322279829, guid: e99af69e8b8cc5b478501756a73e2f70,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.016376495
+      value: -3.46
       objectReference: {fileID: 0}
     - target: {fileID: 7683267644322279829, guid: e99af69e8b8cc5b478501756a73e2f70,
         type: 3}
@@ -3172,11 +3172,6 @@ PrefabInstance:
       propertyPath: canvasGroup
       value: 
       objectReference: {fileID: 1732394720}
-    - target: {fileID: 4518433142810080506, guid: d37db884b30eb3e448f57592c12ca5fa,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4518433142810080507, guid: d37db884b30eb3e448f57592c12ca5fa,
         type: 3}
       propertyPath: m_Name
