@@ -871,6 +871,10 @@ MonoBehaviour:
     tileColor: {r: 0.84705883, g: 0.40784314, b: 0.16470589, a: 1}
     tilePrefab: {fileID: 1771023639615332072, guid: c7929831a19a7ad438da183e80666bf4,
       type: 3}
+  - tileTag: Water
+    tileColor: {r: 0.07450981, g: 0.7137255, b: 0.9529412, a: 1}
+    tilePrefab: {fileID: 8456056825921221052, guid: 7a1ff731354226b4a82ded48998cbf52,
+      type: 3}
 --- !u!1 &821852030
 GameObject:
   m_ObjectHideFlags: 0

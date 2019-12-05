@@ -57,7 +57,6 @@ public class Obstacle : MonoBehaviour, IComparable<Obstacle>
         return 0;
     }
 
-
     /// <summary>
     /// La couleur de l'obstacle devient fadedColor
     /// </summary>
@@ -65,7 +64,6 @@ public class Obstacle : MonoBehaviour, IComparable<Obstacle>
     {
         MySpriteRenderer.color = fadedColor;
     }
-
 
     /// <summary>
     /// La couleur de l'obstacle devient defaultColor

@@ -10,13 +10,13 @@ using UnityEngine;
 public class LayerSorter : MonoBehaviour
 {
     // OrderInLayer par défaut du joueur 
-    private int defaultOrderInLayer = 200;
+    private readonly int defaultOrderInLayer = 200;
     
     // SpriteRenderer du joueur
     private SpriteRenderer parentRenderer;
 
     // Liste de tous les obstacles avec lesquels le joueur est en collision
-    private List<Obstacle> obstacles = new List<Obstacle>();
+    private readonly List<Obstacle> obstacles = new List<Obstacle>();
 
 
     /// <summary>

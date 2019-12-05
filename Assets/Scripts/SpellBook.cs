@@ -127,7 +127,6 @@ public class SpellBook : MonoBehaviour
     /// <summary>
     /// Routine d'apparation de la barre de cast
     /// </summary>
-    /// <returns></returns>
     private IEnumerator FadeBar()
     {
         // Vitesse d'apparition de la barre de cast
