@@ -8,7 +8,14 @@ using UnityEngine;
 /// </summary>
 public class Obstacle : MonoBehaviour, IComparable<Obstacle>
 {
+    // SpriteRenderer de l'obstacle
     public SpriteRenderer MySpriteRenderer { get; set; }
+
+    // Couleur de l'obstacle
+    private Color defaultColor;
+
+    // Couleur pour le Fade
+    private Color fadedColor;
 
 
     /// <summary>
@@ -16,7 +23,17 @@ public class Obstacle : MonoBehaviour, IComparable<Obstacle>
     /// </summary>
     private void Start()
     {
+        // Référence au SpriteRenderer de l'obstacle
         MySpriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Référence sur la couleur de l'obstacle
+        defaultColor = MySpriteRenderer.color;
+
+        // Initialisation de la fadedColor
+        fadedColor = defaultColor;
+
+        // Mise à jour de l'alpha de la fadedColor
+        fadedColor.a = 0.7f;
     }
 
     /// <summary>
@@ -38,5 +55,23 @@ public class Obstacle : MonoBehaviour, IComparable<Obstacle>
 
         // Si les 2 obstacles ont le même OrderInLayer 
         return 0;
+    }
+
+
+    /// <summary>
+    /// La couleur de l'obstacle devient fadedColor
+    /// </summary>
+    public void FadeOut()
+    {
+        MySpriteRenderer.color = fadedColor;
+    }
+
+
+    /// <summary>
+    /// La couleur de l'obstacle devient defaultColor
+    /// </summary>
+    public void FadeIn()
+    {
+        MySpriteRenderer.color = defaultColor;
     }
 }

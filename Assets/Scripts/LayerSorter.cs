@@ -38,17 +38,20 @@ public class LayerSorter : MonoBehaviour
         if (collision.CompareTag("Obstacle"))
         {
             // Référence sur l'obstacle
-            Obstacle o = collision.GetComponent<Obstacle>();
+            Obstacle obstacle = collision.GetComponent<Obstacle>();
+
+            // Mise à jour de la couleur de l'obstacle
+            obstacle.FadeOut();
 
             // S'il n'y a pas d'autres collisions ou qu'il y a collision avec un obstacle qui a un OrderInLayer inférieur à celui du joueur
-            if (obstacles.Count == 0 || o.MySpriteRenderer.sortingOrder - 1 < parentRenderer.sortingOrder)
+            if (obstacles.Count == 0 || obstacle.MySpriteRenderer.sortingOrder - 1 < parentRenderer.sortingOrder)
             {
                 // Le joueur passe derrière l'obstacle
-                parentRenderer.sortingOrder = o.MySpriteRenderer.sortingOrder - 1;
+                parentRenderer.sortingOrder = obstacle.MySpriteRenderer.sortingOrder - 1;
             }
 
             // Ajoute l'obstacle dans la liste
-            obstacles.Add(o);
+            obstacles.Add(obstacle);
         }
     }
     
@@ -62,10 +65,13 @@ public class LayerSorter : MonoBehaviour
         if (collision.CompareTag("Obstacle"))
         {
             // Référence sur l'obstacle
-            Obstacle o = collision.GetComponent<Obstacle>();
+            Obstacle obstacle = collision.GetComponent<Obstacle>();
+
+            // Mise à jour de la couleur de l'obstacle
+            obstacle.FadeIn();
 
             // Retire l'obstacle dans la liste 
-            obstacles.Remove(o);
+            obstacles.Remove(obstacle);
 
             // S'il n'y a pas d'autres obstacles
             if (obstacles.Count == 0)
