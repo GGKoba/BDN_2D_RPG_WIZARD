@@ -3,8 +3,9 @@ using UnityEditor;
 using UnityEngine.Tilemaps;
 
 
+
 /// <summary>
-/// Classe des élements de la mp de type "Eau"
+/// Classe des élements de la map de type "Eau"
 /// </summary>
 public class WaterTile : Tile
 {
@@ -57,8 +58,9 @@ public class WaterTile : Tile
     /// <param name="tileData">Données de la cellule</param>
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
     {
-        //tileData.sprite = waterSprites[47];
-     
+        // Appelle GetTileData sur la classe mère
+        base.GetTileData(position, tilemap, ref tileData);
+
         // Chaine qui aura tous les types d'éléments de ses voisins [W(ater) OR E(mpty)]
         string composition = string.Empty;
 
@@ -363,7 +365,7 @@ public class WaterTile : Tile
     }
 
 
-    // Exécution seulement dans l'éditeur UNITY
+// Exécution seulement dans l'éditeur UNITY
 #if UNITY_EDITOR
     /// <summary>
     /// Ajoute un sous-menu dans le menu Assets : Tiles > WaterTile à partir de Assets > Create
@@ -371,8 +373,8 @@ public class WaterTile : Tile
     [MenuItem("Assets/Create/Tiles/WaterTile")]
     public static void CreateWaterTile()
     {
-        // Affiche la fenêtre de sauvegarde [Titre : Enregistrer WaterTile - Default Name : watertile - Extension : .asset - Message : Enregistrer WaterTile - Path : Assets]
-        string path = EditorUtility.SaveFilePanelInProject("Enregistrer WaterTile", "watertile", "asset", "Enregistrer WaterTile", "Assets");
+        // Affiche la fenêtre de sauvegarde [Titre : Enregistrer WaterTile - Default Name : waterTile - Extension : .asset - Message : Enregistrer WaterTile - Path : Assets]
+        string path = EditorUtility.SaveFilePanelInProject("Enregistrer WaterTile", "waterTile", "asset", "Enregistrer WaterTile", "Assets");
 
         if (path == "")
         {

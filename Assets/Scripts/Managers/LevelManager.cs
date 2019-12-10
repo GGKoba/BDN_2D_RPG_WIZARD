@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
     private Vector3 WorldStartPosition { get => Camera.main.ScreenToWorldPoint(new Vector3(0, 0)); }
 
     // Dictionnaire des élements de type Water (Coordonnées => Element)
-    private Dictionary<Point, GameObject> waterTiles = new Dictionary<Point, GameObject>();
+    private readonly Dictionary<Point, GameObject> waterTiles = new Dictionary<Point, GameObject>();
 
 
 
@@ -343,7 +343,7 @@ public class LevelManager : MonoBehaviour
                 if (x != 0 || y != 0)
                 {
                     // Si le dictionnaire contient les coordonnées de mon point
-                    if (waterTiles.ContainsKey(new Point(currentPoint.xPosition + x, currentPoint.yPosition + y)))
+                    if (waterTiles.ContainsKey(new Point(currentPoint.XPosition + x, currentPoint.YPosition + y)))
                     {
                         // La cellule est de type "Water"
                         composition += "W";
@@ -430,16 +430,16 @@ public class MapElement
 public struct Point
 {
     // Coordonnée X
-    public int xPosition { get; set; }
+    public int XPosition { get; set; }
 
     // Coordonnée Y
-    public int yPosition { get; set; }
+    public int YPosition { get; set; }
 
 
     // Constructeur
     public Point(int x, int y)
     {
-        this.xPosition = x;
-        this.yPosition = y;
+        this.XPosition = x;
+        this.YPosition = y;
     }
 }
