@@ -19,12 +19,15 @@ public class TreeTile : Tile
     {
         // MAJ de son positionnement sur le layer (z-index)
         // Permet d'avoir un espace entre 2 arbres (-position.y * 2) et que les arbres de derrière ne passent pas au-dessus des arbres de devant]
-        go.GetComponent<SpriteRenderer>().sortingOrder = -position.y * 2;
-
+        if (go != null)
+        {
+            go.GetComponent<SpriteRenderer>().sortingOrder = -position.y * 2;
+        }
 
         // Appelle StartUp sur la classe mère
         return base.StartUp(position, tilemap, go);
     }
+
 
     // Exécution seulement dans l'éditeur UNITY
 #if UNITY_EDITOR
