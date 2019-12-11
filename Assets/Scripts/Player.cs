@@ -32,6 +32,9 @@ public class Player : Character
     // Cible du joueur
     public Transform MyTarget { get; set; }
 
+    // Positions mini/maxi 
+    private Vector3 minPosition, maxPosition;
+
 
     /// <summary>
     /// Start : Ecrase la fonction Start du script Character
@@ -55,6 +58,9 @@ public class Player : Character
     {
         // Vérifie les interactions
         GetInput();
+
+        // Position du joueur
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, minPosition.x, maxPosition.x), Mathf.Clamp(transform.position.y, minPosition.y, maxPosition.y), transform.position.z);
 
         // Appelle Update sur la classe mère (abstraite)
         base.Update();
@@ -107,6 +113,17 @@ public class Player : Character
             exitIndex = 1;
             direction += Vector2.right;
         }
+    }
+
+    /// <summary>
+    /// Définit les limites du joueur
+    /// </summary>
+    /// <param name="min">Position du joueur minimum (en bas à gauche)</param>
+    /// <param name="max">Position du joueur maximum (en haut à droite)</param>
+    public void SetLimits(Vector3 min, Vector3 max)
+    {
+        minPosition = min;
+        maxPosition = max;
     }
 
     /// <summary>

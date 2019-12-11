@@ -11,20 +11,26 @@ public class CameraFollow : MonoBehaviour
     // Cible de la caméra
     private Transform target;
 
-    // Tailles mini/maxi 
+    // Positions mini/maxi 
     private float xMin, xMax, yMin, yMax;
 
     // Référence sur la Tilemap
     [SerializeField]
     private Tilemap tileMap = default;
 
+    // Référence sur le script Player
+    private Player playerScript;
 
     /// <summary>
     /// Start
     /// </summary>
     private void Start()
     {
+        // Objet Player
         target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        // Script Player 
+        playerScript = target.GetComponent<Player>();
 
         // Position de la cellule en bas à gauche
         Vector3 minTile = tileMap.CellToWorld(tileMap.cellBounds.min);
@@ -34,6 +40,9 @@ public class CameraFollow : MonoBehaviour
 
         // Limites de la caméra
         SetLimits(minTile, maxTile);
+
+        // Limites de la cible
+        playerScript.SetLimits(minTile, maxTile);
     }
 
     /// <summary>
