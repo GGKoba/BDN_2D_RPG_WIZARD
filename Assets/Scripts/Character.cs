@@ -10,7 +10,7 @@
 public abstract class Character : MonoBehaviour
 {
     // Référence sur le rigidbody
-    private Rigidbody2D myRigidbody;
+    private Rigidbody2D rigidbodyCharacter;
 
     // Vitesse de déplacement
     [SerializeField]
@@ -50,10 +50,11 @@ public abstract class Character : MonoBehaviour
     public bool IsAttacking { get; set; }
 
     // Indique si le personnage est en déplacement ou non
-    public bool IsMoving
-    {
-        get { return direction.x != 0 || direction.y != 0; }
-    }
+    public bool IsMoving { get => direction.x != 0 || direction.y != 0; }
+
+    // Indique si le personnage est en vie ou non
+    public bool IsAlive { get => health.MyCurrentValue > 0; }
+
 
 
     /// <summary>
@@ -68,7 +69,7 @@ public abstract class Character : MonoBehaviour
         MyAnimator = GetComponent<Animator>();
 
         // Référence sur le rigidbody du personnage
-        myRigidbody = GetComponent<Rigidbody2D>();
+        rigidbodyCharacter = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -92,8 +93,12 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     public void Move()
     {
-        // Déplace le personnage
-        myRigidbody.velocity = direction.normalized * speed;
+        // Si le personnage est en vie
+        if (IsAlive)
+        {
+            // Déplace le personnage
+            rigidbodyCharacter.velocity = direction.normalized * speed;
+        }
     }
 
     /// <summary>
@@ -101,26 +106,36 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     public void HandleLayers()
     {
-        // Vérifie si le personnage bouge ou pas. S'il bouge, alors il faut jouer l'animation
-        if (IsMoving)
+        // Si le personnage est en vie
+        if (IsAlive)
         {
-            // Utilise le layer "WALK"
-            ActivateLayer("WalkLayer");
+            // Vérifie si le personnage bouge ou pas. S'il bouge, alors il faut jouer l'animation
+            if (IsMoving)
+            {
+                // Utilise le layer "WALK"
+                ActivateLayer("WalkLayer");
 
-            // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
-            MyAnimator.SetFloat("x", direction.x);
-            MyAnimator.SetFloat("y", direction.y);
+                // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
+                MyAnimator.SetFloat("x", direction.x);
+                MyAnimator.SetFloat("y", direction.y);
+            }
+            else if (IsAttacking)
+            {
+                // Utilise le layer "ATTACK"
+                ActivateLayer("AttackLayer");
+            }
+            else
+            {
+                // Utilise le layer "IDLE" s'il n'y a plus de mouvement ou d'attaque
+                ActivateLayer("IdleLayer");
+            }
         }
-        else if (IsAttacking)
-	    {
-            // Utilise le layer "ATTACK"
-            ActivateLayer("AttackLayer");
-	    }
         else
         {
-            // Utilise le layer "IDLE" s'il n'y a plus de mouvement ou d'attaque
-            ActivateLayer("IdleLayer");
+            // Utilise le layer "DEATH" si le personnage n'a plus de vie
+            ActivateLayer("DeathLayer");
         }
+
     }
 
     /// <summary>
@@ -152,6 +167,12 @@ public abstract class Character : MonoBehaviour
         // Si le personnage n'a plus de vie
         if (health.MyCurrentValue <= 0)
         {
+            // Reset de la direction
+            direction = Vector2.zero;
+
+            // Stoppe le déplacement
+            rigidbodyCharacter.velocity = direction;
+
             // Activation du trigger "die"
             MyAnimator.SetTrigger("die");
         }

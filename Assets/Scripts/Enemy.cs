@@ -56,15 +56,19 @@ public class Enemy : NPC
     /// </summary>
     protected override void Update()
     {
-        // S'il n'y a pas d'attaque
-        if (!IsAttacking)
+        // Si le personnage est en vie
+        if (IsAlive)
         {
-            // Mise à jour du temps depuis la dernière attaque
-            MyAttackTime += Time.deltaTime;
-        }
+            // S'il n'y a pas d'attaque
+            if (!IsAttacking)
+            {
+                // Mise à jour du temps depuis la dernière attaque
+                MyAttackTime += Time.deltaTime;
+            }
 
-        // Appelle Update sur l'état courant
-        currentState.Update();
+            // Appelle Update sur l'état courant
+            currentState.Update();
+        }
 
         // Appelle Update sur la classe mère
         base.Update();
