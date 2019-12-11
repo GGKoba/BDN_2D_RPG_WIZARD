@@ -83,12 +83,19 @@ public class Enemy : NPC
     // Suivi de la cible
     private void FollowTarget()
     {
-        Debug.Log(target);
         // S'il y a une cible
         if (target != null)
         {
+            // Direction de la cible
+            direction = (target.transform.position - transform.position).normalized;
+
             // Déplacement vers la cible
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        }
+        else
+        {
+            // Reset de la direction
+            direction = Vector2.zero;
         }
     }
 }
