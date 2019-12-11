@@ -146,10 +146,10 @@ public class Player : Character
         Spell mySpell = spellBook.CastSpell(spellIndex);
 
         // Indique que l'on attaque
-        isAttacking = true;
+        IsAttacking = true;
 
         // Lance l'animation d'attaque
-        animator.SetBool("attack", isAttacking);
+        MyAnimator.SetBool("attack", IsAttacking);
 
         // Simule le temps d'incantation
         yield return new WaitForSeconds(mySpell.SpellCastTime);
@@ -178,7 +178,7 @@ public class Player : Character
         Block();
 
         // Vérifie si l'on peut attaquer
-        if (MyTarget != null && !isAttacking && !IsMoving && InLineOfSight())
+        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight())
         {
             attackRoutine = StartCoroutine(Attack(spellIndex));
         }
@@ -233,10 +233,10 @@ public class Player : Character
         spellBook.StopCasting();
 
         // Indique que l'on n'attaque pas
-        isAttacking = false;
+        IsAttacking = false;
 
         // Arrête l'animation d'attaque
-        animator.SetBool("attack", isAttacking);
+        MyAnimator.SetBool("attack", IsAttacking);
 
         // Vérifie qu'il existe une référence à la routine d'attaque
         if (attackRoutine != null)

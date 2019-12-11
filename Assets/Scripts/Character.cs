@@ -16,6 +16,9 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     private float speed = default;
 
+    // Propriété d'accès à la vitesse du personnage
+    public float MySpeed { get => speed; set => speed = value; }
+
     // Vie initiale du personnage (readonly)
     [SerializeField]
     private float initHealth = default;
@@ -24,36 +27,33 @@ public abstract class Character : MonoBehaviour
     // Référence sur la vie du personnage
     protected Stat health = default;
 
+    // Propriété d'accès à la vie du personnage
+    public Stat MyHealth { get => health; }
+
     // Référence sur la hitBox du personnage
     [SerializeField]
     protected Transform hitBox = default;
 
+    // Direction du personnage
+    private Vector2 direction;
+
+    // Propriété d'accès à la direction du personnage
+    public Vector2 MyDirection { get => direction; set => direction = value; }
+
     // Référence sur l'animator
-    protected Animator animator;
+    public Animator MyAnimator { get; set; }
 
     // Référence sur la routine d'attaque
     protected Coroutine attackRoutine;
     
     // Indique si le personnage attaque ou non
-    protected bool isAttacking = false;
-
-    // Direction du personnage
-    private Vector2 direction;
+    public bool IsAttacking { get; set; }
 
     // Indique si le personnage est en déplacement ou non
     public bool IsMoving
     {
         get { return direction.x != 0 || direction.y != 0; }
     }
-
-    // Propriété d'accès à la vie du personnage
-    public Stat MyHealth { get => health; }
-
-    // Propriété d'accès à la direction du personnage
-    public Vector2 MyDirection { get => direction; set => direction = value; }
-
-    // Propriété d'accès à la vitesse du personnage
-    public float MySpeed { get => speed; set => speed = value; }
 
 
     /// <summary>
@@ -65,7 +65,7 @@ public abstract class Character : MonoBehaviour
         health.Initialize(initHealth, initHealth);
 
         // Référence sur l'animator du personnage
-        animator = GetComponent<Animator>();
+        MyAnimator = GetComponent<Animator>();
 
         // Référence sur le rigidbody du personnage
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -108,10 +108,10 @@ public abstract class Character : MonoBehaviour
             ActivateLayer("WalkLayer");
 
             // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
-            animator.SetFloat("x", direction.x);
-            animator.SetFloat("y", direction.y);
+            MyAnimator.SetFloat("x", direction.x);
+            MyAnimator.SetFloat("y", direction.y);
         }
-        else if (isAttacking)
+        else if (IsAttacking)
 	    {
             // Utilise le layer "ATTACK"
             ActivateLayer("AttackLayer");
@@ -130,14 +130,14 @@ public abstract class Character : MonoBehaviour
     public void ActivateLayer(string layerName)
     {
         // Boucle sur les layers d'animations
-        for (int i = 0; i < animator.layerCount; i++)
+        for (int i = 0; i < MyAnimator.layerCount; i++)
 		{
             // Reset le layer courant
-            animator.SetLayerWeight(i, 0);
+            MyAnimator.SetLayerWeight(i, 0);
 		}
 
         // Active le layer correspond au nom passé en paramètre
-        animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
+        MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);
     }
 
     /// <summary>
@@ -153,7 +153,7 @@ public abstract class Character : MonoBehaviour
         if (health.MyCurrentValue <= 0)
         {
             // Activation du trigger "die"
-            animator.SetTrigger("die");
+            MyAnimator.SetTrigger("die");
         }
     }
 }

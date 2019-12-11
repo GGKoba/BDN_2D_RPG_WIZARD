@@ -23,6 +23,9 @@ public class Enemy : NPC
     // Propriété d'accès à la portée de l'ennemi
     public float MyAttackRange { get; set; }
 
+    // Propriété d'accès au temps d'attaque de l'ennemi
+    public float MyAttackTime { get; set; }
+
 
     /// <summary>
     /// Awake
@@ -30,7 +33,7 @@ public class Enemy : NPC
     protected void Awake()
     {
         // Initialisation de la portée de l'ennemi
-        MyAttackRange = 1;
+        MyAttackRange = 1.39f;
 
         // Passage à l'état d'attente
         ChangeState(new IdleState());
@@ -53,6 +56,13 @@ public class Enemy : NPC
     /// </summary>
     protected override void Update()
     {
+        // S'il n'y a pas d'attaque
+        if (!IsAttacking)
+        {
+            // Mise à jour du temps depuis la dernière attaque
+            MyAttackTime += Time.deltaTime;
+        }
+
         // Appelle Update sur l'état courant
         currentState.Update();
 
