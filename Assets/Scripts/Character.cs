@@ -14,7 +14,7 @@ public abstract class Character : MonoBehaviour
 
     // Vitesse de déplacement
     [SerializeField]
-    private float speed = default;
+    protected float speed = default;
 
     // Vie initiale du personnage (readonly)
     [SerializeField]

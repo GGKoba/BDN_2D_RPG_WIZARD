@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 public class TreeTile : Tile
 {
     /// <summary>
-    /// StartUp : Ecrase la fonction StartUp du script Tile
+    /// StartUp : Surcharge la fonction StartUp du script Tile
     /// </summary>
     /// <param name="position">Position de la cellule</param>
     /// <param name="tilemap">Layer de la cellule</param>

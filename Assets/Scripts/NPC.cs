@@ -36,7 +36,7 @@ public class NPC : Character
 
 
     /// <summary>
-    /// Start : Ecrase la fonction Update du script Character
+    /// Start : Surcharge la fonction Update du script Character
     /// </summary>
     protected override void Start()
     {

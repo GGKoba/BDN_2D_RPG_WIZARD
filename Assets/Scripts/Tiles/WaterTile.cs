@@ -15,7 +15,7 @@ public class WaterTile : Tile
 
 
     /// <summary>
-    /// StartUp : Ecrase la fonction StartUp du script Tile
+    /// StartUp : Surcharge la fonction StartUp du script Tile
     /// </summary>
     /// <param name="position">Position de la cellule</param>
     /// <param name="tilemap">Layer de la cellule</param>
@@ -51,7 +51,7 @@ public class WaterTile : Tile
     }
 
     /// <summary>
-    /// Informations de la cellule : Ecrase la fonction GetTileData du script Tile
+    /// Informations de la cellule : Surcharge la fonction GetTileData du script Tile
     /// </summary>
     /// <param name="position">Position de la cellule</param>
     /// <param name="tilemap">Layer de la cellule</param>

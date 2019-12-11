@@ -11,9 +11,16 @@ public class Enemy : NPC
     [SerializeField]
     private CanvasGroup healthGroup = default;
 
+    // Cible de l'ennemi
+    private Transform target;
+
+    // Propriété d'accès à la cible de l'ennemi
+    //public Transform MyTarget { get; set; }
+    public Transform MyTarget { get => target; set => target = value; }
+
 
     /// <summary>
-    /// Start
+    /// Start : Surcharge la fonction Start du script NPC
     /// </summary>
     protected override void Start()
     {
@@ -25,7 +32,19 @@ public class Enemy : NPC
     }
 
     /// <summary>
-    /// Désélection d'un ennemi : Ecrase la fonction Select du script NPC
+    /// Update : Surcharge la fonction Update du script NPC
+    /// </summary>
+    protected override void Update()
+    {
+        // Suivi de la cible si elle existe
+        FollowTarget();
+
+        // Appelle Update sur la classe mère
+        base.Update();
+    }
+
+    /// <summary>
+    /// Désélection d'un ennemi : Surcharge la fonction Select du script NPC
     /// </summary>
     public override void DeSelect()
     {
@@ -37,7 +56,7 @@ public class Enemy : NPC
     }
 
     /// <summary>
-    /// Sélection d'un ennemi : Ecrase la fonction Select du script NPC
+    /// Sélection d'un ennemi : Surcharge la fonction Select du script NPC
     /// </summary>
     public override Transform Select()
     {
@@ -49,7 +68,7 @@ public class Enemy : NPC
     }
 
     /// <summary>
-    /// Dégâts liée à une attaque : Ecrase la fonction TakeDamage du script Character
+    /// Dégâts liée à une attaque : Surcharge la fonction TakeDamage du script Character
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
     public override void TakeDamage(float damage)
@@ -59,5 +78,17 @@ public class Enemy : NPC
 
         // Déclenche l'évènement de changement de la vie
         OnHealthChanged(health.MyCurrentValue);
+    }
+
+    // Suivi de la cible
+    private void FollowTarget()
+    {
+        Debug.Log(target);
+        // S'il y a une cible
+        if (target != null)
+        {
+            // Déplacement vers la cible
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        }
     }
 }

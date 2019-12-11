@@ -37,7 +37,7 @@ public class Player : Character
 
 
     /// <summary>
-    /// Start : Ecrase la fonction Start du script Character
+    /// Start : Surcharge la fonction Start du script Character
     /// </summary>
     protected override void Start()
     {
@@ -52,7 +52,7 @@ public class Player : Character
     }
 
     /// <summary>
-    /// Update : Ecrase la fonction Update du script Character
+    /// Update : Surcharge la fonction Update du script Character
     /// </summary>
     protected override void Update()
     {
@@ -218,7 +218,7 @@ public class Player : Character
     }
 
     /// <summary>
-    /// Fin de l'attaque : Ecrase la fonction StopAttack du script Character
+    /// Fin de l'attaque : Surcharge la fonction StopAttack du script Character
     /// </summary>
     public override void StopAttack()
     {
