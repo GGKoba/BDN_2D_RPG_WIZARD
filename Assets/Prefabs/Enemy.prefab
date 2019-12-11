@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8284091619110366218}
   - component: {fileID: 1181925245009135346}
   - component: {fileID: 5883395313879521069}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 7683267642312155946}
   - component: {fileID: 7683267642312155947}
   - component: {fileID: 7683267642312155945}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 7683267642846350081}
   - component: {fileID: 7683267642846350087}
   - component: {fileID: 7683267642846350080}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 7683267643191571510}
   - component: {fileID: 7683267643191571511}
   - component: {fileID: 7683267643191571508}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: HealthCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

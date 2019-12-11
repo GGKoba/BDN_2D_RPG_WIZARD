@@ -113,6 +113,13 @@ public class Player : Character
             exitIndex = 1;
             MyDirection += Vector2.right;
         }
+
+
+        // Stoppe l'attaque s'il y a un déplacement
+        if (IsMoving)
+        {
+            StopAttack();
+        }
     }
 
     /// <summary>
@@ -218,14 +225,27 @@ public class Player : Character
     }
 
     /// <summary>
-    /// Fin de l'attaque : Surcharge la fonction StopAttack du script Character
+    /// Fin de l'attaque
     /// </summary>
-    public override void StopAttack()
+    public void StopAttack()
     {
         // Stoppe l'incantation du sort
         spellBook.StopCasting();
 
-        // Appelle StopAttack sur la classe abstraite pour mettre fin au statut d'attaque
-        base.StopAttack();
+        // Indique que l'on n'attaque pas
+        isAttacking = false;
+
+        // Arrête l'animation d'attaque
+        animator.SetBool("attack", isAttacking);
+
+        // Vérifie qu'il existe une référence à la routine d'attaque
+        if (attackRoutine != null)
+        {
+            // Arrête la routine d'attaque
+            StopCoroutine(attackRoutine);
+
+            // Reset la routine d'attaque
+            attackRoutine = null;
+        }
     }
 }

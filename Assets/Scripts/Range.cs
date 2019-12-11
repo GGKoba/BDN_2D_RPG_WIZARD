@@ -24,12 +24,11 @@ public class Range : MonoBehaviour
     /// <param name="collision">L'objet de collision</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if(collision.CompareTag("Player"))
         {
             enemyScript.MyTarget = collision.transform;
         }
     }
-
 
     /// <summary>
     /// Détection de sortie de collision
@@ -37,7 +36,7 @@ public class Range : MonoBehaviour
     /// <param name="collision">L'objet de collision</param>
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             enemyScript.MyTarget = null;
         }

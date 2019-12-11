@@ -110,10 +110,6 @@ public abstract class Character : MonoBehaviour
             // Renseigne les paramètres de l'animation : le personnage s'oriente dans la bonne direction
             animator.SetFloat("x", direction.x);
             animator.SetFloat("y", direction.y);
-
-            // Stoppe l'attaque s'il y a un déplacent
-            StopAttack();
-
         }
         else if (isAttacking)
 	    {
@@ -142,28 +138,6 @@ public abstract class Character : MonoBehaviour
 
         // Active le layer correspond au nom passé en paramètre
         animator.SetLayerWeight(animator.GetLayerIndex(layerName), 1);
-    }
-
-    /// <summary>
-    /// Fin de l'attaque
-    /// </summary>
-    public virtual void StopAttack()
-    {
-        // Indique que l'on n'attaque pas
-        isAttacking = false;
-
-        // Arrête l'animation d'attaque
-        animator.SetBool("attack", isAttacking);
-
-        // Vérifie qu'il existe une référence à la routine d'attaque
-        if (attackRoutine != null)
-        {
-            // Arrête la routine d'attaque
-            StopCoroutine(attackRoutine);
-
-            // Reset la routine d'attaque
-            attackRoutine = null;
-        }
     }
 
     /// <summary>

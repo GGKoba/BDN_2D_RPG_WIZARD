@@ -3,16 +3,16 @@
 
 
 /// <summary>
-/// Classe de l'état "FOLLOW"
+/// Classe de l'état "ATTACK"
 /// </summary>
-class FollowState : IState
+class AttackState : IState
 {
     // Référence sur le script Enemy
     private Enemy enemy;
 
 
     /// <summary>
-    /// Entrée dans l'état "FOLLOW"
+    /// Entrée dans l'état "IDLE"
     /// </summary>
     public void Enter(Enemy enemyScript)
     {
@@ -20,38 +20,29 @@ class FollowState : IState
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "FOLLOW"
+    /// Mise à jour dans l'état "IDLE"
     /// </summary>
     public void Exit()
     {
-        // Reset de la direction
-        enemy.MyDirection = Vector2.zero;
     }
 
     /// <summary>
-    /// Sortie de l'état "FOLLOW"
+    /// Sortie de l'état "IDLE"
     /// </summary>
     public void Update()
     {
-        // S'il y a une cible à portée
+        // S'il y a une cible
         if (enemy.MyTarget != null)
         {
-            // Trouve la direction de la cible
-            enemy.MyDirection = (enemy.MyTarget.position - enemy.transform.position).normalized;
-
-            // Déplacement vers la cible
-            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.MyTarget.position, enemy.MySpeed * Time.deltaTime);
-
             // Distance entre l'ennemi et la cible
             float distance = Vector2.Distance(enemy.MyTarget.position, enemy.transform.position);
 
             // Si la cible est à portée d'attaque
-            if (distance <= enemy.MyAttackRange)
+            if (distance >= enemy.MyAttackRange)
             {
-                // Passage à l'état d'attaque
-                enemy.ChangeState(new AttackState());
+                // Passage à l'état de poursuite
+                enemy.ChangeState(new FollowState());
             }
-
         }
         else
         {

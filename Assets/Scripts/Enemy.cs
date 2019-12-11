@@ -20,12 +20,19 @@ public class Enemy : NPC
     // Propriété d'accès à la cible de l'ennemi
     public Transform MyTarget { get => target; set => target = value; }
 
+    // Propriété d'accès à la portée de l'ennemi
+    public float MyAttackRange { get; set; }
+
 
     /// <summary>
     /// Awake
     /// </summary>
     protected void Awake()
     {
+        // Initialisation de la portée de l'ennemi
+        MyAttackRange = 1;
+
+        // Passage à l'état d'attente
         ChangeState(new IdleState());
     }
     

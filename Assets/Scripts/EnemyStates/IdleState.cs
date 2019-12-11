@@ -27,9 +27,10 @@ class IdleState : IState
     /// </summary>
     public void Update()
     {
-        // Passe en mode "Poursuite" si la cible est à portée
+        // S'il y a une cible
         if (enemy.MyTarget != null)
         {
+            // Passage à l'état de poursuite
             enemy.ChangeState(new FollowState());
         }
     }
