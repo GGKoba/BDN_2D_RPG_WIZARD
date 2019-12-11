@@ -71,7 +71,7 @@ public class Player : Character
     /// </summary>
     private void GetInput()
     {
-        direction = Vector2.zero;
+        MyDirection = Vector2.zero;
 
         // [DEBUG] : Test Vie/Mana
         if (Input.GetKeyDown(KeyCode.I))
@@ -90,28 +90,28 @@ public class Player : Character
         if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))
         {
             exitIndex = 0;
-            direction += Vector2.up;
+            MyDirection += Vector2.up;
         }
 
         // Déplacement en Bas
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             exitIndex = 2;
-            direction += Vector2.down;
+            MyDirection += Vector2.down;
         }
 
         // Déplacement à Gauche
         if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
         {
             exitIndex = 3;
-            direction += Vector2.left;
+            MyDirection += Vector2.left;
         }
 
         // Déplacement à Droite
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             exitIndex = 1;
-            direction += Vector2.right;
+            MyDirection += Vector2.right;
         }
     }
 

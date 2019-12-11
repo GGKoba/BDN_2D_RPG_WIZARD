@@ -11,14 +11,24 @@ public class Enemy : NPC
     [SerializeField]
     private CanvasGroup healthGroup = default;
 
+    // Etat courant de l'ennemi
+    private IState currentState;
+
     // Cible de l'ennemi
     private Transform target;
 
     // Propriété d'accès à la cible de l'ennemi
-    //public Transform MyTarget { get; set; }
     public Transform MyTarget { get => target; set => target = value; }
 
 
+    /// <summary>
+    /// Awake
+    /// </summary>
+    protected void Awake()
+    {
+        ChangeState(new IdleState());
+    }
+    
     /// <summary>
     /// Start : Surcharge la fonction Start du script NPC
     /// </summary>
@@ -36,8 +46,8 @@ public class Enemy : NPC
     /// </summary>
     protected override void Update()
     {
-        // Suivi de la cible si elle existe
-        FollowTarget();
+        // Appelle Update sur l'état courant
+        currentState.Update();
 
         // Appelle Update sur la classe mère
         base.Update();
@@ -80,22 +90,23 @@ public class Enemy : NPC
         OnHealthChanged(health.MyCurrentValue);
     }
 
-    // Suivi de la cible
-    private void FollowTarget()
+    /// <summary>
+    /// Change l'état de l'ennemi
+    /// </summary>
+    /// <param name="state">Etat de l'ennemi</param>
+    public void ChangeState(IState state)
     {
-        // S'il y a une cible
-        if (target != null)
+        // S'il y a un état;
+        if (currentState != null)
         {
-            // Direction de la cible
-            direction = (target.transform.position - transform.position).normalized;
+            // Sortie de l'ancien état
+            currentState.Exit();
+        }
 
-            // Déplacement vers la cible
-            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        }
-        else
-        {
-            // Reset de la direction
-            direction = Vector2.zero;
-        }
+        // Mise à jour de l'état courant
+        currentState = state;
+
+        // Entrée dans le nouvel état
+        currentState.Enter(this);
     }
 }

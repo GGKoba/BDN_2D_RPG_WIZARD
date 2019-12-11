@@ -14,7 +14,7 @@ public abstract class Character : MonoBehaviour
 
     // Vitesse de déplacement
     [SerializeField]
-    protected float speed = default;
+    private float speed = default;
 
     // Vie initiale du personnage (readonly)
     [SerializeField]
@@ -38,7 +38,7 @@ public abstract class Character : MonoBehaviour
     protected bool isAttacking = false;
 
     // Direction du personnage
-    protected Vector2 direction;
+    private Vector2 direction;
 
     // Indique si le personnage est en déplacement ou non
     public bool IsMoving
@@ -47,13 +47,13 @@ public abstract class Character : MonoBehaviour
     }
 
     // Propriété d'accès à la vie du personnage
-    public Stat MyHealth
-    {
-        get
-        {
-            return health;
-        }
-    }
+    public Stat MyHealth { get => health; }
+
+    // Propriété d'accès à la direction du personnage
+    public Vector2 MyDirection { get => direction; set => direction = value; }
+
+    // Propriété d'accès à la vitesse du personnage
+    public float MySpeed { get => speed; set => speed = value; }
 
 
     /// <summary>
