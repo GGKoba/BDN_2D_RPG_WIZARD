@@ -178,7 +178,7 @@ public class Player : Character
         Block();
 
         // Vérifie si l'on peut attaquer
-        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight())
+        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
         {
             attackRoutine = StartCoroutine(Attack(spellIndex));
         }
