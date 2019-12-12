@@ -14,6 +14,9 @@ public class Enemy : NPC
     // Etat courant de l'ennemi
     private IState currentState;
 
+    // Propriété d'accès à la position de départ de l'ennemi
+    public Vector3 MyStartPosition { get; set; }
+
     // Propriété d'accès au temps d'attaque de l'ennemi
     public float MyAttackTime { get; set; }
 
@@ -37,6 +40,9 @@ public class Enemy : NPC
     /// </summary>
     protected void Awake()
     {
+        // Initialisation de la position de départ de l'ennemi
+        MyStartPosition = transform.position;
+
         // Initialisation de la portée d'attaque de l'ennemi
         MyAttackRange = 1.39f;
 
@@ -113,14 +119,18 @@ public class Enemy : NPC
     /// <param name="source">Source de l'attaque</param>
     public override void TakeDamage(float damage, Transform source)
     {
-        // Définit la cible et actualise la portée d'aggro
-        SetTarget(source);
+        // Si l'état n'est pas en évasion
+        if (!(currentState is EvadeState))
+        {
+            // Définit la cible et actualise la portée d'aggro
+            SetTarget(source);
 
-        // Appelle TakeDamage sur la classe mère
-        base.TakeDamage(damage, source);
+            // Appelle TakeDamage sur la classe mère
+            base.TakeDamage(damage, source);
 
-        // Déclenche l'évènement de changement de la vie
-        OnHealthChanged(health.MyCurrentValue);
+            // Déclenche l'évènement de changement de la vie
+            OnHealthChanged(health.MyCurrentValue);
+        }
     }
 
     /// <summary>
@@ -149,8 +159,8 @@ public class Enemy : NPC
     /// <param name="target">Cible</param>
     public void SetTarget(Transform sourceTarget)
     {
-        // S'il n'y a pas de cible
-        if (MyTarget == null)
+        // S'il n'y a pas de cible et que l'état n'est pas en évasion
+        if (MyTarget == null && !(currentState is EvadeState))
         {
             // Calcul de la distance entre l'ennemi et la cible
             float distance = Vector2.Distance(transform.position, sourceTarget.position);

@@ -12,4 +12,3 @@ public interface IState
     // Sortie de l'état
     void Exit();
 }
-

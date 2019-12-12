@@ -56,8 +56,8 @@ class FollowState : IState
         // Si la cible n'est plus à portée
         if (!enemy.InRange)
         {
-            // Passage à l'état d'attente
-            enemy.ChangeState(new IdleState());
+            // Passage à l'état d'évasion
+            enemy.ChangeState(new EvadeState());
         }
     }
 }
