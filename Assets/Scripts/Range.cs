@@ -26,20 +26,8 @@ public class Range : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            enemyScript.MyTarget = collision.transform;
+            // Définit la cible
+            enemyScript.SetTarget(collision.transform);
         }
     }
-
-    /// <summary>
-    /// Détection de sortie de collision
-    /// </summary>
-    /// <param name="collision">L'objet de collision</param>
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            enemyScript.MyTarget = null;
-        }
-    }
-
 }

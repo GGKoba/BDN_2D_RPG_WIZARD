@@ -159,7 +159,7 @@ public class SpellBook : MonoBehaviour
             // Arrête la routine de remplissage
             StopCoroutine(spellRoutine);
 
-            // Reset la routine de remplissage
+            // Réinitialise la routine de remplissage
             spellRoutine = null;
         }
 
@@ -169,10 +169,10 @@ public class SpellBook : MonoBehaviour
             // Arrête la routine d'apparition
             StopCoroutine(fadeRoutine);
 
-            // Reset la transparence du canvas
+            // Réinitialise la transparence du canvas
             canvasGroup.alpha = 0;
 
-            // Reset la routine d'apparition
+            // Réinitialise la routine d'apparition
             fadeRoutine = null;
         }
     }

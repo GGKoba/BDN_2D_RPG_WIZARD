@@ -43,7 +43,7 @@ class AttackState : IState
         // Vérifie si l'on peut attaquer
         if (enemy.MyAttackTime >= attackCooldown && !enemy.IsAttacking)
         {
-            // Reset du temps d'attaque
+            // Réinitialise le temps d'attaque
             enemy.MyAttackTime = 0;
 
             // Lancement de l'attaque

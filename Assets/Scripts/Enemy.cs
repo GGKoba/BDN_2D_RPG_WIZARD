@@ -14,11 +14,22 @@ public class Enemy : NPC
     // Etat courant de l'ennemi
     private IState currentState;
 
-    // Propriété d'accès à la portée de l'ennemi
-    public float MyAttackRange { get; set; }
-
     // Propriété d'accès au temps d'attaque de l'ennemi
     public float MyAttackTime { get; set; }
+
+    // Propriété d'accès à la portée d'attaque de l'ennemi
+    public float MyAttackRange { get; set; }
+
+    // Propriété d'accès à la portée d'aggro de l'ennemi
+    public float MyAggroRange { get; set; }
+
+    // Portée d'aggro de l'ennemi
+    [SerializeField]
+    private float initialAggroRange;
+
+    // Cible à portée ?
+    public bool InRange { get => Vector2.Distance(transform.position, MyTarget.position) < MyAggroRange; }
+
 
 
     /// <summary>
@@ -26,8 +37,11 @@ public class Enemy : NPC
     /// </summary>
     protected void Awake()
     {
-        // Initialisation de la portée de l'ennemi
+        // Initialisation de la portée d'attaque de l'ennemi
         MyAttackRange = 1.39f;
+
+        // Initialisation de la portée d'aggro de l'ennemi
+        MyAggroRange = initialAggroRange;
 
         // Passage à l'état d'attente
         ChangeState(new IdleState());
@@ -99,6 +113,9 @@ public class Enemy : NPC
     /// <param name="source">Source de l'attaque</param>
     public override void TakeDamage(float damage, Transform source)
     {
+        // Définit la cible et actualise la portée d'aggro
+        SetTarget(source);
+
         // Appelle TakeDamage sur la classe mère
         base.TakeDamage(damage, source);
 
@@ -124,5 +141,46 @@ public class Enemy : NPC
 
         // Entrée dans le nouvel état
         currentState.Enter(this);
+    }
+
+    /// <summary>
+    /// Définit la cible
+    /// </summary>
+    /// <param name="target">Cible</param>
+    public void SetTarget(Transform sourceTarget)
+    {
+        // S'il n'y a pas de cible
+        if (MyTarget == null)
+        {
+            // Calcul de la distance entre l'ennemi et la cible
+            float distance = Vector2.Distance(transform.position, sourceTarget.position);
+
+            // Réinitialise la portée d'aggro de l'ennemi
+            MyAggroRange = initialAggroRange;
+
+            // Ajoute la distance entre l'ennemi et la cible à la portée d'aggro de l'ennemi
+            MyAggroRange += distance;
+
+            // La source de l'attaque devient la cible
+            MyTarget = sourceTarget;
+        }
+    }
+
+    /// <summary>
+    /// Réinitialise les données de l'ennemi
+    /// </summary>
+    public void Reset()
+    {
+        // Réinitialise la cible
+        MyTarget = null;
+
+        // Réinitialise la portée d'aggro de l'ennemi
+        MyAggroRange = initialAggroRange;
+
+        // Réinitialise la vie de l'ennemi
+        MyHealth.MyCurrentValue = MyHealth.MyMaxValue;
+
+        // Déclenche l'évènement de changement de la vie
+        OnHealthChanged(health.MyCurrentValue);
     }
 }

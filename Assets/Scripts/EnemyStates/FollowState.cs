@@ -24,7 +24,7 @@ class FollowState : IState
     /// </summary>
     public void Exit()
     {
-        // Reset de la direction
+        // Réinitialise la direction
         enemy.MyDirection = Vector2.zero;
     }
 
@@ -33,7 +33,7 @@ class FollowState : IState
     /// </summary>
     public void Update()
     {
-        // S'il y a une cible à portée
+        // S'il y a une cible
         if (enemy.MyTarget != null)
         {
             // Trouve la direction de la cible
@@ -51,9 +51,10 @@ class FollowState : IState
                 // Passage à l'état d'attaque
                 enemy.ChangeState(new AttackState());
             }
-
         }
-        else
+
+        // Si la cible n'est plus à portée
+        if (!enemy.InRange)
         {
             // Passage à l'état d'attente
             enemy.ChangeState(new IdleState());

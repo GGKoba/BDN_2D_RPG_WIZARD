@@ -13,6 +13,9 @@ class IdleState : IState
     public void Enter(Enemy enemyScript)
     {
         enemy = enemyScript;
+
+        // Réinitialise les données de l'ennemi
+        enemy.Reset();
     }
 
     /// <summary>

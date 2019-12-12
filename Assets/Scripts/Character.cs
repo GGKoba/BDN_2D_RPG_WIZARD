@@ -150,7 +150,7 @@ public abstract class Character : MonoBehaviour
         // Boucle sur les layers d'animations
         for (int i = 0; i < MyAnimator.layerCount; i++)
 		{
-            // Reset le layer courant
+            // Réinitialise le layer courant
             MyAnimator.SetLayerWeight(i, 0);
 		}
 
@@ -165,20 +165,13 @@ public abstract class Character : MonoBehaviour
     /// <param name="source">Source de l'attaque</param>
     public virtual void TakeDamage(float damage, Transform source)
     {
-        // S'il n'y a pas de cible
-        if (MyTarget == null)
-        {
-            // La source de l'attaque devient la cible
-            MyTarget = source;
-        }
-
         // Réduction de la vie du personnage
         health.MyCurrentValue -= damage;
           
         // Si le personnage n'a plus de vie
         if (health.MyCurrentValue <= 0)
         {
-            // Reset de la direction
+            // Réinitialise la direction
             direction = Vector2.zero;
 
             // Stoppe le déplacement

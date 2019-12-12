@@ -241,7 +241,7 @@ public class Player : Character
             // Arrête la routine d'attaque
             StopCoroutine(attackRoutine);
 
-            // Reset la routine d'attaque
+            // Réinitialise la routine d'attaque
             attackRoutine = null;
         }
     }

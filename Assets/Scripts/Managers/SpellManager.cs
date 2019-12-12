@@ -94,10 +94,10 @@ public class SpellManager : MonoBehaviour
             // Activation du trigger "impact"
             GetComponent<Animator>().SetTrigger("impact");
 
-            // Arrêt du mouvement du spell
+            // Arrêt du mouvement du sort
             myRigidbody.velocity = Vector2.zero;
 
-            // Reset de la cible du spell
+            // Réinitialise la cible du sort
             MyTarget = null;
         }
     }
