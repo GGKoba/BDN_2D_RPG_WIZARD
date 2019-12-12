@@ -28,7 +28,7 @@ public class Enemy : NPC
 
     // Portée d'aggro de l'ennemi
     [SerializeField]
-    private float initialAggroRange;
+    private float initialAggroRange = default;
 
     // Cible à portée ?
     public bool InRange { get => Vector2.Distance(transform.position, MyTarget.position) < MyAggroRange; }
