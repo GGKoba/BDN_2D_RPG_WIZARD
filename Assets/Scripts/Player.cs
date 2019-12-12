@@ -29,9 +29,6 @@ public class Player : Character
     // Bibliothèque des sorts
     private SpellBook spellBook;
 
-    // Cible du joueur
-    public Transform MyTarget { get; set; }
-
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
@@ -161,7 +158,7 @@ public class Player : Character
             SpellManager spell = Instantiate(mySpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellManager>();
 
             // Affecte la cible et les dégâts du sort
-            spell.Initialize(attackTarget, mySpell.SpellDamage);
+            spell.Initialize(attackTarget, mySpell.SpellDamage, transform);
         }
 
         // Termine l'attaque

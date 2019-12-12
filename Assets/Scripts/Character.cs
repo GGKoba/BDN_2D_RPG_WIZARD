@@ -43,6 +43,9 @@ public abstract class Character : MonoBehaviour
     // Référence sur l'animator
     public Animator MyAnimator { get; set; }
 
+    // Propriété d'accès à la cible de du personnage
+    public Transform MyTarget { get; set; }
+
     // Référence sur la routine d'attaque
     protected Coroutine attackRoutine;
     
@@ -159,8 +162,16 @@ public abstract class Character : MonoBehaviour
     /// Dégâts liée à une attaque
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
-    public virtual void TakeDamage(float damage)
+    /// <param name="source">Source de l'attaque</param>
+    public virtual void TakeDamage(float damage, Transform source)
     {
+        // S'il n'y a pas de cible
+        if (MyTarget == null)
+        {
+            // La source de l'attaque devient la cible
+            MyTarget = source;
+        }
+
         // Réduction de la vie du personnage
         health.MyCurrentValue -= damage;
           

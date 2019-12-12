@@ -13,10 +13,10 @@ class AttackState : IState
     private Enemy enemy;
 
     // Cooldown d'attaque
-    private float attackCooldown = 3;
+    private readonly float attackCooldown = 3;
 
     // Portée d'attaque
-    private float extraRange = 0.1f;
+    private readonly float extraRange = 0.1f;
 
 
 
@@ -78,12 +78,6 @@ class AttackState : IState
     /// </summary>
     private IEnumerator Attack()
     {
-        // La cible de l'attaque est la cible sélectionnée
-        Transform attackTarget = enemy.MyTarget;
-
-        // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
-        //Spell mySpell = spellBook.CastSpell(spellIndex);
-
         // Indique que l'on attaque
         enemy.IsAttacking = true;
 

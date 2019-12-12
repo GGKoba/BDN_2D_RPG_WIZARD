@@ -14,12 +14,6 @@ public class Enemy : NPC
     // Etat courant de l'ennemi
     private IState currentState;
 
-    // Cible de l'ennemi
-    private Transform target;
-
-    // Propriété d'accès à la cible de l'ennemi
-    public Transform MyTarget { get => target; set => target = value; }
-
     // Propriété d'accès à la portée de l'ennemi
     public float MyAttackRange { get; set; }
 
@@ -102,10 +96,11 @@ public class Enemy : NPC
     /// Dégâts liée à une attaque : Surcharge la fonction TakeDamage du script Character
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
-    public override void TakeDamage(float damage)
+    /// <param name="source">Source de l'attaque</param>
+    public override void TakeDamage(float damage, Transform source)
     {
         // Appelle TakeDamage sur la classe mère
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, source);
 
         // Déclenche l'évènement de changement de la vie
         OnHealthChanged(health.MyCurrentValue);

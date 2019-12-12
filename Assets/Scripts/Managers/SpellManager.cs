@@ -20,6 +20,10 @@ public class SpellManager : MonoBehaviour
     // Cible du sort
     public Transform MyTarget { get; private set; }
 
+    // Source du sort
+    public Transform source;
+
+
 
     /// <summary>
     /// Start
@@ -35,13 +39,16 @@ public class SpellManager : MonoBehaviour
     /// </summary>
     /// <param name="spellTarget">Cible du sort</param>
     /// <param name="spellDamage">Dégâts du sort</param>
-    public void Initialize(Transform spellTarget, int spellDamage)
+    public void Initialize(Transform spellTarget, int spellDamage, Transform spellSource)
     {
         // Initialisation de la cible du sort
         MyTarget = spellTarget;
 
         // Initialisation des dégâts du sort
         damage = spellDamage;
+
+        // Initialisation de la source du sort
+        source = spellSource;
     }
 
     /// <summary>
@@ -75,11 +82,14 @@ public class SpellManager : MonoBehaviour
         // Si la collision de la cible a le tag Hitbox
         if (collision.CompareTag("HitBox") && collision.transform == MyTarget)
         {
+            // Source de l'attaque
+            Character character = collision.GetComponentInParent<Character>();
+
             // Stoppe le déplacement du sort
             speed = 0;
 
             // Appelle la fonction de dégats sur le personnage
-            collision.GetComponentInParent<Enemy>().TakeDamage(damage);
+            character.TakeDamage(damage, source);
 
             // Activation du trigger "impact"
             GetComponent<Animator>().SetTrigger("impact");
