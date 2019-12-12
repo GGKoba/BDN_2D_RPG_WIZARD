@@ -7,7 +7,7 @@ using UnityEngine;
 /// Classe des sorts
 /// </summary>
 [Serializable]
-public class Spell
+public class SpellData
 {
     // Nom du sort
     [SerializeField]

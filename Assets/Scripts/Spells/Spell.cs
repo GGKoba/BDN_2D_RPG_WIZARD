@@ -3,9 +3,9 @@
 
 
 /// <summary>
-/// Classe pour la gestion des sorts
+/// Classe pour utiliser des sorts
 /// </summary>
-public class SpellManager : MonoBehaviour
+public class Spell : MonoBehaviour
 {
     // Vitesse du sort
     [SerializeField]
