@@ -84,8 +84,8 @@ public class KeyBindManager : MonoBehaviour
             currentDictionary = ActionBinds;
         }
 
-        // Si c'est une nouvelle valeur
-        if (!currentDictionary.ContainsValue(keyBind))
+        // Si c'est une nouvelle clé
+        if (!currentDictionary.ContainsKey(key))
         {
             // Ajoute dans le dictionnaire
             currentDictionary.Add(key, keyBind);
@@ -114,6 +114,34 @@ public class KeyBindManager : MonoBehaviour
 
         // Vide le nom de la clé
         bindName = string.Empty;
+    }
 
+    /// <summary>
+    /// Bind une touche
+    /// </summary>
+    /// <param name="name">Nom du bind</param>
+    public void KeyBindOnClick(string name)
+    {
+        bindName = name;
+    }
+
+    /// <summary>
+    /// Evènement de bind
+    /// </summary>
+    public void OnGUI()
+    {
+        // S'il y a un bind à faire
+        if (bindName != string.Empty)
+        {
+            // Récupération de l'évènement
+            Event e = Event.current;
+
+            // Si c'est un touche
+            if (e.isKey)
+            {
+                // Assigne la touche
+                BindKey(bindName, e.keyCode);
+            }
+        }
     }
 }
