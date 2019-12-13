@@ -50,7 +50,6 @@ public class KeyBindManager : MonoBehaviour
         InitBinds();
     }
 
-
     /// <summary>
     /// Initialise les raccourcis
     /// </summary>
@@ -64,8 +63,6 @@ public class KeyBindManager : MonoBehaviour
         BindKey("ACT2", KeyCode.Alpha2);
         BindKey("ACT3", KeyCode.Alpha3);
     }
-
-
 
     /// <summary>
     /// Assigne une touche
