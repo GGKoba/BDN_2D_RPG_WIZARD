@@ -40,7 +40,7 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès à la direction du personnage
     public Vector2 MyDirection { get => direction; set => direction = value; }
 
-    // Référence sur l'animator
+    // Propriété d'accès sur l'animator
     public Animator MyAnimator { get; set; }
 
     // Propriété d'accès à la cible de du personnage
@@ -48,14 +48,14 @@ public abstract class Character : MonoBehaviour
 
     // Référence sur la routine d'attaque
     protected Coroutine attackRoutine;
-    
-    // Indique si le personnage attaque ou non
+
+    // Propriété d'accès sur l'indicateur d'attaque du personnage
     public bool IsAttacking { get; set; }
 
-    // Indique si le personnage est en déplacement ou non
+    // Propriété d'accès sur l'indicateur de déplacement du personnage
     public bool IsMoving { get => direction.x != 0 || direction.y != 0; }
 
-    // Indique si le personnage est en vie ou non
+    // Propriété d'accès sur la vie du personnage
     public bool IsAlive { get => health.MyCurrentValue > 0; }
 
 

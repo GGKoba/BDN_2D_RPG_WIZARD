@@ -25,7 +25,7 @@ public class Stat : MonoBehaviour
     // Stat CurrentValue : vie/mana courant
     private float currentValue;
 
-    // Stat MaxValue : vie/mana max
+    // Propriété d'accès à la valeur maximum
     public float MyMaxValue { get; set; }
 
 

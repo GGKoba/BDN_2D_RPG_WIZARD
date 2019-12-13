@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,25 @@ using UnityEngine.UI;
 /// </summary>
 public class SpellBook : MonoBehaviour
 {
+    // Instance de classe (singleton)
+    private static SpellBook instance;
+
+    // Propriété d'accès à l'instance
+    public static SpellBook MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Retourne l'object de type SpellBook (doit être unique)
+                instance = FindObjectOfType<SpellBook>();
+            }
+
+            return instance;
+        }
+    }
+
+
     // Tableau des sorts
     [SerializeField]
     private SpellData[] spells = default;
@@ -18,7 +38,7 @@ public class SpellBook : MonoBehaviour
     [SerializeField]
     public Image castingBar;
 
-    // Référence à l'icone du sort de la barre de cast du joueur
+    // Référence à l'icône du sort de la barre de cast du joueur
     [SerializeField]
     private Image icon = default;
 
@@ -53,26 +73,26 @@ public class SpellBook : MonoBehaviour
     /// <summary>
     /// Retourne un sort avec ses propriétés
     /// </summary>
-    /// <param name="spellIndex">Index du sort</param>
-    public SpellData CastSpell(int spellIndex)
+    /// <param name="spellToCast">Nom du sort</param>
+    public SpellData CastSpell(string spellToCast)
     {
-        // Sort correspondant à l'index dans le tableau
-        SpellData spell = spells[spellIndex];
+        // Sort correspondant au nom du sort dans le tableau
+        SpellData spell = GetSpell(spellToCast);
 
         // Initialise le remplissage de la barre à vide
         castingBar.fillAmount = 0;
 
         // Adapte la couleur de la barre avec celle qui est liée au sort
-        castingBar.color = spell.SpellBarColor;
+        castingBar.color = spell.MyBarColor;
 
-        // Adapte l'icone de la barre avec celle qui est liée au sort
-        icon.sprite = spell.SpellIcon;
+        // Adapte l'icône de la barre avec celle qui est liée au sort
+        icon.sprite = spell.MyIcon;
 
         // Adapte le nom du sort de la barre avec celui qui est liée au sort
-        spellName.text = spell.SpellName;
+        spellName.text = spell.MyName;
 
         // Démarre la routine d'incantation du sort
-        spellRoutine = StartCoroutine(Progress(spell.SpellCastTime));
+        spellRoutine = StartCoroutine(Progress(spell.MyCastTime));
 
         // Démarre la routine d'apparition de la barre de cast
         fadeRoutine = StartCoroutine(FadeBar());
@@ -176,4 +196,14 @@ public class SpellBook : MonoBehaviour
             fadeRoutine = null;
         }
     }
+
+    /// <summary>
+    /// Retourne un sort avec ses informations
+    /// </summary>
+    /// <param name="spellName"></param>
+    public SpellData GetSpell(string spellName)
+    {
+        return Array.Find(spells, aSpell => aSpell.MyName == spellName);
+    }
+
 }

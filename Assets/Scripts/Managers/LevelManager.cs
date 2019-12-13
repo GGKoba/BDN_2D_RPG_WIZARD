@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private MapElement[] mapElements = default;
 
-    // Position de la caméra dans le jeu 
+    // Propriété d'accès à la position de la caméra dans le jeu 
     private Vector3 WorldStartPosition { get => Camera.main.ScreenToWorldPoint(new Vector3(0, 0)); }
 
     // Dictionnaire des élements de type Water (Coordonnées => Element)
@@ -130,56 +130,48 @@ public class LevelManager : MonoBehaviour
             // bordure Left Top
             if (composition[1] == 'E' && composition[3] == 'W' && composition[4] == 'E' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("0");
                 UpdateTileSprite(tile.Value, "0");
             }
 
             // Bordure Top
             if (composition[1] == 'W' && composition[3] == 'W' && composition[4] == 'E' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("1");
                 UpdateTileSprite(tile.Value, "1");
             }
 
             // bordure Right Top
             if (composition[1] == 'W' && composition[3] == 'W' && composition[4] == 'E' && composition[6] == 'E')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("2");
                 UpdateTileSprite(tile.Value, "2");
             }
 
             // Bordure Left
             if (composition[1] == 'E' && composition[3] == 'W' && composition[4] == 'W' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("3");
                 UpdateTileSprite(tile.Value, "3");
             }
 
             // Bordure Right
             if (composition[1] == 'W' && composition[3] == 'W' && composition[4] == 'W' && composition[6] == 'E')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("4");
                 UpdateTileSprite(tile.Value, "4");
             }
 
             // bordure Left Bottom
             if (composition[1] == 'E' && composition[3] == 'E' && composition[4] == 'W' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("5");
                 UpdateTileSprite(tile.Value, "5");
             }
 
             // Bordure Bottom
             if (composition[1] == 'W' && composition[3] == 'E' && composition[4] == 'W' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("6");
                 UpdateTileSprite(tile.Value, "6");
             }
 
             // bordure Right Bottom
             if (composition[1] == 'W' && composition[3] == 'E' && composition[4] == 'W' && composition[6] == 'E')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("7");
                 UpdateTileSprite(tile.Value, "7");
             }
 
@@ -187,117 +179,69 @@ public class LevelManager : MonoBehaviour
             if (composition[1] == 'W' && composition[3] == 'E' && composition[4] == 'E' && composition[6] == 'E')
             {
                 tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("8");
-                //UpdateTileSprite(tile.Value, "8");
+
             }
 
             //Bordure Left Top Bottom
             if (composition[1] == 'E' && composition[3] == 'E' && composition[4] == 'E' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("9");
                 UpdateTileSprite(tile.Value, "9");
             }
 
             // Bordure Top Bottom
             if (composition[1] == 'W' && composition[3] == 'E' && composition[4] == 'E' && composition[6] == 'W')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("10");
                 UpdateTileSprite(tile.Value, "10");
             }
 
             // Bordure Left Right
             if (composition[1] == 'E' && composition[3] == 'W' && composition[4] == 'W' && composition[6] == 'E')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("11");
                 UpdateTileSprite(tile.Value, "11");
             }
 
             //Bordure Bottom Left Right
             if (composition[1] == 'E' && composition[3] == 'E' && composition[4] == 'W' && composition[6] == 'E')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("12");
                 UpdateTileSprite(tile.Value, "12");
             }
 
             //Bordure Top Left Right
             if (composition[1] == 'E' && composition[3] == 'W' && composition[4] == 'E' && composition[6] == 'E')
             {
-                //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("13");
                 UpdateTileSprite(tile.Value, "13");
             }
 
             // Jointure Right Bottom
             if (composition[3] == 'W' && composition[5] == 'E' && composition[6] == 'W')
             {
-                /*
-                //Copie la cellule à la même position
-                GameObject tileCopy = Instantiate(tile.Value, tile.Value.transform.position, Quaternion.identity, map);
-
-                // Remplace l'image par celle de la jointure correspondante
-                tileCopy.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("14");
-
-                // Positionne la copie au-dessus de l'image
-                tileCopy.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                */
                 UpdateTileSprite(tile.Value, "14", true);
             }
 
             // Jointure Left Top
             if (composition[1] == 'W' && composition[2] == 'E' && composition[4] == 'W')
             {
-                /*
-                //Copie la cellule à la même position
-                GameObject tileCopy = Instantiate(tile.Value, tile.Value.transform.position, Quaternion.identity, map);
-
-                // Remplace l'image par celle de la jointure correspondante
-                tileCopy.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("15");
-
-                // Positionne la copie au-dessus de l'image
-                tileCopy.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                */
                 UpdateTileSprite(tile.Value, "15", true);
             }
 
             // Jointure Right Top
             if (composition[4] == 'W' && composition[6] == 'W' && composition[7] == 'E')
             {
-                /*
-                //Copie la cellule à la même position
-                GameObject tileCopy = Instantiate(tile.Value, tile.Value.transform.position, Quaternion.identity, map);
-
-                // Remplace l'image par celle de la jointure correspondante
-                tileCopy.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("16");
-
-                // Positionne la copie au-dessus de l'image
-                tileCopy.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                */
                 UpdateTileSprite(tile.Value, "16", true);
             }
 
             // Jointure Left Bottom
             if (composition[0] == 'E' && composition[1] == 'W' && composition[3] == 'W')
             {
-                /*
-                //Copie la cellule à la même position
-                GameObject tileCopy = Instantiate(tile.Value, tile.Value.transform.position, Quaternion.identity, map);
-
-                // Remplace l'image par celle de la jointure correspondante
-                tileCopy.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("17");
-
-                // Positionne la copie au-dessus de l'image
-                tileCopy.GetComponent<SpriteRenderer>().sortingOrder = 1;
-                */
                 UpdateTileSprite(tile.Value, "17", true);
             }
            
             // Cellule entourée d'eau en haut, en bas, à gauche et à droite
             if (composition[1] == 'W' && composition[3] == 'W' && composition[4] == 'W' && composition[6] == 'W')
             {
-                //int randomChance = UnityEngine.Random.Range(0, 100);
-
                 // 15% de chance d'ajouter une cellule de décoration (Vagues)
                 if (GetRandomNumber() < 15)
                 {
-                    //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("19");
                     UpdateTileSprite(tile.Value, "19");
                 }
             }
@@ -305,12 +249,9 @@ public class LevelManager : MonoBehaviour
             // Cellule quasiement entourée d'eau
             if (composition[1] == 'W' && composition[2] == 'W' && composition[3] == 'W' && composition[4] == 'W' && composition[5] == 'W' && composition[6] == 'W')
             {
-                //int randomChance = UnityEngine.Random.Range(0, 100);
-
                 // 15% de chance d'ajouter une cellule de décoration (Nénuphar)
                 if (GetRandomNumber() < 10)
                 {
-                    //tile.Value.GetComponent<SpriteRenderer>().sprite = waterAtlas.GetSprite("20");
                     UpdateTileSprite(tile.Value, "20");
                 }
             }
@@ -429,10 +370,10 @@ public class MapElement
 /// </summary>
 public struct Point
 {
-    // Coordonnée X
+    // Propriété d'accès à la coordonnée X
     public int XPosition { get; set; }
 
-    // Coordonnée Y
+    // Propriété d'accès à la coordonnée Y
     public int YPosition { get; set; }
 
 

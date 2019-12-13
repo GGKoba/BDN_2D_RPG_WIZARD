@@ -30,7 +30,7 @@ public class Enemy : NPC
     [SerializeField]
     private float initialAggroRange = default;
 
-    // Cible à portée ?
+    // Propriété d'accès à la portée de l'ennemi
     public bool InRange { get => Vector2.Distance(transform.position, MyTarget.position) < MyAggroRange; }
 
 

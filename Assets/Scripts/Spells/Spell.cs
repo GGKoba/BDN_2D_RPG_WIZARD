@@ -17,7 +17,7 @@ public class Spell : MonoBehaviour
     // Dégâts du sort
     private int damage;
 
-    // Cible du sort
+    // Propriété d'accès à la cible du sort
     public Transform MyTarget { get; private set; }
 
     // Source du sort

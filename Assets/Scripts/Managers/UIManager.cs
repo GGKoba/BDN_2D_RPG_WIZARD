@@ -41,10 +41,7 @@ public class UIManager : MonoBehaviour
 
     // Tableau des boutons d'action
     [SerializeField]
-    private Button[] actionButtons = default;
-
-    // Liste des touches liées aux actions
-    private KeyCode action1, action2, action3;
+    private ActionButton[] actionButtons = default;
 
     // Barre de vie de la cible
     private Stat healthStat;
@@ -70,18 +67,18 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // Binding des touches
-        action1 = KeyCode.Alpha1;
-        action2 = KeyCode.Alpha2;
-        action3 = KeyCode.Alpha3;
-
         // Référence sur la barre de vie de la cible
         healthStat = targetFrame.GetComponentInChildren<Stat>();
+
+        // Définition des boutons d'actions
+        SetUseable(actionButtons[0], SpellBook.MyInstance.GetSpell("Fireball"));
+        SetUseable(actionButtons[1], SpellBook.MyInstance.GetSpell("Frostbolt"));
+        SetUseable(actionButtons[2], SpellBook.MyInstance.GetSpell("Thunderbolt"));
 
         // Masque la frame de la cible
         HideTargetFrame();
 
-        //Masque le menu
+        // Masque le menu
         CloseMenu();
     }
 
@@ -90,24 +87,6 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // Si on presse la touche d'action 1 (touche 1)
-        if (Input.GetKeyDown(action1))
-        {
-            ActionButtonOnClick(0);
-        }
-
-        // Si on presse la touche d'action 2 (touche 2)
-        if (Input.GetKeyDown(action2))
-        {
-            ActionButtonOnClick(1);
-        }
-
-        // Si on presse la touche d'action 3 (touche 3)
-        if (Input.GetKeyDown(action3))
-        {
-            ActionButtonOnClick(2);
-        }
-
         // Si on presse la touche Esc
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -122,17 +101,6 @@ public class UIManager : MonoBehaviour
                 OpenMenu();
             }
         }
-
-    }
-
-    /// <summary>
-    /// Clic sur un bouton d'action
-    /// </summary>
-    /// <param name="buttonIndex">Index du bouton d'action</param>
-    private void ActionButtonOnClick(int buttonIndex)
-    {
-        // Appelle la fonction Onclick du bouton lié à l'action
-        actionButtons[buttonIndex].onClick.Invoke();
     }
 
     /// <summary>
@@ -219,9 +187,37 @@ public class UIManager : MonoBehaviour
     public void UpdateKeyText(string key, KeyCode code)
     {
         // Retourne le texte du bouton qui a le même nom que la clé
-        Text buttonText = Array.Find(keyBindButtons, button => button.name == key + "_Button").GetComponentInChildren<Text>();
+        Text buttonText = Array.Find(keyBindButtons, button => button.name.ToUpper() == (key + "_Button").ToUpper()).GetComponentInChildren<Text>();
 
         // Retourne le texte du bouton qui a le même nom que la clé
-        buttonText.text = code.ToString();
+        buttonText.text = (code == KeyCode.None ? "" : code.ToString());
     }
+
+    /// <summary>
+    /// Clic sur un bouton d'action
+    /// </summary>
+    /// <param name="buttonName">Nom du bouton</param>
+    public void ClickActionButton(string buttonName)
+    {
+        // Déclenchement du clic sur le bouton d'action
+        Array.Find(actionButtons, actionButton => actionButton.gameObject.name.ToUpper() == (buttonName + "_Button").ToUpper()).MyActionButton.onClick.Invoke();
+    }
+
+    /// <summary>
+    /// Définit le useable du bouton d'action
+    /// </summary>
+    /// <param name="button">Bouton d'action</param>
+    /// <param name="useable">Objet utilisable</param>
+    public void SetUseable(ActionButton button, IUseable useable)
+    {
+        // Image du bouton
+        button.MyActionButton.image.sprite = useable.MyIcon;
+
+        // Couleur du bouton
+        button.MyActionButton.image.color = Color.white;
+
+        // Utilisation du bouton
+        button.MyUseable = useable;
+    }
+
 }

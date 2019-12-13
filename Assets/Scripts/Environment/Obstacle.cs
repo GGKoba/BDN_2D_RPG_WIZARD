@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Obstacle : MonoBehaviour, IComparable<Obstacle>
 {
-    // SpriteRenderer de l'obstacle
+    // Propriété d'accès au SpriteRenderer de l'obstacle
     public SpriteRenderer MySpriteRenderer { get; set; }
 
     // Couleur de l'obstacle

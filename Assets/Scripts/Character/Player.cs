@@ -8,6 +8,24 @@ using UnityEngine;
 /// </summary>
 public class Player : Character
 {
+    // Instance de classe (singleton)
+    private static Player instance;
+
+    // Propriété d'accès à l'instance
+    public static Player MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Retourne l'object de type Player (doit être unique)
+                instance = FindObjectOfType<Player>();
+            }
+
+            return instance;
+        }
+    }
+
     // Mana du joueur
     [SerializeField]
     private Stat mana = default;
@@ -84,39 +102,49 @@ public class Player : Character
 
 
         // Déplacement en Haut
-        if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyBindManager.MyInstance.KeyBinds["UP"]) || Input.GetKey(KeyCode.UpArrow))
         {
             exitIndex = 0;
             MyDirection += Vector2.up;
         }
 
         // Déplacement en Bas
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyBindManager.MyInstance.KeyBinds["DOWN"]) || Input.GetKey(KeyCode.DownArrow))
         {
             exitIndex = 2;
             MyDirection += Vector2.down;
         }
 
         // Déplacement à Gauche
-        if (Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyBindManager.MyInstance.KeyBinds["LEFT"]) || Input.GetKey(KeyCode.LeftArrow))
         {
             exitIndex = 3;
             MyDirection += Vector2.left;
         }
 
         // Déplacement à Droite
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyBindManager.MyInstance.KeyBinds["RIGHT"]) || Input.GetKey(KeyCode.RightArrow))
         {
             exitIndex = 1;
             MyDirection += Vector2.right;
         }
-
 
         // Stoppe l'attaque s'il y a un déplacement
         if (IsMoving)
         {
             StopAttack();
         }
+
+        // Boutons d'actions
+        foreach (string action in KeyBindManager.MyInstance.ActionBinds.Keys)
+        {
+            if (Input.GetKeyDown(KeyBindManager.MyInstance.ActionBinds[action]))
+            {
+                // Déclenchement de l'action du bouton
+                UIManager.MyInstance.ClickActionButton(action);
+            }
+        }
+
     }
 
     /// <summary>
@@ -133,14 +161,14 @@ public class Player : Character
     /// <summary>
     /// Routine d'attaque
     /// </summary>
-    /// <param name="spellIndex">Index du sort</param>
-    private IEnumerator Attack(int spellIndex)
+    /// <param name="spellName">Nom du sort</param>
+    private IEnumerator Attack(string spellName)
     {
         // La cible de l'attaque est la cible sélectionnée
         Transform attackTarget = MyTarget;
 
         // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
-        SpellData mySpell = spellBook.CastSpell(spellIndex);
+        SpellData mySpell = spellBook.CastSpell(spellName);
 
         // Indique que l'on attaque
         IsAttacking = true;
@@ -149,16 +177,16 @@ public class Player : Character
         MyAnimator.SetBool("attack", IsAttacking);
 
         // Simule le temps d'incantation
-        yield return new WaitForSeconds(mySpell.SpellCastTime);
+        yield return new WaitForSeconds(mySpell.MyCastTime);
 
         // Vérifie que la cible de l'attaque est toujours attaquable 
         if (attackTarget != null && InLineOfSight())
         {
             // Instantie le sort
-            Spell spell = Instantiate(mySpell.SpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
+            Spell spell = Instantiate(mySpell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
 
             // Affecte la cible et les dégâts du sort
-            spell.Initialize(attackTarget, mySpell.SpellDamage, transform);
+            spell.Initialize(attackTarget, mySpell.MyDamage, transform);
         }
 
         // Termine l'attaque
@@ -168,8 +196,8 @@ public class Player : Character
     /// <summary>
     /// Incante un sort
     /// </summary>
-    /// <param name="spellIndex">Index du sort</param>
-    public void CastSpell(int spellIndex)
+    /// <param name="spellName">Nom du sort</param>
+    public void CastSpell(string spellName)
     {
         // Actualise les blocs
         Block();
@@ -177,7 +205,7 @@ public class Player : Character
         // Vérifie si l'on peut attaquer
         if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
         {
-            attackRoutine = StartCoroutine(Attack(spellIndex));
+            attackRoutine = StartCoroutine(Attack(spellName));
         }
     }
 

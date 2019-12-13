@@ -7,7 +7,7 @@ using UnityEngine;
 /// Classe des sorts
 /// </summary>
 [Serializable]
-public class SpellData
+public class SpellData : IUseable
 {
     // Nom du sort
     [SerializeField]
@@ -17,7 +17,7 @@ public class SpellData
     [SerializeField]
     private int damage = default;
 
-    // Icone du sort
+    // Icône du sort
     [SerializeField]
     private Sprite icon = default;
 
@@ -42,24 +42,31 @@ public class SpellData
     /// Accesseurs sur les propriétés du sort
     /// </summary>
 
-    // Nom 
-    public string SpellName { get => name; }
+    // Propriété d'accès au nom du sort 
+    public string MyName { get => name; }
 
-    // Dégâts
-    public int SpellDamage { get => damage; }
+    // Propriété d'accès aux dégâts du sort
+    public int MyDamage { get => damage; }
 
-    // Icone 
-    public Sprite SpellIcon { get => icon; }
+    // Propriété d'accès à l'icône du sort 
+    public Sprite MyIcon { get => icon; }
 
-    // Vitesse 
-    public float SpellSpeed { get => speed; }
+    // Propriété d'accès à la vitesse du sort 
+    public float MySpeed { get => speed; }
 
-    // Temps d'incantation 
-    public float SpellCastTime { get => castTime; }
+    // Propriété d'accès au temps d'incantation du sort
+    public float MyCastTime { get => castTime; }
 
-    // Prefab 
-    public GameObject SpellPrefab { get => prefab; }
+    // Propriété d'accès à la prefab du sort 
+    public GameObject MyPrefab { get => prefab; }
 
-    // Couleur de la barre 
-    public Color SpellBarColor { get => barColor; }
+    // Propriété d'accès à la couleur de la barre 
+    public Color MyBarColor { get => barColor; }
+
+
+    // Utilisation du sort
+    public void Use()
+    {
+        Player.MyInstance.CastSpell(MyName);
+    }
 }

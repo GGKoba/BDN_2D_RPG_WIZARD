@@ -27,10 +27,10 @@ public class KeyBindManager : MonoBehaviour
         }
     }
 
-    // Dictionnaire des raccourcis
+    // Propriété d'accès au dictionnaire des raccourcis
     public Dictionary<string, KeyCode> KeyBinds { get; private set; }
 
-    // Dictionnaire des raccourcis d'action
+    // Propriété d'accès au dictionnaire des raccourcis d'action
     public Dictionary<string, KeyCode> ActionBinds { get; private set; }
 
     // Nom de la clé
