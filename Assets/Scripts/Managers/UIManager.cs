@@ -26,11 +26,21 @@ public class UIManager : MonoBehaviour
             return instance;
         }
     }
+       
+    // Tableau des boutons d'action
+    [SerializeField]
+    private ActionButton[] actionButtons = default;
 
+    [Header("Menu")]
     // Menu des raccourcis
     [SerializeField]
     private CanvasGroup keyBindMenu = default;
 
+    // Menu des sorts
+    [SerializeField]
+    private CanvasGroup spellBookMenu = default;
+
+    [Header("Target")]
     // Frame de la cible
     [SerializeField]
     private GameObject targetFrame = default;
@@ -39,15 +49,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image targetPortrait = default;
 
-    // Tableau des boutons d'action
-    [SerializeField]
-    private ActionButton[] actionButtons = default;
-
     // Barre de vie de la cible
     private Stat healthStat;
 
     // Le menu est-il ouvert ?
-    private bool isOpenMenu;
+    // private bool isOpenMenu;
 
     // Tableau des boutons des touches
     private GameObject[] keyBindButtons;
@@ -79,7 +85,7 @@ public class UIManager : MonoBehaviour
         HideTargetFrame();
 
         // Masque le menu
-        CloseMenu();
+        OpenClose(keyBindMenu);
     }
 
     /// <summary>
@@ -90,6 +96,8 @@ public class UIManager : MonoBehaviour
         // Si on presse la touche Esc
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            OpenClose(keyBindMenu);
+            /*
             if (isOpenMenu)
             {
                 // Fermeture du menu
@@ -100,6 +108,13 @@ public class UIManager : MonoBehaviour
                 // Ouverture du menu
                 OpenMenu();
             }
+            */
+        }
+
+        // Si on presse la touche P
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            OpenClose(spellBookMenu);
         }
     }
 
@@ -142,7 +157,7 @@ public class UIManager : MonoBehaviour
     {
         healthStat.MyCurrentValue = health;
     }
-
+    /*
     /// <summary>
     /// Ouverture du menu
     /// </summary>
@@ -178,7 +193,7 @@ public class UIManager : MonoBehaviour
         // Définit le menu comme fermé
         isOpenMenu = false;
     }
-
+    */
     /// <summary>
     /// Mise à jour du texte des touches
     /// </summary>
@@ -211,13 +226,28 @@ public class UIManager : MonoBehaviour
     public void SetUseable(ActionButton button, IUseable useable)
     {
         // Image du bouton
-        button.MyActionButton.image.sprite = useable.MyIcon;
+        button.MyIcon.sprite = useable.MyIcon;
 
         // Couleur du bouton
-        button.MyActionButton.image.color = Color.white;
+        button.MyIcon.color = Color.white;
 
         // Utilisation du bouton
         button.MyUseable = useable;
     }
 
+    /// <summary>
+    /// Ouverture/Fermeture d'un menu
+    /// </summary>
+    /// <param name="canvasGroup"></param>
+    public void OpenClose(CanvasGroup canvasGroup)
+    {
+        // Bloque/débloque les interactions
+        canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
+
+        // Masque(0) /Affiche(1) le menu
+        canvasGroup.alpha = canvasGroup.alpha > 0 ? 0 : 1;
+
+        // Début(0)/fin(1) de pause
+        //Time.timeScale = Time.timeScale > 0 ? 0 : 1;
+    }
 }

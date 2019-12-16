@@ -667,7 +667,6 @@ GameObject:
   - component: {fileID: 4518433142810080509}
   - component: {fileID: 4518433142810080506}
   - component: {fileID: 4518433142810080508}
-  - component: {fileID: 4518433142810080481}
   - component: {fileID: 4518433142810080511}
   - component: {fileID: 4518433142810080510}
   - component: {fileID: 4518433142810080480}
@@ -775,48 +774,6 @@ MonoBehaviour:
     second: {fileID: 4518433142063552563}
   - first: {fileID: 4518433142063552563}
     second: {fileID: 4518433141818367739}
---- !u!114 &4518433142810080481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4518433142810080507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81452423047295b409249bd358302841, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spells:
-  - name: Fireball
-    damage: 5
-    icon: {fileID: 21300000, guid: a63e1f16198d04847ab17dcd4e545b51, type: 3}
-    speed: 5
-    castTime: 2.5
-    prefab: {fileID: 7147741476327212716, guid: 2f59996f412b82c468844922d29134a0,
-      type: 3}
-    barColor: {r: 0.95686275, g: 0.3882353, b: 0.3882353, a: 1}
-  - name: Frostbolt
-    damage: 5
-    icon: {fileID: 21300000, guid: f723ee7fa78c91848892a75ac6247204, type: 3}
-    speed: 5
-    castTime: 1.5
-    prefab: {fileID: 7147741476327212716, guid: d820c20a1351679459c14ade53c2dcbc,
-      type: 3}
-    barColor: {r: 0.3764706, g: 0.6745098, b: 0.9254902, a: 1}
-  - name: Thunderbolt
-    damage: 5
-    icon: {fileID: 21300000, guid: 7c34dfebf0abca047892bef7cbac8192, type: 3}
-    speed: 5
-    castTime: 1
-    prefab: {fileID: 7147741476327212716, guid: 3acfca79a8fa6704d9c6e22786aff2be,
-      type: 3}
-    barColor: {r: 1, g: 0.9137255, b: 0.54509807, a: 1}
-  castingBar: {fileID: 0}
-  icon: {fileID: 0}
-  spellName: {fileID: 0}
-  castTime: {fileID: 0}
-  canvasGroup: {fileID: 0}
 --- !u!95 &4518433142810080511
 Animator:
   serializedVersion: 3

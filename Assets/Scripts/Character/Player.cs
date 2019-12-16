@@ -44,9 +44,6 @@ public class Player : Character
     // Index de la position d'attaque (2 = down)
     private int exitIndex = 2;
 
-    // Bibliothèque des sorts
-    private SpellBook spellBook;
-
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
@@ -58,9 +55,6 @@ public class Player : Character
     {
         // Initialise les barres
         mana.Initialize(initMana, initMana);
-
-        // Référence sur la bibliothèque des sorts
-        spellBook = gameObject.GetComponent<SpellBook>();
 
         // Appelle Start sur la classe mère (abstraite)
         base.Start();
@@ -168,7 +162,7 @@ public class Player : Character
         Transform attackTarget = MyTarget;
 
         // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
-        SpellData mySpell = spellBook.CastSpell(spellName);
+        SpellData mySpell = SpellBook.MyInstance.CastSpell(spellName);
 
         // Indique que l'on attaque
         IsAttacking = true;
@@ -255,7 +249,7 @@ public class Player : Character
     public void StopAttack()
     {
         // Stoppe l'incantation du sort
-        spellBook.StopCasting();
+        SpellBook.MyInstance.StopCasting();
 
         // Indique que l'on n'attaque pas
         IsAttacking = false;
