@@ -8,6 +8,10 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class SpellButton : MonoBehaviour, IPointerClickHandler
 {
+    // Nom du sort
+    [SerializeField]
+    private string spellName;
+
     /// <summary>
     /// Gestion du clic
     /// </summary>
@@ -18,6 +22,7 @@ public class SpellButton : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             // Drag le sort
+            Hand.MyInstance.TakeMoveable(SpellBook.MyInstance.GetSpell(spellName));
         }
     }
 }

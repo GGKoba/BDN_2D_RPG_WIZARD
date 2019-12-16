@@ -32,6 +32,9 @@ public class Hand : MonoBehaviour
     // Image de l'objet déplaçable
     private Image icon;
 
+    // Décalage de l'image avec le curseur
+    [SerializeField]
+    private Vector3 offset;
 
 
     /// <summary>
@@ -39,7 +42,8 @@ public class Hand : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        
+        // Référence sur l'image de l'objet déplaçable
+        icon = GetComponent<Image>();
     }
 
     /// <summary>
@@ -47,7 +51,8 @@ public class Hand : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        
+        // L'icône a la position du curseur de la souris
+        icon.transform.position = Input.mousePosition + offset;
     }
 
 
