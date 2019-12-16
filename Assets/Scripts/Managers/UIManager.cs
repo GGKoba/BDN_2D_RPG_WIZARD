@@ -211,10 +211,10 @@ public class UIManager : MonoBehaviour
     public void SetUseable(ActionButton button, IUseable useable)
     {
         // Image du bouton
-        button.MyActionButton.image.sprite = useable.MyIcon;
+        button.MyIcon.sprite = useable.MyIcon;
 
         // Couleur du bouton
-        button.MyActionButton.image.color = Color.white;
+        button.MyIcon.color = Color.white;
 
         // Utilisation du bouton
         button.MyUseable = useable;

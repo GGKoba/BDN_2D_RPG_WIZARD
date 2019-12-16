@@ -14,8 +14,15 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
     // Propriété d'accès au bouton d'action
     public Button MyActionButton { get; private set; }
+    
+    // Image du bouton
+    [SerializeField]
+    private Image icon;
 
-       
+    // Propriété d'accès à l'image du bouton
+    public Image MyIcon { get => icon; set => icon = value; }
+
+
     /// <summary>
     /// Start
     /// </summary>
