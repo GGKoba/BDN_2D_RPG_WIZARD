@@ -381,7 +381,7 @@ Tilemap:
   - first: {x: 13, y: -4, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -444,7 +444,7 @@ Tilemap:
   - first: {x: 13, y: -3, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -471,7 +471,7 @@ Tilemap:
   - first: {x: 9, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -489,7 +489,7 @@ Tilemap:
   - first: {x: 11, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -678,7 +678,7 @@ Tilemap:
   - first: {x: 2, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -696,7 +696,7 @@ Tilemap:
   - first: {x: 4, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -705,7 +705,7 @@ Tilemap:
   - first: {x: 5, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -842,7 +842,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 4
+  - m_RefCount: 3
     m_Data: {fileID: 21300000, guid: 073edd353c497184fbb30426d30ffd13, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 666e8fc18b346be45b7dd10fcc48c55f, type: 3}
@@ -854,7 +854,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 9f209008e4a564244bf2bea8001729b0, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 8516f29cd3697a048b0209ed0cf72767, type: 3}
-  - m_RefCount: 10
+  - m_RefCount: 11
     m_Data: {fileID: 21300000, guid: fee2885df28f8664fad7b24572a42192, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: c376d3c81da11594db26b4408541a622, type: 3}
@@ -14509,6 +14509,8 @@ GameObject:
   - component: {fileID: 1810033264}
   - component: {fileID: 1810033266}
   - component: {fileID: 1810033265}
+  - component: {fileID: 1810033267}
+  - component: {fileID: 1810033268}
   m_Layer: 5
   m_Name: SpellBook
   m_TagString: Untagged
@@ -14572,6 +14574,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810033263}
   m_CullTransparentMesh: 0
+--- !u!225 &1810033267
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810033263}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1810033268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810033263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81452423047295b409249bd358302841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spells:
+  - name: Fireball
+    damage: 5
+    icon: {fileID: 21300000, guid: a63e1f16198d04847ab17dcd4e545b51, type: 3}
+    speed: 5
+    castTime: 2.5
+    prefab: {fileID: 7147741476327212716, guid: 2f59996f412b82c468844922d29134a0,
+      type: 3}
+    barColor: {r: 0.95686275, g: 0.3882353, b: 0.3882353, a: 1}
+  - name: Frostbolt
+    damage: 5
+    icon: {fileID: 21300000, guid: f723ee7fa78c91848892a75ac6247204, type: 3}
+    speed: 5
+    castTime: 1.5
+    prefab: {fileID: 7147741476327212716, guid: d820c20a1351679459c14ade53c2dcbc,
+      type: 3}
+    barColor: {r: 0.3764706, g: 0.6745098, b: 0.9254902, a: 1}
+  - name: Thunderbolt
+    damage: 5
+    icon: {fileID: 21300000, guid: 7c34dfebf0abca047892bef7cbac8192, type: 3}
+    speed: 5
+    castTime: 1
+    prefab: {fileID: 7147741476327212716, guid: 3acfca79a8fa6704d9c6e22786aff2be,
+      type: 3}
+    barColor: {r: 1, g: 0.9137255, b: 0.54509807, a: 1}
+  castingBar: {fileID: 1698985910}
+  icon: {fileID: 1664978082}
+  spellName: {fileID: 1365127624}
+  castTime: {fileID: 1757976687}
+  canvasGroup: {fileID: 1732394720}
 --- !u!1 &1843461153
 GameObject:
   m_ObjectHideFlags: 0
@@ -14943,13 +14999,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2235fce2367327447a3c74a9ede4ad58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyBindMenu: {fileID: 13442118}
-  targetFrame: {fileID: 1981899655}
-  targetPortrait: {fileID: 708148909}
   actionButtons:
   - {fileID: 1029706586}
   - {fileID: 1920254549}
   - {fileID: 1754899195}
+  keyBindMenu: {fileID: 13442118}
+  spellBookMenu: {fileID: 1810033267}
+  targetFrame: {fileID: 1981899655}
+  targetPortrait: {fileID: 708148909}
 --- !u!4 &1915219683
 Transform:
   m_ObjectHideFlags: 0
@@ -16535,31 +16592,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4518433142810080481, guid: d37db884b30eb3e448f57592c12ca5fa,
-        type: 3}
-      propertyPath: castingBar
-      value: 
-      objectReference: {fileID: 1698985910}
-    - target: {fileID: 4518433142810080481, guid: d37db884b30eb3e448f57592c12ca5fa,
-        type: 3}
-      propertyPath: icon
-      value: 
-      objectReference: {fileID: 1664978082}
-    - target: {fileID: 4518433142810080481, guid: d37db884b30eb3e448f57592c12ca5fa,
-        type: 3}
-      propertyPath: spellName
-      value: 
-      objectReference: {fileID: 1365127624}
-    - target: {fileID: 4518433142810080481, guid: d37db884b30eb3e448f57592c12ca5fa,
-        type: 3}
-      propertyPath: castTime
-      value: 
-      objectReference: {fileID: 1757976687}
-    - target: {fileID: 4518433142810080481, guid: d37db884b30eb3e448f57592c12ca5fa,
-        type: 3}
-      propertyPath: canvasGroup
-      value: 
-      objectReference: {fileID: 1732394720}
     - target: {fileID: 4518433142810080507, guid: d37db884b30eb3e448f57592c12ca5fa,
         type: 3}
       propertyPath: m_Name
