@@ -10,7 +10,7 @@ public class SpellButton : MonoBehaviour, IPointerClickHandler
 {
     // Nom du sort
     [SerializeField]
-    private string spellName;
+    private string spellName = default;
 
     /// <summary>
     /// Gestion du clic

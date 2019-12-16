@@ -34,7 +34,7 @@ public class Hand : MonoBehaviour
 
     // Décalage de l'image avec le curseur
     [SerializeField]
-    private Vector3 offset;
+    private Vector3 offset = default;
 
 
     /// <summary>
