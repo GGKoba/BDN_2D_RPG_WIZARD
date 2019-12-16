@@ -76,11 +76,6 @@ public class UIManager : MonoBehaviour
         // Référence sur la barre de vie de la cible
         healthStat = targetFrame.GetComponentInChildren<Stat>();
 
-        // Définition des boutons d'actions
-        SetUseable(actionButtons[0], SpellBook.MyInstance.GetSpell("Fireball"));
-        SetUseable(actionButtons[1], SpellBook.MyInstance.GetSpell("Frostbolt"));
-        SetUseable(actionButtons[2], SpellBook.MyInstance.GetSpell("Thunderbolt"));
-
         // Masque la frame de la cible
         HideTargetFrame();
 
@@ -216,23 +211,6 @@ public class UIManager : MonoBehaviour
     {
         // Déclenchement du clic sur le bouton d'action
         Array.Find(actionButtons, actionButton => actionButton.gameObject.name.ToUpper() == (buttonName + "_Button").ToUpper()).MyActionButton.onClick.Invoke();
-    }
-
-    /// <summary>
-    /// Définit le useable du bouton d'action
-    /// </summary>
-    /// <param name="button">Bouton d'action</param>
-    /// <param name="useable">Objet utilisable</param>
-    public void SetUseable(ActionButton button, IUseable useable)
-    {
-        // Image du bouton
-        button.MyIcon.sprite = useable.MyIcon;
-
-        // Couleur du bouton
-        button.MyIcon.color = Color.white;
-
-        // Utilisation du bouton
-        button.MyUseable = useable;
     }
 
     /// <summary>

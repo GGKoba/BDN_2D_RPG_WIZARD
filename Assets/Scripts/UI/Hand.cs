@@ -55,16 +55,39 @@ public class Hand : MonoBehaviour
         icon.transform.position = Input.mousePosition + offset;
     }
 
-
+    /// <summary>
+    /// Actualise les informations de l'objet déplaçable
+    /// </summary>
+    /// <param name="moveableItem"></param>
     public void TakeMoveable(IMoveable moveableItem)
     {
-        // Item déplaçable
+        // Objet déplaçable
         MyMoveable = moveableItem;
 
-        // Image de l'item
+        // Image de l'objet
         icon.sprite = moveableItem.MyIcon;
 
-        // Couleur de l'item;
+        // Couleur de l'objet;
         icon.color = Color.white;
     }
+
+    /// <summary>
+    /// Assigne un objet déplaçable
+    /// </summary>
+    /// <returns></returns>
+    public IMoveable Put()
+    {
+        // Objet déplaçable
+        IMoveable item = MyMoveable;
+
+        // Réinitialise l'objet
+        MyMoveable = null;
+
+        // Redéfinit une couleur noire transparente à l'objet
+        icon.color = new Color(0, 0, 0, 0);
+
+        // Retourne l'objet
+        return item;
+    }
+
 }
