@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -25,9 +26,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
+
+    // Liste des sacs de l'inventaire
+    private List<Pocket> bags = new List<Pocket>();
+
+    // Tabelau des boutons des sacs
+    [SerializeField]
+    private BagButton[] bagButtons;
+
     // [DEBUG] : Tableau des items de l'inventaire
     [SerializeField]
     private Item[] items;
+
+    // Propriété d'ajout des sacs
+    public bool CanAddBag { get => bags.Count < bagButtons.Length; }
+
 
 
     /// <summary>
@@ -39,25 +52,51 @@ public class Inventory : MonoBehaviour
         Pocket bag = (Pocket)Instantiate(items[0]);
 
         // Initialisation du sac
-        bag.Initialize(16);
+        bag.Initialize(20);
 
         // Ajoute un sac à l'inventaire
         bag.Use();
     }
 
-    /// <summary>
-    /// Start
-    /// </summary>
-    private void Start()
-    {
-
-    }
 
     /// <summary>
     /// Update
     /// </summary>
     private void Update()
     {
+        // [DEBUG] : Ajoute un sac
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            // Création d'un sac
+            Pocket bag = (Pocket)Instantiate(items[0]);
 
+            // Initialisation du sac
+            bag.Initialize(20);
+
+            // Ajoute un sac à l'inventaire
+            bag.Use();
+        }
+    }
+
+
+    /// <summary>
+    /// Ajoute un sac à l'inventaire
+    /// </summary>
+    public void AddBag(Pocket bag)
+    {
+        foreach (BagButton bagButton in bagButtons)
+        {
+            // S'il n'y a pas de sacs sur le bouton
+            if (bagButton.MyBag == null)
+            {
+                // Assignation du sac
+                bagButton.MyBag = bag;
+
+                // Ajoute le sac dans la liste
+                bags.Add(bag);
+
+                break;
+            }
+        }
     }
 }

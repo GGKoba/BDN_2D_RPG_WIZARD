@@ -37,10 +37,17 @@ public class Pocket : Item, IUseable
     /// </summary>
     public void Use()
     {
-        // Instantiation d'un objet Bag
-        MyBagScript = Instantiate(bagPrefab, Inventory.MyInstance.transform).GetComponent<Bag>();
+        // Si l'on peut ajouter un sac
+        if (Inventory.MyInstance.CanAddBag)
+        {
+            // Instantiation d'un objet Bag
+            MyBagScript = Instantiate(bagPrefab, Inventory.MyInstance.transform).GetComponent<Bag>();
 
-        // Ajoute le nombre d'emplacements au sac
-        MyBagScript.AddSlots(slotsCount);
+            // Ajoute le nombre d'emplacements au sac
+            MyBagScript.AddSlots(slotsCount);
+
+            // Ajout un sac à l'inventaire
+            Inventory.MyInstance.AddBag(this);
+        }
     }
 }
