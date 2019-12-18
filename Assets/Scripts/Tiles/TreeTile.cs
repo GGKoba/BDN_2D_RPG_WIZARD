@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 
 /// <summary>
-/// Classe des élements de la map de type "Arbre"
+/// Classe des éléments de la map de type "Arbre"
 /// </summary>
 public class TreeTile : Tile
 {

@@ -40,13 +40,16 @@ public class Bag : Item, IUseable
         // Si l'on peut ajouter un sac
         if (InventoryScript.MyInstance.CanAddBag)
         {
+            // Supprime l'item de l'emplacement
+            Remove();
+
             // Instantiation d'un objet Bag
             MyBagScript = Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
 
             // Ajoute le nombre d'emplacements au sac
             MyBagScript.AddSlots(slotsCount);
 
-            // Ajout un sac à l'inventaire
+            // Ajoute le sac sur un emplacement (BagButton) 
             InventoryScript.MyInstance.AddBag(this);
         }
     }

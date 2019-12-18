@@ -22,7 +22,6 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
         }
     }
 
-
     // Image du sac équipé
     [SerializeField]
     private Sprite equiped = default;

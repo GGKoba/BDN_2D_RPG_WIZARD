@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 /// <summary>
-/// Classe de gestion des déplacements élements de l'interface
+/// Classe de gestion des déplacements éléments de l'interface
 /// </summary>
 public class Hand : MonoBehaviour
 {

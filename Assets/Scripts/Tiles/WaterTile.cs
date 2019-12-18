@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 
 /// <summary>
-/// Classe des élements de la map de type "Eau"
+/// Classe des éléments de la map de type "Eau"
 /// </summary>
 public class WaterTile : Tile
 {

@@ -77,7 +77,10 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
         // Mise à jour de l'image
         UpdateVisual();
     }
-
+    
+    /// <summary>
+    /// Actualise l'image du bouton d'action
+    /// </summary>
     public void UpdateVisual()
     {
         // Image du bouton

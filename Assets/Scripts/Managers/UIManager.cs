@@ -238,4 +238,22 @@ public class UIManager : MonoBehaviour
         // Début(0)/fin(1) de pause
         //Time.timeScale = Time.timeScale > 0 ? 0 : 1;
     }
+
+    /// <summary>
+    /// Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
+    /// </summary>
+    /// <param name="clickable"></param>
+    public void UpdateStackSize(IClickable clickable)
+    {
+        // S'il n'y a plus d'élément
+        if (clickable.MyCount == 0)
+        {
+            // Réinitialisation de l'image de l'emplacement
+            clickable.MyIcon.sprite = null;
+
+            // Réinitialisation de la couleur de l'emplacement
+            clickable.MyIcon.color = new Color(0, 0, 0, 0);
+        }
+    }
+
 }

@@ -81,7 +81,7 @@ public class InventoryScript : MonoBehaviour
             Bag bag = (Bag)Instantiate(items[0]);
 
             // Initialisation du sac
-            bag.Initialize(2);
+            bag.Initialize(20);
 
             // Ajoute l'item Sac dans un sac de l'inventaire
             AddItem(bag);

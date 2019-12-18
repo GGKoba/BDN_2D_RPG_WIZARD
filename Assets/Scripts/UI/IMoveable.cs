@@ -3,10 +3,10 @@
 
 
 /// <summary>
-/// Interface de déplacement des élements de l'interface
+/// Interface de déplacement des éléments de l'interface
 /// </summary>
 public interface IMoveable
 {
-    // Propriété d'accès à l'image liée à l'élement déplaçable
+    // Propriété d'accès à l'image liée à l'élément déplaçable
     Sprite MyIcon { get; }
 }
