@@ -5,7 +5,7 @@
 /// <summary>
 /// Classe de gestion des emplacements des sacs
 /// </summary>
-public class Slot : MonoBehaviour
+public class SlotScript : MonoBehaviour
 {
     /// <summary>
     /// Start

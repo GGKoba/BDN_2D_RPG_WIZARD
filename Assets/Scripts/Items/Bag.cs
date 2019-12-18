@@ -6,7 +6,7 @@
 /// Classe de gestion de l'inventaire de base
 /// </summary>
 [CreateAssetMenu(fileName = "Bag", menuName = "Items/Bag", order = 1)]
-public class Pocket : Item, IUseable
+public class Bag : Item, IUseable
 {
     // Nombre d'emplacements
     private int slotsCount;
@@ -19,7 +19,7 @@ public class Pocket : Item, IUseable
     private GameObject bagPrefab;
 
     // Propriété d'accès au script Bag
-    public Bag MyBagScript { get; set; }
+    public BagScript MyBagScript { get; set; }
 
 
     /// <summary>
@@ -38,16 +38,16 @@ public class Pocket : Item, IUseable
     public void Use()
     {
         // Si l'on peut ajouter un sac
-        if (Inventory.MyInstance.CanAddBag)
+        if (InventoryScript.MyInstance.CanAddBag)
         {
             // Instantiation d'un objet Bag
-            MyBagScript = Instantiate(bagPrefab, Inventory.MyInstance.transform).GetComponent<Bag>();
+            MyBagScript = Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
 
             // Ajoute le nombre d'emplacements au sac
             MyBagScript.AddSlots(slotsCount);
 
             // Ajout un sac à l'inventaire
-            Inventory.MyInstance.AddBag(this);
+            InventoryScript.MyInstance.AddBag(this);
         }
     }
 }

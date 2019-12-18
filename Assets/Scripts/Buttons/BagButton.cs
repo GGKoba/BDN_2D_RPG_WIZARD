@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class BagButton : MonoBehaviour
 {
     // Référence sur le sac
-    private Pocket bag;
+    private Bag bag;
 
     // Propriété d'accès au sac
-    public Pocket MyBag
+    public Bag MyBag
     { 
         get => bag;
         set

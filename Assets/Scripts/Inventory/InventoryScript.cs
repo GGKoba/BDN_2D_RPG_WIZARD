@@ -6,20 +6,20 @@ using UnityEngine;
 /// <summary>
 /// Classe de gestion de l'inventaire
 /// </summary>
-public class Inventory : MonoBehaviour
+public class InventoryScript : MonoBehaviour
 {
     // Instance de classe (singleton)
-    private static Inventory instance;
+    private static InventoryScript instance;
 
     // Propriété d'accès à l'instance
-    public static Inventory MyInstance
+    public static InventoryScript MyInstance
     {
         get
         {
             if (instance == null)
             {
                 // Retourne l'object de type Inventory (doit être unique)
-                instance = FindObjectOfType<Inventory>();
+                instance = FindObjectOfType<InventoryScript>();
             }
 
             return instance;
@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
 
 
     // Liste des sacs de l'inventaire
-    private List<Pocket> bags = new List<Pocket>();
+    private List<Bag> bags = new List<Bag>();
 
     // Tabelau des boutons des sacs
     [SerializeField]
@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         // Création d'un sac
-        Pocket bag = (Pocket)Instantiate(items[0]);
+        Bag bag = (Bag)Instantiate(items[0]);
 
         // Initialisation du sac
         bag.Initialize(20);
@@ -68,7 +68,7 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             // Création d'un sac
-            Pocket bag = (Pocket)Instantiate(items[0]);
+            Bag bag = (Bag)Instantiate(items[0]);
 
             // Initialisation du sac
             bag.Initialize(20);
@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
     /// <summary>
     /// Ajoute un sac à l'inventaire
     /// </summary>
-    public void AddBag(Pocket bag)
+    public void AddBag(Bag bag)
     {
         foreach (BagButton bagButton in bagButtons)
         {

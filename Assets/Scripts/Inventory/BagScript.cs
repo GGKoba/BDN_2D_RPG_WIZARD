@@ -5,7 +5,7 @@
 /// <summary>
 /// Classe de gestion des sacs de l'inventaire
 /// </summary>
-public class Bag : MonoBehaviour
+public class BagScript : MonoBehaviour
 {
     // Prefab de l'emplacement du sac
     [SerializeField]

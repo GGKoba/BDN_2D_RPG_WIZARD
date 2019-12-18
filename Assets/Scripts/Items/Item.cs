@@ -22,8 +22,8 @@ public abstract class Item : ScriptableObject
     public int MyStackSize { get => stackSize; }
 
     // Référence sur l'emplacement de l'item
-    private Slot slot;
+    private SlotScript slot;
 
     // Propriété d'accès à l'emplacement de l'item
-    protected Slot MySlot { get => slot; set => slot = value; }
+    protected SlotScript MySlot { get => slot; set => slot = value; }
 }
