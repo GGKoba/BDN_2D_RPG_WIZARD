@@ -3,7 +3,7 @@
 
 
 /// <summary>
-/// Classe de gestion de l'inventaire de base
+/// Classe de gestion des sacs
 /// </summary>
 [CreateAssetMenu(fileName = "Bag", menuName = "Items/Bag", order = 1)]
 public class Bag : Item, IUseable

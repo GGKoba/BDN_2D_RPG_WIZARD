@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // Touche Esc
+        // [Esc] : Menu Raccourci
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Ouverture/Fermeture du menu des raccourcis
@@ -107,14 +107,14 @@ public class UIManager : MonoBehaviour
             */
         }
 
-        // Touche P
+        // [P] : Menu Sorts
         if (Input.GetKeyDown(KeyCode.P))
         {
             // Ouverture/Fermeture du menu des sorts
             OpenClose(spellBookMenu);
         }
 
-        // Touche B
+        // [B] : Sacs
         if (Input.GetKeyDown(KeyCode.B))
         {
             // Ouverture/Fermeture de tous les sacs de l'inventaire

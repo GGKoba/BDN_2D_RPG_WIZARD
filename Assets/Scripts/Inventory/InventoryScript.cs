@@ -61,7 +61,7 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // Ajoute un sac avec la touche J
+        // [J] : Utilise un sac (Ajoute le sac sur un emplacement)
         if (Input.GetKeyDown(KeyCode.J))
         {
             // Création d'un sac
@@ -70,11 +70,11 @@ public class InventoryScript : MonoBehaviour
             // Initialisation du sac
             bag.Initialize(20);
 
-            // Ajoute un sac dans l'inventaire
+            // Utilise le sac
             bag.Use();
         }
 
-        // Ajoute un item avec la touche K
+        // [K] : Ajoute un item Sac dans l'inventaire
         if (Input.GetKeyDown(KeyCode.K))
         {
             // Création d'un Item sac
@@ -87,6 +87,15 @@ public class InventoryScript : MonoBehaviour
             AddItem(bag);
         }
 
+        // [L] : Ajoute un item Potion dans l'inventaire
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            // Création d'un Item sac
+            HealthPotion healthPotion = (HealthPotion)Instantiate(items[1]);
+
+            // Ajoute l'item HealthPotion dans un sac de l'inventaire
+            AddItem(healthPotion);
+        }
     }
 
     /// <summary>

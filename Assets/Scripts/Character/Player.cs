@@ -82,12 +82,14 @@ public class Player : Character
     {
         MyDirection = Vector2.zero;
 
-        // [DEBUG] : Test Vie/Mana
+        // [DEBUG]
+        // [I] : Vie/Mana --
         if (Input.GetKeyDown(KeyCode.I))
         {
             health.MyCurrentValue -= 10;
             mana.MyCurrentValue -= 10;
         }
+        // [O] : Vie/Mana ++
         if (Input.GetKeyDown(KeyCode.O))
         {
             health.MyCurrentValue += 10;
