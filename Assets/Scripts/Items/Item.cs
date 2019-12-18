@@ -9,14 +9,14 @@ public abstract class Item : ScriptableObject
 {
     // Icône de l'item
     [SerializeField]
-    private Sprite icon;
+    private Sprite icon = default;
 
     // Propriété d'accès à l'icône de l'item
     public Sprite MyIcon { get => icon; }
 
     // Taille empilable de l'item
     [SerializeField]
-    private int stackSize;
+    private int stackSize = default;
 
     // Propriété d'accès à la taille empilable de l'item
     public int MyStackSize { get => stackSize; }

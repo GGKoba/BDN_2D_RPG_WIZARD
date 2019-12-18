@@ -16,7 +16,7 @@ public class Bag : Item, IUseable
     
     // Prefab du sac
     [SerializeField]
-    private GameObject bagPrefab;
+    private GameObject bagPrefab = default;
 
     // Propriété d'accès au script Bag
     public BagScript MyBagScript { get; set; }

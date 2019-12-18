@@ -88,9 +88,10 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // Si on presse la touche Esc
+        // Touche Esc
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // Ouverture/Fermeture du menu des raccourcis
             OpenClose(keyBindMenu);
             /*
             if (isOpenMenu)
@@ -106,10 +107,18 @@ public class UIManager : MonoBehaviour
             */
         }
 
-        // Si on presse la touche P
+        // Touche P
         if (Input.GetKeyDown(KeyCode.P))
         {
+            // Ouverture/Fermeture du menu des sorts
             OpenClose(spellBookMenu);
+        }
+
+        // Touche B
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            // Ouverture/Fermeture de tous les sacs de l'inventaire
+            InventoryScript.MyInstance.OpenClose();
         }
     }
 
@@ -189,6 +198,7 @@ public class UIManager : MonoBehaviour
         isOpenMenu = false;
     }
     */
+
     /// <summary>
     /// Mise à jour du texte des touches
     /// </summary>

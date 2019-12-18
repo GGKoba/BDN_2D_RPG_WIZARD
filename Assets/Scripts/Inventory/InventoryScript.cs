@@ -30,17 +30,16 @@ public class InventoryScript : MonoBehaviour
     // Liste des sacs de l'inventaire
     private List<Bag> bags = new List<Bag>();
 
-    // Tabelau des boutons des sacs
+    // Tableau des boutons des sacs
     [SerializeField]
-    private BagButton[] bagButtons;
+    private BagButton[] bagButtons = default;
 
     // [DEBUG] : Tableau des items de l'inventaire
     [SerializeField]
-    private Item[] items;
+    private Item[] items = default;
 
     // Propriété d'ajout des sacs
     public bool CanAddBag { get => bags.Count < bagButtons.Length; }
-
 
 
     /// <summary>
@@ -57,7 +56,6 @@ public class InventoryScript : MonoBehaviour
         // Ajoute un sac à l'inventaire
         bag.Use();
     }
-
 
     /// <summary>
     /// Update
@@ -78,7 +76,6 @@ public class InventoryScript : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Ajoute un sac à l'inventaire
     /// </summary>
@@ -96,6 +93,25 @@ public class InventoryScript : MonoBehaviour
                 bags.Add(bag);
 
                 break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ouverture/Fermeture de tous les sacs de l'inventaire
+    /// </summary>
+    public void OpenClose()
+    {
+        // Y a-t-il au moins un sac fermé
+        bool closedBag = bags.Find(bag => !bag.MyBagScript.IsOpen);
+
+        // Ouverture de tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Si un sac est fermé, ouverture de tous les sacs fermés 
+            if (bag.MyBagScript.IsOpen != closedBag)
+            {
+                bag.MyBagScript.OpenClose();
             }
         }
     }
