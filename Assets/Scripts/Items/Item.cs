@@ -7,11 +7,11 @@
 /// </summary>
 public abstract class Item : ScriptableObject
 {
-    // Icône de l'item
+    // Image de l'item
     [SerializeField]
     private Sprite icon = default;
 
-    // Propriété d'accès à l'icône de l'item
+    // Propriété d'accès à l'image de l'item
     public Sprite MyIcon { get => icon; }
 
     // Taille empilable de l'item

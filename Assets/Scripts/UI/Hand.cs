@@ -51,7 +51,7 @@ public class Hand : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // L'icône a la position du curseur de la souris
+        // L'image a la position du curseur de la souris
         icon.transform.position = Input.mousePosition + offset;
     }
 

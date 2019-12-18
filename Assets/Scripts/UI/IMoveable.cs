@@ -7,6 +7,6 @@
 /// </summary>
 public interface IMoveable
 {
-    // Propriété d'accès à l'icône liée à l'élement déplaçable
+    // Propriété d'accès à l'image liée à l'élement déplaçable
     Sprite MyIcon { get; }
 }

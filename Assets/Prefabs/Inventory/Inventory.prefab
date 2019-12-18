@@ -82,5 +82,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c4c19f1ed435c429077d01cc67b633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bagButtons: []
+  bagButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   items: []

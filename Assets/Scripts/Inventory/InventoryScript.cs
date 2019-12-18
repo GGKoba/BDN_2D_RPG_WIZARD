@@ -26,7 +26,6 @@ public class InventoryScript : MonoBehaviour
         }
     }
 
-
     // Liste des sacs de l'inventaire
     private List<Bag> bags = new List<Bag>();
 
@@ -58,11 +57,11 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Update
+    /// [DEBUG] : Update
     /// </summary>
     private void Update()
     {
-        // [DEBUG] : Ajoute un sac
+        // Ajoute un sac avec la touche J
         if (Input.GetKeyDown(KeyCode.J))
         {
             // Création d'un sac
@@ -71,9 +70,23 @@ public class InventoryScript : MonoBehaviour
             // Initialisation du sac
             bag.Initialize(20);
 
-            // Ajoute un sac à l'inventaire
+            // Ajoute un sac dans l'inventaire
             bag.Use();
         }
+
+        // Ajoute un item avec la touche K
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            // Création d'un Item sac
+            Bag bag = (Bag)Instantiate(items[0]);
+
+            // Initialisation du sac
+            bag.Initialize(2);
+
+            // Ajoute l'item Sac dans un sac de l'inventaire
+            AddItem(bag);
+        }
+
     }
 
     /// <summary>
@@ -102,7 +115,7 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     public void OpenClose()
     {
-        // Y a-t-il au moins un sac fermé
+        // Y a-t-il au moins un sac fermé ?
         bool closedBag = bags.Find(bag => !bag.MyBagScript.IsOpen);
 
         // Ouverture de tous les sacs
@@ -112,6 +125,24 @@ public class InventoryScript : MonoBehaviour
             if (bag.MyBagScript.IsOpen != closedBag)
             {
                 bag.MyBagScript.OpenClose();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Ajoute un item dans un sac de l'inventaire
+    /// </summary>
+    /// <param name="item">Item à ajouter</param>
+    /// <returns></returns>
+    public void AddItem(Item item)
+    {
+        foreach (Bag bag in bags)
+        {
+            // Si l'ajout dans le sac est OK
+            if (bag.MyBagScript.AddItem(item))
+            {
+                // Pas besoin d'aller plus loin
+                return;
             }
         }
     }
