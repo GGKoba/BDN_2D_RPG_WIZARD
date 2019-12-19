@@ -27,7 +27,7 @@ public class InventoryScript : MonoBehaviour
     }
 
     // Liste des sacs de l'inventaire
-    private List<Bag> bags = new List<Bag>();
+    private readonly List<Bag> bags = new List<Bag>();
 
     // Tableau des boutons des sacs
     [SerializeField]
@@ -127,7 +127,7 @@ public class InventoryScript : MonoBehaviour
         // Y a-t-il au moins un sac fermé ?
         bool closedBag = bags.Find(bag => !bag.MyBagScript.IsOpen);
 
-        // Ouverture de tous les sacs
+        // Pour tous les sacs de l'inventaire
         foreach (Bag bag in bags)
         {
             // Si un sac est fermé, ouverture de tous les sacs fermés 
@@ -145,6 +145,54 @@ public class InventoryScript : MonoBehaviour
     /// <returns></returns>
     public void AddItem(Item item)
     {
+        // Si l'item est stackable
+        if (item.MyStackSize > 0)
+        {
+            // Si l'item peut se stacker sur un emplacement
+            if (PlaceInStack(item))
+            {
+                // Pas besoin d'aller plus loin
+                return;
+            }
+        }
+
+        // Place l'item dans un nouvel emplacement
+        PlaceInEmpty(item);
+    }
+
+    /// <summary>
+    /// Place l'item dans la Stack de l'emplacement du sac
+    /// </summary>
+    /// <param name="item">Item à placer dans la stack</param>
+    /// <returns></returns>
+    private bool PlaceInStack(Item item)
+    {
+        // Pour tous les sacs de l'inventaire
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'item peut être ajouté dans la stack de l'emplacement
+                if (slot.StackItem(item))
+                {
+                    // Retourne que c'est OK
+                    return true;
+                }
+            }
+        }
+
+        // Retourne que c'est KO
+        return false;
+    }
+
+    /// <summary>
+    /// Place l'item dans un nouvel emplacement
+    /// </summary>
+    /// <param name="item">Item à placer</param>
+    private void PlaceInEmpty(Item item)
+    {
+        // Pour tous les sacs de l'inventaire
         foreach (Bag bag in bags)
         {
             // Si l'ajout dans le sac est OK

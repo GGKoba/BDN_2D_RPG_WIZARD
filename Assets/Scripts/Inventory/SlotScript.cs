@@ -35,7 +35,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// <returns></returns>
     public bool AddItem(Item item)
     {
-        // Ajoute l'item dans la Stack
+        // Ajoute l'item dans la Stack des items de l'emplacement
         items.Push(item);
 
         // Actualise l'image de l'emplacement
@@ -47,7 +47,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         // Assigne l'emplacement à l'item
         item.MySlot = this;
 
-        //Retourne que c'est OK
+        // Retourne que c'est OK
         return true;
     }
 
@@ -95,4 +95,30 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             (MyItem as IUseable).Use();
         }
     }
+
+    /// <summary>
+    /// Stacke l'item sur son emplacement
+    /// </summary>
+    /// <param name="item">Item à stacker</param>
+    /// <returns></returns>
+    public bool StackItem(Item item)
+    {
+        // S'il y a un item sur l'emplacement et qu'il a le même nom que l'item à stacker et que la taille de la Stack de l'emplacement est inférieure au nombre de stack de l'item
+        if (!IsEmpty && item.name == MyItem.name && items.Count < MyItem.MyStackSize)
+        {
+            // Ajoute l'item dans la Stack des items de l'emplacement
+            items.Push(item);
+
+            // Assigne l'emplacement à l'item
+            item.MySlot = this;
+
+            // Retourne que c'est OK
+            return true;
+        }
+
+        // Retourne que c'est KO
+        return false;
+
+    }
+
 }

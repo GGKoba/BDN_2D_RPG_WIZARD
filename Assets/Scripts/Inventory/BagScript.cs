@@ -9,7 +9,10 @@ using UnityEngine;
 public class BagScript : MonoBehaviour
 {
     // Liste des emplacements du sac
-    private List<SlotScript> slots = new List<SlotScript>();
+    private readonly List<SlotScript> slots = new List<SlotScript>();
+
+    // Propriété d'accès aux emplacement du sac
+    public List<SlotScript> MySlots { get => slots; }
 
     // Prefab de l'emplacement du sac
     [SerializeField]
@@ -66,6 +69,7 @@ public class BagScript : MonoBehaviour
     /// <returns></returns>
     public bool AddItem(Item item)
     {
+        // Pour tous les emplacements du sac
         foreach (SlotScript slot in slots)
         {
             // Si l'emplacement est vide
