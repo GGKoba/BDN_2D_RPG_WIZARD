@@ -123,6 +123,21 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
                 // Définit le slot sur lequel se trouve l'item
                 InventoryScript.MyInstance.MyFromSlot = this;
             }
+            // Si rien n'est en train d'être déplacé et que l'emplacement est vide et que je manipule un objet sac qui vient de la barre des sacs
+            else if (InventoryScript.MyInstance.MyFromSlot == null && IsEmpty && Hand.MyInstance.MyMoveable is Bag)
+            {
+                // Cast l'item en type Bag
+                Bag bag = (Bag)Hand.MyInstance.MyMoveable;
+
+                // Ajoute un item sur l'emplacement
+                AddItem(bag);
+
+                // Déséquipe le sac de la liste des sacs
+                bag.MyBagButton.RemoveBag();
+
+                // Libère l'item
+                Hand.MyInstance.Drop();
+            }
             // Si un item est en train d'être déplacé
             else if(InventoryScript.MyInstance.MyFromSlot != null)
             {

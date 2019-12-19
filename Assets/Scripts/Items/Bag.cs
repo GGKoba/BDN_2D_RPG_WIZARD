@@ -21,6 +21,9 @@ public class Bag : Item, IUseable
     // Propriété d'accès au script Bag
     public BagScript MyBagScript { get; set; }
 
+    // Propriété d'accès au bouton du sac
+    public BagButton MyBagButton { get; set; }
+
 
     /// <summary>
     /// Start

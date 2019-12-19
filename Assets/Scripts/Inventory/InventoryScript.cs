@@ -118,7 +118,7 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Ajoute un sac à l'inventaire
+    /// Ajoute un sac à sur la barre des sacs
     /// </summary>
     public void AddBag(Bag bag)
     {
@@ -127,8 +127,11 @@ public class InventoryScript : MonoBehaviour
             // S'il n'y a pas de sacs sur le bouton
             if (bagButton.MyBag == null)
             {
-                // Assignation du sac
+                // Assignation du sac au bouton
                 bagButton.MyBag = bag;
+
+                // Assignation du bouton au sac
+                bag.MyBagButton = bagButton;
 
                 // Ajoute le sac dans la liste
                 bags.Add(bag);
@@ -137,6 +140,21 @@ public class InventoryScript : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Retire un sac à sur la barre des sacs
+    /// </summary>
+    /// <param name="bag">Sac à retirer</param>
+    public void RemoveBag(Bag bag)
+    {
+        // Retire le sac
+        bags.Remove(bag);
+
+        // Détruit l'objet
+        Destroy(bag.MyBagScript.gameObject);
+    }
+
+
 
     /// <summary>
     /// Ouverture/Fermeture de tous les sacs de l'inventaire

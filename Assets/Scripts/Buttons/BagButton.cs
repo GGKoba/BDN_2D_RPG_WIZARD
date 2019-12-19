@@ -37,10 +37,35 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
     /// <param name="eventData">Evenement de clic</param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        // S'il y a un sac
-        if (bag != null)
+        // Clic gauche
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            bag.MyBagScript.OpenClose();
+            // [LEFT SHIFT] : Déséquipe le sac
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                // Drag le sac
+                Hand.MyInstance.TakeMoveable(MyBag);
+            }
+            // S'il y a un sac
+            else if (bag != null)
+            {
+                bag.MyBagScript.OpenClose();
+            }
         }
+    }
+
+    /// <summary>
+    /// Déséquipe un sac
+    /// </summary>
+    public void RemoveBag()
+    {
+        // Retire un sac de la liste des boutons des sacs
+        InventoryScript.MyInstance.RemoveBag(MyBag);
+
+        // Réinitialisation du bouton du sac
+        MyBag.MyBagButton = null;
+
+        // Réinitialisation du sac
+        MyBag = null;
     }
 }
