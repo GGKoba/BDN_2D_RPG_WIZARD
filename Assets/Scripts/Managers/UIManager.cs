@@ -245,6 +245,27 @@ public class UIManager : MonoBehaviour
     /// <param name="clickable"></param>
     public void UpdateStackSize(IClickable clickable)
     {
+        // S'il y a plus d'un élément
+        if (clickable.MyCount > 1)
+        {
+            // Actualise le texte du nombre d'éléments de l'item
+            clickable.MyStackText.text = clickable.MyCount.ToString();
+
+            // Actualise la couleur du texte
+            clickable.MyStackText.color = Color.white;
+
+            // Actualise la couleur de l'image
+            clickable.MyIcon.color = Color.white;
+        }
+        else
+        {
+            // Réinitialisation du texte du nombre d'éléments de l'item
+            clickable.MyStackText.text = null;
+
+            // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
+            clickable.MyStackText.color = new Color(0, 0, 0, 0);
+        }
+
         // S'il n'y a plus d'élément
         if (clickable.MyCount == 0)
         {
@@ -253,6 +274,13 @@ public class UIManager : MonoBehaviour
 
             // Réinitialisation de la couleur de l'emplacement
             clickable.MyIcon.color = new Color(0, 0, 0, 0);
+            /*
+            // Réinitialisation du texte du nombre d'éléments de l'item
+            clickable.MyStackText.text = null;
+
+            // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
+            clickable.MyStackText.color = new Color(0, 0, 0, 0);
+            */
         }
     }
 

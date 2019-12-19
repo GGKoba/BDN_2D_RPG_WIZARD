@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 
+
 // Gestion du changement de la valeur de la vie d'un PNJ
 public delegate void HealthChanged(float health);
 
@@ -32,7 +33,6 @@ public class NPC : Character
             return portrait;
         }
     }
-
 
 
     /// <summary>
@@ -71,7 +71,7 @@ public class NPC : Character
     /// <param name="health">Vie actuelle</param>
     public void OnHealthChanged(float health)
     {
-        // S'il existe un abonnement à cet évènement
+        // S'il y a un abonnement à cet évènement
         if (HealthChanged != null)
         {
             // Déclenchement de l'évènement de changement de la valeur de la vie
@@ -84,7 +84,7 @@ public class NPC : Character
     /// </summary>
     public void OnCharacterRemoved()
     {
-        // S'il existe un abonnement à cet évènement
+        // S'il y a un abonnement à cet évènement
         if (CharacterRemoved != null)
         {
             // Déclenchement de l'évènement de disparition du personnage

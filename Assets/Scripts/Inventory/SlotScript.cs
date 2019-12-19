@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
 {
     // Liste (Stack) des items de l'emplacement
-    private Stack<Item> items = new Stack<Item>();
+    private readonly ObservableStack<Item> items = new ObservableStack<Item>();
 
     // Image de l'emplacement
     [SerializeField]
@@ -18,6 +18,13 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     // Propriété d'accès à l'image de l'emplacement
     public Image MyIcon { get => icon; set => icon = value; }
 
+    // Texte du nombre d'éléments de l'emplacement
+    [SerializeField]
+    private Text stackSize;
+
+    // Propriété d'accès au texte du nombre d'éléments de l'emplacement
+    public Text MyStackText { get => stackSize; }
+
     // Propriété d'accès à la Stack de l'emplacement
     public int MyCount { get => items.Count; }
 
@@ -25,8 +32,23 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     public bool IsEmpty { get => items.Count == 0; }
 
     // Propriété d'accès à l'item de l'emplacement (Peek retourne l'item situé en haut de la Stack sans le supprimer)
-    public Item MyItem { get => !IsEmpty ? items.Peek() : null ; }
+    public Item MyItem { get => !IsEmpty ? items.Peek() : null; }
 
+
+    /// <summary>
+    /// Awake
+    /// </summary>
+    public void Awake()
+    {
+        // Abonnement sur l'évènement d'ajout dans la stack d'un emplacement
+        items.OnPush += new StackUpdated(UpdateSlot);
+
+        // Abonnement sur l'évènement de retrait dans la stack d'un emplacement
+        items.OnPop += new StackUpdated(UpdateSlot);
+
+        // Abonnement sur l'évènement de nettoyage de la stack d'un emplacement
+        items.OnClear += new StackUpdated(UpdateSlot);
+    }
 
     /// <summary>
     /// Ajoute un item sur l'emplacement
@@ -62,12 +84,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         {
             // Enleve l'item situé en haut de la Stack
             items.Pop();
-
-            //Mise à jour de la Stack de l'emplacement de l'item
-            UIManager.MyInstance.UpdateStackSize(this);
         }
     }
-
 
     /// <summary>
     /// Gestion du clic
@@ -118,7 +136,14 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
 
         // Retourne que c'est KO
         return false;
-
     }
 
+    /// <summary>
+    /// Actualise l'emplacement
+    /// </summary>
+    private void UpdateSlot()
+    {
+        // Mise à jour de la Stack de l'emplacement de l'item
+        UIManager.MyInstance.UpdateStackSize(this);
+    }
 }
