@@ -9,7 +9,7 @@ public delegate void StackUpdated();
 /// <summary>
 /// Classe de gestion des mises à jour de la Stack d'un emplacement
 /// </summary>
-class ObservableStack<T> : Stack<T>
+public class ObservableStack<T> : Stack<T>
 {
     // Evènement d'ajout dans la stack d'un emplacement
     public event StackUpdated OnPush;
@@ -19,6 +19,12 @@ class ObservableStack<T> : Stack<T>
 
     // Evènement de nettoyage de la stack d'un emplacement
     public event StackUpdated OnClear;
+
+    // Constructeur vide
+    public ObservableStack() { }
+
+    // Constructeur paramétré
+    public ObservableStack(ObservableStack<T> itemStack) : base(itemStack) { }
 
 
     /// <summary>

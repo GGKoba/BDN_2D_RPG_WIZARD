@@ -37,8 +37,27 @@ public class InventoryScript : MonoBehaviour
     [SerializeField]
     private Item[] items = default;
 
-    // Propriété d'ajout des sacs
+    // Propriété sur l'indicateur d'ajout des sacs
     public bool CanAddBag { get => bags.Count < bagButtons.Length; }
+
+
+    // Référence sur un emplacement
+    private SlotScript fromSlot;
+
+    // Propriété d'accès sur la référence sur un emplacement
+    public SlotScript MyFromSlot
+    { 
+        get => fromSlot;
+        set
+        {
+            fromSlot = value;
+
+            if (value != null)
+            {
+                fromSlot.MyIcon.color = Color.grey;
+            }
+        }
+    }
 
 
     /// <summary>

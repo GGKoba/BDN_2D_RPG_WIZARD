@@ -5,7 +5,7 @@
 /// <summary>
 /// Classe abstraite dont tous les objets héritent
 /// </summary>
-public abstract class Item : ScriptableObject
+public abstract class Item : ScriptableObject, IMoveable
 {
     // Taille empilable de l'item
     [SerializeField]

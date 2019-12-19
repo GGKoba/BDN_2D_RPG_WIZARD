@@ -80,7 +80,7 @@ public class Hand : MonoBehaviour
         // Objet déplaçable
         IMoveable item = MyMoveable;
 
-        // Réinitialise l'objet
+        // Réinitialisation de l'objet
         MyMoveable = null;
 
         // Redéfinit une couleur noire transparente à l'objet
@@ -90,4 +90,15 @@ public class Hand : MonoBehaviour
         return item;
     }
 
+    /// <summary>
+    /// Libère l'objet déplaçable
+    /// </summary>
+    public void Drop()
+    {
+        // Réinitialisation de l'objet
+        MyMoveable = null;
+
+        // Redéfinit une couleur noire transparente à l'objet
+        icon.color = new Color(0, 0, 0, 0);
+    }
 }

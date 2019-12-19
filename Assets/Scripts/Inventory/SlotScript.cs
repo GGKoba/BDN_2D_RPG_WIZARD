@@ -20,19 +20,22 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
 
     // Texte du nombre d'éléments de l'emplacement
     [SerializeField]
-    private Text stackSize;
+    private Text stackSize = default;
 
     // Propriété d'accès au texte du nombre d'éléments de l'emplacement
     public Text MyStackText { get => stackSize; }
 
+    // Propriété d'accès à l'item de l'emplacement (Peek retourne l'item situé en haut de la Stack sans le supprimer)
+    public Item MyItem { get => !IsEmpty ? items.Peek() : null; }
+
     // Propriété d'accès à la Stack de l'emplacement
     public int MyCount { get => items.Count; }
 
-    // Propriété d'accès sur l'indicateur du contenu de l'emplacement
+    // Propriété d'accès sur l'indicateur d'un emplacement vide
     public bool IsEmpty { get => items.Count == 0; }
 
-    // Propriété d'accès à l'item de l'emplacement (Peek retourne l'item situé en haut de la Stack sans le supprimer)
-    public Item MyItem { get => !IsEmpty ? items.Peek() : null; }
+    // Propriété d'accès sur l'indicateur d'un emplacement plein
+    public bool IsFull { get => (IsEmpty || MyCount < MyItem.MyStackSize) ? false : true; }
 
 
     /// <summary>
@@ -93,6 +96,33 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// <param name="eventData">Evenement de clic</param>
     public void OnPointerClick(PointerEventData eventData)
     {
+        // Clic gauche
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // Si rien n'est en train d'être déplacé et que l'emplacement n'est pas vide
+            if (InventoryScript.MyInstance.MyFromSlot == null && !IsEmpty)
+            {
+                // Drag l'item
+                Hand.MyInstance.TakeMoveable(MyItem as IMoveable);
+
+                // Définit le slot sur lequel se trouve l'item
+                InventoryScript.MyInstance.MyFromSlot = this;
+            }
+            // Si un item est en train d'être déplacé
+            else if(InventoryScript.MyInstance.MyFromSlot != null)
+            {
+                // Si l'item est sur le même emplacement ou qu'il change d'emplacement
+                if (PutItemBack() || SwapItems(InventoryScript.MyInstance.MyFromSlot) || MoveStackItems(InventoryScript.MyInstance.MyFromSlot.items))
+                {
+                    // Libère l'item
+                    Hand.MyInstance.Drop();
+
+                    // Réinitialisation de l'emplacement
+                    InventoryScript.MyInstance.MyFromSlot = null;
+                }
+            }
+        }
+
         // Clic droit
         if (eventData.button == PointerEventData.InputButton.Right)
         {
@@ -145,5 +175,97 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     {
         // Mise à jour de la Stack de l'emplacement de l'item
         UIManager.MyInstance.UpdateStackSize(this);
+    }
+
+    /// <summary>
+    /// L'item doit-il rester à son emplacement ?
+    /// </summary>
+    /// <returns></returns>
+    private bool PutItemBack()
+    {
+        // Si c'est le même emplacement
+        if (InventoryScript.MyInstance.MyFromSlot == this)
+        {
+            // Actualise la couleur de l'emplacement
+            InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
+
+            // Retourne que c'est OK
+            return true;
+        }
+
+        // Retourne que c'est KO
+        return false;
+    }
+
+    /// <summary>
+    /// L'item doit-il changer d'emplacement ?
+    /// </summary>
+    /// <param name="newItems">Stack de l'item à déplacer</param>
+    /// <returns></returns>
+    public bool MoveStackItems(ObservableStack<Item> stackItems)
+    {
+        // Si l'emplacement est vide ou qu'il est occupé par un item du même type
+        if (IsEmpty || stackItems.Peek().GetType() == MyItem.GetType())
+        {
+            // Nombre d'éléments de la stack
+            int count = stackItems.Count;
+
+            // Pour chaque élement de la stack
+            for (int i = 0; i < count; i++)
+            {
+                // Si l'emplacement est plein
+                if (IsFull)
+                {
+                    // Retourne que c'est KO
+                    return false;
+                }
+
+                // Ajoute l'item sur l'emplacement
+                AddItem(stackItems.Pop());
+            }
+
+            // Retourne que c'est OK
+            return true;
+        }
+
+        // Retourne que c'est KO
+        return false;
+    }
+
+    /// <summary>
+    /// Echange les emplacements
+    /// </summary>
+    public bool SwapItems(SlotScript from)
+    {
+        if (IsEmpty)
+        {
+            // Retourne que c'est KO
+            return false;
+        }
+
+        //Si les items sont de type différents ou que le total des 2 items est supérieur au maximum d'éléments de la Stack
+        if (from.MyItem.GetType() != MyItem.GetType() || from.MyCount + MyCount > MyItem.MyStackSize)
+        {
+            // Stack de l'item à deplacer
+            ObservableStack<Item> fromStack = new ObservableStack<Item>(from.items);
+
+            // Vide la stack de l'item de l'emplacement d'origine
+            from.items.Clear();
+
+            // Ajoute la Stack de l'item de l'emplacement sélectionné sur l'emplacement d'origine
+            from.MoveStackItems(items);
+
+            // Vide l'emplacement sélectionné
+            items.Clear();
+
+            // Ajoute la Stack de l'item de l'emplacement d'origine sur l'emplacement sélectionné
+            MoveStackItems(fromStack);
+
+            // Retourne que c'est OK
+            return true;
+        }
+
+        // Retourne que c'est KO
+        return false;
     }
 }
