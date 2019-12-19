@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -53,6 +54,9 @@ public class Hand : MonoBehaviour
     {
         // L'image a la position du curseur de la souris
         icon.transform.position = Input.mousePosition + offset;
+
+        // [DEBUG] : Supprime un item
+        DeleteItem();
     }
 
     /// <summary>
@@ -101,4 +105,28 @@ public class Hand : MonoBehaviour
         // Redéfinit une couleur noire transparente à l'objet
         icon.color = new Color(0, 0, 0, 0);
     }
+
+    /// <summary>
+    /// Supprime un item
+    /// </summary>
+    private void DeleteItem()
+    {
+        // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action) et qu'on déplace un item
+        if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject() && MyInstance.MyMoveable != null)
+        {
+            // Si c'est un item et qu'il vient d'un emplacement
+            if (MyMoveable is Item && InventoryScript.MyInstance.MyFromSlot != null)
+            {
+                // Vide l'emplacement
+                (MyMoveable as Item).MySlot.Clear();
+            }
+
+            // Libère l'item
+            Drop();
+
+            // Réinitialisation de l'emplacement
+            InventoryScript.MyInstance.MyFromSlot = null;
+        }
+    }
+
 }

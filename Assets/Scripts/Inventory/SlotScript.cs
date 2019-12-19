@@ -91,6 +91,21 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     }
 
     /// <summary>
+    /// Supprime la stack de l'item de l'emplacement
+    /// </summary>
+    public void Clear()
+    {
+        // S'il y a des éléments dans la stack
+        if (items.Count > 0)
+        {
+            // Retire tous les éléments de la stack
+            items.Clear();
+        }
+    }
+
+
+
+    /// <summary>
     /// Gestion du clic
     /// </summary>
     /// <param name="eventData">Evenement de clic</param>
@@ -112,7 +127,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             else if(InventoryScript.MyInstance.MyFromSlot != null)
             {
                 // Si l'item est sur le même emplacement ou qu'il change d'emplacement
-                if (PutItemBack() || SwapItems(InventoryScript.MyInstance.MyFromSlot) || MoveStackItems(InventoryScript.MyInstance.MyFromSlot.items))
+                if (PutItemBack() || MergeItems(InventoryScript.MyInstance.MyFromSlot) || SwapItems(InventoryScript.MyInstance.MyFromSlot) || MoveStackItems(InventoryScript.MyInstance.MyFromSlot.items))
                 {
                     // Libère l'item
                     Hand.MyInstance.Drop();
@@ -260,6 +275,37 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
 
             // Ajoute la Stack de l'item de l'emplacement d'origine sur l'emplacement sélectionné
             MoveStackItems(fromStack);
+
+            // Retourne que c'est OK
+            return true;
+        }
+
+        // Retourne que c'est KO
+        return false;
+    }
+
+    /// <summary>
+    /// Fusionne les emplacements
+    /// </summary>
+    public bool MergeItems(SlotScript from)
+    {
+        if (IsEmpty)
+        {
+            // Retourne que c'est KO
+            return false;
+        }
+
+        //Si les items sont de même type et que l'emplacement n'est pas plein
+        if (from.MyItem.GetType() == MyItem.GetType() && !IsFull)
+        {
+            // Emplacement(s) restant(s) dans la stack
+            int freeSpace = MyItem.MyStackSize - MyCount;
+
+            // Pour chaque emplacement vide restant
+            for (int i = 0; i < freeSpace; i++)
+            {
+                AddItem(from.items.Pop());
+            }
 
             // Retourne que c'est OK
             return true;

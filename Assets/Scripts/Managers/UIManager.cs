@@ -264,6 +264,9 @@ public class UIManager : MonoBehaviour
 
             // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
             clickable.MyStackText.color = new Color(0, 0, 0, 0);
+
+            // Actualise la couleur de l'image
+            clickable.MyIcon.color = Color.white;
         }
 
         // S'il n'y a plus d'élément
