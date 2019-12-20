@@ -37,6 +37,9 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     // Propriété d'accès sur l'indicateur d'un emplacement plein
     public bool IsFull { get => (IsEmpty || MyCount < MyItem.MyStackSize) ? false : true; }
 
+    // Propriété d'accès sur le sac qui contient l'emplacement
+    public BagScript MyBag { get; set; }
+
 
     /// <summary>
     /// Awake
@@ -123,20 +126,24 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
                 // Définit le slot sur lequel se trouve l'item
                 InventoryScript.MyInstance.MyFromSlot = this;
             }
-            // Si rien n'est en train d'être déplacé et que l'emplacement est vide et que je manipule un objet sac qui vient de la barre des sacs
+            // Si rien n'est en train d'être déplacé et que l'emplacement est vide et que l'objet sac manipulé vient de la barre des sacs
             else if (InventoryScript.MyInstance.MyFromSlot == null && IsEmpty && Hand.MyInstance.MyMoveable is Bag)
             {
                 // Cast l'item en type Bag
                 Bag bag = (Bag)Hand.MyInstance.MyMoveable;
 
-                // Ajoute un item sur l'emplacement
-                AddItem(bag);
+                // Si le sac n'est pas a déposer dans un de ses emplacements et qu'il y a assez de place pour contenir ce que contient le sac
+                if(bag.MyBagScript != MyBag && InventoryScript.MyInstance.MyEmptySlotCount - bag.MySlotsCount > 0)
+                {
+                    // Ajoute un item sur l'emplacement
+                    AddItem(bag);
 
-                // Déséquipe le sac de la liste des sacs
-                bag.MyBagButton.RemoveBag();
+                    // Déséquipe le sac de la liste des sacs
+                    bag.MyBagButton.RemoveBag();
 
-                // Libère l'item
-                Hand.MyInstance.Drop();
+                    // Libère l'item
+                    Hand.MyInstance.Drop();
+                }
             }
             // Si un item est en train d'être déplacé
             else if(InventoryScript.MyInstance.MyFromSlot != null)

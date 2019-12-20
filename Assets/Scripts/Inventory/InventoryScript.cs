@@ -40,7 +40,6 @@ public class InventoryScript : MonoBehaviour
     // Propriété sur l'indicateur d'ajout des sacs
     public bool CanAddBag { get => bags.Count < bagButtons.Length; }
 
-
     // Référence sur un emplacement
     private SlotScript fromSlot;
 
@@ -58,6 +57,24 @@ public class InventoryScript : MonoBehaviour
             }
         }
     }
+
+    // Propriété d'accès au nombre d'emplacements vides
+    public int MyEmptySlotCount
+    {
+        get
+        {
+            int count = 0;
+
+            // Pour chaque sac
+            foreach (Bag bag in bags)
+            {
+                count += bag.MyBagScript.MyEmptySlotCount;
+            }
+
+            return count;
+        }
+    }
+
 
 
     /// <summary>

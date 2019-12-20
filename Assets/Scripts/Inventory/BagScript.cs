@@ -24,6 +24,27 @@ public class BagScript : MonoBehaviour
     // Propriété d'accès sur l'indicateur d'ouverture du sac
     public bool IsOpen { get => canvasGroup.alpha > 0; }
 
+    // Propriété d'accès au nombre d'emplacements vides
+    public int MyEmptySlotCount
+    {
+        get
+        {
+            int count = 0;
+
+            // Pour chaque emplacement
+            foreach (SlotScript slot in MySlots)
+            {
+                // Si l'emplacement est vide
+                if (slot.IsEmpty)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+    }
+
 
     /// <summary>
     /// Awake
@@ -44,6 +65,9 @@ public class BagScript : MonoBehaviour
         {
             // Instantiation d'un objet Slot
             SlotScript slot = Instantiate(slotPrefab, transform).GetComponent<SlotScript>();
+
+            //Assigne le sac à l'emplacement
+            slot.MyBag = this;
 
             // Ajoute l'emplacement dans la liste des emplacements du sac
             slots.Add(slot);
