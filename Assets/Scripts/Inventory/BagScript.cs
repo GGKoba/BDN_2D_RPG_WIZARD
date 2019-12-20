@@ -110,4 +110,31 @@ public class BagScript : MonoBehaviour
         // Retourne que c'est KO
         return false;
     }
+
+    /// <summary>
+    /// Renvoie la liste des items du sac
+    /// </summary>
+    /// <returns></returns>
+    public List<Item> GetItems()
+    {
+        // Liste des items du sac
+        List<Item> items = new List<Item>();
+
+        // Pour tous les emplacements du sac
+        foreach (SlotScript slot in slots)
+        {
+            // Si l'emplacement n'est pas vide
+            if (!slot.IsEmpty)
+            {
+                // Pour tous les items de l'emplacement
+                foreach (Item item in slot.MyItems)
+                {
+                    items.Add(item);
+                }
+            }
+        }
+
+        // Retourne la liste
+        return items;
+    }
 }

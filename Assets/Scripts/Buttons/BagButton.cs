@@ -65,6 +65,13 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
         // Réinitialisation du bouton du sac
         MyBag.MyBagButton = null;
 
+        // Pour tous les items du sac
+        foreach (Item item in MyBag.MyBagScript.GetItems())
+        {
+            // Ajoute tous les items du sac dans l'inventaire
+            InventoryScript.MyInstance.AddItem(item);
+        }
+
         // Réinitialisation du sac
         MyBag = null;
     }

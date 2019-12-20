@@ -11,6 +11,9 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     // Liste (Stack) des items de l'emplacement
     private readonly ObservableStack<Item> items = new ObservableStack<Item>();
 
+    // Propriété d'accès à la stack des items de l'emplacement
+    public ObservableStack<Item> MyItems { get => items; }
+    
     // Image de l'emplacement
     [SerializeField]
     private Image icon;
