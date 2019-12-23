@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour
     // Propriété d'accès à la position de la caméra dans le jeu 
     private Vector3 WorldStartPosition { get => Camera.main.ScreenToWorldPoint(new Vector3(0, 0)); }
 
-    // Dictionnaire des élements de type Water (Coordonnées => Element)
+    // Dictionnaire des éléments de type Water (Coordonnées => Element)
     private readonly Dictionary<Point, GameObject> waterTiles = new Dictionary<Point, GameObject>();
 
 
@@ -101,7 +101,7 @@ public class LevelManager : MonoBehaviour
                             waterTiles.Add(new Point(x, y), gameObjectElement);
                         }
 
-                        // Ajoute les objets comme des enfants de l'élement Map
+                        // Ajoute les objets comme des enfants de l'élément Map
                         gameObjectElement.transform.parent = map;
                     }
                 }

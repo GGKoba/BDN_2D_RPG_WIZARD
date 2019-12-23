@@ -38,7 +38,7 @@ public class SpellBook : MonoBehaviour
     [SerializeField]
     public Image castingBar;
 
-    // Référence à l'icône du sort de la barre de cast du joueur
+    // Référence à l'image du sort de la barre de cast du joueur
     [SerializeField]
     private Image icon = default;
 
@@ -85,7 +85,7 @@ public class SpellBook : MonoBehaviour
         // Adapte la couleur de la barre avec celle qui est liée au sort
         castingBar.color = spell.MyBarColor;
 
-        // Adapte l'icône de la barre avec celle qui est liée au sort
+        // Adapte l'image de la barre avec celle qui est liée au sort
         icon.sprite = spell.MyIcon;
 
         // Adapte le nom du sort de la barre avec celui qui est liée au sort

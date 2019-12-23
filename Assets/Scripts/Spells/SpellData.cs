@@ -17,7 +17,7 @@ public class SpellData : IUseable, IMoveable
     [SerializeField]
     private int damage = default;
 
-    // Icône du sort
+    // Image du sort
     [SerializeField]
     private Sprite icon = default;
 
@@ -48,7 +48,7 @@ public class SpellData : IUseable, IMoveable
     // Propriété d'accès aux dégâts du sort
     public int MyDamage { get => damage; }
 
-    // Propriété d'accès à l'icône du sort 
+    // Propriété d'accès à l'image du sort 
     public Sprite MyIcon { get => icon; }
 
     // Propriété d'accès à la vitesse du sort 

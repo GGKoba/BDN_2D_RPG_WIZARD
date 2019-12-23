@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ClickTarget()
     {
-        // Clic droit et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
+        // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
             // Raycast depuis la position de la souris dans le jeu

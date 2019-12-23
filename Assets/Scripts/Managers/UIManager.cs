@@ -88,9 +88,10 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // Si on presse la touche Esc
+        // [Esc] : Menu Raccourci
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            // Ouverture/Fermeture du menu des raccourcis
             OpenClose(keyBindMenu);
             /*
             if (isOpenMenu)
@@ -106,10 +107,18 @@ public class UIManager : MonoBehaviour
             */
         }
 
-        // Si on presse la touche P
+        // [P] : Menu Sorts
         if (Input.GetKeyDown(KeyCode.P))
         {
+            // Ouverture/Fermeture du menu des sorts
             OpenClose(spellBookMenu);
+        }
+
+        // [B] : Sacs
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            // Ouverture/Fermeture de tous les sacs de l'inventaire
+            InventoryScript.MyInstance.OpenClose();
         }
     }
 
@@ -189,6 +198,7 @@ public class UIManager : MonoBehaviour
         isOpenMenu = false;
     }
     */
+
     /// <summary>
     /// Mise à jour du texte des touches
     /// </summary>
@@ -228,4 +238,53 @@ public class UIManager : MonoBehaviour
         // Début(0)/fin(1) de pause
         //Time.timeScale = Time.timeScale > 0 ? 0 : 1;
     }
+
+    /// <summary>
+    /// Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
+    /// </summary>
+    /// <param name="clickable"></param>
+    public void UpdateStackSize(IClickable clickable)
+    {
+        // S'il y a plus d'un élément
+        if (clickable.MyCount > 1)
+        {
+            // Actualise le texte du nombre d'éléments de l'item
+            clickable.MyStackText.text = clickable.MyCount.ToString();
+
+            // Actualise la couleur du texte
+            clickable.MyStackText.color = Color.white;
+
+            // Actualise la couleur de l'image
+            clickable.MyIcon.color = Color.white;
+        }
+        else
+        {
+            // Réinitialisation du texte du nombre d'éléments de l'item
+            clickable.MyStackText.text = null;
+
+            // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
+            clickable.MyStackText.color = new Color(0, 0, 0, 0);
+
+            // Actualise la couleur de l'image
+            clickable.MyIcon.color = Color.white;
+        }
+
+        // S'il n'y a plus d'élément
+        if (clickable.MyCount == 0)
+        {
+            // Réinitialisation de l'image de l'emplacement
+            clickable.MyIcon.sprite = null;
+
+            // Réinitialisation de la couleur de l'emplacement
+            clickable.MyIcon.color = new Color(0, 0, 0, 0);
+            /*
+            // Réinitialisation du texte du nombre d'éléments de l'item
+            clickable.MyStackText.text = null;
+
+            // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
+            clickable.MyStackText.color = new Color(0, 0, 0, 0);
+            */
+        }
+    }
+
 }
