@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -22,6 +23,12 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     // Propriété d'accès à l'image du bouton
     public Image MyIcon { get => icon; set => icon = value; }
 
+    // Propriété d'accès aux items de l'emplacement
+    public Stack<IUseable> useables;
+
+    // Nombre d'emplacement
+    private int count;
+
 
     /// <summary>
     /// Start
@@ -40,10 +47,22 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnClick()
     {
-        // S'il y a quelque chose à utiliser
-        if (MyUseable != null)
+        // Si je manipule quelque chose
+        if (Hand.MyInstance.MyMoveable == null)
         {
-            MyUseable.Use();
+            // S'il y a quelque chose à utiliser
+            if (MyUseable != null)
+            {
+                // Utilisation de l'item
+                MyUseable.Use();
+            }
+
+            // S'il y a un item (stack) à utiliser
+            if (useables != null && useables.Count > 0)
+            {
+                // Utilisation de l'item
+                useables.Pop().Use();
+            }
         }
     }
     
@@ -71,8 +90,26 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     /// <param name="useable">Objet utilisable</param>
     public void SetUseable(IUseable useable)
     {
-        // Utilisation du bouton
-        MyUseable = useable;
+        // Si c'est un item
+        if (useable is Item)
+        {
+            // L'item est utilisable
+            useables = InventoryScript.MyInstance.GetUseables(useable);
+
+            // nombre d'élément de la Stack
+            count = useables.Count;
+
+            // Actualise la couleur de l'emplacement
+            InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
+
+            // Réinitilisatiion de l'emplacement
+            InventoryScript.MyInstance.MyFromSlot = null;
+        }
+        else
+        {
+            // Utilisation du bouton
+            MyUseable = useable;
+        }
 
         // Mise à jour de l'image
         UpdateVisual();

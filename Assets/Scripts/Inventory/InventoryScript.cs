@@ -75,6 +75,31 @@ public class InventoryScript : MonoBehaviour
         }
     }
 
+    // Propriété d'accès au nombre d'emplacements du sac
+    public int MyTotalSlotCount
+    { 
+        get
+        {
+            int count = 0;
+
+            // Pour chaque sac
+            foreach (Bag bag in bags)
+            {
+                count += bag.MyBagScript.MySlots.Count;
+            }
+
+            return count;
+        }
+    }
+
+    // Propriété d'accès au nombre d'emplacements plein du sac
+    public int MyFullSlotCount
+    {
+        get
+        {
+            return MyTotalSlotCount - MyEmptySlotCount;
+        }
+    }
 
 
     /// <summary>
@@ -159,6 +184,19 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Ajoute un sac à sur un emplacement spécifique 
+    /// </summary>
+    public void AddBag(Bag bag, BagButton bagButton)
+    {
+        // Ajoute un sac à sur la barre des sacs
+        bags.Add(bag);
+
+        // Ajoute le sac sur un bouton
+        bagButton.MyBag = bag;
+    }
+
+
+    /// <summary>
     /// Retire un sac à sur la barre des sacs
     /// </summary>
     /// <param name="bag">Sac à retirer</param>
@@ -171,7 +209,48 @@ public class InventoryScript : MonoBehaviour
         Destroy(bag.MyBagScript.gameObject);
     }
 
+    /// <summary>
+    /// Echange les sacs
+    /// </summary>
+    /// <param name="oldBag">Ancien sac</param>
+    /// <param name="newBag">Nouveau sac</param>
+    public void SwapBags(Bag oldBag, Bag newBag)
+    {
+        int newSlotCount = (MyTotalSlotCount - oldBag.MySlotsCount) + newBag.MySlotsCount;
 
+        // S'il y a assez de place entre les emplacements du nouveau sac et du sac à échanger
+        if (newSlotCount - MyFullSlotCount >= 0)
+        {
+            // Items du sac à échanger
+            List<Item> bagItems = oldBag.MyBagScript.GetItems();
+
+            // Retire l'ancien sac
+            RemoveBag(oldBag);
+
+            // Reprend le bouton de l'ancien sac
+            newBag.MyBagButton = oldBag.MyBagButton;
+
+            // Ajoute le nouveau sac
+            newBag.Use();
+
+            // Pour tous les elemnts du sac
+            foreach(Item item in bagItems)
+            {
+                // Si l'item est différent de mon sac
+                if (item != newBag)
+                {
+                    // Ajoute l'item
+                    AddItem(oldBag);
+                }
+            }
+            
+            // Libère l'item
+            Hand.MyInstance.Drop();
+
+            // Réinitialisation de l'emplacement de base
+            MyInstance.fromSlot = null;
+        }
+    }
 
     /// <summary>
     /// Ouverture/Fermeture de tous les sacs de l'inventaire
@@ -256,5 +335,37 @@ public class InventoryScript : MonoBehaviour
                 return;
             }
         }
+    }
+
+    /// <summary>
+    /// Retourne les items "useable"
+    /// </summary>
+    /// <param name="useable">Lite des items "useable"</param>
+    /// <returns></returns>
+    public Stack<IUseable> GetUseables(IUseable useable)
+    {
+        // Stack des items utilisables
+        Stack<IUseable> items = new Stack<IUseable>();
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est le même type
+                if (!slot.IsEmpty && slot.MyItem.GetType() == useable.GetType())
+                {
+                    // Pour tous les items de l'emplacement
+                    foreach (Item item in slot.MyItems)
+                    {
+                        items.Push(item as IUseable);
+                    }
+                }
+            }
+        }
+
+        // Retourne la stack des items utilisables
+        return items;
     }
 }
