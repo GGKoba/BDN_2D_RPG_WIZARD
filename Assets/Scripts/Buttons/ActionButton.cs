@@ -96,7 +96,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
             // L'item est utilisable
             useables = InventoryScript.MyInstance.GetUseables(useable);
 
-            // nombre d'élément de la Stack
+            // Nombre d'éléments de la Stack
             count = useables.Count;
 
             // Actualise la couleur de l'emplacement
