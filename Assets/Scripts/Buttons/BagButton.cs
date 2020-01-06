@@ -40,8 +40,37 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
         // Clic gauche
         if (eventData.button == PointerEventData.InputButton.Left)
         {
+            // Si c'est un sac que l'on veut glisser
+            if (InventoryScript.MyInstance.MyFromSlot != null && Hand.MyInstance.MyMoveable != null && Hand.MyInstance.MyMoveable is Bag)
+            {
+                if (MyBag != null)
+                {
+                    // Echange les sacs
+                    InventoryScript.MyInstance.SwapBags(MyBag, Hand.MyInstance.MyMoveable as Bag);
+                }
+                else
+                {
+                    // Cast l'objet en "Sac"
+                    Bag aBag =(Bag)Hand.MyInstance.MyMoveable;
+                    
+                    // Assigne le bouton au sac
+                    aBag.MyBagButton = this;
+
+                    // Equipe le sac
+                    aBag.Use();
+
+                    // Assigne le sac
+                    MyBag = aBag;
+
+                    // Libère l'item
+                    Hand.MyInstance.Drop();
+
+                    // Réinitialisation de l'emplacement
+                    InventoryScript.MyInstance.MyFromSlot = null;
+                }
+            }
             // [LEFT SHIFT] : Déséquipe le sac
-            if (Input.GetKey(KeyCode.LeftShift))
+            else if (Input.GetKey(KeyCode.LeftShift))
             {
                 // Drag le sac
                 Hand.MyInstance.TakeMoveable(MyBag);
