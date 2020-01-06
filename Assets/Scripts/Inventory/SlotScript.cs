@@ -207,8 +207,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// <returns></returns>
     public bool StackItem(Item item)
     {
-        // S'il y a un item sur l'emplacement et qu'il a le même nom que l'item à stacker et que la taille de la Stack de l'emplacement est inférieure au nombre de stack de l'item
-        if (!IsEmpty && item.name == MyItem.name && items.Count < MyItem.MyStackSize)
+        // S'il y a un item sur l'emplacement et qu'il a le même type que l'item à stacker et que la taille de la Stack de l'emplacement est inférieure au nombre de stack de l'item
+        if (!IsEmpty && item.GetType() == MyItem.GetType() && items.Count < MyItem.MyStackSize)
         {
             // Ajoute l'item dans la Stack des items de l'emplacement
             items.Push(item);
@@ -229,7 +229,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// </summary>
     private void UpdateSlot()
     {
-        // Mise à jour de la Stack de l'emplacement de l'item
+        // Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
         UIManager.MyInstance.UpdateStackSize(this);
     }
 
@@ -299,7 +299,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             return false;
         }
 
-        //Si les items sont de type différents ou que le total des 2 items est supérieur au maximum d'éléments de la Stack
+        // Si les items sont de type différents ou que le total des 2 items est supérieur au maximum d'éléments de la Stack
         if (from.MyItem.GetType() != MyItem.GetType() || from.MyCount + MyCount > MyItem.MyStackSize)
         {
             // Stack de l'item à deplacer
@@ -336,7 +336,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             return false;
         }
 
-        //Si les items sont de même type et que l'emplacement n'est pas plein
+        // Si les items sont de même type et que l'emplacement n'est pas plein
         if (from.MyItem.GetType() == MyItem.GetType() && !IsFull)
         {
             // Emplacement(s) restant(s) dans la stack

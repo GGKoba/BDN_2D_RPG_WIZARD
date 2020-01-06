@@ -142,7 +142,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable
         // S'il y a plus d'un élement
         if (count > 1)
         {
-            // Mise à jour du texte du bouton
+            // Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
             UIManager.MyInstance.UpdateStackSize(this);
         }
     }
@@ -165,7 +165,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable
                 // Actualise le nombre d'éléments de la Stack de l'emplacement
                 count = useables.Count;
 
-                // Mise à jour du texte du bouton
+                // Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
                 UIManager.MyInstance.UpdateStackSize(this);
             }
         }
