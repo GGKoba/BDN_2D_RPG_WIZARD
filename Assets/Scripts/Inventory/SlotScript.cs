@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion des emplacements des sacs
 /// </summary>
-public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
+public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // Liste (Stack) des items de l'emplacement
     private readonly ObservableStack<Item> items = new ObservableStack<Item>();
@@ -111,8 +111,6 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             items.Clear();
         }
     }
-
-
 
     /// <summary>
     /// Gestion du clic
@@ -354,5 +352,29 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
 
         // Retourne que c'est KO
         return false;
+    }
+
+    /// <summary>
+    /// Entrée du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement d'entrée</param>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // S'il y a un item dans l'emplacement
+        if (!IsEmpty)
+        {
+            // Affiche le tooltip
+            UIManager.MyInstance.ShowTooltip();
+        }
+    }
+
+    /// <summary>
+    /// Sortie du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement de sortie</param>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Masque le tooltip
+        UIManager.MyInstance.HideTooltip();
     }
 }

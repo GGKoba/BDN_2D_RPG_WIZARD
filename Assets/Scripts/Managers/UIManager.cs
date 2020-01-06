@@ -49,6 +49,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image targetPortrait = default;
 
+    // Tooltip
+    [SerializeField]
+    private GameObject tooltip = default;
+
     // Barre de vie de la cible
     private Stat healthStat;
 
@@ -280,4 +284,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Affiche le tooltip
+    /// </summary>
+    public void ShowTooltip()
+    {
+        tooltip.SetActive(true);
+    }
+
+    /// <summary>
+    /// Masque le tooltip
+    /// </summary>
+    public void HideTooltip()
+    {
+        // Affiche le tooltip
+        tooltip.SetActive(false);
+    }
 }
