@@ -287,8 +287,13 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Affiche le tooltip
     /// </summary>
-    public void ShowTooltip()
+    /// <param name="position">Position du tooltip</param>
+    public void ShowTooltip(Vector3 position)
     {
+        // Position du tooltip
+        tooltip.transform.position = position;
+
+        // Affichage du tooltip
         tooltip.SetActive(true);
     }
 
@@ -297,7 +302,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void HideTooltip()
     {
-        // Affiche le tooltip
+        // Masquage du tooltip
         tooltip.SetActive(false);
     }
 }

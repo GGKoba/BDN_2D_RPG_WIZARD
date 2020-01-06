@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion des boutons d'actions
 /// </summary>
-public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable
+public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPointerEnterHandler, IPointerExitHandler
 {
     // Propriété d'accès à l'objet utilisable
     public IUseable MyUseable { get; set; }
@@ -169,5 +169,35 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable
                 UIManager.MyInstance.UpdateStackSize(this);
             }
         }
+    }
+
+    /// <summary>
+    /// Entrée du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement d'entrée</param>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // S'il y a un objet utilisable (sort)
+        if (MyUseable != null)
+        {
+            // Affiche le tooltip
+            UIManager.MyInstance.ShowTooltip(transform.position);
+        }
+        // S'il y a un item qui a plusieurs élements (objet stackable)
+        else if (useables.Count > 0)
+        {
+            // Affiche le tooltip
+            UIManager.MyInstance.ShowTooltip(transform.position);
+        }
+    }
+
+    /// <summary>
+    /// Sortie du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement de sortie</param>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Masque le tooltip
+        UIManager.MyInstance.HideTooltip();
     }
 }
