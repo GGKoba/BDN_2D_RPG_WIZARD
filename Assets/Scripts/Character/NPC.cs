@@ -15,10 +15,10 @@ public delegate void CharacterRemoved();
 public class NPC : Character
 {
     // Evènement de changement de valeur de la vie
-    public event HealthChanged HealthChanged;
+    public event HealthChanged HealthChangedEvent;
 
     // Evènement de disparition du personnage
-    public event CharacterRemoved CharacterRemoved;
+    public event CharacterRemoved CharacterRemovedEvent;
 
 
     // Image de la cible
@@ -50,10 +50,10 @@ public class NPC : Character
     public virtual void DeSelect()
     {
         // Désabonnement de l'évènement de changement de vie
-        HealthChanged -= new HealthChanged(UIManager.MyInstance.UpdateTargetFrame);
+        HealthChangedEvent -= new HealthChanged(UIManager.MyInstance.UpdateTargetFrame);
 
         // Désabonnement de l'évènement de disparition du personnage
-        CharacterRemoved -= new CharacterRemoved(UIManager.MyInstance.HideTargetFrame);
+        CharacterRemovedEvent -= new CharacterRemoved(UIManager.MyInstance.HideTargetFrame);
     }
 
     /// <summary>
@@ -72,10 +72,10 @@ public class NPC : Character
     public void OnHealthChanged(float health)
     {
         // S'il y a un abonnement à cet évènement
-        if (HealthChanged != null)
+        if (HealthChangedEvent != null)
         {
             // Déclenchement de l'évènement de changement de la valeur de la vie
-            HealthChanged(health);
+            HealthChangedEvent.Invoke(health);
         }
     }
 
@@ -85,10 +85,10 @@ public class NPC : Character
     public void OnCharacterRemoved()
     {
         // S'il y a un abonnement à cet évènement
-        if (CharacterRemoved != null)
+        if (CharacterRemovedEvent != null)
         {
             // Déclenchement de l'évènement de disparition du personnage
-            CharacterRemoved();
+            CharacterRemovedEvent.Invoke();
         }
 
         // Destruction du personnage

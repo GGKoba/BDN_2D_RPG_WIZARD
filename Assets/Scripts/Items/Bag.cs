@@ -55,12 +55,12 @@ public class Bag : Item, IUseable
             // s'il n'y a pas d'emplacement
             if( MyBagButton == null)
             {
-                // Ajoute le sac sur un emplacement (BagButton
+                // Ajoute le sac sur un emplacement (BagButton)
                 InventoryScript.MyInstance.AddBag(this);
             }
             else
             {
-                // Ajoute le sac sur un emplacement donné => BagButton
+                // Ajoute le sac sur un emplacement (BagButton) spécifique
                 InventoryScript.MyInstance.AddBag(this, MyBagButton);
             }
         }

@@ -12,13 +12,13 @@ public delegate void StackUpdated();
 public class ObservableStack<T> : Stack<T>
 {
     // Evènement d'ajout dans la stack d'un emplacement
-    public event StackUpdated OnPush;
+    public event StackUpdated PushEvent;
 
     // Evènement de retrait dans la stack d'un emplacement
-    public event StackUpdated OnPop;
+    public event StackUpdated PopEvent;
 
     // Evènement de nettoyage de la stack d'un emplacement
-    public event StackUpdated OnClear;
+    public event StackUpdated ClearEvent;
 
     // Constructeur vide
     public ObservableStack() { }
@@ -37,10 +37,10 @@ public class ObservableStack<T> : Stack<T>
         base.Push(item);
 
         // S'il existe un abonnement à cet évènement
-        if (OnPush != null)
+        if (PushEvent != null)
         {
             // Déclenchement de l'évènement d'ajout dans la stack d'un emplacement
-            OnPush();
+            PushEvent.Invoke();
         }
 
     }
@@ -54,10 +54,10 @@ public class ObservableStack<T> : Stack<T>
         T item = base.Pop();
 
         // S'il existe un abonnement à cet évènement
-        if (OnPop != null)
+        if (PopEvent != null)
         {
             // Déclenchement de l'évènement de retrait dans la stack d'un emplacement
-            OnPop();
+            PopEvent.Invoke();
         }
 
         // Retourne l'item
@@ -73,11 +73,10 @@ public class ObservableStack<T> : Stack<T>
         base.Clear();
 
         // S'il existe un abonnement à cet évènement
-        if (OnClear != null)
+        if (ClearEvent != null)
         {
             // Déclenchement de l'évènement nettoyage de la stack d'un emplacement
-            OnClear();
+            ClearEvent.Invoke();
         }
     }
-
 }

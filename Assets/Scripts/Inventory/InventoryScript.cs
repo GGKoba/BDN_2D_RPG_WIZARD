@@ -3,11 +3,18 @@ using UnityEngine;
 
 
 
+// Gestion de la mise à jour du nombre d'élements de l'item
+public delegate void ItemCountChanged(Item item);
+
+
 /// <summary>
 /// Classe de gestion de l'inventaire
 /// </summary>
 public class InventoryScript : MonoBehaviour
 {
+    // Evènement de mise à jour du nombre d'élements de l'item
+    public event ItemCountChanged ItemCountChangedEvent;
+
     // Instance de classe (singleton)
     private static InventoryScript instance;
 
@@ -309,6 +316,9 @@ public class InventoryScript : MonoBehaviour
                 // Si l'item peut être ajouté dans la stack de l'emplacement
                 if (slot.StackItem(item))
                 {
+                    // Déclenche l'évènement de mise à jour du nombre d'élements de l'item
+                    OnItemCountChanged(item);
+
                     // Retourne que c'est OK
                     return true;
                 }
@@ -331,6 +341,9 @@ public class InventoryScript : MonoBehaviour
             // Si l'ajout dans le sac est OK
             if (bag.MyBagScript.AddItem(item))
             {
+                // Déclenche l'évènement de mise à jour du nombre d'élements de l'item
+                OnItemCountChanged(item);
+
                 // Pas besoin d'aller plus loin
                 return;
             }
@@ -338,9 +351,9 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Retourne les items "useable"
+    /// Retourne les items "useable" d'un même type
     /// </summary>
-    /// <param name="useable">Lite des items "useable"</param>
+    /// <param name="useable">Item "useable"</param>
     /// <returns></returns>
     public Stack<IUseable> GetUseables(IUseable useable)
     {
@@ -367,5 +380,20 @@ public class InventoryScript : MonoBehaviour
 
         // Retourne la stack des items utilisables
         return items;
+    }
+
+
+    /// <summary>
+    /// Appelle l'évènement de mise à jour du nombre d'élements de l'item
+    /// </summary>
+    /// <param name="item">Item courant</param>
+    public void OnItemCountChanged(Item item)
+    {
+        // S'il existe un abonnement à cet évènement
+        if (ItemCountChangedEvent != null)
+        {
+            // Déclenchement de mise à jour du nombre d'élements de l'item
+            ItemCountChangedEvent.Invoke(item);
+        }
     }
 }

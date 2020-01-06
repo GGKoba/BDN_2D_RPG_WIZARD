@@ -138,10 +138,10 @@ public class UIManager : MonoBehaviour
         targetPortrait.sprite = target.MyPortrait;
 
         // Abonnement sur l'évènement de changement de vie
-        target.HealthChanged += new HealthChanged(UpdateTargetFrame);
+        target.HealthChangedEvent += new HealthChanged(UpdateTargetFrame);
 
         // Abonnement sur l'évènement de disparition du personnage
-        target.CharacterRemoved += new CharacterRemoved(HideTargetFrame);
+        target.CharacterRemovedEvent += new CharacterRemoved(HideTargetFrame);
     }
 
     /// <summary>
@@ -277,13 +277,6 @@ public class UIManager : MonoBehaviour
 
             // Réinitialisation de la couleur de l'emplacement
             clickable.MyIcon.color = new Color(0, 0, 0, 0);
-            /*
-            // Réinitialisation du texte du nombre d'éléments de l'item
-            clickable.MyStackText.text = null;
-
-            // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
-            clickable.MyStackText.color = new Color(0, 0, 0, 0);
-            */
         }
     }
 

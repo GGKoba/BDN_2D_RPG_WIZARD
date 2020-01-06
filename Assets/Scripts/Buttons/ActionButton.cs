@@ -8,9 +8,9 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion des boutons d'actions
 /// </summary>
-public class ActionButton : MonoBehaviour, IPointerClickHandler
+public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable
 {
-    // Propriété d'accès à l'bjet utilisable
+    // Propriété d'accès à l'objet utilisable
     public IUseable MyUseable { get; set; }
 
     // Propriété d'accès au bouton d'action
@@ -24,10 +24,20 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     public Image MyIcon { get => icon; set => icon = value; }
 
     // Propriété d'accès aux items de l'emplacement
-    public Stack<IUseable> useables;
+    public Stack<IUseable> useables = new Stack<IUseable>();
 
-    // Nombre d'emplacement
+    // Nombre d'éléments de la Stack de l'emplacement
     private int count;
+
+    // Propriété d'accès au nombre d'éléments de la Stack de l'emplacement
+    public int MyCount { get => count; }
+
+    // Texte du bouton d'action
+    [SerializeField]
+    private Text stackSize = default;
+
+    // Propriété d'accès au texte du bouton d'action
+    public Text MyStackText { get => stackSize; }
 
 
     /// <summary>
@@ -40,6 +50,9 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
         // Ecoute l'évènement OnClick sur le bouton et déclenche OnClick()
         MyActionButton.onClick.AddListener(OnClick);
+
+        // Abonnement sur l'évènement de mise à jour du nombre d'élements de l'item
+        InventoryScript.MyInstance.ItemCountChangedEvent += new ItemCountChanged(UpdateItemCount);
     }
 
     /// <summary>
@@ -60,8 +73,8 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
             // S'il y a un item (stack) à utiliser
             if (useables != null && useables.Count > 0)
             {
-                // Utilisation de l'item
-                useables.Pop().Use();
+                // Utilisation de l'item (Peek retourne l'item situé en haut de la Stack sans le supprimer)
+                useables.Peek().Use();
             }
         }
     }
@@ -125,5 +138,36 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
         // Couleur du bouton
         MyIcon.color = Color.white;
+
+        // S'il y a plus d'un élement
+        if (count > 1)
+        {
+            // Mise à jour du texte du bouton
+            UIManager.MyInstance.UpdateStackSize(this);
+        }
+    }
+
+    /// <summary>
+    /// Actualise le nombre d'éléments du bouton
+    /// </summary>
+    /// <param name="item"></param>
+    public void UpdateItemCount(Item item)
+    {
+        // Si c'est un item utilisable et qu'il a un ou plusieurs élements dans sa stack
+        if (item is IUseable && useables.Count > 0)
+        {
+            // Si cet item est le même que celui du bouton
+            if (useables.Peek().GetType() == item.GetType())
+            {
+                // Nombre d'éléments du même type
+                useables = InventoryScript.MyInstance.GetUseables(item as IUseable);
+
+                // Actualise le nombre d'éléments de la Stack de l'emplacement
+                count = useables.Count;
+
+                // Mise à jour du texte du bouton
+                UIManager.MyInstance.UpdateStackSize(this);
+            }
+        }
     }
 }

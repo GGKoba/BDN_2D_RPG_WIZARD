@@ -50,13 +50,13 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     public void Awake()
     {
         // Abonnement sur l'évènement d'ajout dans la stack d'un emplacement
-        items.OnPush += new StackUpdated(UpdateSlot);
+        items.PushEvent += new StackUpdated(UpdateSlot);
 
         // Abonnement sur l'évènement de retrait dans la stack d'un emplacement
-        items.OnPop += new StackUpdated(UpdateSlot);
+        items.PopEvent += new StackUpdated(UpdateSlot);
 
         // Abonnement sur l'évènement de nettoyage de la stack d'un emplacement
-        items.OnClear += new StackUpdated(UpdateSlot);
+        items.ClearEvent += new StackUpdated(UpdateSlot);
     }
 
     /// <summary>
@@ -91,8 +91,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         // S'il y a un item sur l'emplacement
         if (!IsEmpty)
         {
-            // Enleve l'item situé en haut de la Stack
-            items.Pop();
+            // Appelle l'évènement de mise à jour du nombre d'élements de l'item en enlevant l'item situé en haut de la Stack
+            InventoryScript.MyInstance.OnItemCountChanged(items.Pop());
         }
     }
 
@@ -104,6 +104,9 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         // S'il y a des éléments dans la stack
         if (items.Count > 0)
         {
+            // Appelle l'évènement de mise à jour du nombre d'élements de l'item en enlevant l'item situé en haut de la Stack
+            InventoryScript.MyInstance.OnItemCountChanged(items.Pop());
+
             // Retire tous les éléments de la stack
             items.Clear();
         }
