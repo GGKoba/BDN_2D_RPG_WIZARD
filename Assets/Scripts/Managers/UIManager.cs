@@ -53,6 +53,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject tooltip = default;
 
+    // Texte du tooltip
+    private Text tooltipText;
+
     // Barre de vie de la cible
     private Stat healthStat;
 
@@ -70,6 +73,9 @@ public class UIManager : MonoBehaviour
     {
         // Référence sur les boutons des touches
         keyBindButtons = GameObject.FindGameObjectsWithTag("KeyBind");
+
+        // Référence sur le texte du tooltip
+        tooltipText = tooltip.GetComponentInChildren<Text>();
     }
 
     /// <summary>
@@ -288,10 +294,14 @@ public class UIManager : MonoBehaviour
     /// Affiche le tooltip
     /// </summary>
     /// <param name="position">Position du tooltip</param>
-    public void ShowTooltip(Vector3 position)
+    /// <param name="itemDescription">Description du tooltip</param>
+    public void ShowTooltip(Vector3 position, IDescribable itemDescription)
     {
         // Position du tooltip
         tooltip.transform.position = position;
+
+        // Description du tooltip
+        tooltipText.text = itemDescription.GetDescription();
 
         // Affichage du tooltip
         tooltip.SetActive(true);

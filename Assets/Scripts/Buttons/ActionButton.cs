@@ -181,13 +181,13 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         if (MyUseable != null)
         {
             // Affiche le tooltip
-            UIManager.MyInstance.ShowTooltip(transform.position);
+            //UIManager.MyInstance.ShowTooltip(transform.position);
         }
         // S'il y a un item qui a plusieurs élements (objet stackable)
         else if (useables.Count > 0)
         {
             // Affiche le tooltip
-            UIManager.MyInstance.ShowTooltip(transform.position);
+            //UIManager.MyInstance.ShowTooltip(transform.position);
         }
     }
 

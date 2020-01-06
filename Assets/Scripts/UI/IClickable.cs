@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+
+
 /// <summary>
 /// Interface des éléments cliquables de l'interface
 /// </summary>

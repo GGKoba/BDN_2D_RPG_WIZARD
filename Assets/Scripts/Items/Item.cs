@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-
-
+using UnityEngine.UI;
 
 /// <summary>
 /// Classe abstraite dont tous les objets héritent
 /// </summary>
-public abstract class Item : ScriptableObject, IMoveable
+public abstract class Item : ScriptableObject, IMoveable, IDescribable
 {
     // Taille empilable de l'item
     [SerializeField]
@@ -14,6 +13,10 @@ public abstract class Item : ScriptableObject, IMoveable
     // Image de l'item
     [SerializeField]
     private Sprite icon = default;
+
+    // Titre de l'item
+    [SerializeField]
+    private string title = default;
 
     // Propriété d'accès à l'image de l'item
     public Sprite MyIcon { get => icon; }
@@ -37,5 +40,10 @@ public abstract class Item : ScriptableObject, IMoveable
             // Supprime l'item de l'emplacement
             MySlot.RemoveItem(this);
         }
+    }
+
+    public string GetDescription()
+    {
+        return title;
     }
 }
