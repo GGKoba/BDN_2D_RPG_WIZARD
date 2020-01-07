@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+
+
+
+public enum Quality { Common, Uncommon, Rare, Epic, Legendary  };
+
 
 /// <summary>
 /// Classe abstraite dont tous les objets héritent
@@ -18,6 +22,10 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     [SerializeField]
     private string title = default;
 
+    // Qualité de l'item
+    [SerializeField]
+    private Quality quality;
+
     // Propriété d'accès à l'image de l'item
     public Sprite MyIcon { get => icon; }
 
@@ -31,7 +39,9 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     public SlotScript MySlot { get => slot; set => slot = value; }
 
 
-    // Supprime un item
+    /// <summary>
+    /// Supprime un item
+    /// </summary>
     public void Remove()
     {
         // S'il y a un emplacement pour l'item
@@ -42,8 +52,37 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
         }
     }
 
+    /// <summary>
+    /// Retourne le titre de l'item
+    /// </summary>
     public string GetDescription()
     {
-        return title;
+        string color = string.Empty;
+
+        // Adapte la couleur suivant la qualité
+        switch (quality)
+        {
+            case Quality.Common:
+                color = "white";
+                break;
+            case Quality.Uncommon:
+                color = "green";
+                break;
+            case Quality.Rare:
+                color = "blue";
+                break;
+            case Quality.Epic:
+                color = "purple";
+                break;
+            case Quality.Legendary:
+                color = "orange";
+                break;
+            default:
+                color = "grey";
+                break;
+        }
+
+        // Retourne un titre adapté à sa qualité
+        return string.Format("<color={0}>{1}</color>", color, title);
     }
 }
