@@ -28,4 +28,13 @@ public class HealthPotion : Item, IUseable
             Player.MyInstance.MyHealth.MyCurrentValue += health;
         }
     }
+
+    /// <summary>
+    /// Retourne le titre de l'item : Surcharge la fonction GetDescription du script Item
+    /// </summary>
+    public override string GetDescription()
+    {
+        // Appelle GetDescription sur la classe mère
+        return base.GetDescription() + string.Format("\n\nUtiliser : Restaure {0} points de vie", health);
+    }
 }

@@ -53,9 +53,9 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     }
 
     /// <summary>
-    /// Retourne le titre de l'item
+    /// Retourne le titre de l'item : virtual pour être écrasée pour les sous-classes
     /// </summary>
-    public string GetDescription()
+    public virtual string GetDescription()
     {
         string color = string.Empty;
 
@@ -63,22 +63,22 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
         switch (quality)
         {
             case Quality.Common:
-                color = "white";
+                color = "#DDE2E2";
                 break;
             case Quality.Uncommon:
-                color = "green";
+                color = "#0ED145";
                 break;
             case Quality.Rare:
-                color = "blue";
+                color = "#298EDB";
                 break;
             case Quality.Epic:
-                color = "purple";
+                color = "#9D29DB";
                 break;
             case Quality.Legendary:
-                color = "orange";
+                color = "#FF812B";
                 break;
             default:
-                color = "grey";
+                color = "black";
                 break;
         }
 

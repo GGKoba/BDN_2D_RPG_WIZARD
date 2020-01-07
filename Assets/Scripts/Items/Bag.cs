@@ -65,4 +65,13 @@ public class Bag : Item, IUseable
             }
         }
     }
+
+    /// <summary>
+    /// Retourne le titre de l'item : Surcharge la fonction GetDescription du script Item
+    /// </summary>
+    public override string GetDescription()
+    {
+        // Appelle GetDescription sur la classe mère
+        return base.GetDescription() + string.Format("\n\nAjoute {0} emplacements", MySlotsCount);
+    }
 }
