@@ -7,7 +7,7 @@ using UnityEngine;
 /// Classe des sorts
 /// </summary>
 [Serializable]
-public class SpellData : IUseable, IMoveable
+public class SpellData : IUseable, IMoveable, IDescribable
 {
     // Nom du sort
     [SerializeField]
@@ -16,6 +16,10 @@ public class SpellData : IUseable, IMoveable
     // Dégâts du sort
     [SerializeField]
     private int damage = default;
+
+    // Description du sort
+    [SerializeField]
+    private string description = default;
 
     // Image du sort
     [SerializeField]
@@ -64,9 +68,20 @@ public class SpellData : IUseable, IMoveable
     public Color MyBarColor { get => barColor; }
 
 
-    // Utilisation du sort
+    /// <summary>
+    /// Utilisation du sort
+    /// </summary>
     public void Use()
     {
         Player.MyInstance.CastSpell(MyName);
+    }
+
+    /// <summary>
+    /// Retourne la description du sort
+    /// </summary>
+    public string GetDescription()
+    {
+        // Appelle GetDescription sur la classe mère
+        return string.Format("<color=#FFD904><b>{0}</b></color>\n\nIncantation : {1}s\n\n<color=#E0D0AE>{2}\net cause {3} points de dégâts</color>", name, castTime, description, damage);
     }
 }

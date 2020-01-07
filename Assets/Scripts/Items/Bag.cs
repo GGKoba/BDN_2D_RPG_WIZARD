@@ -67,7 +67,7 @@ public class Bag : Item, IUseable
     }
 
     /// <summary>
-    /// Retourne le titre de l'item : Surcharge la fonction GetDescription du script Item
+    /// Retourne la description de l'item : Surcharge la fonction GetDescription du script Item
     /// </summary>
     public override string GetDescription()
     {

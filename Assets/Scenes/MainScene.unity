@@ -345,7 +345,7 @@ Tilemap:
   - first: {x: 13, y: -5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -435,7 +435,7 @@ Tilemap:
   - first: {x: 12, y: -3, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -480,7 +480,7 @@ Tilemap:
   - first: {x: 10, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -489,7 +489,7 @@ Tilemap:
   - first: {x: 11, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -705,7 +705,7 @@ Tilemap:
   - first: {x: 5, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -842,9 +842,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
+  - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: 073edd353c497184fbb30426d30ffd13, type: 3}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 666e8fc18b346be45b7dd10fcc48c55f, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: f42721f68e5389046a22157f16a66726, type: 3}
@@ -854,7 +854,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 9f209008e4a564244bf2bea8001729b0, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 8516f29cd3697a048b0209ed0cf72767, type: 3}
-  - m_RefCount: 12
+  - m_RefCount: 10
     m_Data: {fileID: 21300000, guid: fee2885df28f8664fad7b24572a42192, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: c376d3c81da11594db26b4408541a622, type: 3}
@@ -10927,7 +10927,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Lance un sort d'\xE9lectricit\xE9 sur l'ennemi"
+  m_Text: Lance un sort de foudre sur l'ennemi
 --- !u!222 &836911217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15471,7 +15471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spells:
   - name: Fireball
-    damage: 5
+    damage: 10
+    description: Lance un sort de feu sur l'ennemi
     icon: {fileID: 21300000, guid: a63e1f16198d04847ab17dcd4e545b51, type: 3}
     speed: 5
     castTime: 2.5
@@ -15479,17 +15480,19 @@ MonoBehaviour:
       type: 3}
     barColor: {r: 0.95686275, g: 0.3882353, b: 0.3882353, a: 1}
   - name: Frostbolt
-    damage: 5
+    damage: 7
+    description: Lance un sort de glace sur l'ennemi
     icon: {fileID: 21300000, guid: f723ee7fa78c91848892a75ac6247204, type: 3}
-    speed: 5
+    speed: 3
     castTime: 1.5
     prefab: {fileID: 7147741476327212716, guid: d820c20a1351679459c14ade53c2dcbc,
       type: 3}
     barColor: {r: 0.3764706, g: 0.6745098, b: 0.9254902, a: 1}
   - name: Thunderbolt
     damage: 5
+    description: Lance un sort de foudre sur l'ennemi
     icon: {fileID: 21300000, guid: 7c34dfebf0abca047892bef7cbac8192, type: 3}
-    speed: 5
+    speed: 2
     castTime: 1
     prefab: {fileID: 7147741476327212716, guid: 3acfca79a8fa6704d9c6e22786aff2be,
       type: 3}

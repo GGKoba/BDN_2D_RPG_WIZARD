@@ -24,7 +24,7 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
 
     // Qualité de l'item
     [SerializeField]
-    private Quality quality;
+    private Quality quality = default;
 
     // Propriété d'accès à l'image de l'item
     public Sprite MyIcon { get => icon; }
@@ -57,32 +57,29 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     /// </summary>
     public virtual string GetDescription()
     {
-        string color = string.Empty;
+        string textColor = string.Empty;
 
         // Adapte la couleur suivant la qualité
         switch (quality)
         {
             case Quality.Common:
-                color = "#DDE2E2";
+                textColor = "#DDE2E2";
                 break;
             case Quality.Uncommon:
-                color = "#0ED145";
+                textColor = "#0ED145";
                 break;
             case Quality.Rare:
-                color = "#298EDB";
+                textColor = "#298EDB";
                 break;
             case Quality.Epic:
-                color = "#9D29DB";
+                textColor = "#9D29DB";
                 break;
             case Quality.Legendary:
-                color = "#FF812B";
-                break;
-            default:
-                color = "black";
+                textColor = "#FF812B";
                 break;
         }
 
         // Retourne un titre adapté à sa qualité
-        return string.Format("<color={0}>{1}</color>", color, title);
+        return string.Format("<color={0}>{1}</color>", textColor, title);
     }
 }

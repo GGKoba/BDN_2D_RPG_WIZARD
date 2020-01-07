@@ -60,7 +60,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
     /// </summary>
     public void OnClick()
     {
-        // Si je manipule quelque chose
+        // Si un item est manipulé
         if (Hand.MyInstance.MyMoveable == null)
         {
             // S'il y a quelque chose à utiliser
@@ -177,17 +177,26 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
     /// <param name="eventData">Evenement d'entrée</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // S'il y a un objet utilisable (sort)
-        if (MyUseable != null)
+        IDescribable describable = null;
+
+        // S'il y a un objet utilisable (sort) et que cet objet est "descriptible"
+        if (MyUseable != null && MyUseable is IDescribable)
         {
-            // Affiche le tooltip
-            //UIManager.MyInstance.ShowTooltip(transform.position);
+            // L'objet utilisable devient "descriptible"
+            describable = MyUseable as IDescribable;
         }
         // S'il y a un item qui a plusieurs élements (objet stackable)
         else if (useables.Count > 0)
         {
             // Affiche le tooltip
             //UIManager.MyInstance.ShowTooltip(transform.position);
+        }
+
+        // S'il y a un objet "descriptible"
+        if (describable != null)
+        {
+            // Affiche le tooltip
+            UIManager.MyInstance.ShowTooltip(transform.position, describable);
         }
     }
 
