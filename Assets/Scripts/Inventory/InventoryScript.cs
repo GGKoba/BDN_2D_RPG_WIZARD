@@ -145,7 +145,7 @@ public class InventoryScript : MonoBehaviour
         // [K] : Ajoute un item Sac dans l'inventaire
         if (Input.GetKeyDown(KeyCode.K))
         {
-            // Création d'un Item sac
+            // Création d'un item Sac
             Bag bag = (Bag)Instantiate(items[0]);
 
             // Initialisation du sac
@@ -158,7 +158,7 @@ public class InventoryScript : MonoBehaviour
         // [J] : Ajoute un item Potion dans l'inventaire
         if (Input.GetKeyDown(KeyCode.J))
         {
-            // Création d'un Item sac
+            // Création d'un item Potion
             HealthPotion healthPotion = (HealthPotion)Instantiate(items[1]);
 
             // Ajoute l'item HealthPotion dans un sac de l'inventaire
@@ -168,11 +168,40 @@ public class InventoryScript : MonoBehaviour
         // [H] : Ajoute un item Armor dans l'inventaire
         if (Input.GetKeyDown(KeyCode.H))
         {
-            // Création d'un Item sac
-            Armor helmet = (Armor)Instantiate(items[2]);
+            // Création d'un sac
+            Bag bag = (Bag)Instantiate(items[0]);
 
-            // Ajoute l'item Armor dans un sac de l'inventaire
-            AddItem(helmet);
+            // Initialisation du sac
+            bag.Initialize(10);
+
+            // Utilise le sac
+            bag.Use();
+
+            // Création des items Armor
+            Armor helmet = (Armor)Instantiate(items[2]);
+            Armor shoulders = (Armor)Instantiate(items[3]);
+            Armor chest = (Armor)Instantiate(items[4]);
+            Armor gloves = (Armor)Instantiate(items[5]);
+            Armor pants = (Armor)Instantiate(items[6]);
+            Armor boots = (Armor)Instantiate(items[7]);
+            Armor sword = (Armor)Instantiate(items[8]);
+            Armor shield = (Armor)Instantiate(items[9]);
+            Armor rod = (Armor)Instantiate(items[10]);
+            Armor orb = (Armor)Instantiate(items[11]);
+
+            // Ajoute les items Armor dans un sac de l'inventaire
+            bag.MyBagScript.AddItem(helmet);
+            bag.MyBagScript.AddItem(shoulders);
+            bag.MyBagScript.AddItem(chest);
+            bag.MyBagScript.AddItem(gloves);
+            bag.MyBagScript.AddItem(pants);
+            bag.MyBagScript.AddItem(boots);
+            bag.MyBagScript.AddItem(sword);
+            bag.MyBagScript.AddItem(shield);
+            bag.MyBagScript.AddItem(rod);
+            bag.MyBagScript.AddItem(orb);
+
+            bag.MyBagScript.OpenClose();
         }
     }
 

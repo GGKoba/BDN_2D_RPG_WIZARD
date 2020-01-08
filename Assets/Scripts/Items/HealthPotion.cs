@@ -37,6 +37,6 @@ public class HealthPotion : Item, IUseable
     public override string GetDescription()
     {
         // Appelle GetDescription sur la classe mère
-        return base.GetDescription() + string.Format("\n\n<color=cyan><b>Utiliser :</b></color> Restaure {0} points de vie", health);
+        return base.GetDescription() + string.Format("\n\n<color=#ECECEC><color=#FFF2BE>Utiliser :</color> Restaure <color=cyan>{0}</color> points de vie</color>", health);
     }
 }

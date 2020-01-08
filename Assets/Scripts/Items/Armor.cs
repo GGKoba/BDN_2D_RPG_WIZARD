@@ -2,7 +2,7 @@
 
 
 
-enum ArmorType { Helmet, Shoulders, Chest, Gloves, Feet, MainHand, OffHand, TwoHand };
+enum ArmorType { Helmet, Shoulder, Chest, Glove, Feet, Pant, MainHand, OffHand };
 
 
 /// <summary>
@@ -40,22 +40,22 @@ public class Armor : Item
         // Si l'item a une Stat Endurance
         if (stamina > 0)
         {
-            stats += string.Format("\nEndurance : <b>{0}</b>", stamina);
+            stats += string.Format("\nEndurance : <color=cyan><b>{0}</b></color>", stamina);
         }
 
         // Si l'item a une Stat Intelligence
         if (intellect > 0)
         {
-            stats += string.Format("\nIntelligence : <b>{0}</b>", intellect);
+            stats += string.Format("\nIntelligence : <color=cyan><b>{0}</b></color>", intellect);
         }
 
         // Si l'item a une Stat Force
         if (strengh > 0)
         {
-            stats += string.Format("\nForce : <b>{0}</b>", strengh);
+            stats += string.Format("\nForce : <color=cyan><b>{0}</b></color>", strengh);
         }
 
         // Appelle GetDescription sur la classe mère
-        return base.GetDescription() + string.Format("\n{0}", stats);
+        return base.GetDescription() + string.Format("\n<color=#ECECEC>{0}</color>", stats);
     }
 }

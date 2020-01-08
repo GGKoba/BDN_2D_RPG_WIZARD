@@ -58,6 +58,6 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     public virtual string GetDescription()
     {
         // Retourne un titre adapté à sa qualité
-        return string.Format("<color={0}>{1}</color>", QualityColor.MyColors[quality], title);
+        return string.Format("<color={0}><b>{1}</b></color>", QualityColor.MyColors[quality], title);
     }
 }

@@ -3,7 +3,7 @@
 
 
 // Liste des qualités d'un item
-public enum Quality { Common, Uncommon, Rare, Epic, Legendary };
+public enum Quality { Useless, Common, Uncommon, Rare, Epic, Legendary };
 
 
 /// <summary>
@@ -14,10 +14,11 @@ public static class QualityColor
     // Dictionnaire des couleurs des différentes qualités
     private static Dictionary<Quality, string> colors = new Dictionary<Quality, string>()
     {
-        { Quality.Common, "#DDE2E2" },
+        { Quality.Useless, "#CBCBCB" },
+        { Quality.Common, "#FFFFFF" },
         { Quality.Uncommon, "#0ED145" },
         { Quality.Rare, "#298EDB" },
-        { Quality.Epic, "#9D29DB" },
+        { Quality.Epic, "#C950CC" },
         { Quality.Legendary, "#FF812B" }
     };
 

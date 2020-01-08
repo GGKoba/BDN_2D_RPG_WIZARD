@@ -74,6 +74,6 @@ public class Bag : Item, IUseable
     public override string GetDescription()
     {
         // Appelle GetDescription sur la classe mère
-        return base.GetDescription() + string.Format("\n\nAjoute {0} emplacements", MySlotsCount);
+        return base.GetDescription() + string.Format("\n\n<color=#ECECEC>Ajoute <color=cyan>{0}</color> emplacements</color>", MySlotsCount);
     }
 }

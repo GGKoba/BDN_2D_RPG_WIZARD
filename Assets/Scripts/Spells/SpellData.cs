@@ -81,7 +81,10 @@ public class SpellData : IUseable, IMoveable, IDescribable
     /// </summary>
     public string GetDescription()
     {
-        // Appelle GetDescription sur la classe mère
-        return string.Format("<color=#FFD904><b>{0}</b></color>\n\nIncantation : {1}s\n\n<color=#E0D0AE>{2}\net cause {3} points de dégâts</color>", name, castTime, description, damage);
+        string spellTitle = string.Format("<color=#FFD904><b>{0}</b></color>", name);
+        string spellStats = string.Format("<color=#ECECEC>Incantation : {0}s</color>", castTime);
+        string spellDescription = string.Format("<color=#E0D0AE>{0}\net cause <color=cyan>{1}</color> points de dégâts</color>", description, damage);
+
+        return string.Format("{0}\n\n{1}\n\n{2}", spellTitle, spellStats, spellDescription);
     }
 }
