@@ -8,15 +8,17 @@
 [CreateAssetMenu(fileName = "Bag", menuName = "Items/Bag", order = 1)]
 public class Bag : Item, IUseable
 {
+    [Header("Bag")]
+
+    // Prefab du sac
+    [SerializeField]
+    private GameObject bagPrefab = default;
+
     // Nombre d'emplacements
     private int slotsCount;
 
     // Propriété d'accès au nombre d'emplacements du sac
     public int MySlotsCount { get => slotsCount; }
-    
-    // Prefab du sac
-    [SerializeField]
-    private GameObject bagPrefab = default;
 
     // Propriété d'accès au script Bag
     public BagScript MyBagScript { get; set; }

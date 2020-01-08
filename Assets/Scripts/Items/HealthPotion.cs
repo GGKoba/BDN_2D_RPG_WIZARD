@@ -8,6 +8,8 @@
 [CreateAssetMenu(fileName = "HealthPotion", menuName = "Items/Potion", order = 1)]
 public class HealthPotion : Item, IUseable
 {
+    [Header("HealthPotion")]
+
     // Points de vie de la potion
     [SerializeField]
     private int health = default;

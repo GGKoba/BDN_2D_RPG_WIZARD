@@ -188,8 +188,8 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         // S'il y a un item qui a plusieurs élements (objet stackable)
         else if (useables.Count > 0)
         {
-            // Affiche le tooltip
-            //UIManager.MyInstance.ShowTooltip(transform.position);
+            // L'item devient "descriptible"
+            describable = useables.Peek() as IDescribable;
         }
 
         // S'il y a un objet "descriptible"

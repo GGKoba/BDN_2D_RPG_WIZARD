@@ -33,7 +33,7 @@ public class SpellBook : MonoBehaviour
     [SerializeField]
     private SpellData[] spells = default;
 
-    [Header("Barre de cast")]
+    [Header("CastBar")]
     // Référence à la barre de cast du joueur
     [SerializeField]
     public Image castingBar;

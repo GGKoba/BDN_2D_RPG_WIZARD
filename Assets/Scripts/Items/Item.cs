@@ -2,14 +2,13 @@
 
 
 
-public enum Quality { Common, Uncommon, Rare, Epic, Legendary  };
-
-
 /// <summary>
 /// Classe abstraite dont tous les objets héritent
 /// </summary>
 public abstract class Item : ScriptableObject, IMoveable, IDescribable
 {
+    [Header("Item")]
+
     // Taille empilable de l'item
     [SerializeField]
     private int stackSize = default;
@@ -25,6 +24,7 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     // Qualité de l'item
     [SerializeField]
     private Quality quality = default;
+
 
     // Propriété d'accès à l'image de l'item
     public Sprite MyIcon { get => icon; }
@@ -57,29 +57,7 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     /// </summary>
     public virtual string GetDescription()
     {
-        string textColor = string.Empty;
-
-        // Adapte la couleur suivant la qualité
-        switch (quality)
-        {
-            case Quality.Common:
-                textColor = "#DDE2E2";
-                break;
-            case Quality.Uncommon:
-                textColor = "#0ED145";
-                break;
-            case Quality.Rare:
-                textColor = "#298EDB";
-                break;
-            case Quality.Epic:
-                textColor = "#9D29DB";
-                break;
-            case Quality.Legendary:
-                textColor = "#FF812B";
-                break;
-        }
-
         // Retourne un titre adapté à sa qualité
-        return string.Format("<color={0}>{1}</color>", textColor, title);
+        return string.Format("<color={0}>{1}</color>", QualityColor.MyColors[quality], title);
     }
 }
