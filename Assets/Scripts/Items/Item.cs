@@ -24,13 +24,18 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     // Qualité de l'item
     [SerializeField]
     private Quality quality = default;
-
+    
+    // Propriété d'accès à la taille empilable de l'item
+    public int MyStackSize { get => stackSize; }
 
     // Propriété d'accès à l'image de l'item
     public Sprite MyIcon { get => icon; }
 
-    // Propriété d'accès à la taille empilable de l'item
-    public int MyStackSize { get => stackSize; }
+    // Propriété d'accès au titre de l'item
+    public string MyTitle { get => title; }
+
+    // Propriété d'accès à la qualité de l'item
+    public Quality MyQuality { get => quality; }
 
     // Référence sur l'emplacement de l'item
     private SlotScript slot;
