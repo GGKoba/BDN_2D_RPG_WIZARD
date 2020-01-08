@@ -34,12 +34,15 @@ public class LootWindow : MonoBehaviour
 
 
         // Actualise l'icone du bouton
-        lootButtons[0].MyIcon.sprite = items[lootIndex].MyIcon;
+        lootButtons[lootIndex].MyIcon.sprite = items[lootIndex].MyIcon;
 
         // Actualise le titre du bouton
-        lootButtons[0].MyTitle.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[items[lootIndex].MyQuality], items[lootIndex].MyTitle);
+        lootButtons[lootIndex].MyTitle.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[items[lootIndex].MyQuality], items[lootIndex].MyTitle);
+
+        // Assigne l'item du bouton
+        lootButtons[lootIndex].MyLoot = items[lootIndex];
 
         // Affiche le bouton
-        lootButtons[0].gameObject.SetActive(true);
+        lootButtons[lootIndex].gameObject.SetActive(true);
     }
 }

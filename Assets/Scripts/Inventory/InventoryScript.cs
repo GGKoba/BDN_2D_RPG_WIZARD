@@ -322,7 +322,7 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     /// <param name="item">Item à ajouter</param>
     /// <returns></returns>
-    public void AddItem(Item item)
+    public bool AddItem(Item item)
     {
         // Si l'item est stackable
         if (item.MyStackSize > 0)
@@ -330,13 +330,13 @@ public class InventoryScript : MonoBehaviour
             // Si l'item peut se stacker sur un emplacement
             if (PlaceInStack(item))
             {
-                // Pas besoin d'aller plus loin
-                return;
+                // Retourne que c'est OK
+                return true;
             }
         }
 
         // Place l'item dans un nouvel emplacement
-        PlaceInEmpty(item);
+        return PlaceInEmpty(item);
     }
 
     /// <summary>
@@ -372,7 +372,7 @@ public class InventoryScript : MonoBehaviour
     /// Place l'item dans un nouvel emplacement
     /// </summary>
     /// <param name="item">Item à placer</param>
-    private void PlaceInEmpty(Item item)
+    private bool PlaceInEmpty(Item item)
     {
         // Pour tous les sacs de l'inventaire
         foreach (Bag bag in bags)
@@ -383,10 +383,13 @@ public class InventoryScript : MonoBehaviour
                 // Déclenche l'évènement de mise à jour du nombre d'élements de l'item
                 OnItemCountChanged(item);
 
-                // Pas besoin d'aller plus loin
-                return;
+                // Retourne que c'est OK
+                return true;
             }
         }
+
+        // Retourne que c'est KO
+        return false;
     }
 
     /// <summary>
