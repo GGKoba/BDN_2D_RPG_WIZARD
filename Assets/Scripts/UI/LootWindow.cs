@@ -93,6 +93,7 @@ public class LootWindow : MonoBehaviour
     /// <summary>
     /// Création de la liste des pages de butin
     /// </summary>
+    /// <param name="items">Liste des items du butin</param>
     public void CreatePages(List<Item> items)
     {
         List<Item> currentPage = new List<Item>();
@@ -166,6 +167,35 @@ public class LootWindow : MonoBehaviour
         {
             // Masque le bouton
             button.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Retire l'item de la page et de la liste des butins
+    /// </summary>
+    /// <param name="loot">Item à retirer</param>
+    public void TakeLoot(Item loot)
+    {
+        // Retire l'item de la page
+        pages[pageIndex].Remove(loot);
+
+        // Retire l'item de la liste des butins
+
+        // Si la page n'a plus d'item
+        if (pages[pageIndex].Count == 0)
+        {
+            // Supprime la page
+            pages.Remove(pages[pageIndex]);
+
+            // Si c'est la dernière page et que ce n'est pas la première
+            if (pageIndex == pages.Count && pageIndex > 0)
+            {
+                // Décrémente l'index de la page
+                pageIndex--;
+            }
+
+            // Ajoute les items de l'index de la page dans la fenêtre de butin
+            AddLoot();
         }
     }
 }

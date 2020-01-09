@@ -21,8 +21,8 @@ public class DeathBehaviour : StateMachineBehaviour
         // MAJ du temps écoulé 
         timePassed += Time.deltaTime;
 
-        // Détruit l'objet après 4s
-        if (timePassed >= 4)
+        // Détruit l'objet après 30s
+        if (timePassed >= 30)
         {
             // Déclenche l'évènement de disparition du personnage
             animator.GetComponent<NPC>().OnCharacterRemoved();

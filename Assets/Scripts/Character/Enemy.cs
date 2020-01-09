@@ -70,7 +70,7 @@ public class Enemy : NPC
     /// </summary>
     protected override void Update()
     {
-        // Si le personnage est en vie
+        // Si l'ennemi est en vie
         if (IsAlive)
         {
             // S'il n'y a pas d'attaque
@@ -192,5 +192,17 @@ public class Enemy : NPC
 
         // Déclenche l'évènement de changement de la vie
         OnHealthChanged(health.MyCurrentValue);
+    }
+
+    /// <summary>
+    /// Interaction avec le personnage : Surcharge la fonction Interact du script NPC
+    /// </summary>
+    public override void Interact()
+    {
+        // Si l'ennemi n'est pas en vie
+        if (!IsAlive)
+        {
+            Debug.Log("Loot Me");
+        }
     }
 }

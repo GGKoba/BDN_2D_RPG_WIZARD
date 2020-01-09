@@ -94,4 +94,12 @@ public class NPC : Character
         // Destruction du personnage
         Destroy(gameObject);
     }
+
+    /// <summary>
+    /// Interaction avec le personnage : virtual pour être écrasée pour les sous-classes
+    /// </summary>
+    public virtual void Interact()
+    {
+        Debug.Log("Interaction with NPC");
+    }
 }

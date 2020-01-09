@@ -26,6 +26,17 @@ public class LootButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // Propriété d'accès à l'item du butin
     public Item MyLoot { get; set; }
 
+    // Référence sur le script LootWindow
+    private LootWindow lootWindow;
+
+
+    /// <summary>
+    /// Awake
+    /// </summary>
+    private void Awake()
+    {
+        lootWindow = GetComponentInParent<LootWindow>();
+    }
 
     /// <summary>
     /// Entrée du curseur
@@ -58,6 +69,9 @@ public class LootButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             // Réinitialisation du bouton
             gameObject.SetActive(false);
+
+            // Retire l'item de la page et de la liste des butins
+            lootWindow.TakeLoot(MyLoot);
 
             // Masque le tooltip
             UIManager.MyInstance.HideTooltip();

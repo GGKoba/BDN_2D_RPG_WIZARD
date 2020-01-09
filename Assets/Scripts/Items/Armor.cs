@@ -55,7 +55,7 @@ public class Armor : Item
             stats += string.Format("\nForce : <color=cyan><b>{0}</b></color>", strengh);
         }
 
-        // Appelle GetDescription sur la classe mère
+        // Appelle GetDescription sur la classe mère et ajoute la description de l'item
         return base.GetDescription() + string.Format("\n<color=#ECECEC>{0}</color>", stats);
     }
 }

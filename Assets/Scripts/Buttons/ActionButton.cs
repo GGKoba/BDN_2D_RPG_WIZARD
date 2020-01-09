@@ -94,6 +94,9 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
                 // Cast l'objet à déplacer en objet à utiliser
                 SetUseable(Hand.MyInstance.MyMoveable as IUseable);
             }
+
+            // Masque le tooltip
+            UIManager.MyInstance.HideTooltip();
         }
     }
 

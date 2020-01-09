@@ -30,11 +30,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ClickTarget()
     {
+        // Raycast depuis la position de la souris dans le jeu
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
+
         // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
-            // Raycast depuis la position de la souris dans le jeu
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
 
             // S'il y a déjà une cible
             if (currentTarget != null)
@@ -64,6 +65,16 @@ public class GameManager : MonoBehaviour
                 // Supprime les références à la cible
                 currentTarget = null;
                 player.MyTarget = null;
+            }
+        }
+        // Clic droit et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
+        else if (Input.GetMouseButtonDown(1) & !EventSystem.current.IsPointerOverGameObject())
+        {
+            // Si l'on touche quelque chose et que celle-ci e un tag "Enemy"
+            if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+            {
+                // Interaction avec le personnage
+                hit.collider.GetComponent<NPC>().Interact();
             }
         }
     }
