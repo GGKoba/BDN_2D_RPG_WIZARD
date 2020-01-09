@@ -35,6 +35,7 @@ public class LootButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     /// </summary>
     private void Awake()
     {
+        // Référence sur le script LootWindow
         lootWindow = GetComponentInParent<LootWindow>();
     }
 

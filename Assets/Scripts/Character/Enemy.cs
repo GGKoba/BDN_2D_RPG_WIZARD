@@ -33,6 +33,9 @@ public class Enemy : NPC
     // Propriété d'accès à la portée de l'ennemi
     public bool InRange { get => Vector2.Distance(transform.position, MyTarget.position) < MyAggroRange; }
 
+    // Table des butins de l'ennemi
+    [SerializeField]
+    private LootTable lootTable;
 
 
     /// <summary>
@@ -202,7 +205,8 @@ public class Enemy : NPC
         // Si l'ennemi n'est pas en vie
         if (!IsAlive)
         {
-            Debug.Log("Loot Me");
+            // Affiche les butins de l'ennemi
+            lootTable.ShowLoots();
         }
     }
 }

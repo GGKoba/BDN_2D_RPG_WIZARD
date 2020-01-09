@@ -9,6 +9,25 @@ using UnityEngine.UI;
 /// </summary>
 public class LootWindow : MonoBehaviour
 {
+
+    // Instance de classe (singleton)
+    private static LootWindow instance;
+
+    // Propriété d'accès à l'instance
+    public static LootWindow MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Retourne l'object de type LootWindow (doit être unique)
+                instance = FindObjectOfType<LootWindow>();
+            }
+
+            return instance;
+        }
+    }
+
     // Texte de la page courante
     [SerializeField]
     private Text pageNumber = default;
@@ -28,31 +47,39 @@ public class LootWindow : MonoBehaviour
     // Liste des pages de butin
     private List<List<Item>> pages = new List<List<Item>>();
 
+    // Liste des butins
+    private List<Item> droppedLoots = new List<Item>();
+
     // Index de la page courante
     private int pageIndex = 0;
 
+    // CanvasGroup de la fenêtre des butins
+    private CanvasGroup canvasGroup;
+
+    // Propriété d'accès sur l'indicateur d'ouverture de la fenêtre des butins
+    public bool IsOpen { get => canvasGroup.alpha > 0; }
+
+
+    /// <summary>
+    /// Awake
+    /// </summary>
+    private void Awake()
+    {
+        // Référence sur le canvasGroup de la fenêtre des butins
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
 
     /// <summary>
     /// Start
     /// </summary>
     private void Start()
     {
-        // [DEBUG] : Teste l'ajout de butins 
-
-        List<Item> lootList = new List<Item>();
-
-        // Pour tous les items de la page
-        for (int i = 0; i < items.Length; i++)
-        {
-            lootList.Add(items[i]);
-        }
-
-        // Création de la liste des pages de butin
-        CreatePages(lootList);
+        // Fermeture de la fenêtre des butins
+        Close();
     }
 
     /// <summary>
-    /// Ajoute les items de l'index de la page dans la fenêtre de butin
+    /// Ajoute les items de l'index de la page dans la fenêtre des butins
     /// </summary>
     private void AddLoot()
     {
@@ -96,27 +123,38 @@ public class LootWindow : MonoBehaviour
     /// <param name="items">Liste des items du butin</param>
     public void CreatePages(List<Item> items)
     {
-        List<Item> currentPage = new List<Item>();
-
-        // Pour tous les items
-        for (int i = 0; i < items.Count; i++)
+        // Si la fenêtre de butin n'est pas ouverte
+        if (!IsOpen)
         {
-            // Ajoute l'item dans la page courante
-            currentPage.Add(items[i]);
+            // Référence sur la liste des items du butin
+            droppedLoots = items;
 
-            // Si la page a autant d'items que le nombre de boutons (4) ou que c'est le dernier item
-            if (currentPage.Count == lootButtons.Length || i == items.Count - 1)
+            // Création d'une nouvelle page
+            List<Item> currentPage = new List<Item>();
+
+            // Pour tous les items
+            for (int i = 0; i < items.Count; i++)
             {
-                // Ajoute la page courante
-                pages.Add(currentPage);
+                // Ajoute l'item dans la page courante
+                currentPage.Add(items[i]);
 
-                // Création d'une nouvelle page
-                currentPage = new List<Item>();
+                // Si la page a autant d'items que le nombre de boutons (4) ou que c'est le dernier item
+                if (currentPage.Count == lootButtons.Length || i == items.Count - 1)
+                {
+                    // Ajoute la page courante
+                    pages.Add(currentPage);
+
+                    // Création d'une nouvelle page
+                    currentPage = new List<Item>();
+                }
             }
-        }
 
-        // Ajoute les items de l'index de la page dans la fenêtre de butin
-        AddLoot();
+            // Ajoute les items de l'index de la page dans la fenêtre des butins
+            AddLoot();
+
+            // Affiche la fenêtre des butins
+            Open();
+        }
     }
 
     /// <summary>
@@ -133,7 +171,7 @@ public class LootWindow : MonoBehaviour
             // Efface les boutons de la page courante
             ClearButtons();
 
-            // Ajoute les items de l'index de la page dans la fenêtre de butin
+            // Ajoute les items de l'index de la page dans fenêtre des butins
             AddLoot();
         }
     }
@@ -152,7 +190,7 @@ public class LootWindow : MonoBehaviour
             // Efface les boutons de la page courante
             ClearButtons();
 
-            // Ajoute les items de l'index de la page dans la fenêtre de butin
+            // Ajoute les items de l'index de la page dans la fenêtre des butins
             AddLoot();
         }
     }
@@ -179,7 +217,8 @@ public class LootWindow : MonoBehaviour
         // Retire l'item de la page
         pages[pageIndex].Remove(loot);
 
-        // Retire l'item de la liste des butins
+        // Retire l'item de la liste des butins (par référence sur le liste passée dans le CreatePages()
+        droppedLoots.Remove(loot);
 
         // Si la page n'a plus d'item
         if (pages[pageIndex].Count == 0)
@@ -194,8 +233,38 @@ public class LootWindow : MonoBehaviour
                 pageIndex--;
             }
 
-            // Ajoute les items de l'index de la page dans la fenêtre de butin
+            // Ajoute les items de l'index de la page dans la fenêtre des butins
             AddLoot();
         }
+    }
+
+    /// <summary>
+    /// Ouverture de la fenêtre des butins
+    /// </summary>
+    public void Open()
+    {
+        // Bloque les interactions
+        canvasGroup.blocksRaycasts = true;
+
+        // Affiche la fenêtre des butins
+        canvasGroup.alpha = 1;
+    }
+
+    /// <summary>
+    /// Fermeture de la fenêtre des butins
+    /// </summary>
+    public void Close()
+    {
+        // Vide la liste des butins
+        pages.Clear();
+
+        // Efface les boutons de la page courante
+        ClearButtons();
+
+        // Débloque les interactions
+        canvasGroup.blocksRaycasts = false;
+
+        // Masque la fenêtre des butins
+        canvasGroup.alpha = 0;
     }
 }

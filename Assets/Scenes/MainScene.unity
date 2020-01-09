@@ -372,7 +372,7 @@ Tilemap:
   - first: {x: 12, y: -4, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -381,7 +381,7 @@ Tilemap:
   - first: {x: 13, y: -4, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -435,7 +435,7 @@ Tilemap:
   - first: {x: 12, y: -3, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -444,7 +444,7 @@ Tilemap:
   - first: {x: 13, y: -3, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -678,7 +678,7 @@ Tilemap:
   - first: {x: 2, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -714,7 +714,7 @@ Tilemap:
   - first: {x: 6, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -842,10 +842,10 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 6
+  - m_RefCount: 5
     m_Data: {fileID: 21300000, guid: 073edd353c497184fbb30426d30ffd13, type: 3}
-  - m_RefCount: 2
-    m_Data: {fileID: 21300000, guid: 666e8fc18b346be45b7dd10fcc48c55f, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: f42721f68e5389046a22157f16a66726, type: 3}
   - m_RefCount: 1
@@ -854,7 +854,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 9f209008e4a564244bf2bea8001729b0, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 8516f29cd3697a048b0209ed0cf72767, type: 3}
-  - m_RefCount: 7
+  - m_RefCount: 10
     m_Data: {fileID: 21300000, guid: fee2885df28f8664fad7b24572a42192, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: c376d3c81da11594db26b4408541a622, type: 3}
@@ -1267,6 +1267,55 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: b6837d07f137b554d8685e0912ebb209,
+        type: 2}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 75b7e8869df4b634f8404ef813205f99,
+        type: 2}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: d96e5db486e8a614ba301c404c411567,
+        type: 2}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: fda1cf4315dbc5e458999607a487f8c1,
+        type: 2}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[0].dropChance
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[1].dropChance
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[2].dropChance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160220664395063928, guid: e99af69e8b8cc5b478501756a73e2f70,
+        type: 3}
+      propertyPath: loots.Array.data[3].dropChance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7683267644322279829, guid: e99af69e8b8cc5b478501756a73e2f70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1735,6 +1784,7 @@ GameObject:
   - component: {fileID: 262062492}
   - component: {fileID: 262062491}
   - component: {fileID: 262062493}
+  - component: {fileID: 262062494}
   m_Layer: 5
   m_Name: LootWindow
   m_TagString: Untagged
@@ -1835,6 +1885,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 305144d0f992389498381156693563fe, type: 2}
   - {fileID: 11400000, guid: 88e17a1c17bbdb344884c094e443af2b, type: 2}
   - {fileID: 11400000, guid: a03292a6e32f91941a5646a29c6b79b3, type: 2}
+--- !u!225 &262062494
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262062489}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &274086141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,7 +2101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0024586, y: -24.69}
+  m_AnchoredPosition: {x: -0.0024586, y: -24.689941}
   m_SizeDelta: {x: 800.01, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &334902912
@@ -13350,7 +13412,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 972930452}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 262062493}
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &972930452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15202,7 +15275,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.000015259, y: 30.1}
+  m_AnchoredPosition: {x: 0.000015259, y: 30.099976}
   m_SizeDelta: {x: 800, y: 60.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1399994425
