@@ -40,6 +40,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private CanvasGroup spellBookMenu = default;
 
+    // Feuille du personnage
+    [SerializeField]
+    private CharacterPanel characterPanel;
+
     [Header("Target")]
     // Frame de la cible
     [SerializeField]
@@ -129,6 +133,13 @@ public class UIManager : MonoBehaviour
         {
             // Ouverture/Fermeture de tous les sacs de l'inventaire
             InventoryScript.MyInstance.OpenClose();
+        }
+
+        // [C] : Profil
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            // Ouverture/Fermeture de la feuille du personnage
+            characterPanel.OpenClose();
         }
     }
 
