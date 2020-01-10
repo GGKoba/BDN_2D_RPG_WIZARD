@@ -2,7 +2,7 @@
 
 
 
-enum ArmorType { Helmet, Shoulder, Chest, Glove, Feet, Pant, MainHand, OffHand };
+enum ArmorType { Helmet, Shoulders, Chest, Gloves, Pants, Boots, MainHand, OffHand };
 
 
 /// <summary>
@@ -28,6 +28,9 @@ public class Armor : Item
     // Stat Force
     [SerializeField]
     private int strengh = default;
+
+    // Propriété d'accès au type d'équipement
+    internal ArmorType MyArmorType { get => armorType; }
 
 
     /// <summary>
