@@ -199,7 +199,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         if (describable != null)
         {
             // Affiche le tooltip
-            UIManager.MyInstance.ShowTooltip(transform.position, describable);
+            UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, describable);
         }
     }
 

@@ -53,9 +53,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image targetPortrait = default;
 
+    [Header("Tooltip")]
     // Tooltip
     [SerializeField]
     private GameObject tooltip = default;
+
+    // Référence sur le RectTransform du tooltip
+    [SerializeField]
+    private RectTransform tooltipRect = default;
 
     // Texte du tooltip
     private Text tooltipText;
@@ -304,10 +309,14 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Affiche le tooltip
     /// </summary>
+    /// <param name="pivot">Pivot du tooltip</param>
     /// <param name="position">Position du tooltip</param>
     /// <param name="itemDescription">Description du tooltip</param>
-    public void ShowTooltip(Vector3 position, IDescribable itemDescription)
+    public void ShowTooltip(Vector2 pivot, Vector3 position, IDescribable itemDescription)
     {
+        // Pivot du tooltip
+        tooltipRect.pivot = pivot;
+
         // Position du tooltip
         tooltip.transform.position = position;
 

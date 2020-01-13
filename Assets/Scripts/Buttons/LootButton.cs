@@ -46,7 +46,7 @@ public class LootButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         // Affiche le tooltip
-        UIManager.MyInstance.ShowTooltip(transform.position, MyLoot);
+        UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, MyLoot);
     }
 
     /// <summary>

@@ -25,8 +25,13 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     /// <param name="eventData">Evenement d'entrée</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Affiche le tooltip
-        //UIManager.MyInstance.ShowTooltip(transform.position, armor);
+        // Si l'emplacement n'est pas vide
+        if (equippedArmor != null)
+        {
+            // Affiche le tooltip
+            UIManager.MyInstance.ShowTooltip(new Vector2(0, 0), transform.position, equippedArmor);
+        }
+
     }
 
     /// <summary>
@@ -36,7 +41,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         // Masque le tooltip
-        //UIManager.MyInstance.HideTooltip();
+        UIManager.MyInstance.HideTooltip();
     }
 
     /// <summary>
@@ -83,8 +88,6 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
             // Masque le tooltip
             UIManager.MyInstance.HideTooltip();
         }
-
-
 
         // Actualise l'image de l'item
         icon.sprite = armor.MyIcon;
