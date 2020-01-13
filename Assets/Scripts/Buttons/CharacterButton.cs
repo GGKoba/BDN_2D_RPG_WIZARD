@@ -92,6 +92,15 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // Actualise l'image de l'item
         icon.sprite = armor.MyIcon;
 
+        // Nouvelle couleur
+        Color buttonColor = Color.clear;
+        
+        // La couleur varie en fonction de la qualité de l'item
+        ColorUtility.TryParseHtmlString(QualityColor.MyColors[armor.MyQuality], out buttonColor);
+
+        // Actualise la couleur du bouton
+        GetComponent<Image>().color = buttonColor;
+
         // Active l'image de l'item
         icon.enabled = true;
 
