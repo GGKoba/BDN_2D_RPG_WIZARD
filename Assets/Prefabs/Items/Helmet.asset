@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackSize: 0
   icon: {fileID: 21300000, guid: b0afa83b34a44814b8c4669c6c0e94ec, type: 3}
-  title: Chapeau de mage
-  quality: 3
+  title: Casque de guerrier
+  quality: 2
   armorType: 0
   stamina: 5
-  intellect: 15
-  strengh: 2
+  intellect: 2
+  strengh: 8

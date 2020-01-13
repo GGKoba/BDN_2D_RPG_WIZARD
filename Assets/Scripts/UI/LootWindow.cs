@@ -34,16 +34,16 @@ public class LootWindow : MonoBehaviour
 
     // Boutons de pagination
     [SerializeField]
-    private GameObject previousButton, nextButton = default;
+    private GameObject previousButton = default, nextButton = default;
 
     // Tableau des boutons des butins
     [SerializeField]
     private LootButton[] lootButtons = default;
-
+    /*
     // [DEBUG] : Tableau des items du butin
     [SerializeField]
     private Item[] items = default;
-
+    */
     // Liste des pages de butin
     private List<List<Item>> pages = new List<List<Item>>();
 

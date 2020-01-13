@@ -35,7 +35,7 @@ public class Enemy : NPC
 
     // Table des butins de l'ennemi
     [SerializeField]
-    private LootTable lootTable;
+    private LootTable lootTable = default;
 
 
     /// <summary>

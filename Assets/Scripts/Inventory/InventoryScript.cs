@@ -172,7 +172,7 @@ public class InventoryScript : MonoBehaviour
             Bag bag = (Bag)Instantiate(items[0]);
 
             // Initialisation du sac
-            bag.Initialize(10);
+            bag.Initialize(12);
 
             // Utilise le sac
             bag.Use();

@@ -108,6 +108,9 @@ public class Hand : MonoBehaviour
 
         // Redéfinit une couleur noire transparente à l'objet
         icon.color = new Color(0, 0, 0, 0);
+
+        // Réinitialisation de l'emplacement
+        InventoryScript.MyInstance.MyFromSlot = null;
     }
 
     /// <summary>
@@ -128,5 +131,4 @@ public class Hand : MonoBehaviour
         // Réinitialisation de l'emplacement
         InventoryScript.MyInstance.MyFromSlot = null;
     }
-
 }

@@ -2,7 +2,7 @@
 
 
 
-enum ArmorType { Helmet, Shoulders, Chest, Gloves, Pants, Boots, MainHand, OffHand };
+enum ArmorType { Head, Shoulders, Chest, Hands, Legs, Feet, MainHand, OffHand };
 
 
 /// <summary>
@@ -60,5 +60,13 @@ public class Armor : Item
 
         // Appelle GetDescription sur la classe mère et ajoute la description de l'item
         return base.GetDescription() + string.Format("\n<color=#ECECEC>{0}</color>", stats);
+    }
+
+    /// <summary>
+    /// Equipe l'item
+    /// </summary>
+    public void Equip()
+    {
+        CharacterPanel.MyInstance.EquipArmor(this);
     }
 }

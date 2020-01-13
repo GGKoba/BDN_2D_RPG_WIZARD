@@ -7,17 +7,16 @@ using UnityEngine.UI;
 /// </summary>
 public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+    // Item d'équipement
+    private Armor equippedArmor;
+
     // Type d'équipement
     [SerializeField]
-    private ArmorType armorType;
-
-    // Item d'équipement
-    private Armor armor;
+    private ArmorType armorType = default;
 
     // Image de l'item
     [SerializeField]
-    private Image icon;
-
+    private Image icon = default;
 
 
     /// <summary>
@@ -49,7 +48,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // Clic gauche
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // S'il l'on déplace un item Armor
+            // S'il on déplace un item Armor
             if (Hand.MyInstance.MyMoveable is Armor)
             {
                 // Item Armor
@@ -65,18 +64,42 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     // Equipe un item
-    public void EquipArmor(Armor item)
+    public void EquipArmor(Armor armor)
     {
+        // Retire l'item de l'inventaire
+        armor.Remove();
+        
+        // Si l'emplacement n'est pas vide
+        if (equippedArmor != null)
+        {
+            // Ajoute l'item équipé dans l'emplacement de l'item à equiper
+            armor.MySlot.AddItem(equippedArmor);
+
+            // Actualise le tooltip
+            UIManager.MyInstance.RefreshTooltip(equippedArmor);
+        }
+        else
+        {
+            // Masque le tooltip
+            UIManager.MyInstance.HideTooltip();
+        }
+
+
+
         // Actualise l'image de l'item
-        icon.sprite = item.MyIcon;
+        icon.sprite = armor.MyIcon;
 
         // Active l'image de l'item
         icon.enabled = true;
 
         // Référence sur l'item
-        armor = item;
+        equippedArmor = armor;
 
-        // Libère l'item
-        Hand.MyInstance.DeleteItem();
+        // S'il on déplace un item Armor
+        if (Hand.MyInstance.MyMoveable == (armor as IMoveable))
+        {
+            // Libère l'item
+            Hand.MyInstance.Drop();
+        }
     }
 }

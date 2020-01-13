@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
 
     // Feuille du personnage
     [SerializeField]
-    private CharacterPanel characterPanel;
+    private CharacterPanel characterPanel = default;
 
     [Header("Target")]
     // Frame de la cible
@@ -325,5 +325,15 @@ public class UIManager : MonoBehaviour
     {
         // Masquage du tooltip
         tooltip.SetActive(false);
+    }
+
+    /// <summary>
+    /// Actualise le tooltip
+    /// </summary>
+    /// <param name="itemDescription">Description du tooltip</param>
+    public void RefreshTooltip(IDescribable itemDescription)
+    {
+        // Actualise le text du tooltîp
+        tooltipText.text = itemDescription.GetDescription();
     }
 }

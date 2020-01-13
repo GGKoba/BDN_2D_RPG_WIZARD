@@ -196,6 +196,12 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
             // Utilisation de l'item
             (MyItem as IUseable).Use();
         }
+        // Si l'item est un équipement
+        else if (MyItem is Armor)
+        {
+            // Equipement de l'item
+            (MyItem as Armor).Equip();
+        }
     }
 
     /// <summary>
