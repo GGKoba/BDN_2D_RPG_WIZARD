@@ -98,8 +98,12 @@ public class UIManager : MonoBehaviour
         // Masque la frame de la cible
         HideTargetFrame();
 
-        // Masque le menu
+        // Masque le menu Raccourcis
         OpenClose(keyBindMenu);
+
+        // Masque le menu Sorts
+        OpenClose(spellBookMenu);
+
     }
 
     /// <summary>
