@@ -53,7 +53,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // Clic gauche
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // S'il on déplace un item Armor
+            // // Si un item Armor est en train d'être déplacé
             if (Hand.MyInstance.MyMoveable is Armor)
             {
                 // Item Armor
@@ -64,21 +64,43 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
                     // Equipement de l'item
                     EquipArmor(stuff);
                 }
+
+                // Actualise le tooltip
+                UIManager.MyInstance.RefreshTooltip(stuff);
+            }
+            // Si rien n'est en train d'être déplacé et qu'il y a un clic sur un emplacement qui n'est pas vide
+            else if (Hand.MyInstance.MyMoveable == null && equippedArmor != null)
+            {
+                // Récupération de l'item
+                Hand.MyInstance.TakeMoveable(equippedArmor);
+
+                // Référence sur le bouton
+                CharacterPanel.MyInstance.MySelectedButton = this;
+
+                // Grise l'image de l'item
+                icon.color = Color.grey; 
             }
         }
     }
 
-    // Equipe un item
+    /// <summary>
+    /// Equipe un item
+    /// </summary>
+    /// <param name="armor"></param>
     public void EquipArmor(Armor armor)
     {
         // Retire l'item de l'inventaire
         armor.Remove();
-        
+
         // Si l'emplacement n'est pas vide
         if (equippedArmor != null)
         {
-            // Ajoute l'item équipé dans l'emplacement de l'item à equiper
-            armor.MySlot.AddItem(equippedArmor);
+            // Si l'item à équiper est différent de l'item équipé
+            if (equippedArmor != armor)
+            {
+                // Ajoute l'item équipé dans l'emplacement de l'item à equiper
+                armor.MySlot.AddItem(equippedArmor);
+            }
 
             // Actualise le tooltip
             UIManager.MyInstance.RefreshTooltip(equippedArmor);
@@ -89,16 +111,19 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
             UIManager.MyInstance.HideTooltip();
         }
 
+        // Actualise la couleur de l'image de l'item
+        icon.color = Color.white;
+
         // Actualise l'image de l'item
         icon.sprite = armor.MyIcon;
 
         // Nouvelle couleur
         Color buttonColor = Color.clear;
-        
+
         // La couleur varie en fonction de la qualité de l'item
         ColorUtility.TryParseHtmlString(QualityColor.MyColors[armor.MyQuality], out buttonColor);
 
-        // Actualise la couleur du bouton
+        // Actualise la couleur de l'image de l'emplacement
         GetComponent<Image>().color = buttonColor;
 
         // Active l'image de l'item
@@ -113,5 +138,27 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
             // Libère l'item
             Hand.MyInstance.Drop();
         }
+    }
+
+    /// <summary>
+    /// Déséquipe un item
+    /// </summary>
+    /// <param name="armor"></param>
+    public void UnequipArmor()
+    {
+        // Actualise la couleur de l'image de l'item
+        icon.color = Color.white;
+
+        // Actualise l'image de l'item
+        icon.sprite = null;
+
+        // Actualise la couleur de l'image de l'emplacement
+        GetComponent<Image>().color = Color.white;
+
+        // Active l'image de l'item
+        icon.enabled = false;
+
+        // Référence sur l'item
+        equippedArmor = null;
     }
 }

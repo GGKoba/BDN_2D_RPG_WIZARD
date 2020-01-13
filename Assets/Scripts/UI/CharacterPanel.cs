@@ -32,11 +32,15 @@ public class CharacterPanel : MonoBehaviour
     // Propriété d'accès sur l'indicateur d'ouverture de la feuille du personnage
     public bool IsOpen { get => canvasGroup.alpha > 0; }
 
+    // Propriété d'accès au bouton sélectionné dans la feuille du personnage
+    public CharacterButton MySelectedButton { get; set; }
+
+
     [Header("Slots")]
     //Emplacements des items d'équipement : Tête
     [SerializeField]
     private CharacterButton head = default;
-    
+
     //Emplacements des items d'équipement : Epaules
     [SerializeField]
     private CharacterButton shoulders = default;
@@ -145,6 +149,15 @@ public class CharacterPanel : MonoBehaviour
                 offHand.EquipArmor(item);
                 break;
         }
+    }
+
+    /// <summary>
+    /// Déséquipe un item
+    /// </summary>
+    /// <param name="item">Item à équiper</param>
+    public void UnequipArmor(Armor item)
+    {
+
     }
 
 }

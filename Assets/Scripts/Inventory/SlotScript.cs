@@ -124,14 +124,31 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
             // Si rien n'est en train d'être déplacé et que l'emplacement n'est pas vide
             if (InventoryScript.MyInstance.MyFromSlot == null && !IsEmpty)
             {
-                // S'il y a un oject à manipuler et que c'est un sac
-                if (Hand.MyInstance.MyMoveable != null && Hand.MyInstance.MyMoveable is Bag)
+                // S'il y a un objet manipulé
+                if (Hand.MyInstance.MyMoveable != null)
                 {
-                    // Si c'est un sac
-                    if (MyItem is Bag)
+                    // Si l'objet manipulé est un item Bag
+                    if (Hand.MyInstance.MyMoveable is Bag)
                     {
-                        // Echange des sacs
-                        InventoryScript.MyInstance.SwapBags(Hand.MyInstance.MyMoveable as Bag, MyItem as Bag);
+                        // S'il on clique sur un item Bag
+                        if (MyItem is Bag)
+                        {
+                            // Echange des items Bag
+                            InventoryScript.MyInstance.SwapBags(Hand.MyInstance.MyMoveable as Bag, MyItem as Bag);
+                        }
+                    }
+                    // Si l'objet manipulé est un item Armor
+                    else if (Hand.MyInstance.MyMoveable is Armor)
+                    {
+                        // S'il on clique sur un item Armor et que les items ont le même type d'équipement
+                        if (MyItem is Armor && (MyItem as Armor).MyArmorType == (Hand.MyInstance.MyMoveable as Armor).MyArmorType)
+                        {
+                            // Equipe l'item cliqué
+                            (MyItem as Armor).Equip();
+
+                            // Libère l'item
+                            Hand.MyInstance.Drop();
+                        }
                     }
                 }
                 else
@@ -143,20 +160,39 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
                     InventoryScript.MyInstance.MyFromSlot = this;
                 }
             }
-            // Si rien n'est en train d'être déplacé et que l'emplacement est vide et que l'objet sac manipulé vient de la barre des sacs
-            else if (InventoryScript.MyInstance.MyFromSlot == null && IsEmpty && Hand.MyInstance.MyMoveable is Bag)
+            // Si rien n'est en train d'être déplacé et que l'emplacement est vide
+            else if (InventoryScript.MyInstance.MyFromSlot == null && IsEmpty)
             {
-                // Cast l'item en type Bag
-                Bag bag = (Bag)Hand.MyInstance.MyMoveable;
-
-                // Si le sac n'est pas a déposer dans un de ses emplacements et qu'il y a assez de place pour contenir ce que contient le sac
-                if(bag.MyBagScript != MyBag && InventoryScript.MyInstance.MyEmptySlotCount - bag.MySlotsCount > 0)
+                //  Si l'objet manipulé est un item Bag
+                if (Hand.MyInstance.MyMoveable is Bag)
                 {
-                    // Ajoute un item sur l'emplacement
-                    AddItem(bag);
+                    // Cast l'item en type Bag
+                    Bag bag = Hand.MyInstance.MyMoveable as Bag;
 
-                    // Déséquipe le sac de la liste des sacs
-                    bag.MyBagButton.RemoveBag();
+                    // Si le sac n'est pas a déposer dans un de ses emplacements et qu'il y a assez de place pour contenir ce que contient le sac
+                    if (bag.MyBagScript != MyBag && InventoryScript.MyInstance.MyEmptySlotCount - bag.MySlotsCount > 0)
+                    {
+                        // Ajoute l'item sur l'emplacement
+                        AddItem(bag);
+
+                        // Déséquipe le sac de la liste des sacs
+                        bag.MyBagButton.RemoveBag();
+
+                        // Libère l'item
+                        Hand.MyInstance.Drop();
+                    }
+                }
+                //  Si l'objet manipulé est un item Armor
+                else if (Hand.MyInstance.MyMoveable is Armor)
+                {
+                    // Cast l'item en type Armor
+                    Armor armor = Hand.MyInstance.MyMoveable as Armor;
+
+                    // Ajoute l'item sur l'emplacement
+                    AddItem(armor);
+
+                    // Déséquipe l'item
+                    CharacterPanel.MyInstance.MySelectedButton.UnequipArmor();
 
                     // Libère l'item
                     Hand.MyInstance.Drop();
@@ -177,8 +213,8 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
             }
         }
 
-        // Clic droit
-        if (eventData.button == PointerEventData.InputButton.Right)
+        // Clic droit et rien n'est en train d'être déplacé
+        if (eventData.button == PointerEventData.InputButton.Right && Hand.MyInstance.MyMoveable == null)
         {
             // Utilisation de l'item
             UseItem();
