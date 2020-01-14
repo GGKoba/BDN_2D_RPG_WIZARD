@@ -29,6 +29,14 @@ public class Armor : Item
     [SerializeField]
     private int strengh = default;
 
+    [Header("Animations")]
+    // Tableau des animations de l'équipement
+    [SerializeField]
+    private AnimationClip[] animationClips = default;
+
+    // Propriété d'accès au tableau des animations de l'équipement
+    public AnimationClip[] MyAnimationClips { get => animationClips; }
+
     // Propriété d'accès au type d'équipement
     internal ArmorType MyArmorType { get => armorType; }
 
