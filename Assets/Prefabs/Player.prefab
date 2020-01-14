@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -399610093
   m_SortingLayer: 1
-  m_SortingOrder: 201
+  m_SortingOrder: 202
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -296,7 +296,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -399610093
   m_SortingLayer: 1
-  m_SortingOrder: 201
+  m_SortingOrder: 204
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1228,6 +1228,13 @@ MonoBehaviour:
     second: {fileID: 4518433142063552563}
   - first: {fileID: 4518433142063552563}
     second: {fileID: 4518433141818367739}
+  gearSockets:
+  - {fileID: 2543662806582374279}
+  - {fileID: 3843644137165457694}
+  - {fileID: 3059300091471337703}
+  - {fileID: 7083916196394815249}
+  - {fileID: 1463168665764279656}
+  - {fileID: 2488560559183147171}
 --- !u!95 &4518433142810080511
 Animator:
   serializedVersion: 3
@@ -1394,7 +1401,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -399610093
   m_SortingLayer: 1
-  m_SortingOrder: 201
+  m_SortingOrder: 203
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

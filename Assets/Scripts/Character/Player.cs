@@ -38,6 +38,11 @@ public class Player : Character
     [SerializeField]
     private Block[] blocks = default;
 
+    // Référence sur l'emplacement de l'equipement sur le personnage
+    [SerializeField]
+    private GearSocket[] gearSockets = default;
+
+
     // Mana initiale du joueur (readonly)
     private readonly float initMana = 50;
     
@@ -172,6 +177,13 @@ public class Player : Character
         // Lance l'animation d'attaque
         MyAnimator.SetBool("attack", IsAttacking);
 
+        // Pour chaque emplacement de l'equipement sur le personnage
+        foreach (GearSocket socket in gearSockets)
+        {
+            // Lance l'animation d'attaque
+            socket.MyAnimator.SetBool("attack", IsAttacking);
+        }
+
         // Simule le temps d'incantation
         yield return new WaitForSeconds(mySpell.MyCastTime);
 
@@ -259,6 +271,13 @@ public class Player : Character
         // Arrête l'animation d'attaque
         MyAnimator.SetBool("attack", IsAttacking);
 
+        // Pour chaque emplacement de l'equipement sur le personnage
+        foreach (GearSocket socket in gearSockets)
+        {
+            // Arrête l'animation d'attaque
+            socket.MyAnimator.SetBool("attack", IsAttacking);
+        }
+
         // Vérifie qu'il existe une référence à la routine d'attaque
         if (attackRoutine != null)
         {
@@ -267,6 +286,43 @@ public class Player : Character
 
             // Réinitialise la routine d'attaque
             attackRoutine = null;
+        }
+    }
+
+    /// <summary>
+    /// Update : Surcharge la fonction HandleLayers du script Character
+    /// </summary>
+    public override void HandleLayers()
+    {
+        // Appelle HandleLayers sur la classe mère (abstraite)
+        base.HandleLayers();
+
+        // Si le joueur est en mouvement
+        if (IsMoving)
+        {
+            // Pour chaque emplacement de l'equipement sur le personnage
+            foreach (GearSocket socket in gearSockets)
+            {
+                // Actualise les paramètres de l'animation
+                socket.SetDirection(MyDirection.x, MyDirection.y);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Active un Layer d'animation (Idle/Walk/Attack) : Surcharge la fonction ActivateLayer du script Character
+    /// </summary>
+    /// <param name="layerName">Nom du layer à activer</param>
+    public override void ActivateLayer(string layerName)
+    {
+        // Appelle ActivateLayer sur la classe mère (abstraite)
+        base.ActivateLayer(layerName);
+
+        // Pour chaque emplacement de l'equipement sur le personnage
+        foreach (GearSocket socket in gearSockets)
+        {
+            // Active le layer d'animation
+            socket.ActivateLayer(layerName);
         }
     }
 }

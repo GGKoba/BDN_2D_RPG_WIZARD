@@ -39,6 +39,34 @@ public class GearSocket : MonoBehaviour
     }
 
     /// <summary>
+    /// Actualise les paramètres de l'animation
+    /// </summary>
+    /// <param name="x">X</param>
+    /// <param name="y">Y</param>
+    public void SetDirection(float x, float y)
+    {
+        MyAnimator.SetFloat("x", x);
+        MyAnimator.SetFloat("y", y);
+    }
+
+    /// <summary>
+    /// [TODO :  refactoring Duplicated CODE] Active un layer d'animation (Idle/Walk/Attack)
+    /// </summary>
+    /// <param name="layerName">Nom du layer à activer</param>
+    public void ActivateLayer(string layerName)
+    {
+        // Boucle sur les layers d'animations
+        for (int i = 0; i < MyAnimator.layerCount; i++)
+        {
+            // Réinitialise le layer courant
+            MyAnimator.SetLayerWeight(i, 0);
+        }
+
+        // Active le layer correspond au nom passé en paramètre
+        MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);
+    }
+
+    /// <summary>
     /// Ecrase les animations d'un équipement
     /// </summary>
     /// <param name="animations">Tableau des animations de l'équipement</param>

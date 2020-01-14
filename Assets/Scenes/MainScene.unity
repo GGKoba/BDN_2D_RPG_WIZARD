@@ -120,6 +120,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &7588272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1463168665764279656, guid: d37db884b30eb3e448f57592c12ca5fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4518433141160499505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &13442114
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +466,7 @@ Tilemap:
   - first: {x: 13, y: -4, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -508,7 +520,7 @@ Tilemap:
   - first: {x: 12, y: -3, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -517,7 +529,7 @@ Tilemap:
   - first: {x: 13, y: -3, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -544,7 +556,7 @@ Tilemap:
   - first: {x: 9, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -562,7 +574,7 @@ Tilemap:
   - first: {x: 11, y: -2, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -760,7 +772,7 @@ Tilemap:
   - first: {x: 3, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -769,7 +781,7 @@ Tilemap:
   - first: {x: 4, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -787,7 +799,7 @@ Tilemap:
   - first: {x: 6, y: 5, z: 0}
     second:
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_ObjectToInstantiate: {fileID: 0}
@@ -915,9 +927,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 2
+  - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: 666e8fc18b346be45b7dd10fcc48c55f, type: 3}
-  - m_RefCount: 5
+  - m_RefCount: 6
     m_Data: {fileID: 21300000, guid: 073edd353c497184fbb30426d30ffd13, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: f42721f68e5389046a22157f16a66726, type: 3}
@@ -1406,6 +1418,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173830803}
   m_CullTransparentMesh: 0
+--- !u!114 &174576149 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7083916196394815249, guid: d37db884b30eb3e448f57592c12ca5fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4518433141160499505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &183819816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3712,6 +3736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 4
   icon: {fileID: 1299559599}
+  gearSocket: {fileID: 174576149}
 --- !u!1 &618775643
 GameObject:
   m_ObjectHideFlags: 0
@@ -4806,6 +4831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 0
   icon: {fileID: 1331178835}
+  gearSocket: {fileID: 1017171508}
 --- !u!1 &719974175
 GameObject:
   m_ObjectHideFlags: 0
@@ -14339,6 +14365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 3
   icon: {fileID: 467610869}
+  gearSocket: {fileID: 0}
 --- !u!1 &1017076387
 GameObject:
   m_ObjectHideFlags: 0
@@ -14459,6 +14486,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017076387}
   m_CullTransparentMesh: 0
+--- !u!114 &1017171508 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3059300091471337703, guid: d37db884b30eb3e448f57592c12ca5fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4518433141160499505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1029706581
 GameObject:
   m_ObjectHideFlags: 0
@@ -16367,6 +16406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 1
   icon: {fileID: 1357962298}
+  gearSocket: {fileID: 1521360694}
 --- !u!1 &1385888406
 GameObject:
   m_ObjectHideFlags: 0
@@ -16687,6 +16727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 5
   icon: {fileID: 685685730}
+  gearSocket: {fileID: 2038195511}
 --- !u!1 &1428728901
 GameObject:
   m_ObjectHideFlags: 0
@@ -17120,6 +17161,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514886980}
   m_CullTransparentMesh: 0
+--- !u!114 &1521360694 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2488560559183147171, guid: d37db884b30eb3e448f57592c12ca5fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4518433141160499505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1531703385
 GameObject:
   m_ObjectHideFlags: 0
@@ -17319,6 +17372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 6
   icon: {fileID: 38920666}
+  gearSocket: {fileID: 7588272}
 --- !u!1 &1545369314
 GameObject:
   m_ObjectHideFlags: 0
@@ -17945,6 +17999,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 2
   icon: {fileID: 1533949521}
+  gearSocket: {fileID: 1675386946}
 --- !u!1 &1664978080
 GameObject:
   m_ObjectHideFlags: 0
@@ -18018,6 +18073,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664978080}
   m_CullTransparentMesh: 0
+--- !u!114 &1675386946 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2543662806582374279, guid: d37db884b30eb3e448f57592c12ca5fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4518433141160499505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1681678834
 GameObject:
   m_ObjectHideFlags: 0
@@ -20276,6 +20343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armorType: 7
   icon: {fileID: 1554338427}
+  gearSocket: {fileID: 0}
 --- !u!1 &1965897121
 GameObject:
   m_ObjectHideFlags: 0
@@ -21089,6 +21157,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004793686}
   m_CullTransparentMesh: 0
+--- !u!114 &2038195511 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3843644137165457694, guid: d37db884b30eb3e448f57592c12ca5fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4518433141160499505}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2058946235
 GameObject:
   m_ObjectHideFlags: 0
@@ -21700,6 +21780,36 @@ PrefabInstance:
     - target: {fileID: 4518433142810080509, guid: d37db884b30eb3e448f57592c12ca5fa,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5438907252959281828, guid: d37db884b30eb3e448f57592c12ca5fa,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5909083231623231622, guid: d37db884b30eb3e448f57592c12ca5fa,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6559471540020060905, guid: d37db884b30eb3e448f57592c12ca5fa,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598495608700757852, guid: d37db884b30eb3e448f57592c12ca5fa,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7339020367765636240, guid: d37db884b30eb3e448f57592c12ca5fa,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193409799340845436, guid: d37db884b30eb3e448f57592c12ca5fa,
+        type: 3}
+      propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

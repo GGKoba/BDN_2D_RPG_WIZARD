@@ -18,6 +18,10 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField]
     private Image icon = default;
 
+    // Référence sur l'emplacement de l'equipement sur le personnage
+    [SerializeField]
+    private GearSocket gearSocket = default;
+
 
     /// <summary>
     /// Entrée du curseur
@@ -138,6 +142,13 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
             // Libère l'item
             Hand.MyInstance.Drop();
         }
+
+        // S'il y a un emplacement pour l'équipement sur le personnage et que l'équipement a des animations
+        if (gearSocket != null && equippedArmor.MyAnimationClips != null)
+        {
+            // Ecrase les animations de l'équipement
+            gearSocket.Equip(equippedArmor.MyAnimationClips);
+        }
     }
 
     /// <summary>
@@ -158,7 +169,14 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // Active l'image de l'item
         icon.enabled = false;
 
-        // Référence sur l'item
+        // S'il y a un emplacement pour l'équipement sur le personnage et que l'équipement a des animations
+        if (gearSocket != null && equippedArmor.MyAnimationClips != null)
+        {
+            // Réinitialise les animations d'un équipement
+            gearSocket.Unequip();
+        }
+
+        // Réinitialise la référence sur l'item
         equippedArmor = null;
     }
 }

@@ -105,9 +105,9 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Utilise le layer d'animation adapté
+    /// Utilise le layer d'animation adapté : virtual pour être écrasée pour les sous-classes
     /// </summary>
-    public void HandleLayers()
+    public virtual void HandleLayers()
     {
         // Si le personnage est en vie
         if (IsAlive)
@@ -142,10 +142,10 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Active un Layer d'animation (Idle/Walk/Attack)
+    /// Active un layer d'animation (Idle/Walk/Attack) : virtual pour être écrasée pour les sous-classes
     /// </summary>
     /// <param name="layerName">Nom du layer à activer</param>
-    public void ActivateLayer(string layerName)
+    public virtual void ActivateLayer(string layerName)
     {
         // Boucle sur les layers d'animations
         for (int i = 0; i < MyAnimator.layerCount; i++)
