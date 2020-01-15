@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -22,6 +23,17 @@ public class Chest : MonoBehaviour, IInteractable
     // Propriété d'accès sur l'indicateur d'ouverture du coffre
     private bool isOpen;
 
+    // Canvas du coffre
+    [SerializeField]
+    private CanvasGroup canvasGroup = default;
+
+    // Liste des items
+    private List<Item> items;
+
+    // Propriété d'accès sur le coffre
+    [SerializeField]
+    private ChestScript bank = default;
+
 
     /// <summary>
     /// Awake
@@ -43,11 +55,20 @@ public class Chest : MonoBehaviour, IInteractable
         }
         else
         {
+            // Ajoute les items stockés
+            AddItems();
+
             // Définit le coffre "Ouvert
             isOpen = true;
 
             // Actualise l'image du coffre
             spriteRenderer.sprite = openSprite;
+
+            // Affiche le coffre
+            canvasGroup.alpha = 1;
+
+            // Bloque les interactions
+            canvasGroup.blocksRaycasts = true;
         }
     }
 
@@ -61,5 +82,41 @@ public class Chest : MonoBehaviour, IInteractable
 
         // Actualise l'image du coffre
         spriteRenderer.sprite = closedSprite;
+
+        // Masque le coffre
+        canvasGroup.alpha = 0;
+
+        // Débloque les interactions
+        canvasGroup.blocksRaycasts = false;
+
+        //Stocke les items
+        StoreItems();
+
+        // [TODO : Partage le coffre] Réinitialise le contenu du coffre
+        bank.Clear();
+    }
+
+    /// <summary>
+    /// Stocke les items
+    /// </summary>
+    public void StoreItems()
+    {
+        // Liste des items du coffre
+        items = bank.GetItems();
+    }
+
+    /// <summary>
+    /// Ajoute les items stockés
+    /// </summary>
+    public void AddItems()
+    {
+        if (items != null)
+        {
+            foreach (Item item in items)
+            {
+                // Ajoute l'item dans son emplacement
+                item.MySlot.AddItem(item);
+            }
+        }
     }
 }

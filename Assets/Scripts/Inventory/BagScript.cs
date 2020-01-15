@@ -137,4 +137,15 @@ public class BagScript : MonoBehaviour
         // Retourne la liste
         return items;
     }
+
+    // Vide le contenu du sac
+    public void Clear()
+    {
+        // Pour tous les emplacements du sac
+        foreach (SlotScript slot in slots)
+        {
+            // Vide l'emplacement
+            slot.Clear();
+        }
+    }
 }

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
             // Si l'on touche quelque chose
             if (hit.collider != null)
             {
-                // [DEBUG - Erreur sur clic gauhe sur un coffre] Si l'on touche un ennemi
+                // Si l'on touche un ennemi
                 if (hit.collider.CompareTag("Enemy"))
                 {
                     // Sélection de la nouvelle cible
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             // Désélection de la cible
             else
             {
-                // Affiche la frame de la cible
+                // Masque la frame de la cible
                 UIManager.MyInstance.HideTargetFrame();
 
                 // Supprime les références à la cible
