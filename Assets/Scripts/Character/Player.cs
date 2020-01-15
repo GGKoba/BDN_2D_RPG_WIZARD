@@ -349,7 +349,7 @@ public class Player : Character
     public void OnTriggerEnter2D(Collider2D collision)
     {
         // Si le joueur entre en contact avec un ennemi
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Interactable"))
         {
             // Interaction avec l'ennemi
             interactable = collision.GetComponent<IInteractable>();
@@ -363,7 +363,7 @@ public class Player : Character
     public void OnTriggerExit2D(Collider2D collision)
     {
         // Si le joueur n'est plus en contact avec un ennemi
-        if (collision.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Interactable"))
         {
             // S'il y a une interaction du joueur
             if (interactable != null)

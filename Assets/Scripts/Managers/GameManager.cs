@@ -47,14 +47,18 @@ public class GameManager : MonoBehaviour
             // Si l'on touche quelque chose
             if (hit.collider != null)
             {
-                // Sélection de la nouvelle cible
-                currentTarget = hit.collider.GetComponent<NPC>();
+                // [DEBUG - Erreur sur clic gauhe sur un coffre] Si l'on touche un ennemi
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    // Sélection de la nouvelle cible
+                    currentTarget = hit.collider.GetComponent<NPC>();
 
-                // Affecte la nouvelle cible au joueur
-                player.MyTarget = currentTarget.Select();
+                    // Affecte la nouvelle cible au joueur
+                    player.MyTarget = currentTarget.Select();
 
-                // Affiche la frame de la cible
-                UIManager.MyInstance.ShowTargetFrame(currentTarget);
+                    // Affiche la frame de la cible
+                    UIManager.MyInstance.ShowTargetFrame(currentTarget);
+                }
             }
             // Désélection de la cible
             else
@@ -71,7 +75,7 @@ public class GameManager : MonoBehaviour
         else if (Input.GetMouseButtonDown(1) & !EventSystem.current.IsPointerOverGameObject())
         {
             // Si l'on touche quelque chose et que celle-ci e un tag "Enemy"
-            if (hit.collider != null && hit.collider.CompareTag("Enemy"))
+            if (hit.collider != null && (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Interactable")))
             {
                 // Interaction avec le personnage
                 player.Interact();
