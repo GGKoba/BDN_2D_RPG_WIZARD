@@ -77,6 +77,12 @@ public class Chest : MonoBehaviour, IInteractable
     /// </summary>
     public void StopInteract()
     {
+        //Stocke les items
+        StoreItems();
+
+        // [TODO : Partage le coffre] Réinitialise le contenu du coffre
+        bank.Clear();
+
         // Définit le coffre "Fermé
         isOpen = false;
 
@@ -88,12 +94,6 @@ public class Chest : MonoBehaviour, IInteractable
 
         // Débloque les interactions
         canvasGroup.blocksRaycasts = false;
-
-        //Stocke les items
-        StoreItems();
-
-        // [TODO : Partage le coffre] Réinitialise le contenu du coffre
-        bank.Clear();
     }
 
     /// <summary>
