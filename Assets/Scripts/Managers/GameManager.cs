@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
             if (hit.collider != null && hit.collider.CompareTag("Enemy"))
             {
                 // Interaction avec le personnage
-                hit.collider.GetComponent<NPC>().Interact();
+                player.Interact();
             }
         }
     }

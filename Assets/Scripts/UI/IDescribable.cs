@@ -1,9 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-
-
-/// <summary>
+﻿/// <summary>
 /// Interface des éléments descriptibles
 /// </summary>
 public interface IDescribable

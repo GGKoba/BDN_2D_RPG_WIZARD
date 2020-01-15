@@ -31,7 +31,7 @@ public class LayerSorter : MonoBehaviour
     /// <summary>
     /// Détection de collision du joueur avec des obstables
     /// </summary>
-    /// <param name="collision"></param>
+    /// <param name="collision">L'objet de collision</param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Si le joueur touche un "Obstacle"
@@ -54,11 +54,11 @@ public class LayerSorter : MonoBehaviour
             obstacles.Add(obstacle);
         }
     }
-    
+
     /// <summary>
     /// Détection de fin de collision du joueur avec des obstables
     /// </summary>
-    /// <param name="collision"></param>
+    /// <param name="collision">L'objet de collision</param>
     private void OnTriggerExit2D(Collider2D collision)
     {
         // Si le joueur ne touche plus un "Obstacle"

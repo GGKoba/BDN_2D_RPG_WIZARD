@@ -11,7 +11,7 @@ class WeaponSocket : GearSocket
 
     // Référence sur le SpriteRenderer du personnage
     [SerializeField]
-    private SpriteRenderer parentSpriteRenderer;
+    private SpriteRenderer parentSpriteRenderer = default;
 
 
     /// <summary>

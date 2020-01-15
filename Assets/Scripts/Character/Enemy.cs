@@ -209,4 +209,13 @@ public class Enemy : NPC
             lootTable.ShowLoots();
         }
     }
+
+    /// <summary>
+    /// Fin de l'interaction avec le personnage : Surcharge la fonction StopInteract du script NPC
+    /// </summary>
+    public override void StopInteract()
+    {
+        // Ferme la fenêtre des butins
+        LootWindow.MyInstance.Close();
+    }
 }

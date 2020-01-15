@@ -49,6 +49,9 @@ public class Player : Character
     // Index de la position d'attaque (2 = down)
     private int exitIndex = 2;
 
+    // Référence sur l'interaction
+    private IInteractable interactable;
+
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
@@ -323,6 +326,54 @@ public class Player : Character
         {
             // Active le layer d'animation
             socket.ActivateLayer(layerName);
+        }
+    }
+
+    /// <summary>
+    /// Interaction du personnage : Surcharge la fonction Interact du script NPC
+    /// </summary>
+    public void Interact()
+    {
+        // S'il y a une interaction du joueur
+        if (interactable != null)
+        {
+            // Début de l'interaction  
+            interactable.Interact();
+        }
+    }
+
+    /// <summary>
+    /// Détection de collision du joueur avec des obstables
+    /// </summary>
+    /// <param name="collision">L'objet de collision</param>
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Si le joueur entre en contact avec un ennemi
+        if (collision.CompareTag("Enemy"))
+        {
+            // Interaction avec l'ennemi
+            interactable = collision.GetComponent<IInteractable>();
+        }
+    }
+
+    /// <summary>
+    /// Détection de fin de collision du joueur avec des obstables
+    /// </summary>
+    /// <param name="collision">L'objet de collision</param>
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        // Si le joueur n'est plus en contact avec un ennemi
+        if (collision.CompareTag("Enemy"))
+        {
+            // S'il y a une interaction du joueur
+            if (interactable != null)
+            {
+                // Fin de l'interaction avec l'ennemi
+                interactable.StopInteract();
+
+                // Réinitialise l'interaction
+                interactable = null;
+            }
         }
     }
 }

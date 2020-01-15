@@ -12,7 +12,7 @@ public delegate void CharacterRemoved();
 /// <summary>
 /// Classe contenant les fonctionnalités spécifiques aux personnage non jouable
 /// </summary>
-public class NPC : Character
+public class NPC : Character, IInteractable
 {
     // Evènement de changement de valeur de la vie
     public event HealthChanged HealthChangedEvent;
@@ -101,5 +101,13 @@ public class NPC : Character
     public virtual void Interact()
     {
         Debug.Log("Interaction with NPC");
+    }
+
+    /// <summary>
+    /// Fin de l'interaction avec le personnage : virtual pour être écrasée pour les autres classes
+    /// </summary>
+    public virtual void StopInteract()
+    {
+
     }
 }
