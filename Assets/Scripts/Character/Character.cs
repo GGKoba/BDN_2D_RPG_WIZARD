@@ -76,7 +76,7 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Update : virtual pour être écrasée pour les sous-classes
+    /// Update : virtual pour être écrasée pour les autres classes
     /// </summary>
     protected virtual void Update()
     {
@@ -105,7 +105,7 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Utilise le layer d'animation adapté : virtual pour être écrasée pour les sous-classes
+    /// Utilise le layer d'animation adapté : virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual void HandleLayers()
     {
@@ -142,7 +142,7 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Active un layer d'animation (Idle/Walk/Attack) : virtual pour être écrasée pour les sous-classes
+    /// Active un layer d'animation (Idle/Walk/Attack) : virtual pour être écrasée pour les autres classes
     /// </summary>
     /// <param name="layerName">Nom du layer à activer</param>
     public virtual void ActivateLayer(string layerName)

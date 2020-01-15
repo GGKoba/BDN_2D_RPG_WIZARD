@@ -289,14 +289,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            // Réinitialisation du texte du nombre d'éléments de l'item
-            clickable.MyStackText.text = null;
-
-            // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
-            clickable.MyStackText.color = new Color(0, 0, 0, 0);
-
-            // Actualise la couleur de l'image
-            clickable.MyIcon.color = Color.white;
+            // Réinitialise le texte du nombre d'éléments de l'item
+            ClearStackCount(clickable);
         }
 
         // S'il n'y a plus d'élément
@@ -309,6 +303,22 @@ public class UIManager : MonoBehaviour
             clickable.MyIcon.color = new Color(0, 0, 0, 0);
         }
     }
+
+    /// <summary>
+    /// Réinitialise le texte du nombre d'éléments de l'item
+    /// </summary>
+    public void ClearStackCount(IClickable clickable)
+    {
+        // Réinitialisation du texte du nombre d'éléments de l'item
+        clickable.MyStackText.text = null;
+
+        // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
+        clickable.MyStackText.color = new Color(0, 0, 0, 0);
+
+        // Actualise la couleur de l'image
+        clickable.MyIcon.color = Color.white;
+    }
+
 
     /// <summary>
     /// Affiche le tooltip

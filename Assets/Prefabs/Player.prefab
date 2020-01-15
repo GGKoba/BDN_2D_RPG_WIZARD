@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 5363893608377892833}
   - component: {fileID: 5438907252959281828}
   - component: {fileID: 3697617747827496828}
-  - component: {fileID: 1463168665764279656}
+  - component: {fileID: 6442602455639632334}
   m_Layer: 0
   m_Name: MainHand
   m_TagString: Untagged
@@ -327,7 +327,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1463168665764279656
+--- !u!114 &6442602455639632334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,9 +336,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3577480248982689345}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e75171bc7b4d644fb11c3d22e5e8a76, type: 3}
+  m_Script: {fileID: 11500000, guid: 913fa975d1980054b9c974c2d4ad6a8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentSpriteRenderer: {fileID: 4518433142810080506}
 --- !u!1 &3969290524442597795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,7 +1234,7 @@ MonoBehaviour:
   - {fileID: 3843644137165457694}
   - {fileID: 3059300091471337703}
   - {fileID: 7083916196394815249}
-  - {fileID: 1463168665764279656}
+  - {fileID: 6442602455639632334}
   - {fileID: 2488560559183147171}
 --- !u!95 &4518433142810080511
 Animator:

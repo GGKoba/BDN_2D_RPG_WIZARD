@@ -1,104 +1,90 @@
-Ôªøusing UnityEngine;
+using System;
+using UnityEngine;
 
 
 
 /// <summary>
-/// Classe pour utiliser des sorts
+/// Classe des sorts
 /// </summary>
-public class Spell : MonoBehaviour
+[Serializable]
+public class Spell : IUseable, IMoveable, IDescribable
 {
+    // Nom du sort
+    [SerializeField]
+    private string name = default;
+
+    // DÈg‚ts du sort
+    [SerializeField]
+    private int damage = default;
+
+    // Description du sort
+    [SerializeField]
+    private string description = default;
+
+    // Image du sort
+    [SerializeField]
+    private Sprite icon = default;
+
     // Vitesse du sort
     [SerializeField]
     private float speed = default;
 
-    // R√©f√©rence sur le rigidbody du sort
-    private Rigidbody2D myRigidbody;
+    // Temps d'incantation du sort
+    [SerializeField]
+    private float castTime = default;
 
-    // D√©g√¢ts du sort
-    private int damage;
+    // Prefab du sort
+    [SerializeField]
+    private GameObject prefab = default;
 
-    // Propri√©t√© d'acc√®s √† la cible du sort
-    public Transform MyTarget { get; private set; }
-
-    // Source du sort
-    public Transform source;
-
+    // Couleur de la barre de sort
+    [SerializeField]
+    private Color barColor = default;
 
 
     /// <summary>
-    /// Start
+    /// Accesseurs sur les propriÈtÈs du sort
     /// </summary>
-    private void Start()
+
+    // PropriÈtÈ d'accËs au nom du sort 
+    public string MyName { get => name; }
+
+    // PropriÈtÈ d'accËs aux dÈg‚ts du sort
+    public int MyDamage { get => damage; }
+
+    // PropriÈtÈ d'accËs ‡ l'image du sort 
+    public Sprite MyIcon { get => icon; }
+
+    // PropriÈtÈ d'accËs ‡ la vitesse du sort 
+    public float MySpeed { get => speed; }
+
+    // PropriÈtÈ d'accËs au temps d'incantation du sort
+    public float MyCastTime { get => castTime; }
+
+    // PropriÈtÈ d'accËs ‡ la prefab du sort 
+    public GameObject MyPrefab { get => prefab; }
+
+    // PropriÈtÈ d'accËs ‡ la couleur de la barre 
+    public Color MyBarColor { get => barColor; }
+
+
+    /// <summary>
+    /// Utilisation du sort
+    /// </summary>
+    public void Use()
     {
-        // R√©f√©rence sur le rigidbody du sort
-        myRigidbody = GetComponent<Rigidbody2D>();
+        Player.MyInstance.CastSpell(MyName);
     }
 
     /// <summary>
-    /// Initialisation des donn√©es du sort
+    /// Retourne la description du sort
     /// </summary>
-    /// <param name="spellTarget">Cible du sort</param>
-    /// <param name="spellDamage">D√©g√¢ts du sort</param>
-    public void Initialize(Transform spellTarget, int spellDamage, Transform spellSource)
+    public string GetDescription()
     {
-        // Initialisation de la cible du sort
-        MyTarget = spellTarget;
+        string spellTitle = string.Format("<color=#FFD904><b>{0}</b></color>", name);
+        string spellStats = string.Format("<color=#ECECEC>Incantation : {0}s</color>", castTime);
+        string spellDescription = string.Format("<color=#E0D0AE>{0}\net cause <color=cyan>{1}</color> points de dÈg‚ts</color>", description, damage);
 
-        // Initialisation des d√©g√¢ts du sort
-        damage = spellDamage;
-
-        // Initialisation de la source du sort
-        source = spellSource;
-    }
-
-    /// <summary>
-    /// FixedUpdate : Update utilis√© pour le Rigibody
-    /// </summary>
-    private void FixedUpdate()
-    {
-        // S'il y a une cible, le sort est en mouvement
-        if (MyTarget != null)
-        {
-            // Calcule la direction du sort
-            Vector2 direction = MyTarget.position - transform.position;
-
-            // D√©place le sort en utilisant le rigidboby
-            myRigidbody.velocity = direction.normalized * speed;
-
-            // Calcule l'angle de rotation
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-            // Fait pivoter le sort vers la cible
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-    }
-
-    /// <summary>
-    /// D√©tection de l'impact
-    /// </summary>
-    /// <param name="collision">L'objet de collision</param>
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Si la collision de la cible a le tag Hitbox
-        if (collision.CompareTag("HitBox") && collision.transform == MyTarget)
-        {
-            // Source de l'attaque
-            Character character = collision.GetComponentInParent<Character>();
-
-            // Stoppe le d√©placement du sort
-            speed = 0;
-
-            // Appelle la fonction de d√©gats sur le personnage
-            character.TakeDamage(damage, source);
-
-            // Activation du trigger "impact"
-            GetComponent<Animator>().SetTrigger("impact");
-
-            // Arr√™t du mouvement du sort
-            myRigidbody.velocity = Vector2.zero;
-
-            // R√©initialise la cible du sort
-            MyTarget = null;
-        }
+        return string.Format("{0}\n\n{1}\n\n{2}", spellTitle, spellStats, spellDescription);
     }
 }

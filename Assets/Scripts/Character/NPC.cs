@@ -45,7 +45,7 @@ public class NPC : Character
     }
 
     /// <summary>
-    /// Désélection d'un NPC : virtual pour être écrasée pour les sous-classes
+    /// Désélection d'un NPC : virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual void DeSelect()
     {
@@ -57,7 +57,7 @@ public class NPC : Character
     }
 
     /// <summary>
-    /// Sélection d'un NPC : virtual pour être écrasée pour les sous-classes
+    /// Sélection d'un NPC : virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual Transform Select()
     {
@@ -96,7 +96,7 @@ public class NPC : Character
     }
 
     /// <summary>
-    /// Interaction avec le personnage : virtual pour être écrasée pour les sous-classes
+    /// Interaction avec le personnage : virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual void Interact()
     {

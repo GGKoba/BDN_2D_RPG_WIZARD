@@ -85,6 +85,15 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 icon.color = Color.grey; 
             }
         }
+        // Clic droit
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            // Ajoute un item dans un sac de l'inventaire
+            InventoryScript.MyInstance.AddItem(equippedArmor);
+
+            /// Déséquipe l'item
+            UnequipArmor();
+        }
     }
 
     /// <summary>
@@ -144,7 +153,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         }
 
         // S'il y a un emplacement pour l'équipement sur le personnage et que l'équipement a des animations
-        if (gearSocket != null && equippedArmor.MyAnimationClips != null)
+        if (gearSocket != null && equippedArmor.MyAnimationClips != null && equippedArmor.MyAnimationClips.Length > 0)
         {
             // Ecrase les animations de l'équipement
             gearSocket.Equip(equippedArmor.MyAnimationClips);

@@ -112,9 +112,6 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
             // L'item est utilisable
             useables = InventoryScript.MyInstance.GetUseables(useable);
 
-            // Nombre d'éléments de la Stack
-            count = useables.Count;
-
             // Actualise la couleur de l'emplacement
             InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
 
@@ -123,9 +120,15 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         }
         else
         {
+            // Réinitialise les items de l'emplacement
+            useables.Clear();
+
             // Utilisation du bouton
             MyUseable = useable;
         }
+
+        // Actualise le nombre d'éléments de la Stack
+        count = useables.Count;
 
         // Mise à jour de l'image
         UpdateVisual();
@@ -147,6 +150,12 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         {
             // Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
             UIManager.MyInstance.UpdateStackSize(this);
+        }
+        // Si l'item est un sort
+        else if (MyUseable is Spell)
+        {
+            // Réinitialise le texte du nombre d'éléments de l'item
+            UIManager.MyInstance.ClearStackCount(this);
         }
     }
 

@@ -31,7 +31,7 @@ public class SpellBook : MonoBehaviour
 
     // Tableau des sorts
     [SerializeField]
-    private SpellData[] spells = default;
+    private Spell[] spells = default;
 
     [Header("CastBar")]
     // Référence à la barre de cast du joueur
@@ -74,10 +74,10 @@ public class SpellBook : MonoBehaviour
     /// Retourne un sort avec ses propriétés
     /// </summary>
     /// <param name="spellToCast">Nom du sort</param>
-    public SpellData CastSpell(string spellToCast)
+    public Spell CastSpell(string spellToCast)
     {
         // Sort correspondant au nom du sort dans le tableau
-        SpellData spell = GetSpell(spellToCast);
+        Spell spell = GetSpell(spellToCast);
 
         // Initialise le remplissage de la barre à vide
         castingBar.fillAmount = 0;
@@ -201,7 +201,7 @@ public class SpellBook : MonoBehaviour
     /// Retourne un sort avec ses informations
     /// </summary>
     /// <param name="spellName"></param>
-    public SpellData GetSpell(string spellName)
+    public Spell GetSpell(string spellName)
     {
         return Array.Find(spells, aSpell => aSpell.MyName == spellName);
     }

@@ -2,16 +2,19 @@
 
 
 
+/// <summary>
+/// Classe de gestion des emplacements des équipements du personnage
+/// </summary>
 public class GearSocket : MonoBehaviour
 {
     // Référence sur l'Animator
     public Animator MyAnimator { get; set; }
 
-    // Référence sur l'Animator du personnage
-    private Animator parentAnimator;
+    // [TODO : useless ?] - Référence sur l'Animator du personnage
+    //private Animator parentAnimator;
 
     // Référence sur le SpriteRenderer
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
 
     // Référence sur le controller
     private AnimatorOverrideController animatorOverrideController;
@@ -25,8 +28,8 @@ public class GearSocket : MonoBehaviour
         // Référence sur le SpriteRenderer
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Référence sur l'Animator du personnage
-        parentAnimator = GetComponentInParent<Animator>();
+        // [TODO : useless ?] - Référence sur l'Animator du personnage
+        //parentAnimator = GetComponentInParent<Animator>();
 
         // Référence sur l'Animator
         MyAnimator = GetComponent<Animator>();
@@ -39,11 +42,11 @@ public class GearSocket : MonoBehaviour
     }
 
     /// <summary>
-    /// Actualise les paramètres de l'animation
+    /// Actualise les paramètres de l'animation  : virtual pour être écrasée pour les autres classes
     /// </summary>
     /// <param name="x">X</param>
     /// <param name="y">Y</param>
-    public void SetDirection(float x, float y)
+    public virtual void SetDirection(float x, float y)
     {
         MyAnimator.SetFloat("x", x);
         MyAnimator.SetFloat("y", y);

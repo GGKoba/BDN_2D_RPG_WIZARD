@@ -169,7 +169,7 @@ public class Player : Character
         Transform attackTarget = MyTarget;
 
         // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
-        SpellData mySpell = SpellBook.MyInstance.CastSpell(spellName);
+        Spell mySpell = SpellBook.MyInstance.CastSpell(spellName);
 
         // Indique que l'on attaque
         IsAttacking = true;
@@ -191,7 +191,7 @@ public class Player : Character
         if (attackTarget != null && InLineOfSight())
         {
             // Instantie le sort
-            Spell spell = Instantiate(mySpell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();
+            SpellScript spell = Instantiate(mySpell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
 
             // Affecte la cible et les dégâts du sort
             spell.Initialize(attackTarget, mySpell.MyDamage, transform);
