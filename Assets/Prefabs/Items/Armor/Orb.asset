@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
-  m_Name: Sword
+  m_Name: Orb
   m_EditorClassIdentifier: 
   stackSize: 0
-  icon: {fileID: 21300000, guid: e4b29ed407378c04ab29892d3b526873, type: 3}
-  title: "Ep\xE9e de guerrier"
-  quality: 4
-  armorType: 6
-  stamina: 10
-  intellect: 0
-  strengh: 8
+  icon: {fileID: 21300000, guid: 424c5ceb55be1164b9e1b7bc785b7fe1, type: 3}
+  title: Orbe de mage
+  quality: 5
+  armorType: 7
+  stamina: 8
+  intellect: 10
+  strengh: 0
+  animationClips: []

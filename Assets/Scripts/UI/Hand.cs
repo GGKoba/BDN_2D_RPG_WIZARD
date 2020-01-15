@@ -118,11 +118,24 @@ public class Hand : MonoBehaviour
     /// </summary>
     public void DeleteItem()
     {
-        // Si c'est un item et qu'il vient d'un emplacement
-        if (MyMoveable is Item && InventoryScript.MyInstance.MyFromSlot != null)
+        // Si c'est un item
+        if (MyMoveable is Item)
         {
-            // Vide l'emplacement
-            (MyMoveable as Item).MySlot.Clear();
+            // L'objet déplacé devient un item
+            Item item = MyMoveable as Item;
+
+            // Si l'item a un emplacement dans l'inventaire
+            if (item.MySlot != null)
+            {
+                // Vide l'emplacement
+                item.MySlot.Clear();
+            }
+            // Si l'item a un emplacement sur la feuille du personnage
+            else if (item.MyCharacterButton != null)
+            {
+                /// Déséquipe l'item
+                item.MyCharacterButton.UnequipArmor();
+            }
         }
 
         // Libère l'item

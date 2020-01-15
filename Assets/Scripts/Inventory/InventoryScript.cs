@@ -224,6 +224,9 @@ public class InventoryScript : MonoBehaviour
                 // Ajoute le sac dans la liste
                 bags.Add(bag);
 
+                // Assignation de l'index du sac
+                bag.MyBagScript.transform.SetSiblingIndex(bagButton.MyBagIndex);
+
                 break;
             }
         }
@@ -234,11 +237,14 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     public void AddBag(Bag bag, BagButton bagButton)
     {
+        // Ajoute le sac sur un bouton
+        bagButton.MyBag = bag;
+
         // Ajoute un sac à sur la barre des sacs
         bags.Add(bag);
 
-        // Ajoute le sac sur un bouton
-        bagButton.MyBag = bag;
+        // Assignation de l'index du sac
+        bag.MyBagScript.transform.SetSiblingIndex(bagButton.MyBagIndex);
     }
 
 

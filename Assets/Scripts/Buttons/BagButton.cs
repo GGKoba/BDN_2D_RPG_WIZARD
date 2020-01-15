@@ -22,6 +22,13 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    // Index du sac équipé
+    [SerializeField]
+    private int bagIndex = default;
+
+    // Propriété d'accès à l'index du sac
+    public int MyBagIndex { get => bagIndex; set => bagIndex = value; }
+
     // Image du sac équipé
     [SerializeField]
     private Sprite equiped = default;

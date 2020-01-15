@@ -15,7 +15,8 @@ public class Bag : Item, IUseable
     private GameObject bagPrefab = default;
 
     // Nombre d'emplacements
-    private int slotsCount;
+    [SerializeField]
+    private int slotsCount = default;
 
     // Propriété d'accès au nombre d'emplacements du sac
     public int MySlotsCount { get => slotsCount; }

@@ -145,6 +145,9 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // Référence sur l'item
         equippedArmor = armor;
 
+        // Référence sur l'emplacement de l'item
+        equippedArmor.MyCharacterButton = this;
+
         // S'il on déplace un item Armor
         if (Hand.MyInstance.MyMoveable == (armor as IMoveable))
         {
@@ -184,6 +187,9 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
             // Réinitialise les animations d'un équipement
             gearSocket.Unequip();
         }
+
+        // Réinitialise l'emplacement de l'item
+        equippedArmor.MyCharacterButton = null;
 
         // Réinitialise la référence sur l'item
         equippedArmor = null;
