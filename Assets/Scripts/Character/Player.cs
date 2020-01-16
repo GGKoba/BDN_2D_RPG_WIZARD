@@ -55,12 +55,19 @@ public class Player : Character
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
+    // Propriété d'accès à l'argent du joueur
+    public int MyGold { get; set; }
+
+
 
     /// <summary>
     /// Start : Surcharge la fonction Start du script Character
     /// </summary>
     protected override void Start()
     {
+        // Initialise l'argent du joueur
+        MyGold = 25;
+
         // Initialise les barres
         mana.Initialize(initMana, initMana);
 

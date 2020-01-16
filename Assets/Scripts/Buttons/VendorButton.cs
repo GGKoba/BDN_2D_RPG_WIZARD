@@ -29,9 +29,9 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField]
     private Text quantity = default;
 
+    // Item du bouton
+    private VendorItem vendorItem;
 
-    // Propriété d'accès à l'item du vendeur
-    public Item MyItem { get; set; }
 
     // Référence sur le script LootWindow
     //private VendorWindow vendorWindow;
@@ -53,7 +53,7 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         // Affiche le tooltip
-        //UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, MyLoot);
+        UIManager.MyInstance.ShowTooltip(new Vector2(0, 1), transform.position, vendorItem.MyItem);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerExit(PointerEventData eventData)
     {
         // Masque le tooltip
-        //UIManager.MyInstance.HideTooltip();
+        UIManager.MyInstance.HideTooltip();
     }
 
     /// <summary>
@@ -72,60 +72,81 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     /// <param name="eventData">Evenement de clic</param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        /*
-        // Récupère l'item s'il y a de la place 
-        if (InventoryScript.MyInstance.AddItem(MyItem))
+        // Si le joueur a assez d'aregent et qu'il a de la place 
+        if (Player.MyInstance.MyGold >= vendorItem.MyItem.MyPrice && InventoryScript.MyInstance.AddItem(vendorItem.MyItem))
         {
-            // Réinitialisation du bouton
-            gameObject.SetActive(false);
-
-            // Retire l'item de la page et de la liste des butins
-            //vendorWindow.TakeLoot(MyItem);
-
-            // Masque le tooltip
-            UIManager.MyInstance.HideTooltip();
+            // Vend l'item
+            SellItem();
         }
-        */
     }
 
     /// <summary>
     /// Ajoute un item
     /// </summary>
     /// <param name="vendorItem">item du vendeur</param>
-    public void AddItem(VendorItem vendorItem)
-    {   
+    public void AddItem(VendorItem itemToAdd)
+    {
+        // Assigne l'item du bouton
+        vendorItem = itemToAdd;
+
         // Si j'ai une quantité pour cet item ou que je n'ai pas de quantité mais que l'item est en disponibilité illimitée
-        if (vendorItem.MyQuantity > 0 || (vendorItem.MyQuantity == 0 && vendorItem.MyUnlimited))
+        if (itemToAdd.MyQuantity > 0 || (itemToAdd.MyQuantity == 0 && itemToAdd.MyUnlimited))
         {
             // Actualise l'image de l'item du bouton
-            icon.sprite = vendorItem.MyItem.MyIcon;
+            icon.sprite = itemToAdd.MyItem.MyIcon;
 
             // Actualise le titre de l'item du bouton
-            title.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[vendorItem.MyItem.MyQuality], vendorItem.MyItem.MyTitle);
+            title.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[itemToAdd.MyItem.MyQuality], itemToAdd.MyItem.MyTitle);
 
             // Actualise le prix de l'item du bouton
-            price.text = (vendorItem.MyItem.MyPrice > 0) ? string.Format("Prix : {0}", vendorItem.MyItem.MyPrice) : string.Empty;
+            price.text = (itemToAdd.MyItem.MyPrice > 0) ? string.Format("Prix : {0}", itemToAdd.MyItem.MyPrice) : string.Empty;
 
             // Si la disponibilité est limitée
-            if (!vendorItem.MyUnlimited)
+            if (!itemToAdd.MyUnlimited)
             {
                 // Actualise la quantité de l'item du bouton
-                quantity.text = vendorItem.MyQuantity.ToString();
+                quantity.text = itemToAdd.MyQuantity.ToString();
             }
 
             // Nouvelle couleur
             Color buttonColor = Color.clear;
 
             // La couleur varie en fonction de la qualité de l'item
-            ColorUtility.TryParseHtmlString(QualityColor.MyColors[vendorItem.MyItem.MyQuality], out buttonColor);
+            ColorUtility.TryParseHtmlString(QualityColor.MyColors[itemToAdd.MyItem.MyQuality], out buttonColor);
 
             // Actualise la couleur de l'image de l'emplacement
             GetComponent<Image>().color = buttonColor;
 
-
-
             // Active le bouton de l'item
             gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Vente de l'item
+    /// </summary>
+    private void SellItem()
+    {
+        // Deduit l'argent au joueur
+        Player.MyInstance.MyGold -= vendorItem.MyItem.MyPrice;
+
+        // Si la disponibilité n'est pas illimitée
+        if (!vendorItem.MyUnlimited)
+        {
+            // Reduit la quantité
+            vendorItem.MyQuantity--;
+
+            // Actualise la quantité de l'item du bouton
+            quantity.text = vendorItem.MyQuantity.ToString();
+
+            if (vendorItem.MyQuantity == 0)
+            {
+                // Réinitialisation du bouton
+                gameObject.SetActive(false);
+
+                // Masque le tooltip
+                UIManager.MyInstance.HideTooltip();
+            }
         }
     }
 }
