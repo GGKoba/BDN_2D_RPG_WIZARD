@@ -43,8 +43,21 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     // Propriété d'accès à l'emplacement de l'item
     public SlotScript MySlot { get => slot; set => slot = value; }
 
+    // Emplacement de l'item sur la feuille du personnage
+    private CharacterButton characterButton;
+
     // Propriété d'accès à l'emplacement de l'item sur la feuille du personnage
-    public CharacterButton MyCharacterButton { get; set; }
+    public CharacterButton MyCharacterButton
+    { 
+        get => characterButton;
+        set
+        {
+            // Réinitialise l''emplacement
+            MySlot = null;
+
+            characterButton = value;
+        }
+    }
 
 
     /// <summary>
@@ -57,9 +70,6 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
         {
             // Supprime l'item de l'emplacement
             MySlot.RemoveItem(this);
-
-            // Réinitialise l''emplacement
-            MySlot = null;
         }
     }
 
