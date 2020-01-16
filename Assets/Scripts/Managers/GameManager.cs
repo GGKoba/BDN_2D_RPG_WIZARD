@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-
-
+using UnityEngine.UI;
 
 /// <summary>
 /// Classe de gestion du jeu
@@ -15,6 +14,10 @@ public class GameManager : MonoBehaviour
     // Cible courante
     private NPC currentTarget;
 
+    // Référence sur l'argent du joueur;
+    [SerializeField]
+    private Text goldText = default;
+
 
     /// <summary>
     /// Update
@@ -23,6 +26,9 @@ public class GameManager : MonoBehaviour
     {
         // Exécute le clic sur une cible
         ClickTarget();
+
+        // Actualise l'argent du joueur
+        goldText.text = player.MyGold.ToString();
     }
 
     /// <summary>
