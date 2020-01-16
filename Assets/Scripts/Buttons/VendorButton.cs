@@ -12,14 +12,14 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Image icon = default;
 
     // Propriété d'accès à l'image de l'item du bouton
-    //public Image MyIcon { get => icon; }
+    public Image MyIcon { get => icon; }
 
     // Titre de l'item du bouton
     [SerializeField]
     private Text title = default;
 
     // Propriété d'accès au titre de l'item du bouton
-    //public Text MyTitle { get => title; }
+    public Text MyTitle { get => title; }
 
     // Prix de l'item du bouton
     [SerializeField]
@@ -104,7 +104,7 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             title.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[vendorItem.MyItem.MyQuality], vendorItem.MyItem.MyTitle);
 
             // Actualise le prix de l'item du bouton
-            price.text = string.Format("Prix : {0}", vendorItem.MyItem.MyPrice);
+            price.text = (vendorItem.MyItem.MyPrice > 0) ? string.Format("Prix : {0}", vendorItem.MyItem.MyPrice) : string.Empty;
 
             // Si la disponibilité est limitée
             if (!vendorItem.MyUnlimited)
