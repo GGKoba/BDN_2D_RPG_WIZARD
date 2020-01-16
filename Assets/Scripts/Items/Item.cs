@@ -13,29 +13,36 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     [SerializeField]
     private int stackSize = default;
 
+    // Propriété d'accès à la taille empilable de l'item
+    public int MyStackSize { get => stackSize; }
+
     // Image de l'item
     [SerializeField]
     private Sprite icon = default;
+
+    // Propriété d'accès à l'image de l'item
+    public Sprite MyIcon { get => icon; }
 
     // Titre de l'item
     [SerializeField]
     private string title = default;
 
-    // Qualité de l'item
-    [SerializeField]
-    private Quality quality = default;
-    
-    // Propriété d'accès à la taille empilable de l'item
-    public int MyStackSize { get => stackSize; }
-
-    // Propriété d'accès à l'image de l'item
-    public Sprite MyIcon { get => icon; }
-
     // Propriété d'accès au titre de l'item
     public string MyTitle { get => title; }
 
+    // Qualité de l'item
+    [SerializeField]
+    private Quality quality = default;
+
     // Propriété d'accès à la qualité de l'item
     public Quality MyQuality { get => quality; }
+
+    // Prix de l'item
+    [SerializeField]
+    private int price = default;
+
+    // Propriété d'accès au prix de l'item
+    public int MyPrice { get => price; }
 
     // Référence sur l'emplacement de l'item
     private SlotScript slot;
@@ -45,6 +52,11 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
 
     // Emplacement de l'item sur la feuille du personnage
     private CharacterButton characterButton;
+
+
+
+
+
 
     // Propriété d'accès à l'emplacement de l'item sur la feuille du personnage
     public CharacterButton MyCharacterButton

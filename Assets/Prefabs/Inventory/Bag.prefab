@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1740023239915727958}
   - component: {fileID: 6978751618918457855}
   - component: {fileID: 1740023239915727959}
-  - component: {fileID: 1302966884}
+  - component: {fileID: 8631689398588800185}
   m_Layer: 5
   m_Name: Bag
   m_TagString: Untagged
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_CellSize: {x: 23, y: 23}
   m_Spacing: {x: 2, y: 2}
   m_Constraint: 1
-  m_ConstraintCount: 8
+  m_ConstraintCount: 4
 --- !u!225 &6978751618918457855
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
---- !u!114 &1302966884
+--- !u!114 &8631689398588800185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1740023239915727957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c210ca94fa2a854bb1b285bb4bf522b, type: 3}
+  m_Script: {fileID: 11500000, guid: b922dbbc8ef9ae249bd0cdadf24887b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotPrefab: {fileID: 8232056461637157170, guid: cfa118f0f05c028419b5e1a1188334ec,

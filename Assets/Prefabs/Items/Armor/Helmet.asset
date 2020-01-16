@@ -16,6 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b0afa83b34a44814b8c4669c6c0e94ec, type: 3}
   title: Casque de guerrier
   quality: 2
+  price: 18
   armorType: 0
   stamina: 5
   intellect: 2

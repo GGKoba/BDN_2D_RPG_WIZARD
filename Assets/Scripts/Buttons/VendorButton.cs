@@ -31,7 +31,7 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 
     // Propriété d'accès à l'item du vendeur
-    //public Item MyItem { get; set; }
+    public Item MyItem { get; set; }
 
     // Référence sur le script LootWindow
     //private VendorWindow vendorWindow;
@@ -93,8 +93,39 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     /// </summary>
     /// <param name="vendorItem">item du vendeur</param>
     public void AddItem(VendorItem vendorItem)
-    {
-        // Active le bouton de l'item
-        gameObject.SetActive(true);
+    {   
+        // Si j'ai une quantité pour cet item ou que je n'ai pas de quantité mais que l'item est en disponibilité illimitée
+        if (vendorItem.MyQuantity > 0 || (vendorItem.MyQuantity == 0 && vendorItem.MyUnlimited))
+        {
+            // Actualise l'image de l'item du bouton
+            icon.sprite = vendorItem.MyItem.MyIcon;
+
+            // Actualise le titre de l'item du bouton
+            title.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[vendorItem.MyItem.MyQuality], vendorItem.MyItem.MyTitle);
+
+            // Actualise le prix de l'item du bouton
+            price.text = string.Format("Prix : {0}", vendorItem.MyItem.MyPrice);
+
+            // Si la disponibilité est limitée
+            if (!vendorItem.MyUnlimited)
+            {
+                // Actualise la quantité de l'item du bouton
+                quantity.text = vendorItem.MyQuantity.ToString();
+            }
+
+            // Nouvelle couleur
+            Color buttonColor = Color.clear;
+
+            // La couleur varie en fonction de la qualité de l'item
+            ColorUtility.TryParseHtmlString(QualityColor.MyColors[vendorItem.MyItem.MyQuality], out buttonColor);
+
+            // Actualise la couleur de l'image de l'emplacement
+            GetComponent<Image>().color = buttonColor;
+
+
+
+            // Active le bouton de l'item
+            gameObject.SetActive(true);
+        }
     }
 }

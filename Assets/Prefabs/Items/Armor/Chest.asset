@@ -16,6 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 8971b5d2154f8424386356903421a655, type: 3}
   title: Torse de guerrier
   quality: 3
+  price: 25
   armorType: 2
   stamina: 12
   intellect: 4
