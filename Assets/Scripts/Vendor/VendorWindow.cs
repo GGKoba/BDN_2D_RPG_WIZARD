@@ -40,9 +40,6 @@ public class VendorWindow : MonoBehaviour
     {
         // Référence sur le canvas de la fenêtre
         canvasGroup = GetComponent<CanvasGroup>();
-
-        // Fermeture de la fenêtre du vendeur
-        Close();
     }
 
     /// <summary>
