@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
         // Clic droit et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         else if (Input.GetMouseButtonDown(1) & !EventSystem.current.IsPointerOverGameObject())
         {
-            // Si l'on touche quelque chose et que celle-ci e un tag "Enemy"
-            if (hit.collider != null && (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Interactable")))
+            // Si l'on touche quelque chose et que celle-ci e un tag "Enemy" ou Interactable et que c'est le même objet que celui avec lequel le joueur est en interaction
+            if (hit.collider != null && (hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Interactable")) && hit.collider.gameObject.GetComponent<IInteractable>() == player.MyInteractable)
             {
                 // Interaction avec le personnage
                 player.Interact();

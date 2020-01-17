@@ -15,17 +15,27 @@ public class Vendor : MonoBehaviour, IInteractable
     [SerializeField]
     private VendorItem[] items = default;
 
+    // Propriété d'accès sur l'indicateur d'ouverture de la fenêtre du vendeur
+    public bool IsOpen { get; set; }
+
 
     /// <summary>
     /// Interaction avec le personnage
     /// </summary>
     public void Interact()
     {
-        // Création des pages de la fênêtre du vendeur
-        vendorWindow.CreatePages(items);
+        // Si la fenêtre du vendeur n'est pas ouverte
+        if (!IsOpen)
+        {
+            // Définit la fenêtre comme "ouverte"
+            IsOpen = true;
 
-        // Ouverture de la fenêtre du vendeur
-        vendorWindow.Open();
+            // Création des pages de la fênêtre du vendeur
+            vendorWindow.CreatePages(items);
+
+            // Ouverture de la fenêtre du vendeur
+            vendorWindow.Open(this);
+        }
     }
 
     /// <summary>
@@ -33,7 +43,17 @@ public class Vendor : MonoBehaviour, IInteractable
     /// </summary>
     public void StopInteract()
     {
-        // Fermeture de la fenêtre du vendeur
-        vendorWindow.Close();
+        // Si la fenêtre du vendeur est ouverte
+        if (IsOpen)
+        {
+            // Définit la fenêtre comme "fermée"
+            IsOpen = false;
+
+            // Suppression des pages de la fênêtre du vendeur
+            //vendorWindow.DeletePages();
+
+            // Fermeture de la fenêtre du vendeur
+            vendorWindow.Close();
+        }
     }
 }

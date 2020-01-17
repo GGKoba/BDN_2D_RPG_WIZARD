@@ -77,23 +77,27 @@ public class Chest : MonoBehaviour, IInteractable
     /// </summary>
     public void StopInteract()
     {
-        //Stocke les items
-        StoreItems();
+        // Si le coffre est ouvert
+        if (isOpen)
+        {
+            //Stocke les items
+            StoreItems();
 
-        // [TODO : Partage le coffre] Réinitialise le contenu du coffre
-        bank.Clear();
+            // [TODO : Partage le coffre] Réinitialise le contenu du coffre
+            bank.Clear();
 
-        // Définit le coffre "Fermé
-        isOpen = false;
+            // Définit le coffre "Fermé
+            isOpen = false;
 
-        // Actualise l'image du coffre
-        spriteRenderer.sprite = closedSprite;
+            // Actualise l'image du coffre
+            spriteRenderer.sprite = closedSprite;
 
-        // Masque le coffre
-        canvasGroup.alpha = 0;
+            // Masque le coffre
+            canvasGroup.alpha = 0;
 
-        // Débloque les interactions
-        canvasGroup.blocksRaycasts = false;
+            // Débloque les interactions
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
     /// <summary>

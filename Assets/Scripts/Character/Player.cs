@@ -52,12 +52,14 @@ public class Player : Character
     // Référence sur l'interaction
     private IInteractable interactable;
 
+    // Propriété d'accès sur la référence sur l'interaction
+    public IInteractable MyInteractable { get => interactable; set => interactable = value; }
+
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
     // Propriété d'accès à l'argent du joueur
     public int MyGold { get; set; }
-
 
 
     /// <summary>
@@ -342,10 +344,10 @@ public class Player : Character
     public void Interact()
     {
         // S'il y a une interaction du joueur
-        if (interactable != null)
+        if (MyInteractable != null)
         {
             // Début de l'interaction  
-            interactable.Interact();
+            MyInteractable.Interact();
         }
     }
 
@@ -359,7 +361,7 @@ public class Player : Character
         if (collision.CompareTag("Enemy") || collision.CompareTag("Interactable"))
         {
             // Interaction avec l'ennemi
-            interactable = collision.GetComponent<IInteractable>();
+            MyInteractable = collision.GetComponent<IInteractable>();
         }
     }
 
@@ -373,13 +375,13 @@ public class Player : Character
         if (collision.CompareTag("Enemy") || collision.CompareTag("Interactable"))
         {
             // S'il y a une interaction du joueur
-            if (interactable != null)
+            if (MyInteractable != null)
             {
                 // Fin de l'interaction avec l'ennemi
-                interactable.StopInteract();
+                MyInteractable.StopInteract();
 
                 // Réinitialise l'interaction
-                interactable = null;
+                MyInteractable = null;
             }
         }
     }

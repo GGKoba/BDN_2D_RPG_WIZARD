@@ -17,8 +17,8 @@ public class VendorWindow : MonoBehaviour
     // Liste des pages des items du vendeur
     private List<List<VendorItem>> pages = new List<List<VendorItem>>();
 
-    // Liste des items du vendeur
-    //private List<VendorItem> vendorItems = new List<VendorItem>();
+    // Référence sur le vendeur
+    private Vendor vendor;
 
     // Index de la page courante
     private int pageIndex = 0;
@@ -48,8 +48,11 @@ public class VendorWindow : MonoBehaviour
     /// <summary>
     /// Ouverture de la fenêtre du vendeur
     /// </summary>
-    public void Open()
+    public void Open(Vendor vendorRef)
     {
+        // Référence sur le vendeur
+        vendor = vendorRef;
+
         // Débloque les interactions
         canvasGroup.blocksRaycasts = true;
 
@@ -62,13 +65,18 @@ public class VendorWindow : MonoBehaviour
     /// </summary>
     public void Close()
     {
+        // Définit la fenêtre du vendeur comme "fermée"
+        vendor.IsOpen = false;
+
         // Débloque les interactions
         canvasGroup.blocksRaycasts = false;
 
         // Masque la fenêtre du vendeur
         canvasGroup.alpha = 0;
-    }
 
+        // Réinitialise la référence sur le vendeur
+        vendor = null;
+    }
 
     /// <summary>
     /// Création de la liste des pages de butin
@@ -76,6 +84,9 @@ public class VendorWindow : MonoBehaviour
     /// <param name="items">Liste des items du vendeur</param>
     public void CreatePages(VendorItem[] items)
     {
+        // Supprime les pages
+        pages.Clear();
+
         // Création d'une nouvelle page
         List<VendorItem> currentPage = new List<VendorItem>();
 

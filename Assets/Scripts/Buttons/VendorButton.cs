@@ -33,7 +33,7 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private VendorItem vendorItem;
 
 
-    // Référence sur le script LootWindow
+    // Référence sur le script VendorWindow
     //private VendorWindow vendorWindow;
 
 
@@ -42,7 +42,7 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     /// </summary>
     private void Awake()
     {
-        // Référence sur le script LootWindow
+        // Référence sur le script VendorWindow
         //vendorWindow = GetComponentInParent<VendorWindow>();
     }
 
@@ -106,6 +106,11 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             {
                 // Actualise la quantité de l'item du bouton
                 quantity.text = itemToAdd.MyQuantity.ToString();
+            }
+            else
+            {
+                // Réinitialise la quantité de l'item du bouton
+                quantity.text = string.Empty;
             }
 
             // Nouvelle couleur

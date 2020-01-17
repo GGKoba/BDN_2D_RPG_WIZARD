@@ -23,8 +23,19 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
     // Propriété d'accès à l'image du bouton
     public Image MyIcon { get => icon; set => icon = value; }
 
-    // Propriété d'accès aux items de l'emplacement
-    public Stack<IUseable> useables = new Stack<IUseable>();
+    // Stack des items de l'emplacement
+    private Stack<IUseable> useables = new Stack<IUseable>();
+
+    // Propriété d'accès à la Stack des items de l'emplacement
+    public Stack<IUseable> MyUseables
+    { 
+        get => useables;
+        set
+        {
+            MyUseable = value.Peek();
+            useables = value;
+        }
+    }
 
     // Nombre d'éléments de la Stack de l'emplacement
     private int count;
@@ -71,10 +82,10 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
             }
 
             // S'il y a un item (stack) à utiliser
-            if (useables != null && useables.Count > 0)
+            if (MyUseables != null && MyUseables.Count > 0)
             {
                 // Utilisation de l'item (Peek retourne l'item situé en haut de la Stack sans le supprimer)
-                useables.Peek().Use();
+                MyUseables.Peek().Use();
             }
         }
     }
@@ -110,7 +121,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         if (useable is Item)
         {
             // L'item est utilisable
-            useables = InventoryScript.MyInstance.GetUseables(useable);
+            MyUseables = InventoryScript.MyInstance.GetUseables(useable);
 
             // Actualise la couleur de l'emplacement
             InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
@@ -121,17 +132,20 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         else
         {
             // Réinitialise les items de l'emplacement
-            useables.Clear();
+            MyUseables.Clear();
 
             // Utilisation du bouton
             MyUseable = useable;
         }
 
         // Actualise le nombre d'éléments de la Stack
-        count = useables.Count;
+        count = MyUseables.Count;
 
         // Mise à jour de l'image
         UpdateVisual();
+
+        // Actualise le tooltip
+        UIManager.MyInstance.RefreshTooltip(MyUseable as IDescribable);
     }
     
     /// <summary>
@@ -166,16 +180,16 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
     public void UpdateItemCount(Item item)
     {
         // Si c'est un item utilisable et qu'il a un ou plusieurs élements dans sa stack
-        if (item is IUseable && useables.Count > 0)
+        if (item is IUseable && MyUseables.Count > 0)
         {
             // Si cet item est le même que celui du bouton
-            if (useables.Peek().GetType() == item.GetType())
+            if (MyUseables.Peek().GetType() == item.GetType())
             {
                 // Nombre d'éléments du même type
-                useables = InventoryScript.MyInstance.GetUseables(item as IUseable);
+                MyUseables = InventoryScript.MyInstance.GetUseables(item as IUseable);
 
                 // Actualise le nombre d'éléments de la Stack de l'emplacement
-                count = useables.Count;
+                count = MyUseables.Count;
 
                 // Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
                 UIManager.MyInstance.UpdateStackSize(this);
@@ -198,10 +212,10 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
             describable = MyUseable as IDescribable;
         }
         // S'il y a un item qui a plusieurs élements (objet stackable)
-        else if (useables.Count > 0)
+        else if (MyUseables.Count > 0)
         {
             // L'item devient "descriptible"
-            describable = useables.Peek() as IDescribable;
+            describable = MyUseables.Peek() as IDescribable;
         }
 
         // S'il y a un objet "descriptible"
