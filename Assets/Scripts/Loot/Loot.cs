@@ -2,8 +2,9 @@
 using UnityEngine;
 
 
+
 /// <summary>
-/// Classe de gestion des items du butin
+/// Classe de l'objet "Butin"
 /// </summary>
 [Serializable]
 public class Loot

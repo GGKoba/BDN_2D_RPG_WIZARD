@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Classe des sorts
+/// Classe de l'objet "Sort"
 /// </summary>
 [Serializable]
 public class Spell : IUseable, IMoveable, IDescribable

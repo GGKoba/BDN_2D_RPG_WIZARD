@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class LootWindow : MonoBehaviour
 {
-
     // Instance de classe (singleton)
     private static LootWindow instance;
 
