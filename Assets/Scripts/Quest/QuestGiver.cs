@@ -21,7 +21,10 @@ public class QuestGiver : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // [DEBUG] : Accepte une quête
-        questWindow.AcceptQuest(quests[0]);
+        // [DEBUG] : Accepte toutes les quêtes
+        for (int i = 0; i < quests.Length; i++)
+        {
+            questWindow.AcceptQuest(quests[i]);
+        }
     }
 }

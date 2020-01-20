@@ -16,6 +16,16 @@ public class Quest
     // Propriété d'accès au titre de la quête
     public string MyTitle { get => title; set => title = value; }
 
+    // Description de la quête
+    [SerializeField]
+    private string description = default;
+
+    // Propriété d'accès à la description de la quête
+    public string MyDescription { get => description; set => description = value; }
+
+    // Propriété d'accès à au script de la quête
+    public QuestScript MyQuestScript { get; set; }
+
 
     /// <summary>
     /// Start
