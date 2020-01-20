@@ -92,10 +92,17 @@ public class QuestWindow : MonoBehaviour
             selected.MyQuestScript.DeSelect();
         }
 
+        string objectivesText = string.Empty;
+
+        foreach (Objective objective in quest.MyCollectObjectives)
+        {
+            objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
+        }
+
         // Actualise la quête sélectionnée
         selected = quest;
 
         // Actualise la description de la quête sélectionnée
-        questDescription.text = string.Format("<color=#820D0D><b>{0}</b></color>\n\n{1}", quest.MyTitle, quest.MyDescription);
+        questDescription.text = string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>\n\n<color=#3F4D6C>Objectifs</color>\n{2}", quest.MyTitle, quest.MyDescription, objectivesText);
     }
 }

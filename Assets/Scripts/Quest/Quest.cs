@@ -26,6 +26,13 @@ public class Quest
     // Propriété d'accès à au script de la quête
     public QuestScript MyQuestScript { get; set; }
 
+    // Tableau des objectifs de collecte
+    [SerializeField]
+    private CollectObjective[] collectObjectives;
+
+    // Propriété d'accès au tableau des objectifs de collecte
+    public CollectObjective[] MyCollectObjectives { get => collectObjectives; }
+
 
     /// <summary>
     /// Start
@@ -42,4 +49,49 @@ public class Quest
     {
         
     }
+}
+
+
+/// <summary>
+/// Classe abstraite de l'objet "Objectifs"
+/// </summary>
+[Serializable]
+public abstract class Objective
+{
+    // Type de l'objectif
+    [SerializeField]
+    private string type = default;
+
+    // Propriété d'accès au type de l'objectif
+    public string MyType { get => type; }
+
+    // Nombre à atteindre pour l'objectif
+    [SerializeField]
+    private int amount = default;
+
+    // Propriété d'accès au nombre à atteindre pour l'objectif
+    public int MyAmount { get => amount; }
+
+    // Nombre courant
+    private int currentAmount;
+
+    // Propriété d'accès au nombre courant
+    public int MyCurrentAmount { get => currentAmount; set => currentAmount = value; }
+    /*
+    // Indicateur sur la complétude de l'objectif
+    private bool completed;
+
+    // Propriété d'accès à l'indicateur sur la complétude de l'objectif
+    public bool MyCompleted { get => completed; set => completed = value; }
+    */
+}
+
+
+/// <summary>
+/// Classe abstraite de l'objet "Objectifs"
+/// </summary>
+[Serializable]
+public class CollectObjective : Objective
+{
+
 }
