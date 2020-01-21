@@ -430,6 +430,34 @@ public class InventoryScript : MonoBehaviour
         return items;
     }
 
+    /// <summary>
+    /// Nombre d'items du même type contenu dans l'inventaire
+    /// </summary>
+    /// <param name="item">Item</param>
+    /// <returns></returns>
+    public int GetItemCount(Item item)
+    {
+        // Nombre d'éléments
+        int count = 0;
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est le même type
+                if (!slot.IsEmpty && slot.MyItem.GetType() == item.GetType())
+                {
+                    // Ajoute le nombre d'élements de l'emplacement
+                    count += slot.MyItems.Count;
+                }
+            }
+        }
+
+        // Retourne le nombre d'éléments
+        return count;
+    }
 
     /// <summary>
     /// Appelle l'évènement de mise à jour du nombre d'élements de l'item

@@ -28,7 +28,7 @@ public class Quest
 
     // Tableau des objectifs de collecte
     [SerializeField]
-    private CollectObjective[] collectObjectives;
+    private CollectObjective[] collectObjectives = default;
 
     // Propriété d'accès au tableau des objectifs de collecte
     public CollectObjective[] MyCollectObjectives { get => collectObjectives; }
@@ -93,5 +93,20 @@ public abstract class Objective
 [Serializable]
 public class CollectObjective : Objective
 {
+    /// <summary>
+    /// Actualise le nombre d'item pour l'objectif
+    /// </summary>
+    /// <param name="item">Item courant</param>
+    public void UpdateItemCount(Item item)
+    {
+        // Si c'est le même item que celui de l'objectif
+        if (MyType.ToLower() == item.GetType().ToString().ToLower())
+        {
+            // Item du même type contenu dans l'inventaire
+            MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(item);
 
+            // Actualise les informations de la quête
+            QuestWindow.MyInstance.UpdateSelected();
+        }
+    }
 }
