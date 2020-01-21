@@ -44,6 +44,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private CharacterPanel characterPanel = default;
 
+    // Fenêtre des quêtes
+    [SerializeField]
+    private QuestWindow questWindow = default;
+
     [Header("Target")]
     // Frame de la cible
     [SerializeField]
@@ -150,6 +154,14 @@ public class UIManager : MonoBehaviour
             // Ouverture/Fermeture de la feuille du personnage
             characterPanel.OpenClose();
         }
+
+        // [N] : Quêtes
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            // Ouverture/Fermeture de la fenêtre des quêtes
+            questWindow.OpenClose();
+        }
+
     }
 
     /// <summary>

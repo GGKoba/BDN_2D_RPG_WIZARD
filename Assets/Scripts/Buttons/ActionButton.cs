@@ -32,7 +32,18 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         get => useables;
         set
         {
-            MyUseable = value.Peek();
+            // Si l'item à au moins un élément
+            if (value.Count > 0)
+            {
+                // Récupère le 1er élément de la stack de l'item
+                MyUseable = value.Peek();
+            }
+            else
+            {
+                // Réinitialise l'item du bouton si l'item n'a plus d'élément
+                MyUseable = null;
+            }
+
             useables = value;
         }
     }
@@ -80,9 +91,8 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
                 // Utilisation de l'item
                 MyUseable.Use();
             }
-
             // S'il y a un item (stack) à utiliser
-            if (MyUseables != null && MyUseables.Count > 0)
+            else if (MyUseables != null && MyUseables.Count > 0)
             {
                 // Utilisation de l'item (Peek retourne l'item situé en haut de la Stack sans le supprimer)
                 MyUseables.Peek().Use();

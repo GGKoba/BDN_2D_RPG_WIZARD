@@ -88,11 +88,15 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         // Clic droit
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // Ajoute un item dans un sac de l'inventaire
-            InventoryScript.MyInstance.AddItem(equippedArmor);
+            // Si l'emplacement n'est pas vide
+            if (equippedArmor != null)
+            {
+                // Ajoute un item dans un sac de l'inventaire
+                InventoryScript.MyInstance.AddItem(equippedArmor);
 
-            /// Déséquipe l'item
-            UnequipArmor();
+                /// Déséquipe l'item
+                UnequipArmor();
+            }
         }
     }
 

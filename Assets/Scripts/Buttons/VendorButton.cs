@@ -72,10 +72,10 @@ public class VendorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     /// <param name="eventData">Evenement de clic</param>
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Si le joueur a assez d'aregent et qu'il a de la place 
-        if (Player.MyInstance.MyGold >= vendorItem.MyItem.MyPrice && InventoryScript.MyInstance.AddItem(vendorItem.MyItem))
+        // Si le joueur a assez d'argent et qu'il a de la place 
+        if ((Player.MyInstance.MyGold >= vendorItem.MyItem.MyPrice) && InventoryScript.MyInstance.AddItem(Instantiate(vendorItem.MyItem)))
         {
-            // Vend l'item
+            // Vente de l'item
             SellItem();
         }
     }

@@ -172,7 +172,7 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
                     // Si le sac n'est pas a déposer dans un de ses emplacements et qu'il y a assez de place pour contenir ce que contient le sac
                     if (bag.MyBagScript != MyBag && InventoryScript.MyInstance.MyEmptySlotCount - bag.MySlotsCount > 0)
                     {
-                        // Ajoute l'item sur l'emplacement
+                        // Ajoute l'item dans l'inventaire
                         AddItem(bag);
 
                         // Déséquipe le sac de la liste des sacs
@@ -188,11 +188,11 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
                     // Cast l'item en type Armor
                     Armor armor = Hand.MyInstance.MyMoveable as Armor;
 
-                    // Ajoute l'item sur l'emplacement
-                    AddItem(armor);
-
                     // Déséquipe l'item
                     CharacterPanel.MyInstance.MySelectedButton.UnequipArmor();
+
+                    // Ajoute l'item dans l'inventaire
+                    AddItem(armor);
 
                     // Libère l'item
                     Hand.MyInstance.Drop();

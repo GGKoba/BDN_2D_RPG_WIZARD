@@ -59,6 +59,8 @@ public class QuestWindow : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        // Fermeture de la fenêtre des quêtes du joueur
+        OpenClose();
     }
 
     /// <summary>
@@ -68,32 +70,43 @@ public class QuestWindow : MonoBehaviour
     {
 
     }
-
+    /*
     /// <summary>
-    /// Ouverture de la fenêtre des butins
+    /// Ouverture de la fenêtre des quêtes du joueur
     /// </summary>
     public void Open()
     {
         // Bloque les interactions
         canvasGroup.blocksRaycasts = true;
 
-        // Affiche la fenêtre des butins
+        // Affiche la fenêtre des quêtes du joueur
         canvasGroup.alpha = 1;
     }
 
     /// <summary>
-    /// Fermeture de la fenêtre des butins
+    /// Fermeture de la fenêtre des quêtes du joueur
     /// </summary>
     public void Close()
     {
         // Débloque les interactions
         canvasGroup.blocksRaycasts = false;
 
-        // Masque la fenêtre des butins
+        // Masque la fenêtre des quêtes du joueur
         canvasGroup.alpha = 0;
     }
+    */
 
+    /// <summary>
+    /// Ouverture/Fermeture de la fenêtre des quêtes du joueur
+    /// </summary>
+    public void OpenClose()
+    {
+        // Bloque/débloque les interactions
+        canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
 
+        // Masque(0) /Affiche(1) le menu
+        canvasGroup.alpha = canvasGroup.alpha > 0 ? 0 : 1;
+    }
 
     /// <summary>
     /// Accepte une quête
@@ -130,34 +143,39 @@ public class QuestWindow : MonoBehaviour
     /// <param name="quest">Quête affichée</param>
     public void ShowDescription(Quest quest)
     {
-        // S'il y a une quête sélectionnée
-        if (selected != null)
+        // S'il y a une quête
+        if (quest != null)
         {
-            selected.MyQuestScript.DeSelect();
-        }
-
-        // Actualise la quête sélectionnée
-        selected = quest;
-
-        // Description de la quête
-        string fullDescription = string.Empty;
-        fullDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>", quest.MyTitle, quest.MyDescription);
-
-        // Ajout des éventuels objectifs
-        if(quest.MyCollectObjectives.Length > 0)
-        {
-            string objectivesText = string.Empty;
-
-            // Pour chaque objectif
-            foreach (Objective objective in quest.MyCollectObjectives)
+            // S'il y a déjà une quête sélectionnée différente de la quête à afficher
+            if (selected != null && selected != quest)
             {
-                objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
+                // Désélectionne la quête
+                selected.MyQuestScript.DeSelect();
             }
-            fullDescription += string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n{0}", objectivesText);
-        }
 
-        // Actualise la description de la quête sélectionnée
-        questDescription.text = fullDescription;
+            // Actualise la quête sélectionnée
+            selected = quest;
+
+            // Description de la quête
+            string fullDescription = string.Empty;
+            fullDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>", quest.MyTitle, quest.MyDescription);
+
+            // Ajout des éventuels objectifs
+            if (quest.MyCollectObjectives.Length > 0)
+            {
+                string objectivesText = string.Empty;
+
+                // Pour chaque objectif
+                foreach (Objective objective in quest.MyCollectObjectives)
+                {
+                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
+                }
+                fullDescription += string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n{0}", objectivesText);
+            }
+
+            // Actualise la description de la quête sélectionnée
+            questDescription.text = fullDescription;
+        }
     }
 
     /// <summary>
