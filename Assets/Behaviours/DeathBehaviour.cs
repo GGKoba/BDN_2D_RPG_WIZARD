@@ -13,6 +13,9 @@ public class DeathBehaviour : StateMachineBehaviour
     {
         // Destruction du 1er enfant de l'objet (hitbox du personnage)
         Destroy(animator.transform.GetChild(0).gameObject);
+
+        // Bloque le personnage
+        animator.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
