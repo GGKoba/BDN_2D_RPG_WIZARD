@@ -168,7 +168,7 @@ public class UIManager : MonoBehaviour
     /// Affichage la frame de la cible
     /// </summary>
     /// <param name="target">Cible de type NPC</param>
-    public void ShowTargetFrame(NPC target)
+    public void ShowTargetFrame(Enemy target)
     {
         // Active la frame de la cible
         targetFrame.SetActive(true);

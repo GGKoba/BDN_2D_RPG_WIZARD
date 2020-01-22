@@ -2,11 +2,24 @@
 
 
 
+// Gestion du changement de la valeur de la vie d'un PNJ
+public delegate void HealthChanged(float health);
+
+// Gestion de la disparition du personnage
+public delegate void CharacterRemoved();
+
+
 /// <summary>
 /// Classe contenant les fonctionnalités spécifiques aux ennemis
 /// </summary>
-public class Enemy : NPC
+public class Enemy : Character, IInteractable
 {
+    // Evènement de changement de valeur de la vie
+    public event HealthChanged HealthChangedEvent;
+
+    // Evènement de disparition du personnage
+    public event CharacterRemoved CharacterRemovedEvent;
+
     // Canvas de la barre de vie
     [SerializeField]
     private CanvasGroup healthGroup = default;
@@ -36,6 +49,19 @@ public class Enemy : NPC
     // Table des butins de l'ennemi
     [SerializeField]
     private LootTable lootTable = default;
+
+    // Image de la cible
+    [SerializeField]
+    private Sprite portrait = default;
+
+    // Propriété d'accès à l'image de la cible
+    public Sprite MyPortrait
+    {
+        get
+        {
+            return portrait;
+        }
+    }
 
 
     /// <summary>
@@ -92,27 +118,30 @@ public class Enemy : NPC
     }
 
     /// <summary>
-    /// Désélection d'un ennemi : Surcharge la fonction Select du script NPC
+    /// Désélection d'un ennemi
     /// </summary>
-    public override void DeSelect()
+    public void DeSelect()
     {
         // Masque la barre de vie
         healthGroup.alpha = 0;
 
-        // Appelle DeSelect sur la classe mère
-        base.DeSelect();    
+        // Désabonnement de l'évènement de changement de vie
+        HealthChangedEvent -= new HealthChanged(UIManager.MyInstance.UpdateTargetFrame);
+
+        // Désabonnement de l'évènement de disparition du personnage
+        CharacterRemovedEvent -= new CharacterRemoved(UIManager.MyInstance.HideTargetFrame);
     }
 
     /// <summary>
-    /// Sélection d'un ennemi : Surcharge la fonction Select du script NPC
+    /// Sélection d'un ennemi
     /// </summary>
-    public override Transform Select()
+    public Transform Select()
     {
         // Affiche la barre de vie
         healthGroup.alpha = 1;
 
         // Appelle Select sur la classe mère
-        return base.Select();
+        return hitBox;
     }
 
     /// <summary>
@@ -198,9 +227,9 @@ public class Enemy : NPC
     }
 
     /// <summary>
-    /// Interaction avec le personnage : Surcharge la fonction Interact du script NPC
+    /// Interaction avec le personnage
     /// </summary>
-    public override void Interact()
+    public void Interact()
     {
         // Si l'ennemi n'est pas en vie
         if (!IsAlive)
@@ -211,11 +240,41 @@ public class Enemy : NPC
     }
 
     /// <summary>
-    /// Fin de l'interaction avec le personnage : Surcharge la fonction StopInteract du script NPC
+    /// Fin de l'interaction avec le personnage
     /// </summary>
-    public override void StopInteract()
+    public void StopInteract()
     {
         // Ferme la fenêtre des butins
         LootWindow.MyInstance.Close();
+    }
+
+    /// <summary>
+    /// Appelle l'évènement de changement de valeur de la vie
+    /// </summary>
+    /// <param name="health">Vie actuelle</param>
+    public void OnHealthChanged(float health)
+    {
+        // S'il y a un abonnement à cet évènement
+        if (HealthChangedEvent != null)
+        {
+            // Déclenchement de l'évènement de changement de la valeur de la vie
+            HealthChangedEvent.Invoke(health);
+        }
+    }
+
+    /// <summary>
+    /// Appelle l'évènement de disparition du personnage
+    /// </summary>
+    public void OnCharacterRemoved()
+    {
+        // S'il y a un abonnement à cet évènement
+        if (CharacterRemovedEvent != null)
+        {
+            // Déclenchement de l'évènement de disparition du personnage
+            CharacterRemovedEvent.Invoke();
+        }
+
+        // Destruction du personnage
+        Destroy(gameObject);
     }
 }

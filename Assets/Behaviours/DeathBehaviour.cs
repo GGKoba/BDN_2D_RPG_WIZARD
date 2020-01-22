@@ -28,7 +28,7 @@ public class DeathBehaviour : StateMachineBehaviour
         if (timePassed >= 30)
         {
             // Déclenche l'évènement de disparition du personnage
-            animator.GetComponent<NPC>().OnCharacterRemoved();
+            animator.GetComponent<Enemy>().OnCharacterRemoved();
         }
     }
 

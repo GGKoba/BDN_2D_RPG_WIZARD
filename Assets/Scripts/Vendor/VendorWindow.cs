@@ -5,11 +5,8 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion de la fenêtre du vendeur
 /// </summary>
-public class VendorWindow : MonoBehaviour
+public class VendorWindow : Window
 {
-    // Canvas de la fenêtre
-    private CanvasGroup canvasGroup;
-
     // Tableau des boutons des items du vendeur
     [SerializeField]
     private VendorButton[] vendorButtons = default;
@@ -31,50 +28,7 @@ public class VendorWindow : MonoBehaviour
     [SerializeField]
     private GameObject previousButton = default, nextButton = default;
 
-
-
-    /// <summary>
-    /// Awake
-    /// </summary>
-    private void Awake()
-    {
-        // Référence sur le canvas de la fenêtre
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    /// <summary>
-    /// Ouverture de la fenêtre du vendeur
-    /// </summary>
-    public void Open(Vendor vendorRef)
-    {
-        // Référence sur le vendeur
-        vendor = vendorRef;
-
-        // Débloque les interactions
-        canvasGroup.blocksRaycasts = true;
-
-        // Masque la fenêtre du vendeur
-        canvasGroup.alpha = 1;
-    }
-
-    /// <summary>
-    /// Fermeture de la fenêtre du vendeur
-    /// </summary>
-    public void Close()
-    {
-        // Définit la fenêtre du vendeur comme "fermée"
-        vendor.IsOpen = false;
-
-        // Débloque les interactions
-        canvasGroup.blocksRaycasts = false;
-
-        // Masque la fenêtre du vendeur
-        canvasGroup.alpha = 0;
-
-        // Réinitialise la référence sur le vendeur
-        vendor = null;
-    }
-
+ 
     /// <summary>
     /// Création de la liste des pages de butin
     /// </summary>

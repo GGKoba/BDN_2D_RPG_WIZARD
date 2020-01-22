@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private Player player = default;
 
     // Cible courante
-    private NPC currentTarget;
+    private Enemy currentTarget;
 
     // Référence sur l'argent du joueur;
     [SerializeField]
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
                 if (hit.collider.CompareTag("Enemy"))
                 {
                     // Sélection de la nouvelle cible
-                    currentTarget = hit.collider.GetComponent<NPC>();
+                    currentTarget = hit.collider.GetComponent<Enemy>();
 
                     // Affecte la nouvelle cible au joueur
                     player.MyTarget = currentTarget.Select();
