@@ -101,14 +101,18 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     /// </summary>
     public void Clear()
     {
-        // S'il y a des éléments dans la stack
-        if (items.Count > 0)
+        // Nombre d'éléments dans la stack des items de l'emplacement
+        int initCount = items.Count;
+        
+        // S'il y a des éléments dans la stack des items de l'emplacement
+        if (initCount > 0)
         {
-            // Appelle l'évènement de mise à jour du nombre d'élements de l'item en enlevant l'item situé en haut de la Stack
-            InventoryScript.MyInstance.OnItemCountChanged(items.Pop());
-
-            // Retire tous les éléments de la stack
-            items.Clear();
+            // Pour tous les éléments de la stack des items de l'emplacement
+            for (int i = 0; i < initCount; i++)
+            {
+                // Appelle l'évènement de mise à jour du nombre d'élements de l'item en enlevant l'item situé en haut de la Stack
+                InventoryScript.MyInstance.OnItemCountChanged(items.Pop());
+            }
         }
     }
 

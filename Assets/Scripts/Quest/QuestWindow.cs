@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -44,6 +45,9 @@ public class QuestWindow : MonoBehaviour
     // CanvasGroup de la fenêtre des quêtes du joueur
     private CanvasGroup canvasGroup;
 
+    // Liste des quêtes
+    private readonly List<QuestScript> questScripts = new List<QuestScript>();
+
 
     /// <summary>
     /// Awake
@@ -63,13 +67,6 @@ public class QuestWindow : MonoBehaviour
         OpenClose();
     }
 
-    /// <summary>
-    /// Update
-    /// </summary>
-    private void Update()
-    {
-
-    }
     /*
     /// <summary>
     /// Ouverture de la fenêtre des quêtes du joueur
@@ -135,6 +132,9 @@ public class QuestWindow : MonoBehaviour
 
         // Référence sur la quête
         questScript.MyQuest = quest;
+
+        // Ajoute la quête dans la liste
+        questScripts.Add(questScript);
     }
 
     /// <summary>
@@ -185,5 +185,18 @@ public class QuestWindow : MonoBehaviour
     {
         //Affiche la description d'une quête
         ShowDescription(selected);           
+    }
+
+    /// <summary>
+    /// Vérifie la complétude des quêtes de la liste
+    /// </summary>
+    public void CheckCompletion()
+    {
+        // Pour chaque quête
+        foreach (QuestScript questScript in questScripts)
+        {
+            // Vérifie si la quête est terminée
+            questScript.IsComplete();
+        }
     }
 }

@@ -340,7 +340,7 @@ public class InventoryScript : MonoBehaviour
                 return true;
             }
         }
-
+                
         // Place l'item dans un nouvel emplacement
         return PlaceInEmpty(item);
     }

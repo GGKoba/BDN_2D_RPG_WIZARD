@@ -33,21 +33,21 @@ public class Quest
     // Propriété d'accès au tableau des objectifs de collecte
     public CollectObjective[] MyCollectObjectives { get => collectObjectives; }
 
-
-    /// <summary>
-    /// Start
-    /// </summary>
-    private void Start()
+    // Propriété d'accès à l'indicateur sur la complétude de la quête
+    public bool IsComplete
     {
-        
-    }
-
-    /// <summary>
-    /// Update
-    /// </summary>
-    private void Update()
-    {
-        
+        get
+        {
+            // Pour tous les objectifs
+            foreach (CollectObjective collectObjective in collectObjectives)
+            {
+                if (!collectObjective.IsComplete)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 
@@ -77,13 +77,9 @@ public abstract class Objective
 
     // Propriété d'accès au nombre courant
     public int MyCurrentAmount { get => currentAmount; set => currentAmount = value; }
-    /*
-    // Indicateur sur la complétude de l'objectif
-    private bool completed;
 
     // Propriété d'accès à l'indicateur sur la complétude de l'objectif
-    public bool MyCompleted { get => completed; set => completed = value; }
-    */
+    public bool IsComplete { get => currentAmount >= amount; }
 }
 
 
@@ -107,6 +103,9 @@ public class CollectObjective : Objective
 
             // Actualise les informations de la quête
             QuestWindow.MyInstance.UpdateSelected();
+
+            // Vérifie si la quête est terminée
+            QuestWindow.MyInstance.CheckCompletion();
         }
     }
 }
