@@ -21,38 +21,45 @@ public class Window : MonoBehaviour
     {
         // Référence sur le canvas de la fenêtre
         canvasGroup = GetComponent<CanvasGroup>();
+
+        // Fermeture de la fenêtre
+        Close();
     }
 
     /// <summary>
-    /// Ouverture de la fenêtre du vendeur
+    /// Ouverture de la fenêtre : virtual pour être écrasée pour les autres classes
     /// </summary>
-    public void Open(NPC npcRef)
+    public virtual void Open(NPC npcRef)
     {
-        // Référence sur le vendeur
+        // Référence sur le npc
         npc = npcRef;
 
         // Débloque les interactions
         canvasGroup.blocksRaycasts = true;
 
-        // Masque la fenêtre du vendeur
+        // Masque la fenêtre
         canvasGroup.alpha = 1;
     }
 
     /// <summary>
-    /// Fermeture de la fenêtre du vendeur
+    /// Fermeture de la fenêtre
     /// </summary>
     public void Close()
     {
-        // Définit la fenêtre du vendeur comme "fermée"
-        npc.IsInteracting = false;
+        // S'il y a une référense sur un npc
+        if (npc)
+        {
+            // Définit la fenêtre comme "fermée"
+            npc.IsInteracting = false;
+
+            // Réinitialise la référence sur le npc
+            npc = null;
+        }
 
         // Débloque les interactions
         canvasGroup.blocksRaycasts = false;
 
-        // Masque la fenêtre du vendeur
+        // Masque la fenêtre
         canvasGroup.alpha = 0;
-
-        // Réinitialise la référence sur le vendeur
-        npc = null;
     }
 }

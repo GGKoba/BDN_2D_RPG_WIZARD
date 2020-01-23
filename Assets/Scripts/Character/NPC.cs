@@ -5,11 +5,11 @@
 /// <summary>
 /// Classe contenant les fonctionnalités spécifiques aux personnage non jouable
 /// </summary>
-public class NPC : IInteractable
+public class NPC : MonoBehaviour, IInteractable
 {
     // Fenêtre liée au NPC 
     [SerializeField]
-    private Window window;
+    private Window window = default;
 
     // Propriété d'accès sur l'état d'interaction
     public bool IsInteracting { get; set; }

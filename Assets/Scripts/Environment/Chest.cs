@@ -40,7 +40,10 @@ public class Chest : MonoBehaviour, IInteractable
     /// </summary>
     private void Awake()
     {
+        // Référence sur la sprit renderer du coffre
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        Close();
     }
 
     /// <summary>
@@ -64,11 +67,8 @@ public class Chest : MonoBehaviour, IInteractable
             // Actualise l'image du coffre
             spriteRenderer.sprite = openSprite;
 
-            // Affiche le coffre
-            canvasGroup.alpha = 1;
-
-            // Bloque les interactions
-            canvasGroup.blocksRaycasts = true;
+            // Ouverture de la fenêtre
+            Open();
         }
     }
 
@@ -92,13 +92,35 @@ public class Chest : MonoBehaviour, IInteractable
             // Actualise l'image du coffre
             spriteRenderer.sprite = closedSprite;
 
-            // Masque le coffre
-            canvasGroup.alpha = 0;
-
-            // Débloque les interactions
-            canvasGroup.blocksRaycasts = false;
+            // Fermeture de la fenêtre
+            Close();
         }
     }
+
+    /// <summary>
+    /// Ouverture de la fenêtre
+    /// </summary>
+    public void Open()
+    {
+        // Affiche la fenêtre
+        canvasGroup.alpha = 1;
+
+        // Bloque les interactions
+        canvasGroup.blocksRaycasts = true;
+    }
+
+    /// <summary>
+    /// Fermeture de la fenêtre
+    /// </summary>
+    public void Close()
+    {
+        // Masque la fenêtre
+        canvasGroup.alpha = 0;
+
+        // Débloque les interactions
+        canvasGroup.blocksRaycasts = false;
+    }
+
 
     /// <summary>
     /// Stocke les items

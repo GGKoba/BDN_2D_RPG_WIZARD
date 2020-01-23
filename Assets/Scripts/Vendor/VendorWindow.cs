@@ -30,7 +30,7 @@ public class VendorWindow : Window
 
  
     /// <summary>
-    /// Création de la liste des pages de butin
+    /// Création de la liste des pages du vendeur
     /// </summary>
     /// <param name="items">Liste des items du vendeur</param>
     public void CreatePages(VendorItem[] items)
@@ -141,5 +141,18 @@ public class VendorWindow : Window
             // Masque le bouton
             button.gameObject.SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Open : Surcharge la fonction Open du script Window
+    /// </summary>
+    /// <param name="npcRef"></param>
+    public override void Open(NPC npcRef)
+    {
+        // Création de la liste des pages de butin
+        CreatePages((npcRef as Vendor).MyItems);
+
+        // Appelle Open sur la classe mère
+        base.Open(npcRef);
     }
 }

@@ -5,7 +5,7 @@
 /// <summary>
 /// Classe de gestion du donneur de quêtes
 /// </summary>
-public class QuestGiver : MonoBehaviour
+public class QuestGiver : NPC
 {
     // Liste des quêtes
     [SerializeField]
