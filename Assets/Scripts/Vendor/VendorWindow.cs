@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 /// <summary>
 /// Classe de gestion de la fenêtre du vendeur
 /// </summary>
@@ -15,7 +17,7 @@ public class VendorWindow : Window
     private List<List<VendorItem>> pages = new List<List<VendorItem>>();
 
     // Référence sur le vendeur
-    private Vendor vendor;
+    // private Vendor vendor;
 
     // Index de la page courante
     private int pageIndex = 0;

@@ -27,7 +27,6 @@ public class QuestScript : MonoBehaviour
         QuestWindow.MyInstance.ShowDescription(MyQuest);
     }
 
-
     /// <summary>
     /// Désélectionne une quête
     /// </summary>

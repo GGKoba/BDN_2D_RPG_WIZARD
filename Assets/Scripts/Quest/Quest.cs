@@ -49,6 +49,29 @@ public class Quest
             return true;
         }
     }
+
+    // Retourne la description formatée de la quête
+    public string GetDescription()
+    {
+        // Description de la quête
+        string fullDescription = string.Empty;
+        fullDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>", MyTitle, MyDescription);
+
+        // Ajout des éventuels objectifs
+        if (collectObjectives.Length > 0)
+        {
+            string objectivesText = string.Empty;
+
+            // Pour chaque objectif
+            foreach (Objective objective in collectObjectives)
+            {
+                objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
+            }
+            fullDescription += string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n{0}", objectivesText);
+        }
+
+        return fullDescription;
+    }
 }
 
 

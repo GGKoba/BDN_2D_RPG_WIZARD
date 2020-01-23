@@ -36,7 +36,7 @@ public class QuestWindow : Window
 
     // Conteneur de la liste des quêtes
     [SerializeField]
-    private Transform questParent = default;
+    private Transform questArea = default;
 
     // Conteneur de la description de la quête
     [SerializeField]
@@ -119,7 +119,7 @@ public class QuestWindow : Window
         }
 
         // Instantie un objet "Quête"
-        GameObject go = Instantiate(questPrefab, questParent);
+        GameObject go = Instantiate(questPrefab, questArea);
 
         // Actualise le titre de la quête
         go.GetComponent<Text>().text = quest.MyTitle;
@@ -156,25 +156,8 @@ public class QuestWindow : Window
             // Actualise la quête sélectionnée
             selected = quest;
 
-            // Description de la quête
-            string fullDescription = string.Empty;
-            fullDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>", quest.MyTitle, quest.MyDescription);
-
-            // Ajout des éventuels objectifs
-            if (quest.MyCollectObjectives.Length > 0)
-            {
-                string objectivesText = string.Empty;
-
-                // Pour chaque objectif
-                foreach (Objective objective in quest.MyCollectObjectives)
-                {
-                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
-                }
-                fullDescription += string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n{0}", objectivesText);
-            }
-
             // Actualise la description de la quête sélectionnée
-            questDescription.text = fullDescription;
+            questDescription.text = quest.GetDescription();
         }
     }
 
