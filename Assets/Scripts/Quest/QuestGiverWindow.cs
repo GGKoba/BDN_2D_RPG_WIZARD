@@ -148,4 +148,7 @@ public class QuestGiverWindow : Window
         // Affiche la liste des quêtes
         questArea.gameObject.SetActive(true);
     }
+
+
+
 }

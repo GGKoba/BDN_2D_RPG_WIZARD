@@ -156,8 +156,24 @@ public class QuestWindow : Window
             // Actualise la quête sélectionnée
             selected = quest;
 
+            // Description de la quête
+            string description = quest.GetDescription();
+
+            // Ajout des éventuels objectifs
+            if (quest.MyCollectObjectives.Length > 0)
+            {
+                string objectivesText = string.Empty;
+
+                // Pour chaque objectif
+                foreach (Objective objective in quest.MyCollectObjectives)
+                {
+                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
+                }
+                description += string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n{0}", objectivesText);
+            }
+
             // Actualise la description de la quête sélectionnée
-            questDescription.text = quest.GetDescription();
+            questDescription.text = description;
         }
     }
 
