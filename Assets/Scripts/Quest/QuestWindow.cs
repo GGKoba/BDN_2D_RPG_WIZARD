@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion de la fenêtre des quêtes du joueur
 /// </summary>
-public class QuestWindow : MonoBehaviour
+public class QuestWindow : Window
 {
     // Instance de classe (singleton)
     private static QuestWindow instance;
@@ -43,7 +43,7 @@ public class QuestWindow : MonoBehaviour
     private Text questDescription = default;
 
     // CanvasGroup de la fenêtre des quêtes du joueur
-    private CanvasGroup canvasGroup;
+    // private CanvasGroup canvasGroup;
 
     // Liste des quêtes
     private readonly List<QuestScript> questScripts = new List<QuestScript>();
@@ -64,7 +64,7 @@ public class QuestWindow : MonoBehaviour
     private void Start()
     {
         // Fermeture de la fenêtre des quêtes du joueur
-        OpenClose();
+       OpenClose();
     }
 
     /*

@@ -11,20 +11,6 @@ public class QuestGiver : NPC
     [SerializeField]
     private Quest[] quests = default;
 
-    // [DEBUG] : Référence sur la fenêtre des quêtes du joueur
-    [SerializeField]
-    private QuestWindow questWindow = default;
-
-
-    /// <summary>
-    /// Awake
-    /// </summary>
-    private void Awake()
-    {
-        // [DEBUG] : Accepte toutes les quêtes
-        for (int i = 0; i < quests.Length; i++)
-        {
-            questWindow.AcceptQuest(quests[i]);
-        }
-    }
+    // Propriété d'accès à la liste des quêtes
+    public Quest[] MyQuests { get => quests; }
 }
