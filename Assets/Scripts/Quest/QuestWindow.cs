@@ -67,6 +67,19 @@ public class QuestWindow : Window
        OpenClose();
     }
 
+    /// <summary>
+    /// Update
+    /// </summary>
+    private void Update()
+    {
+        // [N] : Quêtes
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            // Ouverture/Fermeture de la fenêtre des quêtes
+            OpenClose();
+        }
+    }
+
     /*
     /// <summary>
     /// Ouverture de la fenêtre des quêtes du joueur

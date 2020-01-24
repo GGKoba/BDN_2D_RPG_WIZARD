@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
+
 
 
 /// <summary>
@@ -25,8 +27,14 @@ public class QuestGiverWindow : Window
         }
     }
 
+    // Liste des quêtes
+    private List<GameObject> quests = new List<GameObject>();
+
     // Référence sur le donneur de quêtes
     private QuestGiver questGiver;
+
+    // Quête sélectionnée
+    private Quest selected;
 
     // Préfab des quêtes du donneur de quêtes
     [SerializeField]
@@ -59,6 +67,11 @@ public class QuestGiverWindow : Window
         // Référence sur le donneur de quêtes 
         questGiver = questGiverRef;
 
+        foreach (GameObject questObject in quests)
+        {
+            Destroy(questObject);
+        }
+
         foreach (Quest quest in questGiver.MyQuests)
         {
             // Instantie un objet "Quête"
@@ -69,7 +82,16 @@ public class QuestGiverWindow : Window
 
             // Référence sur la quête
             go.GetComponent<QuestGiverScript>().MyQuest = quest;
+
+            // Ajoute la quête dans la liste
+            quests.Add(go);
         }
+
+        // Masque la description
+        questDescription.SetActive(false);
+
+        // Affiche la liste des quêtes
+        questArea.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -117,11 +139,9 @@ public class QuestGiverWindow : Window
                 // Désélectionne la quête
                 selected.MyQuestScript.DeSelect();
             }
-
+            */
             // Actualise la quête sélectionnée
             selected = quest;
-
-            */
         }
     }
 
@@ -130,9 +150,13 @@ public class QuestGiverWindow : Window
     /// </summary>
     public void AcceptQuest()
     {
+        // Ajoute la quête à la liste du joueur
+        QuestWindow.MyInstance.AcceptQuest(selected);
 
+        // Retourne à la liste des quêtes
+        Back();
     }
-    
+
     /// <summary>
     /// Clic sur le bouton Retour : Retourne à la liste des quêtes
     /// </summary>
@@ -142,11 +166,8 @@ public class QuestGiverWindow : Window
         acceptButton.SetActive(false);
         backButton.SetActive(false);
 
-        // Masque la description
-        questDescription.SetActive(false);
-
         // Affiche la liste des quêtes
-        questArea.gameObject.SetActive(true);
+        ShowQuests(questGiver);
     }
 
 
