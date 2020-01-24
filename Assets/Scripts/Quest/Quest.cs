@@ -109,7 +109,7 @@ public class CollectObjective : Objective
         if (MyType.ToLower() == item.GetType().ToString().ToLower())
         {
             // Item du même type contenu dans l'inventaire
-            MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(item);
+            MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyType);
 
             // Actualise les informations de la quête
             QuestWindow.MyInstance.UpdateSelected();
@@ -117,5 +117,20 @@ public class CollectObjective : Objective
             // Vérifie si la quête est terminée
             QuestWindow.MyInstance.CheckCompletion();
         }
+    }
+
+    /// <summary>
+    /// Actualise le nombre d'item pour l'objectif
+    /// </summary>
+    public void UpdateItemCount()
+    {
+        // Item du même type contenu dans l'inventaire
+        MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyType);
+
+        // Actualise les informations de la quête
+        QuestWindow.MyInstance.UpdateSelected();
+
+        // Vérifie si la quête est terminée
+        QuestWindow.MyInstance.CheckCompletion();
     }
 }

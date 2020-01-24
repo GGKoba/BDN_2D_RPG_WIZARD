@@ -57,6 +57,10 @@ public class QuestGiverWindow : Window
     [SerializeField]
     private GameObject backButton = default;
 
+    // Référence sur le bouton "Terminer"
+    [SerializeField]
+    private GameObject completeButton = default;
+
 
     /// <summary>
     /// Affiche la liste des quêtes
@@ -67,24 +71,49 @@ public class QuestGiverWindow : Window
         // Référence sur le donneur de quêtes 
         questGiver = questGiverRef;
 
+        // Pour chaque quête de la liste
         foreach (GameObject questObject in quests)
         {
+            // Detruit la quête
             Destroy(questObject);
         }
 
+        // Pour chaque quête de la liste
         foreach (Quest quest in questGiver.MyQuests)
         {
-            // Instantie un objet "Quête"
-            GameObject go = Instantiate(questPrefab, questArea);
+            // Si la quête n'est pas nulle
+            if (quest != null)
+            {
+                // Instantie un objet "Quête"
+                GameObject go = Instantiate(questPrefab, questArea);
 
-            // Actualise le titre de la quête
-            go.GetComponent<Text>().text = quest.MyTitle;
+                // Actualise le titre de la quête
+                go.GetComponent<Text>().text = quest.MyTitle;
 
-            // Référence sur la quête
-            go.GetComponent<QuestGiverScript>().MyQuest = quest;
+                // Référence sur la quête
+                go.GetComponent<QuestGiverScript>().MyQuest = quest;
 
-            // Ajoute la quête dans la liste
-            quests.Add(go);
+                // Ajoute la quête dans la liste
+                quests.Add(go);
+
+                // Si le joueur a deja la quête et que la quête est "Terminée"
+                if (QuestWindow.MyInstance.HasQuest(quest) && quest.IsComplete)
+                {
+                    // Actualise le titre de la quête
+                    go.GetComponent<Text>().text += " (Terminée)";
+                }
+                // Si le joueur a deja la quête
+                else if (QuestWindow.MyInstance.HasQuest(quest))
+                {
+                    Color color = go.GetComponent<Text>().color;
+
+                    // Actualise la transparence de la couleur de la quête
+                    color.a = 0.5f;
+
+                    // Actualise la couleur du texte
+                    go.GetComponent<Text>().color = color;
+                }
+            }
         }
 
         // Masque la description
@@ -109,7 +138,19 @@ public class QuestGiverWindow : Window
         // Appelle Open sur la classe mère
         base.Open(npcRef);
     }
-    
+
+    /// <summary>
+    /// Close : Surcharge la fonction Close du script Window
+    /// </summary>
+    public override void Close()
+    {
+        // Masque le bouton Terminer
+        completeButton.SetActive(false);
+
+        // Appelle Close sur la classe mère
+        base.Close();
+    }
+
     /// <summary>
     /// Affiche les informations d'une quête
     /// </summary>
@@ -119,12 +160,27 @@ public class QuestGiverWindow : Window
         // S'il y a une quête
         if (quest != null)
         {
+            // Si le joueur a deja la quête et que la quête est "Terminée"
+            if (QuestWindow.MyInstance.HasQuest(quest) && quest.IsComplete)
+            {
+                // Masque le bouton Accepter
+                acceptButton.SetActive(false);
+
+                // Affiche le bouton Terminer
+                completeButton.SetActive(true);
+            }
+            // Si le joueur n'a pas la quête
+            else if (!QuestWindow.MyInstance.HasQuest(quest))
+            {
+                // Affiche le bouton Accepter
+                acceptButton.SetActive(true);
+            }
+
+            // Affiche le bouton Retour
+            backButton.SetActive(true);
+
             // Masque la liste des quêtes
             questArea.gameObject.SetActive(false);
-
-            // Affiche les boutons
-            acceptButton.SetActive(true);
-            backButton.SetActive(true);
 
             // Actualise la description de la quête sélectionnée
             questDescription.GetComponent<Text>().text = quest.GetDescription();
@@ -142,6 +198,7 @@ public class QuestGiverWindow : Window
             */
             // Actualise la quête sélectionnée
             selected = quest;
+
         }
     }
 
@@ -165,11 +222,34 @@ public class QuestGiverWindow : Window
         // Masque des boutons
         acceptButton.SetActive(false);
         backButton.SetActive(false);
+        completeButton.SetActive(false);
 
         // Affiche la liste des quêtes
         ShowQuests(questGiver);
     }
 
+    /// <summary>
+    /// Clic sur le bouton Terminer : Termine la quête
+    /// </summary>
+    public void CompleteQuest()
+    {
+        // Si la quête sélectionnée est "Terminée"
+        if (selected.IsComplete)
+        {
+            // Pour chaque quête
+            for (int i = 0; i < questGiver.MyQuests.Length; i++)
+            {
+                // Si la quête sélectionnée est la même que celle du donneur de quêtes
+                if (selected == questGiver.MyQuests[i])
+                {
+                    // Retire la quête de la liste
+                    questGiver.MyQuests[i] = null;
+                }
+            }
 
+            // Retourne à la liste des quêtes
+            Back();
+        }
+    }
 
 }

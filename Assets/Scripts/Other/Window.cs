@@ -42,9 +42,9 @@ public class Window : MonoBehaviour
     }
 
     /// <summary>
-    /// Fermeture de la fenêtre
+    /// Fermeture de la fenêtre : virtual pour être écrasée pour les autres classes
     /// </summary>
-    public void Close()
+    public virtual void Close()
     {
         // S'il y a une référense sur un npc
         if (npc)

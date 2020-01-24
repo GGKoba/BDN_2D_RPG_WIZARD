@@ -42,12 +42,11 @@ public class QuestWindow : Window
     [SerializeField]
     private Text questDescription = default;
 
-    // CanvasGroup de la fenêtre des quêtes du joueur
-    // private CanvasGroup canvasGroup;
-
-    // Liste des quêtes
+    // Liste des scripts des quêtes
     private readonly List<QuestScript> questScripts = new List<QuestScript>();
 
+    // Liste des quêtes
+    private List<Quest> quests = new List<Quest>();
 
     /// <summary>
     /// Awake
@@ -129,6 +128,9 @@ public class QuestWindow : Window
         {
             // Abonnement sur l'évènement de mise à jour du nombre d'élements de l'item
             InventoryScript.MyInstance.ItemCountChangedEvent += new ItemCountChanged(collectObjective.UpdateItemCount);
+
+            // Actualise le nombre d'items
+            collectObjective.UpdateItemCount();
         }
 
         // Instantie un objet "Quête"
@@ -147,7 +149,11 @@ public class QuestWindow : Window
         questScript.MyQuest = quest;
 
         // Ajoute la quête dans la liste
+        quests.Add(quest);
         questScripts.Add(questScript);
+
+        // Vérifie la complétude des quêtes de la liste
+        CheckCompletion();
     }
 
     /// <summary>
@@ -210,5 +216,32 @@ public class QuestWindow : Window
             // Vérifie si la quête est terminée
             questScript.IsComplete();
         }
+    }
+
+    /// <summary>
+    /// Existence de la quête dans la liste des quêtes
+    /// </summary>
+    /// <param name="quest">Quête recherchée</param>
+    /// <returns></returns>
+    public bool HasQuest(Quest quest)
+    {
+        return quests.Exists(q => q.MyTitle == quest.MyTitle);
+    }
+
+    /// <summary>
+    /// Clic sur le bouton Abandonner : Abandonne la quête
+    /// </summary>
+    public void AbandonQuest()
+    {
+        // Retire la queête de la fenêtre
+        // Retire la quête de la liste
+    }
+
+    /// <summary>
+    /// Clic sur le bouton Suivre : Suivi de la quête
+    /// </summary>
+    public void TrackQuest()
+    {
+
     }
 }
