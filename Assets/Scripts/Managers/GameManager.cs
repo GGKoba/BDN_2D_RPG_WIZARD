@@ -127,5 +127,4 @@ public class GameManager : MonoBehaviour
             KillConfirmedEvent.Invoke(character);
         }
     }
-
 }

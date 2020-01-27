@@ -47,6 +47,9 @@ public class QuestScript : MonoBehaviour
             // Actualise le titre de la quête
             GetComponent<Text>().text += " (Terminée)";
 
+            // Ajoute le message "Terminée" si l'objectif est atteint
+            MessageFeedManager.MyInstance.WriteMessage(string.Format("{0} (Terminée)", MyQuest.MyTitle));
+
             // Marque la quête comme "Terminée"
             markedComplete = true;
         }

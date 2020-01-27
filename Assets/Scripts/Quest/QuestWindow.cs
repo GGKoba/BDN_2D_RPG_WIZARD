@@ -249,7 +249,7 @@ public class QuestWindow : Window
     /// </summary>
     public void AbandonQuest()
     {
-        // Retire la queête de la fenêtre
+        // Retire la quête de la fenêtre
         // Retire la quête de la liste
     }
 

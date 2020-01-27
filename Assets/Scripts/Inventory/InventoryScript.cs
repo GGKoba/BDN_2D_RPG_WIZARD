@@ -460,6 +460,47 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Retourne un item du même nom contenu dans l'inventaire, avec une quantité précise
+    /// </summary>
+    /// <param name="name">Nom de l'item</param>
+    /// <param name="count">Nombre d'item</param>
+    /// <returns></returns>
+    public Stack<Item> GetItems(string name, int count)
+    {
+        // Stack de l'item
+        Stack<Item> items = new Stack<Item>();
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est le même type
+                if (!slot.IsEmpty && slot.MyItem.GetType().ToString().ToLower() == name.ToLower())
+                {
+                    // Pour chaque item du slot
+                    foreach (Item item in slot.MyItems)
+                    {
+                        // Ajoute l'item dans la stack
+                        items.Push(item);
+
+                        // Si le nombre d'items correspond au nombre demandé 
+                        if (items.Count == count)
+                        {
+                            // Retourne la Stack de l'item
+                            return items;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Retourne la Stack de l'item
+        return items;
+    }
+
+    /// <summary>
     /// Appelle l'évènement de mise à jour du nombre d'élements de l'item
     /// </summary>
     /// <param name="item">Item courant</param>

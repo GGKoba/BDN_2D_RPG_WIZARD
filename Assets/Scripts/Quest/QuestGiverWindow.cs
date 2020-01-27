@@ -247,6 +247,24 @@ public class QuestGiverWindow : Window
                 }
             }
 
+            // Pour chacun des objectifs de collecte de la quête
+            foreach (CollectObjective collectObjective in selected.MyCollectObjectives)
+            {
+                // Désabonnement sur l'évènement de mise à jour du nombre d'élements de l'item
+                InventoryScript.MyInstance.ItemCountChangedEvent -= new ItemCountChanged(collectObjective.UpdateItemCount);
+
+                // Complète l'objectif de collecte
+                collectObjective.Complete();
+            }
+
+            // Pour chacun des objectifs d'ennemi de la quête
+            foreach (KillObjective killObjective in selected.MyKillObjectives)
+            {
+                // Désabonnement sur l'évènement de la mort d'un personnage
+                GameManager.MyInstance.KillConfirmedEvent -= new KillConfirmed(killObjective.UpdateKillCount);
+            }
+
+
             // Retourne à la liste des quêtes
             Back();
         }

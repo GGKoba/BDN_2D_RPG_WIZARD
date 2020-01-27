@@ -26,8 +26,6 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès à la vitesse du personnage
     public string MyType { get => type; }
 
-
-
     // Vie initiale du personnage (readonly)
     [SerializeField]
     private float initHealth = default;

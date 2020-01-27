@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -70,7 +71,10 @@ public class Quest
         }
     }
 
-    // Retourne la description formatée de la quête
+    /// <summary>
+    /// Retourne la description formatée de la quête
+    /// </summary>
+    /// <returns></returns>
     public string GetDescription()
     {
         // Description de la quête
@@ -110,6 +114,46 @@ public abstract class Objective
 
     // Propriété d'accès à l'indicateur sur la complétude de l'objectif
     public bool IsComplete { get => currentAmount >= amount; }
+
+
+    /// <summary>
+    /// Retourne une message de l'objectif
+    /// </summary>
+    /// <param name="objective">Objectif à afficher</param>
+    public string GetObjectiveMessage()
+    {
+        string message = string.Empty;
+
+        // Si l'objectif n'est pas encore atteint
+        if (MyCurrentAmount <= MyAmount)
+        {
+            // Message par défaut
+            message += string.Format("{0} : {1}/{2}", MyType, MyCurrentAmount, MyAmount);
+        }
+
+        // Retourne le message
+        return message;
+    }
+
+    /// <summary>
+    /// Actualise les informations de la quête
+    /// </summary>
+    /// <param name="displayMessage">Affichage ou non d'un message</param>
+    public void RefreshObjectives(bool displayMessage = false)
+    {
+        // Si l'on doit afficher un message
+        if (displayMessage)
+        {
+            // Affiche le message de progression de l'objectif
+            MessageFeedManager.MyInstance.WriteMessage(GetObjectiveMessage());
+        }
+
+        // Actualise les informations de la quête
+        QuestWindow.MyInstance.UpdateSelected();
+
+        // Vérifie si la quête est terminée
+        QuestWindow.MyInstance.CheckCompletion();
+    }
 }
 
 
@@ -132,10 +176,7 @@ public class CollectObjective : Objective
             MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyType);
 
             // Actualise les informations de la quête
-            QuestWindow.MyInstance.UpdateSelected();
-
-            // Vérifie si la quête est terminée
-            QuestWindow.MyInstance.CheckCompletion();
+            RefreshObjectives(true);
         }
     }
 
@@ -148,10 +189,23 @@ public class CollectObjective : Objective
         MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyType);
 
         // Actualise les informations de la quête
-        QuestWindow.MyInstance.UpdateSelected();
+        RefreshObjectives();
+    }
 
-        // Vérifie si la quête est terminée
-        QuestWindow.MyInstance.CheckCompletion();
+    /// <summary>
+    /// Complète un objectif de collecte
+    /// </summary>
+    public void Complete()
+    {
+        // Stack de l'item
+        Stack<Item> items = InventoryScript.MyInstance.GetItems(MyType, MyAmount);
+
+        // Pour chaque item de la stack
+        foreach (Item item in items)
+        {
+            // Supprime l'item
+            item.Remove();
+        }
     }
 }
 
@@ -174,10 +228,7 @@ public class KillObjective : Objective
             MyCurrentAmount++;
 
             // Actualise les informations de la quête
-            QuestWindow.MyInstance.UpdateSelected();
-
-            // Vérifie si la quête est terminée
-            QuestWindow.MyInstance.CheckCompletion();
+            RefreshObjectives(true);
         }
     }
 }
