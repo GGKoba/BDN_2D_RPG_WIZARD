@@ -2,11 +2,38 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+
+// Gestion de la mort d'un personnage
+public delegate void KillConfirmed(Character character);
+
+
 /// <summary>
 /// Classe de gestion du jeu
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+    // Instance de classe (singleton)
+    private static GameManager instance;
+
+    // Propriété d'accès à l'instance
+    public static GameManager MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Retourne l'object de type GameManager (doit être unique)
+                instance = FindObjectOfType<GameManager>();
+            }
+
+            return instance;
+        }
+    }
+
+    // Evènement de mort d'un personnage
+    public event KillConfirmed KillConfirmedEvent;
+
     // Référence sur le joueur
     [SerializeField]
     private Player player = default;
@@ -42,7 +69,6 @@ public class GameManager : MonoBehaviour
         // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
-
             // S'il y a déjà une cible
             if (currentTarget != null)
             {
@@ -88,4 +114,18 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Appelle l'évènement de la mort d'un personnage
+    /// </summary>
+    public void OnKillConfirmed(Character character)
+    {
+        // S'il y a un abonnement à cet évènement
+        if (KillConfirmedEvent != null)
+        {
+            // Déclenchement de l'évènement de la mort d'un personnage
+            KillConfirmedEvent.Invoke(character);
+        }
+    }
+
 }

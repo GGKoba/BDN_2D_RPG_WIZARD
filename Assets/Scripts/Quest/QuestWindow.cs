@@ -123,7 +123,7 @@ public class QuestWindow : Window
     /// <param name="quest">Quête à accepter</param>
     public void AcceptQuest(Quest quest)
     {
-        // Pour chacun des objectifs de la quête
+        // Pour chacun des objectifs de collecte de la quête
         foreach (CollectObjective collectObjective in quest.MyCollectObjectives)
         {
             // Abonnement sur l'évènement de mise à jour du nombre d'élements de l'item
@@ -132,6 +132,14 @@ public class QuestWindow : Window
             // Actualise le nombre d'items
             collectObjective.UpdateItemCount();
         }
+
+        // Pour chacun des objectifs d'ennemi de la quête
+        foreach (KillObjective killObjective in quest.MyKillObjectives)
+        {
+            // Abonnement sur l'évènement de la mort d'un personnage
+            GameManager.MyInstance.KillConfirmedEvent += new KillConfirmed(killObjective.UpdateKillCount);
+        }
+
 
         // Instantie un objet "Quête"
         GameObject go = Instantiate(questPrefab, questArea);
@@ -179,18 +187,26 @@ public class QuestWindow : Window
             string description = quest.GetDescription();
 
             // Ajout des éventuels objectifs
-            if (quest.MyCollectObjectives.Length > 0)
+            if (quest.MyCollectObjectives.Length > 0 || quest.MyKillObjectives.Length > 0)
             {
-                string objectivesText = string.Empty;
+                string objectivesText = string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n");
 
-                // Pour chaque objectif
-                foreach (Objective objective in quest.MyCollectObjectives)
+                // Pour chaque objectif de collecte
+                foreach (Objective collectObjective in quest.MyCollectObjectives)
                 {
-                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", objective.MyType, objective.MyCurrentAmount, objective.MyAmount);
+                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", collectObjective.MyType, collectObjective.MyCurrentAmount, collectObjective.MyAmount);
                 }
-                description += string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n{0}", objectivesText);
-            }
 
+                // Pour chaque objectif d'ennemi
+                foreach (Objective killObjective in quest.MyKillObjectives)
+                {
+                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", killObjective.MyType, killObjective.MyCurrentAmount, killObjective.MyAmount);
+                }
+
+                // Ajoute les objectifs à la description
+                description += objectivesText;
+            }
+            
             // Actualise la description de la quête sélectionnée
             questDescription.text = description;
         }

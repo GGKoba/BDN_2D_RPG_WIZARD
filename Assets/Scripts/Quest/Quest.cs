@@ -33,19 +33,39 @@ public class Quest
     // Propriété d'accès au tableau des objectifs de collecte
     public CollectObjective[] MyCollectObjectives { get => collectObjectives; }
 
+    // Tableau des objectifs d'ennemi
+    [SerializeField]
+    private KillObjective[] killObjectives = default;
+
+    // Propriété d'accès au tableau des objectifs d'ennemi
+    public KillObjective[] MyKillObjectives { get => killObjectives; }
+
+
+
     // Propriété d'accès à l'indicateur sur la complétude de la quête
     public bool IsComplete
     {
         get
         {
-            // Pour tous les objectifs
-            foreach (CollectObjective collectObjective in collectObjectives)
+            // Pour tous les objectifs de collecte
+            foreach (Objective collectObjective in collectObjectives)
             {
                 if (!collectObjective.IsComplete)
                 {
+                    // Retourne que c'est KO
                     return false;
                 }
             }
+            // Pour tous les objectifs d'ennemi
+            foreach (Objective killObjective in killObjectives)
+            {
+                if (!killObjective.IsComplete)
+                {
+                    // Retourne que c'est KO
+                    return false;
+                }
+            }
+            // Retourne que c'est OK
             return true;
         }
     }
@@ -94,7 +114,7 @@ public abstract class Objective
 
 
 /// <summary>
-/// Classe abstraite de l'objet "Objectifs"
+/// Classe abstraite de l'objet "Objectifs" : Objectifs de collecte
 /// </summary>
 [Serializable]
 public class CollectObjective : Objective
@@ -132,5 +152,32 @@ public class CollectObjective : Objective
 
         // Vérifie si la quête est terminée
         QuestWindow.MyInstance.CheckCompletion();
+    }
+}
+
+
+/// <summary>
+/// Classe abstraite de l'objet "Objectifs" : Objectifs d'ennemi
+/// </summary>
+[Serializable]
+public class KillObjective : Objective
+{
+    /// <summary>
+    /// Actualise le nombre de personnages pour l'objectif
+    /// </summary>
+    public void UpdateKillCount(Character character)
+    {
+        // Si c'est le même personnage que celui de l'objectif
+        if (MyType.ToLower() == character.MyType.ToLower())
+        {
+            // Incrémente le compteur
+            MyCurrentAmount++;
+
+            // Actualise les informations de la quête
+            QuestWindow.MyInstance.UpdateSelected();
+
+            // Vérifie si la quête est terminée
+            QuestWindow.MyInstance.CheckCompletion();
+        }
     }
 }
