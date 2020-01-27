@@ -148,11 +148,11 @@ public abstract class Objective
             MessageFeedManager.MyInstance.WriteMessage(GetObjectiveMessage());
         }
 
-        // Actualise les informations de la quête
-        QuestWindow.MyInstance.UpdateSelected();
-
         // Vérifie si la quête est terminée
         QuestWindow.MyInstance.CheckCompletion();
+
+        // Actualise les informations de la quête
+        QuestWindow.MyInstance.UpdateSelected();
     }
 }
 
