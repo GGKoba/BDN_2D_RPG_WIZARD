@@ -96,13 +96,13 @@ public class QuestGiverWindow : Window
                 // Ajoute la quête dans la liste
                 quests.Add(go);
 
-                // Si le joueur a deja la quête et que la quête est "Terminée"
+                // Si le joueur a déjà la quête et que la quête est "Terminée"
                 if (QuestWindow.MyInstance.HasQuest(quest) && quest.IsComplete)
                 {
                     // Actualise le titre de la quête
                     go.GetComponent<Text>().text += " (Terminée)";
                 }
-                // Si le joueur a deja la quête
+                // Si le joueur a déjà la quête
                 else if (QuestWindow.MyInstance.HasQuest(quest))
                 {
                     Color color = go.GetComponent<Text>().color;
@@ -160,7 +160,7 @@ public class QuestGiverWindow : Window
         // S'il y a une quête
         if (quest != null)
         {
-            // Si le joueur a deja la quête et que la quête est "Terminée"
+            // Si le joueur a déjà la quête et que la quête est "Terminée"
             if (QuestWindow.MyInstance.HasQuest(quest) && quest.IsComplete)
             {
                 // Masque le bouton Accepter
@@ -264,6 +264,8 @@ public class QuestGiverWindow : Window
                 GameManager.MyInstance.KillConfirmedEvent -= new KillConfirmed(killObjective.UpdateKillCount);
             }
 
+            // Retire la quête
+            QuestWindow.MyInstance.RemoveQuest(selected.MyQuestScript);
 
             // Retourne à la liste des quêtes
             Back();

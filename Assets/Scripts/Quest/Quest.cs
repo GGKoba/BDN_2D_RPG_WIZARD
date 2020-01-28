@@ -27,6 +27,9 @@ public class Quest
     // Propriété d'accès à au script de la quête
     public QuestScript MyQuestScript { get; set; }
 
+    // Propriété d'accès au donneur de quêtes
+    public QuestGiver MyQuestGiver { get; set; }
+
     // Tableau des objectifs de collecte
     [SerializeField]
     private CollectObjective[] collectObjectives = default;
@@ -40,8 +43,6 @@ public class Quest
 
     // Propriété d'accès au tableau des objectifs d'ennemi
     public KillObjective[] MyKillObjectives { get => killObjectives; }
-
-
 
     // Propriété d'accès à l'indicateur sur la complétude de la quête
     public bool IsComplete
