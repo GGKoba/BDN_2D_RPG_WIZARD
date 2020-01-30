@@ -225,11 +225,15 @@ public class KillObjective : Objective
         // Si c'est le même personnage que celui de l'objectif
         if (MyType.ToLower() == character.MyType.ToLower())
         {
-            // Incrémente le compteur
-            MyCurrentAmount++;
+            // Si l'objectif n'est pas encore atteint
+            if (MyCurrentAmount < MyAmount)
+            {
+                // Incrémente le compteur
+                MyCurrentAmount++;
 
-            // Actualise les informations de la quête
-            RefreshObjectives(true);
+                // Actualise les informations de la quête
+                RefreshObjectives(true);
+            }
         }
     }
 }

@@ -51,6 +51,9 @@ public class QuestGiver : NPC
     /// </summary>
     public void UpdateQuestStatus()
     {
+        // Nombre de quêtes
+        int count = 0;
+
         // Pour chaque quête
         foreach (Quest quest in quests)
         {
@@ -76,6 +79,21 @@ public class QuestGiver : NPC
                 {
                     // Actualise le status de la quête
                     statusRenderer.sprite = questionSilver;
+                }
+
+                // [TODO] - Affiche l'image du status
+                // statusRenderer.enabled = true;
+            }
+            else
+            {
+                // Incrémente le nombre de quêtes
+                count++;
+
+                // S'il n'y pas de quêtes
+                if (count == quests.Length)
+                {
+                    // Retire l'image du status
+                    statusRenderer.enabled = false;
                 }
             }
         }
