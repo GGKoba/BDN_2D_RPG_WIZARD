@@ -191,4 +191,17 @@ public abstract class Character : MonoBehaviour
             MyAnimator.SetTrigger("die");
         }
     }
+
+    /// <summary>
+    /// Accès à la vie du personnage
+    /// </summary>
+    /// <param name="amount">Points de vie à ajouter au personnage</param>
+    public void GetHealth(int amount)
+    {
+        // Actualise la vie du personnage
+        health.MyCurrentValue += amount;
+
+        // Affiche un texte
+        CombatTextManager.MyInstance.CreateText(transform.position, amount.ToString(), Color.green);
+    }
 }

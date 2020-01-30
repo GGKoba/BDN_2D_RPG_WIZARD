@@ -46,7 +46,7 @@ public class QuestWindow : Window
     private readonly List<QuestScript> questScripts = new List<QuestScript>();
 
     // Liste des quêtes
-    private List<Quest> quests = new List<Quest>();
+    private readonly List<Quest> quests = new List<Quest>();
 
     // Texte du compteur de quêtes
     [SerializeField]

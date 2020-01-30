@@ -27,7 +27,7 @@ public class HealthPotion : Item, IUseable
             Remove();
 
             // Ajoute de la vie au joueur
-            Player.MyInstance.MyHealth.MyCurrentValue += health;
+            Player.MyInstance.GetHealth(health);
         }
     }
 

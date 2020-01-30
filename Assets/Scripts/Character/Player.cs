@@ -105,12 +105,16 @@ public class Player : Character
         {
             health.MyCurrentValue -= 10;
             mana.MyCurrentValue -= 10;
+
+            CombatTextManager.MyInstance.CreateText(transform.position, "-10", Color.red);
         }
         // [O] : Vie/Mana ++
         if (Input.GetKeyDown(KeyCode.O))
         {
             health.MyCurrentValue += 10;
             mana.MyCurrentValue += 10;
+
+            CombatTextManager.MyInstance.CreateText(transform.position, "+10", Color.green);
         }
 
 
