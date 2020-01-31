@@ -12,7 +12,7 @@ public enum Quality { Useless, Common, Uncommon, Rare, Epic, Legendary };
 public static class QualityColor
 {
     // Dictionnaire des couleurs des différentes qualités
-    private static Dictionary<Quality, string> colors = new Dictionary<Quality, string>()
+    private static readonly Dictionary<Quality, string> colors = new Dictionary<Quality, string>()
     {
         { Quality.Useless, "#CBCBCB" },
         { Quality.Common, "#FFFFFF" },

@@ -106,7 +106,7 @@ public class Player : Character
             health.MyCurrentValue -= 10;
             mana.MyCurrentValue -= 10;
 
-            CombatTextManager.MyInstance.CreateText(transform.position, "-10", Color.red);
+            CombatTextManager.MyInstance.CreateText(transform.position, "10", CombatTextType.Damage, false);
         }
         // [O] : Vie/Mana ++
         if (Input.GetKeyDown(KeyCode.O))
@@ -114,7 +114,7 @@ public class Player : Character
             health.MyCurrentValue += 10;
             mana.MyCurrentValue += 10;
 
-            CombatTextManager.MyInstance.CreateText(transform.position, "+10", Color.green);
+            CombatTextManager.MyInstance.CreateText(transform.position, "10", CombatTextType.Heal, true);
         }
 
 

@@ -174,7 +174,10 @@ public abstract class Character : MonoBehaviour
     {
         // Réduction de la vie du personnage
         health.MyCurrentValue -= damage;
-          
+
+        // Affiche un texte
+        CombatTextManager.MyInstance.CreateText(transform.position, damage.ToString(), CombatTextType.Damage, false);
+
         // Si le personnage n'a plus de vie
         if (health.MyCurrentValue <= 0)
         {
@@ -202,6 +205,6 @@ public abstract class Character : MonoBehaviour
         health.MyCurrentValue += amount;
 
         // Affiche un texte
-        CombatTextManager.MyInstance.CreateText(transform.position, amount.ToString(), Color.green);
+        CombatTextManager.MyInstance.CreateText(transform.position, amount.ToString(), CombatTextType.Heal, true);
     }
 }

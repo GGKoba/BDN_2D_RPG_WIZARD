@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 
 
+// Liste des types de messages
+public enum CombatTextType { Damage, Heal };
+
+
 /// <summary>
 /// Classe de gestion des textes de combats
 /// </summary>
@@ -36,18 +40,46 @@ public class CombatTextManager : MonoBehaviour
     /// </summary>
     /// <param name="position">Position du texte</param>
     /// <param name="text">Contenu du texte</param>
-    public void CreateText(Vector2 position, string text, Color color)
+    /// <param name="type">Type de texte</param>
+    /// <param name="crit">texte "critique"</param>
+    public void CreateText(Vector2 position, string text, CombatTextType type, bool crit)
     {
+        //Decalage du texte
+        position.y += 0.8f;
+
         // Instancie un objet "CombatText"
         Text sct = Instantiate(combatTextPrefab, transform).GetComponent<Text>();
 
         // Actualise la position
         sct.transform.position = position;
 
-        // Actualise le texte
-        sct.text = text;
+        // Indicateur d'opération
+        string operation = string.Empty;
 
-        // Actualise la color
-        sct.color = color;
+        switch (type)
+        {
+            case CombatTextType.Damage:
+                operation += "-";
+
+                // Actualise la couleur
+                sct.color = Color.red;
+                break;
+
+            case CombatTextType.Heal:
+                operation += "+";
+
+                // Actualise la couleur
+                sct.color = Color.green;
+                break;
+        }
+
+        // Actualise le texte
+        sct.text = operation + text;
+
+        // Si le etxte est critique
+        if (crit)
+        {
+            sct.GetComponent<Animator>().SetBool("Crit", crit);
+        }
     }
 }
