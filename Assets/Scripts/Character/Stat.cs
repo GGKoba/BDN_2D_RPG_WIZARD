@@ -19,15 +19,34 @@ public class Stat : MonoBehaviour
     // L'image que l'on va remplir
     private Image content;
 
+    // Propriété sur l'indicateur remplissage complet de la barre de stat 
+    public bool IsFull { get => content.fillAmount == 1; }
+
     // Conserve la valeur de remplissage actuelle
     private float currentFill;
+
+    // Surplus de valeur
+    private float overflow;
+
+    // Propriété d'accès à la valeur maximum
+    public float MyOverflow
+    { 
+        get
+        {
+            float tmp = overflow;
+
+            // Réinitalise le surplus
+            overflow = 0;
+
+            return tmp;
+        }
+    }
 
     // Stat CurrentValue : vie/mana courant
     private float currentValue;
 
     // Propriété d'accès à la valeur maximum
     public float MyMaxValue { get; set; }
-
 
     /// <summary>
     /// Propriété pour renseigner la valeur courante, doit être utilisée chaque fois que que la currentValue change, de sorte que tout se mette à jour correctement
@@ -49,6 +68,9 @@ public class Stat : MonoBehaviour
             else if (value > MyMaxValue)
             {
                 currentValue = MyMaxValue;
+
+                // Actualise le "surplus"
+                overflow = value - MyMaxValue;
             }
             // Si la valeur est comprise entre 0 et le max
             else
@@ -118,5 +140,14 @@ public class Stat : MonoBehaviour
             // Actualise le montant de remplissage afin d'obtenir un mouvement en douceur
             content.fillAmount = Mathf.MoveTowards(content.fillAmount, currentFill, Time.deltaTime * lerpSpeed);
         }
+    }
+
+    /// <summary>
+    /// Réinitialise le remplissage de la barre
+    /// </summary>
+    public void ResetBar()
+    {
+        // Vide le remplissage 
+        content.fillAmount = 0;
     }
 }

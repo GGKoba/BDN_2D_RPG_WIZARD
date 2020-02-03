@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 
 // Liste des types de messages
-public enum CombatTextType { Damage, Heal };
+public enum CombatTextType { Damage, Heal, Experience };
 
 
 /// <summary>
@@ -53,28 +53,37 @@ public class CombatTextManager : MonoBehaviour
         // Actualise la position
         sct.transform.position = position;
 
-        // Indicateur d'opération
-        string operation = string.Empty;
+        // Préfixe/Suffixe
+        string before = string.Empty;
+        string after = string.Empty;
 
         switch (type)
         {
             case CombatTextType.Damage:
-                operation += "-";
+                before = "-";
 
                 // Actualise la couleur
                 sct.color = Color.red;
                 break;
 
             case CombatTextType.Heal:
-                operation += "+";
+                before = "+";
 
                 // Actualise la couleur
                 sct.color = Color.green;
                 break;
+
+            case CombatTextType.Experience:
+                before = "+";
+                after = " XP";
+
+                // Actualise la couleur
+                sct.color = Color.yellow;
+                break;
         }
 
         // Actualise le texte
-        sct.text = operation + text;
+        sct.text = before + text + after;
 
         // Si le etxte est critique
         if (crit)

@@ -30,7 +30,7 @@ public class CombatText : MonoBehaviour
         // Référence sur le conteneur du texte
         text = GetComponent<Text>();
 
-        // Démarre la routine de  disparition du texte
+        // Démarre la routine de disparition du texte
         StartCoroutine(FadeOut());
     }
 

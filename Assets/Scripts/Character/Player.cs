@@ -83,10 +83,10 @@ public class Player : Character
         mana.Initialize(initMana, initMana);
 
         // Initialise la barre d'XP
-        xp.Initialize(0, Mathf.Floor(100 * MyLevel * Mathf.Pow(MyLevel, 0.5f)));
+        xp.Initialize(0, GetXPMax());
 
         // Actualise le texte du niveau du joueur
-        levelText.text = MyLevel.ToString();
+        RefreshPlayerLevelText();
 
         // Appelle Start sur la classe mère (abstraite)
         base.Start();
@@ -131,7 +131,11 @@ public class Player : Character
 
             CombatTextManager.MyInstance.CreateText(transform.position, "10", CombatTextType.Heal, true);
         }
-
+        // [X] : Experience ++
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            GainXP(12);
+        }
 
         // Déplacement en Haut
         if (Input.GetKey(KeyBindManager.MyInstance.KeyBinds["UP"]) || Input.GetKey(KeyCode.UpArrow))
@@ -244,6 +248,7 @@ public class Player : Character
         // Vérifie si l'on peut attaquer
         if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
         {
+            // Démarre la routine d'attaque
             attackRoutine = StartCoroutine(Attack(spellName));
         }
     }
@@ -368,6 +373,69 @@ public class Player : Character
             // Début de l'interaction  
             MyInteractable.Interact();
         }
+    }
+
+    /// <summary>
+    /// Gain d'expérience
+    /// </summary>
+    /// <param name="amountXp">Expérience gagnée</param>
+    public void GainXP(int amountXp)
+    {
+        // Ajoute l'expérience au personnage
+        xp.MyCurrentValue += amountXp;
+
+        // Affiche un message
+        CombatTextManager.MyInstance.CreateText(transform.position, amountXp.ToString(), CombatTextType.Experience, false);
+
+        // Si la barre d'expérience est remplie
+        if (xp.MyCurrentValue >= xp.MyMaxValue)
+        {
+            // Démarre la routine de gain de niveau
+            StartCoroutine(LevelUp());
+        }
+    }
+
+    /// <summary>
+    /// Gain de niveau
+    /// </summary>
+    private IEnumerator LevelUp()
+    {
+        // Tant que la barre d'experience n'est pas remplie
+        while (!xp.IsFull)
+        {
+            yield return null;
+        }
+
+        // Incrémente le niveau du joueur
+        MyLevel++;
+
+        //Actualise l'affichage du niveau
+        RefreshPlayerLevelText();
+
+        // Actualise l'expérience à obtenir pour le niveau
+        xp.MyMaxValue = GetXPMax();
+
+        // Actualise la valeur courant e du niveau
+        xp.MyCurrentValue = xp.MyOverflow;
+
+        // Réinitialise le remplissage de la barre
+        xp.ResetBar();
+    }
+
+    /// <summary>
+    /// Retourne le montant d'expérience à obtenir pour le niveau
+    /// </summary>
+    private float GetXPMax()
+    {
+        return Mathf.Floor(100 * MyLevel * Mathf.Pow(MyLevel, 0.5f));
+    }
+
+    /// <summary>
+    /// Actualise le texte du niveau du joueur
+    /// </summary>
+    private void RefreshPlayerLevelText()
+    {
+        levelText.text = MyLevel.ToString();
     }
 
     /// <summary>

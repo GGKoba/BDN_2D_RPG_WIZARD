@@ -46,7 +46,7 @@ class AttackState : IState
             // Réinitialise le temps d'attaque
             enemy.MyAttackTime = 0;
 
-            // Lancement de l'attaque
+            // Démarre la routine d'attaque
             enemy.StartCoroutine(Attack());
         }
 
