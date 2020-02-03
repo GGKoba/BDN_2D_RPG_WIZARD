@@ -37,6 +37,13 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès à la vie du personnage
     public Stat MyHealth { get => health; }
 
+    [SerializeField]
+    // Référence sur le niveau du personnage
+    private int level;
+
+    // Propriété d'accès au niveau du personnage
+    public int MyLevel { get => level; set => level = value; }
+
     // Référence sur la hitBox du personnage
     [SerializeField]
     protected Transform hitBox = default;

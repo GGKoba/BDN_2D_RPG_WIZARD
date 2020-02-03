@@ -116,7 +116,7 @@ public class Stat : MonoBehaviour
         if (currentFill != content.fillAmount)
         {
             // Actualise le montant de remplissage afin d'obtenir un mouvement en douceur
-            content.fillAmount = Mathf.Lerp(content.fillAmount, currentFill, Time.deltaTime * lerpSpeed);
+            content.fillAmount = Mathf.MoveTowards(content.fillAmount, currentFill, Time.deltaTime * lerpSpeed);
         }
     }
 }

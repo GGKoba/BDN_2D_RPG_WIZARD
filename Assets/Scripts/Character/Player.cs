@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -29,6 +30,14 @@ public class Player : Character
     // Mana du joueur
     [SerializeField]
     private Stat mana = default;
+
+    // XP du joueur
+    [SerializeField]
+    private Stat xp = default;
+
+    // Texte du niveau du joueur
+    [SerializeField]
+    private Text levelText = default;
 
     // Tableau des positions pour lancer les sorts
     [SerializeField]
@@ -70,8 +79,14 @@ public class Player : Character
         // Initialise l'argent du joueur
         MyGold = 25;
 
-        // Initialise les barres
+        // Initialise la barre de mana
         mana.Initialize(initMana, initMana);
+
+        // Initialise la barre d'XP
+        xp.Initialize(0, Mathf.Floor(100 * MyLevel * Mathf.Pow(MyLevel, 0.5f)));
+
+        // Actualise le texte du niveau du joueur
+        levelText.text = MyLevel.ToString();
 
         // Appelle Start sur la classe mère (abstraite)
         base.Start();
