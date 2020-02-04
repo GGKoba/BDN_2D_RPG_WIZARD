@@ -53,6 +53,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image targetPortrait = default;
 
+    // Texte du niveau de la cible
+    [SerializeField]
+    private Text levelText = default;
+
     [Header("Tooltip")]
     // Tooltip
     [SerializeField]
@@ -167,11 +171,17 @@ public class UIManager : MonoBehaviour
         // Mise à jour de l'image de la cible (1er enfant de l'objet TargetFrame => face) ==> targetFrame.transform.GetChild(0).GetComponent<Image>();
         targetPortrait.sprite = target.MyPortrait;
 
+        // Actualise le texte du niveau de la cible
+        levelText.text = target.MyLevel.ToString();
+
         // Abonnement sur l'évènement de changement de vie
         target.HealthChangedEvent += new HealthChanged(UpdateTargetFrame);
 
         // Abonnement sur l'évènement de disparition du personnage
         target.CharacterRemovedEvent += new CharacterRemoved(HideTargetFrame);
+
+        // Adapte la couleur du niveau en fonction de celui du joueur
+        SetColorLevelText(target);
     }
 
     /// <summary>
@@ -358,5 +368,34 @@ public class UIManager : MonoBehaviour
     {
         // Actualise le text du tooltîp
         tooltipText.text = itemDescription.GetDescription();
+    }
+
+    /// <summary>
+    /// Adapte la couleur du niveau en fonction de celui du joueur
+    /// </summary>
+    /// <param name="target">Cible du joueur</param>
+    private void SetColorLevelText(Enemy target)
+    {
+        // Adapte la couleur du niveau en fonction de celui du joueur
+        if (target.MyLevel >= Player.MyInstance.MyLevel + 5)
+        {
+            levelText.color = Color.red;
+        }
+        else if (target.MyLevel == Player.MyInstance.MyLevel + 3 || target.MyLevel == Player.MyInstance.MyLevel + 4)
+        {
+            levelText.color = new Color32(255, 160, 0, 255);
+        }
+        else if (target.MyLevel >= Player.MyInstance.MyLevel - 2 && target.MyLevel <= Player.MyInstance.MyLevel + 2)
+        {
+            levelText.color = Color.yellow;
+        }
+        else if (target.MyLevel <= Player.MyInstance.MyLevel - 3 && target.MyLevel > XPManager.CalculateGrayLevel())
+        {
+            levelText.color = Color.green;
+        }
+        else
+        {
+            levelText.color = Color.grey;
+        }
     }
 }

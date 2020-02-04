@@ -199,6 +199,13 @@ public abstract class Character : MonoBehaviour
 
             // Activation du trigger "die"
             MyAnimator.SetTrigger("die");
+
+            // Si le personnage est un ennemi
+            if(this is Enemy)
+            {
+                // Gagne l'expérience calculée
+                Player.MyInstance.GainXP(XPManager.CalculateXP(this as Enemy));
+            }
         }
     }
 

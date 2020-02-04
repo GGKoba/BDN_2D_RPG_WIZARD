@@ -444,6 +444,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -521,6 +522,7 @@ MonoBehaviour:
   type: Skeleton
   initHealth: 13
   health: {fileID: 7683267642312155945}
+  level: 1
   hitBox: {fileID: 7683267644080430689}
   healthGroup: {fileID: 7683267643191571508}
   initialAggroRange: 3
