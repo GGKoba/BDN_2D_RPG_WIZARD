@@ -88,7 +88,7 @@ public class QuestGiverWindow : Window
                 GameObject go = Instantiate(questPrefab, questArea);
 
                 // Actualise le titre de la quête
-                go.GetComponent<Text>().text = quest.MyTitle;
+                go.GetComponent<Text>().text = string.Format("[{0}] {1}", quest.MyLevel, quest.MyTitle);
 
                 // Référence sur la quête
                 go.GetComponent<QuestGiverScript>().MyQuest = quest;
@@ -263,6 +263,9 @@ public class QuestGiverWindow : Window
                 // Désabonnement sur l'évènement de la mort d'un personnage
                 GameManager.MyInstance.KillConfirmedEvent -= new KillConfirmed(killObjective.UpdateKillCount);
             }
+
+            // Gagne l'expérience calculée
+            Player.MyInstance.GainXP(XPManager.CalculateXP(selected));
 
             // Retire la quête
             QuestWindow.MyInstance.RemoveQuest(selected.MyQuestScript);

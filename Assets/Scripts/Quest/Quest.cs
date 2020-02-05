@@ -30,6 +30,20 @@ public class Quest
     // Propriété d'accès au donneur de quêtes
     public QuestGiver MyQuestGiver { get; set; }
 
+    // Niveau de la quête
+    [SerializeField]
+    private int level = default;
+
+    // Propriété d'accèsau niveau de la quête
+    public int MyLevel { get => level; }
+
+    // Expérience de la quête
+    [SerializeField]
+    private int xp = default;
+
+    // Propriété d'accès à l'expérience de la quête
+    public int MyXp { get => xp; }
+
     // Tableau des objectifs de collecte
     [SerializeField]
     private CollectObjective[] collectObjectives = default;
@@ -80,7 +94,7 @@ public class Quest
     {
         // Description de la quête
         string questDescription = string.Empty;
-        questDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>", MyTitle, MyDescription);
+        questDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>\n\n<color=#546320>XP : {2}</color>", MyTitle, MyDescription, XPManager.CalculateXP(this));
 
         return questDescription;
     }

@@ -420,6 +420,13 @@ public class Player : Character
 
         // Réinitialise le remplissage de la barre
         xp.ResetBar();
+
+        // Si la barre d'expérience est remplie
+        if (xp.MyCurrentValue >= xp.MyMaxValue)
+        {
+            // Démarre la routine de gain de niveau
+            StartCoroutine(LevelUp());
+        }
     }
 
     /// <summary>

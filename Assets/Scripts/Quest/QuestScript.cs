@@ -57,7 +57,7 @@ public class QuestScript : MonoBehaviour
         else if (!MyQuest.IsComplete)
         {
             // Réinitialise le titre de la quête
-            GetComponent<Text>().text = MyQuest.MyTitle;
+            GetComponent<Text>().text = string.Format("[{0}] {1}", MyQuest.MyLevel, MyQuest.MyTitle);
 
             // Marque la quête comme "Non Terminée"
             markedComplete = false;

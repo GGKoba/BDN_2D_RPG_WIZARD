@@ -222,7 +222,7 @@ public class QuestWindow : Window
                 // Ajoute les objectifs à la description
                 description += objectivesText;
             }
-            
+
             // Actualise la description de la quête sélectionnée
             questDescription.text = description;
         }
