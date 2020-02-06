@@ -94,7 +94,10 @@ public class Quest
     {
         // Description de la quête
         string questDescription = string.Empty;
-        questDescription += string.Format("<color=#820D0D><b>{0}</b></color>\n\n<size=12>{1}</size>\n\n<color=#546320>XP : {2}</color>", MyTitle, MyDescription, XPManager.CalculateXP(this));
+        questDescription += string.Format("<color=#992F2F><b>{0}</b></color>", MyTitle);
+        questDescription += string.Format("\n\n<color=#FFFFFF><size=12>{0}</size></color>", MyDescription);
+        questDescription += string.Format("\n\n<color=#95AD40>XP : {0}</color>", XPManager.CalculateXP(this));
+
 
         return questDescription;
     }

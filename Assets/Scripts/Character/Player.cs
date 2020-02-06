@@ -39,6 +39,10 @@ public class Player : Character
     [SerializeField]
     private Text levelText = default;
 
+    // Référence sur l'animator de levelUp
+    [SerializeField]
+    private Animator ding = default;
+
     // Tableau des positions pour lancer les sorts
     [SerializeField]
     private Transform[] exitPoints = default;
@@ -50,7 +54,6 @@ public class Player : Character
     // Référence sur l'emplacement de l'equipement sur le personnage
     [SerializeField]
     private GearSocket[] gearSockets = default;
-
 
     // Mana initiale du joueur (readonly)
     private readonly float initMana = 50;
@@ -408,6 +411,9 @@ public class Player : Character
 
         // Incrémente le niveau du joueur
         MyLevel++;
+
+        //Déclenche l'animation de levelUp
+        ding.SetTrigger("Ding");
 
         //Actualise l'affichage du niveau
         RefreshPlayerLevelText();

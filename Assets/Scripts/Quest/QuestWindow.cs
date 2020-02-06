@@ -205,18 +205,18 @@ public class QuestWindow : Window
             // Ajout des éventuels objectifs
             if (quest.MyCollectObjectives.Length > 0 || quest.MyKillObjectives.Length > 0)
             {
-                string objectivesText = string.Format("\n\n<color=#3F6E8E>Objectifs</color>\n");
+                string objectivesText = string.Format("\n\n<color=#468FC1>Objectifs</color>\n");
 
                 // Pour chaque objectif de collecte
                 foreach (Objective collectObjective in quest.MyCollectObjectives)
                 {
-                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", collectObjective.MyType, collectObjective.MyCurrentAmount, collectObjective.MyAmount);
+                    objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", collectObjective.MyType, collectObjective.MyCurrentAmount, collectObjective.MyAmount);
                 }
 
                 // Pour chaque objectif d'ennemi
                 foreach (Objective killObjective in quest.MyKillObjectives)
                 {
-                    objectivesText += string.Format("<size=12><i>{0} : {1}/{2}</i></size>\n", killObjective.MyType, killObjective.MyCurrentAmount, killObjective.MyAmount);
+                    objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", killObjective.MyType, killObjective.MyCurrentAmount, killObjective.MyAmount);
                 }
 
                 // Ajoute les objectifs à la description

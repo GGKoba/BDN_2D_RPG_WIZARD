@@ -88,7 +88,7 @@ public class QuestGiverWindow : Window
                 GameObject go = Instantiate(questPrefab, questArea);
 
                 // Actualise le titre de la quête
-                go.GetComponent<Text>().text = string.Format("[{0}] {1}", quest.MyLevel, quest.MyTitle);
+                go.GetComponent<Text>().text = string.Format("[{0}] {1} <color=#ffbb04><size=12>!</size></color>", quest.MyLevel, quest.MyTitle);
 
                 // Référence sur la quête
                 go.GetComponent<QuestGiverScript>().MyQuest = quest;
@@ -100,7 +100,7 @@ public class QuestGiverWindow : Window
                 if (QuestWindow.MyInstance.HasQuest(quest) && quest.IsComplete)
                 {
                     // Actualise le titre de la quête
-                    go.GetComponent<Text>().text += " (Terminée)";
+                    go.GetComponent<Text>().text = string.Format("[{0}] {1} <color=#ffbb04><size=12>?</size></color>", quest.MyLevel, quest.MyTitle);
                 }
                 // Si le joueur a déjà la quête
                 else if (QuestWindow.MyInstance.HasQuest(quest))
@@ -108,10 +108,13 @@ public class QuestGiverWindow : Window
                     Color color = go.GetComponent<Text>().color;
 
                     // Actualise la transparence de la couleur de la quête
-                    color.a = 0.5f;
+                    color.a = 0.75f;
 
                     // Actualise la couleur du texte
                     go.GetComponent<Text>().color = color;
+
+                    // Actualise le titre de la quête
+                    go.GetComponent<Text>().text = string.Format("[{0}] {1} <color=#c0c0c0ff><size=12>?</size></color>", quest.MyLevel, quest.MyTitle);
                 }
             }
         }
