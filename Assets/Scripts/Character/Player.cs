@@ -446,7 +446,7 @@ public class Player : Character
     /// <summary>
     /// Actualise le texte du niveau du joueur
     /// </summary>
-    private void RefreshPlayerLevelText()
+    public void RefreshPlayerLevelText()
     {
         levelText.text = MyLevel.ToString();
     }
