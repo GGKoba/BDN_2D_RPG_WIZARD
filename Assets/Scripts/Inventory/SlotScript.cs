@@ -43,6 +43,9 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     // Propriété d'accès sur le sac qui contient l'emplacement
     public BagScript MyBag { get; set; }
 
+    // Propriété d'accès sur l'index de l'emplacement
+    public int MyIndex { get; set; }
+
 
     /// <summary>
     /// Awake

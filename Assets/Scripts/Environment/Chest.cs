@@ -30,9 +30,15 @@ public class Chest : MonoBehaviour, IInteractable
     // Liste des items
     private List<Item> items;
 
-    // Propriété d'accès sur le coffre
+    // Propriété d'accès sur la liste des items
+    public List<Item> MyItems { get => items; set => items = value; }
+
+    // Référence sur le coffre
     [SerializeField]
     private ChestScript bank = default;
+
+    // Propriété d'accès sur le coffre
+    public ChestScript MyBank { get => bank; set => bank = value; }
 
 
     /// <summary>
@@ -44,6 +50,8 @@ public class Chest : MonoBehaviour, IInteractable
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         Close();
+
+        items = new List<Item>();
     }
 
     /// <summary>
@@ -128,7 +136,7 @@ public class Chest : MonoBehaviour, IInteractable
     public void StoreItems()
     {
         // Liste des items du coffre
-        items = bank.GetItems();
+        items = MyBank.GetItems();
     }
 
     /// <summary>

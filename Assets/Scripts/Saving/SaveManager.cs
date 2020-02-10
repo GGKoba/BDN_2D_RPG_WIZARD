@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -9,6 +10,22 @@ using UnityEngine;
 /// </summary>
 public class SaveManager : MonoBehaviour
 {
+    // Tableau des coffres
+    private Chest[] chests;
+
+    // Tableau des items
+    [SerializeField]
+    private Item[] items = default;
+
+
+    /// <summary>
+    /// Awake
+    /// </summary>
+    private void Awake()
+    {
+        chests = FindObjectsOfType<Chest>();
+    }
+
     /// <summary>
     /// Start
     /// </summary>
@@ -56,6 +73,9 @@ public class SaveManager : MonoBehaviour
             // Enregistre les données du joueur
             SavePlayer(data);
 
+            // Enregistre les données des coffres
+            SaveChests(data);
+
             // Serialisation des données
             bf.Serialize(file, data);
 
@@ -64,7 +84,7 @@ public class SaveManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-
+            throw;
         }
     }
 
@@ -89,10 +109,13 @@ public class SaveManager : MonoBehaviour
 
             // Chargement des données du joueur
             LoadPlayer(data);
+
+            // Chargement des données des coffres
+            LoadChests(data);
         }
         catch (System.Exception)
         {
-
+            throw;
         }
     }
 
@@ -117,6 +140,26 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Enregistre les données des coffres
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveChests(SaveData data)
+    {
+        for (int i = 0; i < chests.Length; i++)
+        {
+            data.MyChestData.Add(new ChestData(chests[i].name));
+
+            foreach (Item item in chests[i].MyItems)
+            {
+                if (chests[i].MyItems.Count > 0)
+                {
+                    data.MyChestData[i].MyItems.Add(new ItemData(item.MyTitle, item.MySlot.MyItems.Count, item.MySlot.MyIndex));
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Charge les données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
@@ -132,5 +175,24 @@ public class SaveManager : MonoBehaviour
 
         // Actualise le texte du niveau du joueur
         Player.MyInstance.RefreshPlayerLevelText();
+    }
+
+    /// <summary>
+    /// Charge les données des coffres
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadChests(SaveData data)
+    {
+        foreach (ChestData chest in data.MyChestData)
+        {
+            Chest c = Array.Find(chests, aChest => aChest.name == chest.MyName);
+
+            foreach (ItemData itemData in chest.MyItems)
+            {
+                Item item = Array.Find(items, aItem => aItem.MyTitle == itemData.MyTitle);
+                item.MySlot = c.MyBank.MySlots.Find(slot => slot.MyIndex == itemData.MySlotIndex);
+                c.MyItems.Add(item);
+            }
+        }
     }
 }

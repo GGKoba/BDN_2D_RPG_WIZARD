@@ -66,8 +66,11 @@ public class BagScript : MonoBehaviour
             // Instantiation d'un objet Slot
             SlotScript slot = Instantiate(slotPrefab, transform).GetComponent<SlotScript>();
 
-            //Assigne le sac à l'emplacement
+            // Assigne le sac à l'emplacement
             slot.MyBag = this;
+
+            // Assigne l'index de l'emplacement
+            slot.MyIndex = i;
 
             // Ajoute l'emplacement dans la liste des emplacements du sac
             slots.Add(slot);

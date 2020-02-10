@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,10 +13,14 @@ public class SaveData
     // Propriété d'accès aux données du joueur
     public PlayerData MyPlayerData { get; set; }
 
+    // Propriété d'accès aux données des coffres
+    public List<ChestData> MyChestData { get; set; }
+
+
     // Constructeur
     public SaveData()
     {
-
+        MyChestData = new List<ChestData>();
     }
 }
 
@@ -67,5 +72,51 @@ public class PlayerData
         MyGold = gold;
         MyX = position.x;
         MyY = position.y;
+    }
+}
+
+/// <summary>
+/// Classe des données des items
+/// </summary>
+[Serializable]
+public class ItemData
+{
+    // Propriété d'accès sur le titre 
+    public string MyTitle { get; set; }
+
+    // Propriété d'accès sur le nombre d'éléments
+    public int MyStackCount { get; set; }
+
+    // Propriété d'accès sur l'emplacement
+    public int MySlotIndex { get; set; }
+
+
+    // Constructeur
+    public ItemData(string title, int stackCount = 0, int slotIndex = 0)
+    {
+        MyTitle = title;
+        MyStackCount = stackCount;
+        MySlotIndex = slotIndex;
+    }
+}
+
+/// <summary>
+/// Classe des données des coffres
+/// </summary>
+[Serializable]
+public class ChestData
+{
+    // Propriété d'accès au nom
+    public string MyName { get; set; }
+
+    // Propriété d'accès aux items
+    public List<ItemData> MyItems { get; set; }
+
+
+    // Constructeur
+    public ChestData(string name)
+    {
+        MyName = name;
+        MyItems = new List<ItemData>();
     }
 }
