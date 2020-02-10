@@ -35,7 +35,7 @@ public abstract class Character : MonoBehaviour
     protected Stat health = default;
 
     // Propriété d'accès à la vie du personnage
-    public Stat MyHealth { get => health; }
+    public Stat MyHealth { get => health; set => health = value; }
 
     [SerializeField]
     // Référence sur le niveau du personnage

@@ -48,7 +48,7 @@ public class SaveManager : MonoBehaviour
             BinaryFormatter bf = new BinaryFormatter();
 
             // Gestion des fichiers
-            FileStream file = File.Open(Application.persistentDataPath + "/rpgSaveTest.dat", FileMode.OpenOrCreate);
+            FileStream file = File.Open(Application.persistentDataPath + "/rpgSaveTest.dat", FileMode.Create);
 
             // Données de sauvegarde
             SaveData data = new SaveData();
@@ -96,8 +96,6 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-
-
     /// <summary>
     /// Enregistre les données du joueur
     /// </summary>
@@ -105,7 +103,17 @@ public class SaveManager : MonoBehaviour
     private void SavePlayer(SaveData data)
     {
         // Données du joueur
-        data.MyPlayerData = new PlayerData(Player.MyInstance.MyLevel);
+        data.MyPlayerData = new PlayerData(
+            Player.MyInstance.MyLevel,
+            Player.MyInstance.MyXp.MyCurrentValue,
+            Player.MyInstance.MyXp.MyMaxValue,
+            Player.MyInstance.MyHealth.MyCurrentValue,
+            Player.MyInstance.MyHealth.MyMaxValue,
+            Player.MyInstance.MyMana.MyCurrentValue,
+            Player.MyInstance.MyMana.MyMaxValue,
+            Player.MyInstance.MyGold,
+            Player.MyInstance.transform.position
+        );
     }
 
     /// <summary>
@@ -116,6 +124,11 @@ public class SaveManager : MonoBehaviour
     {
         // Données du joueur
         Player.MyInstance.MyLevel = data.MyPlayerData.MyLevel;
+        Player.MyInstance.MyXp.Initialize(data.MyPlayerData.MyXp, data.MyPlayerData.MyMaxXp);
+        Player.MyInstance.MyHealth.Initialize(data.MyPlayerData.MyHealth, data.MyPlayerData.MyMaxHealth);
+        Player.MyInstance.MyMana.Initialize(data.MyPlayerData.MyMana, data.MyPlayerData.MyMaxMana);
+        Player.MyInstance.MyGold = data.MyPlayerData.MyGold;
+        Player.MyInstance.transform.position = new Vector2(data.MyPlayerData.MyX, data.MyPlayerData.MyY);
 
         // Actualise le texte du niveau du joueur
         Player.MyInstance.RefreshPlayerLevelText();

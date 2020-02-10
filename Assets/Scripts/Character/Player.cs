@@ -31,9 +31,15 @@ public class Player : Character
     [SerializeField]
     private Stat mana = default;
 
-    // XP du joueur
+    // Propriété d'accès sur la mana du joueur
+    public Stat MyMana { get => mana; set => mana = value; }
+
+    // Expérience du joueur
     [SerializeField]
     private Stat xp = default;
+    
+    // Propriété d'accès sur l'expérience du joueur
+    public Stat MyXp { get => xp; set => xp = value; }
 
     // Texte du niveau du joueur
     [SerializeField]
