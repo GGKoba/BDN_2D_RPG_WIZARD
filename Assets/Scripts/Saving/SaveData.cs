@@ -19,6 +19,9 @@ public class SaveData
     // Propriété d'accès aux données des sacs
     public InventoryData MyInventoryData { get; set; }
 
+    // Propriété d'accès aux données des équipements
+    public List<EquipmentData> MyEquipmentData { get; set; }
+
 
     /// <summary>
     /// Constructeur
@@ -27,6 +30,7 @@ public class SaveData
     {
         MyInventoryData = new InventoryData();
         MyChestData = new List<ChestData>();
+        MyEquipmentData = new List<EquipmentData>();
     }
 }
 
@@ -172,5 +176,29 @@ public class BagData
     {
         MySlotCount = count;
         MyBagIndex = index;
+    }
+}
+
+
+/// <summary>
+/// Classe des données des équipements
+/// </summary>
+[Serializable]
+public class EquipmentData
+{
+    // Propriété d'accès au nom
+    public string MyTitle { get; set; }
+
+    // Propriété d'accès au type
+    public string MyType { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public EquipmentData(string title, string type)
+    {
+        MyTitle = title;
+        MyType = type;
     }
 }

@@ -17,6 +17,9 @@ public class SaveManager : MonoBehaviour
     [SerializeField]
     private Item[] items = default;
 
+    // Tableau des boutons d'équipements
+    private CharacterButton[] equipmentButtons;
+
 
     /// <summary>
     /// Awake
@@ -24,6 +27,7 @@ public class SaveManager : MonoBehaviour
     private void Awake()
     {
         chests = FindObjectsOfType<Chest>();
+        equipmentButtons = FindObjectsOfType<CharacterButton>();
     }
 
     /// <summary>
@@ -70,6 +74,9 @@ public class SaveManager : MonoBehaviour
             // Données de sauvegarde
             SaveData data = new SaveData();
 
+            // Enregistre les données des équipements
+            SaveEquipment(data);
+
             // Enregistre les données des sacs
             SaveBags(data);
 
@@ -109,6 +116,9 @@ public class SaveManager : MonoBehaviour
 
             // Fermeture du fichier
             file.Close();
+
+            // Chargement des données des équipements
+            LoadEquipment(data);
 
             // Chargement des données des sacs
             LoadBags(data);
@@ -177,6 +187,20 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Enregistre les données des équipements
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveEquipment(SaveData data)
+    {
+        foreach (CharacterButton button in equipmentButtons)
+        {
+            if (button.MyEquippedArmor != null)
+            {
+                data.MyEquipmentData.Add(new EquipmentData(button.MyEquippedArmor.MyTitle, button.name));
+            }
+        }
+    }
 
 
     /// <summary>
@@ -232,6 +256,19 @@ public class SaveManager : MonoBehaviour
 
             // Ajoute le sac
             InventoryScript.MyInstance.AddBag(newBag, bagData.MyBagIndex);
+        }
+    }
+
+    /// <summary>
+    /// Charge les données des équipements
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadEquipment(SaveData data)
+    {
+        foreach (EquipmentData equipmentData in data.MyEquipmentData)
+        {
+            CharacterButton button = Array.Find(equipmentButtons, btn => btn.name == equipmentData.MyType);
+            button.EquipArmor(Array.Find(items, item => item.MyTitle == equipmentData.MyTitle) as Armor);
         }
     }
 }

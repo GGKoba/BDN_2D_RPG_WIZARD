@@ -10,6 +10,9 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     // Item d'équipement
     private Armor equippedArmor;
 
+    // Propriété d'accès à l'item d'équipement
+    public Armor MyEquippedArmor { get => equippedArmor; }
+
     // Type d'équipement
     [SerializeField]
     private ArmorType armorType = default;
