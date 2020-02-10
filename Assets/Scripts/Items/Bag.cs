@@ -70,6 +70,17 @@ public class Bag : Item, IUseable
     }
 
     /// <summary>
+    /// Assigne le script à un sac
+    /// </summary>
+    public void SetUpScript()
+    {
+        MyBagScript = Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
+        
+        // Ajoute les emplacements
+        MyBagScript.AddSlots(slotsCount);
+    }
+
+    /// <summary>
     /// Retourne la description de l'item : Surcharge la fonction GetDescription du script Item
     /// </summary>
     public override string GetDescription()

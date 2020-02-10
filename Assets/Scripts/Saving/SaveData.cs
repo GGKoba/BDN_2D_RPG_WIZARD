@@ -16,10 +16,16 @@ public class SaveData
     // Propriété d'accès aux données des coffres
     public List<ChestData> MyChestData { get; set; }
 
+    // Propriété d'accès aux données des sacs
+    public InventoryData MyInventoryData { get; set; }
 
-    // Constructeur
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     public SaveData()
     {
+        MyInventoryData = new InventoryData();
         MyChestData = new List<ChestData>();
     }
 }
@@ -59,7 +65,9 @@ public class PlayerData
     public float MyY { get; set; }
 
 
-    // Constructeur
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     public PlayerData(int level, float xp, float maxXp, float health, float maxHealth, float mana, float maxMana, int gold, Vector2 position)
     {
         MyLevel = level;
@@ -91,7 +99,9 @@ public class ItemData
     public int MySlotIndex { get; set; }
 
 
-    // Constructeur
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     public ItemData(string title, int stackCount = 0, int slotIndex = 0)
     {
         MyTitle = title;
@@ -113,10 +123,54 @@ public class ChestData
     public List<ItemData> MyItems { get; set; }
 
 
-    // Constructeur
+    /// <summary>
+    /// Constructeur
+    /// </summary>
     public ChestData(string name)
     {
         MyName = name;
         MyItems = new List<ItemData>();
+    }
+}
+
+/// <summary>
+/// Classe des données de l'inventaire
+/// </summary>
+[Serializable]
+public class InventoryData
+{
+    // Propriété d'accès à la liste des sacs
+    public List<BagData> MyBags { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public InventoryData()
+    {
+        MyBags = new List<BagData>();
+    }
+}
+
+/// <summary>
+/// Classe des données des sacs
+/// </summary>
+[Serializable]
+public class BagData
+{
+    // Propriété d'accès au nombre d'emplacement
+    public int MySlotCount { get; set; }
+
+    // Propriété d'accès à l'index
+    public int MyBagIndex { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public BagData(int count, int index)
+    {
+        MySlotCount = count;
+        MyBagIndex = index;
     }
 }

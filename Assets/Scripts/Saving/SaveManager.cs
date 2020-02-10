@@ -70,6 +70,9 @@ public class SaveManager : MonoBehaviour
             // Données de sauvegarde
             SaveData data = new SaveData();
 
+            // Enregistre les données des sacs
+            SaveBags(data);
+
             // Enregistre les données du joueur
             SavePlayer(data);
 
@@ -106,6 +109,9 @@ public class SaveManager : MonoBehaviour
 
             // Fermeture du fichier
             file.Close();
+
+            // Chargement des données des sacs
+            LoadBags(data);
 
             // Chargement des données du joueur
             LoadPlayer(data);
@@ -160,6 +166,20 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Enregistre les données des sacs
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveBags(SaveData data)
+    {
+        for (int i = 1; i < InventoryScript.MyInstance.MyBags.Count; i++)
+        {
+            data.MyInventoryData.MyBags.Add(new BagData(InventoryScript.MyInstance.MyBags[i].MySlotsCount, InventoryScript.MyInstance.MyBags[i].MyBagButton.MyBagIndex));
+        }
+    }
+
+
+
+    /// <summary>
     /// Charge les données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
@@ -193,6 +213,25 @@ public class SaveManager : MonoBehaviour
                 item.MySlot = c.MyBank.MySlots.Find(slot => slot.MyIndex == itemData.MySlotIndex);
                 c.MyItems.Add(item);
             }
+        }
+    }
+
+    /// <summary>
+    /// Charge les données des sacs
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadBags(SaveData data)
+    {
+        foreach (BagData bagData in data.MyInventoryData.MyBags)
+        {
+            // Création d'un sac
+            Bag newBag = (Bag)Instantiate(items[0]);
+
+            // Initialisation du sac
+            newBag.Initialize(bagData.MySlotCount);
+
+            // Ajoute le sac
+            InventoryScript.MyInstance.AddBag(newBag, bagData.MyBagIndex);
         }
     }
 }

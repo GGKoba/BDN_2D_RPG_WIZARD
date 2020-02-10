@@ -36,6 +36,9 @@ public class InventoryScript : MonoBehaviour
     // Liste des sacs de l'inventaire
     private readonly List<Bag> bags = new List<Bag>();
 
+    // Propriété d'accès à la liste des sacs de l'inventaire
+    public List<Bag> MyBags { get => bags; }
+    
     // Tableau des boutons des sacs
     [SerializeField]
     private BagButton[] bagButtons = default;
@@ -107,7 +110,6 @@ public class InventoryScript : MonoBehaviour
             return MyTotalSlotCount - MyEmptySlotCount;
         }
     }
-
 
     /// <summary>
     /// Awake
@@ -247,6 +249,23 @@ public class InventoryScript : MonoBehaviour
         bag.MyBagScript.transform.SetSiblingIndex(bagButton.MyBagIndex);
     }
 
+    /// <summary>
+    /// Ajoute un sac à sur un index spécifique 
+    /// </summary>
+    public void AddBag(Bag bag, int bagIndex)
+    {
+        // Assigne le script au sac
+        bag.SetUpScript();
+
+        // Ajoute le sac sur l'index du bouton
+        bag.MyBagButton = bagButtons[bagIndex];
+
+        // Ajoute un sac à sur la barre des sacs
+        bags.Add(bag);
+
+        // Assignation du sac au bouton
+        bagButtons[bagIndex].MyBag = bag;
+    }
 
     /// <summary>
     /// Retire un sac à sur la barre des sacs
