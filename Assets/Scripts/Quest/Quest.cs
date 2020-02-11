@@ -56,7 +56,7 @@ public class Quest
     private KillObjective[] killObjectives = default;
 
     // Propriété d'accès au tableau des objectifs d'ennemi
-    public KillObjective[] MyKillObjectives { get => killObjectives; }
+    public KillObjective[] MyKillObjectives { get => killObjectives; set => killObjectives = value; }
 
     // Propriété d'accès à l'indicateur sur la complétude de la quête
     public bool IsComplete

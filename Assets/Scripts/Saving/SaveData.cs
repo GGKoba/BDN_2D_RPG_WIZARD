@@ -28,6 +28,9 @@ public class SaveData
     // Propriété d'accès aux données des quêtes
     public List<QuestData> MyQuestData { get; set; }
 
+    // Propriété d'accès aux données des donneurs de quêtes
+    public List<QuestGiverData> MyQuestGiverData { get; set; }
+
 
     /// <summary>
     /// Constructeur
@@ -39,6 +42,7 @@ public class SaveData
         MyEquipmentData = new List<EquipmentData>();
         MyActionButtonData = new List<ActionButtonData>();
         MyQuestData = new List<QuestData>();
+        MyQuestGiverData = new List<QuestGiverData>();
     }
 }
 
@@ -277,5 +281,29 @@ public class QuestData
         MyCollectObjectives = collect;
         MyKillObjectives = kill;
         MyQuestGiverId = questGiverId;
+    }
+}
+
+
+/// <summary>
+/// Classe des données des donneurs de quêtes
+/// </summary>
+[Serializable]
+public class QuestGiverData
+{
+    // Propriété d'accès à l'identifiant du donneur de quêtes
+    public int MyQuestGiverId { get; set; }
+
+    // Propriété d'accès à la liste des quêtes
+    public List<string> MyCompletedQuests { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public QuestGiverData(int questGiverId, List<string> completedQuests)
+    {
+        MyQuestGiverId = questGiverId;
+        MyCompletedQuests = completedQuests;
     }
 }

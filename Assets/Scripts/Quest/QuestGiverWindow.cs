@@ -247,6 +247,12 @@ public class QuestGiverWindow : Window
                 {
                     // Retire la quête de la liste
                     questGiver.MyQuests[i] = null;
+
+                    // Ajoute la quête dans le liste des complètes
+                    questGiver.MyCompletedQuests.Add(selected.MyTitle);
+
+                    // Actualise le statut de la quête
+                    selected.MyQuestGiver.UpdateQuestStatus();
                 }
             }
 

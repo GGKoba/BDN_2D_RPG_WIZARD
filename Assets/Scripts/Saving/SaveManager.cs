@@ -100,6 +100,9 @@ public class SaveManager : MonoBehaviour
             // Enregistrement des données des quêtes
             SaveQuests(data);
 
+            // Enregistrement des données des donneurs dequêtes
+            SaveQuestsGiver(data);
+
             // Serialisation des données
             bf.Serialize(file, data);
 
@@ -151,6 +154,9 @@ public class SaveManager : MonoBehaviour
 
             // Chargement des données des quêtes
             LoadQuests(data);
+
+            // Chargement des données des donneurs dequêtes
+            LoadQuestsGiver(data);
         }
         catch (System.Exception)
         {
@@ -279,6 +285,20 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Enregistrement des données des donneurs de quêtes
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveQuestsGiver(SaveData data)
+    {
+        QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
+
+        foreach (QuestGiver questGiver in questGivers)
+        {
+            data.MyQuestGiverData.Add(new QuestGiverData(questGiver.MyQuestGiverId, questGiver.MyCompletedQuests));
+        }
+    }
+
+    /// <summary>
     /// Chargement des données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
@@ -391,15 +411,30 @@ public class SaveManager : MonoBehaviour
     {
         QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
 
-        
-
         foreach (QuestData questData in data.MyQuestData)
         {
             QuestGiver questGiver = Array.Find(questGivers, qg => qg.MyQuestGiverId == questData.MyQuestGiverId);
             Quest quest = Array.Find(questGiver.MyQuests, q => q.MyTitle == questData.MyTitle);
             quest.MyQuestGiver = questGiver;
+            quest.MyKillObjectives = questData.MyKillObjectives;
 
             QuestWindow.MyInstance.AcceptQuest(quest);
+        }
+    }
+
+    /// <summary>
+    /// Chargement des données des donneurs de quêtes
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadQuestsGiver(SaveData data)
+    {
+        QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
+
+        foreach (QuestGiverData questGiverData in data.MyQuestGiverData)
+        {
+            QuestGiver questGiver = Array.Find(questGivers, qg => qg.MyQuestGiverId == questGiverData.MyQuestGiverId);
+            questGiver.MyCompletedQuests = questGiverData.MyCompletedQuests;
+            questGiver.UpdateQuestStatus();
         }
     }
 }

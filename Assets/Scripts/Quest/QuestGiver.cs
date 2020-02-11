@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -38,6 +39,31 @@ public class QuestGiver : NPC
     // Image "Quête à prendre"
     [SerializeField]
     private Sprite exclamation = default;
+
+    // Liste des quêtes accomplies
+    private List<string> completedQuests = new List<string>();
+
+    // Propriété d'accès à la liste des quêtes accomplies
+    public List<string> MyCompletedQuests 
+    { 
+        get => completedQuests;
+        set
+        {
+            completedQuests = value;
+
+            foreach (string title in completedQuests)
+            {
+                for (int i = 0; i < quests.Length; i++)
+                {
+                    // Retire la quetes qui est complète
+                    if (quests[i] != null && quests[i].MyTitle.ToLower() == title.ToLower())
+                    {
+                        quests[i] = null;
+                    }
+                }
+            }
+        }
+    }
 
 
     /// <summary>
