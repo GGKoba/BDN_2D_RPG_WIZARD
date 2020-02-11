@@ -38,7 +38,7 @@ public class InventoryScript : MonoBehaviour
 
     // Propriété d'accès à la liste des sacs de l'inventaire
     public List<Bag> MyBags { get => bags; }
-    
+
     // Tableau des boutons des sacs
     [SerializeField]
     private BagButton[] bagButtons = default;
@@ -55,7 +55,7 @@ public class InventoryScript : MonoBehaviour
 
     // Propriété d'accès sur la référence sur un emplacement
     public SlotScript MyFromSlot
-    { 
+    {
         get => fromSlot;
         set
         {
@@ -87,7 +87,7 @@ public class InventoryScript : MonoBehaviour
 
     // Propriété d'accès au nombre d'emplacements du sac
     public int MyTotalSlotCount
-    { 
+    {
         get
         {
             int count = 0;
@@ -305,7 +305,7 @@ public class InventoryScript : MonoBehaviour
             newBag.Use();
 
             // Pour tous les elemnts du sac
-            foreach(Item item in bagItems)
+            foreach (Item item in bagItems)
             {
                 // Si l'item est différent de mon sac
                 if (item != newBag)
@@ -314,7 +314,7 @@ public class InventoryScript : MonoBehaviour
                     AddItem(oldBag);
                 }
             }
-            
+
             // Libère l'item
             Hand.MyInstance.Drop();
 
@@ -359,7 +359,7 @@ public class InventoryScript : MonoBehaviour
                 return true;
             }
         }
-                
+
         // Place l'item dans un nouvel emplacement
         return PlaceInEmpty(item);
     }
@@ -418,6 +418,18 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Place l'item dans un emplacement déterminé
+    /// </summary>
+    /// <param name="item">Item à placer</param>
+    /// <param name="slotIndex">Index du slot</param>
+    /// <param name="bagIndex">Index du slot</param>
+    public void PlaceInSlot(Item item, int slotIndex, int bagIndex)
+    {
+        // Ajoute l'item dans l'emplacement du sac
+        bags[bagIndex].MyBagScript.MySlots[slotIndex].AddItem(item);
+    }
+
+    /// <summary>
     /// Retourne les items "useable" d'un même type
     /// </summary>
     /// <param name="useable">Item "useable"</param>
@@ -463,7 +475,7 @@ public class InventoryScript : MonoBehaviour
             foreach (SlotScript slot in bag.MyBagScript.MySlots)
             {
                 // Si l'emplacement n'est pas vide et que c'est le même type
-                if (!slot.IsEmpty && slot.MyItem.MyTitle == type)
+                if (!slot.IsEmpty && slot.MyItem.MyTitle.ToLower() == type.ToLower())
                 {
                     return slot.MyItem as IUseable;
                 }
@@ -472,6 +484,32 @@ public class InventoryScript : MonoBehaviour
 
         // Retourne la stack des items utilisables
         return null;
+    }
+
+    /// <summary>
+    /// Liste des emplacements avec leurs items
+    /// </summary>
+    public List<SlotScript> GetAllItems()
+    {
+        List<SlotScript> slots = new List<SlotScript>();
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide
+                if (!slot.IsEmpty)
+                {
+                    // Ajoute l'emplacement
+                    slots.Add(slot);
+                }
+            }
+        }
+
+        // Retourne la liste des emplacements
+        return slots;
     }
 
     /// <summary>

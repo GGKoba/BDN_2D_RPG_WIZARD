@@ -103,18 +103,22 @@ public class ItemData
     // Propriété d'accès sur le nombre d'éléments
     public int MyStackCount { get; set; }
 
-    // Propriété d'accès sur l'emplacement
+    // Propriété d'accès sur l'index de l'emplacement
     public int MySlotIndex { get; set; }
+
+    // Propriété d'accès sur l'index du sac
+    public int MyBagIndex { get; set; }
 
 
     /// <summary>
     /// Constructeur
     /// </summary>
-    public ItemData(string title, int stackCount = 0, int slotIndex = 0)
+    public ItemData(string title, int stackCount = 0, int slotIndex = 0, int bagIndex = 0)
     {
         MyTitle = title;
         MyStackCount = stackCount;
         MySlotIndex = slotIndex;
+        MyBagIndex = bagIndex;
     }
 }
 
@@ -150,6 +154,8 @@ public class InventoryData
     // Propriété d'accès à la liste des sacs
     public List<BagData> MyBags { get; set; }
 
+    // Propriété d'accès aux items
+    public List<ItemData> MyItems { get; set; }
 
     /// <summary>
     /// Constructeur
@@ -157,6 +163,7 @@ public class InventoryData
     public InventoryData()
     {
         MyBags = new List<BagData>();
+        MyItems = new List<ItemData>();
     }
 }
 
@@ -169,7 +176,7 @@ public class BagData
     // Propriété d'accès au nombre d'emplacement
     public int MySlotCount { get; set; }
 
-    // Propriété d'accès à l'index
+    // Propriété d'accès à l'index du sac
     public int MyBagIndex { get; set; }
 
 
@@ -213,10 +220,13 @@ public class EquipmentData
 [Serializable]
 public class ActionButtonData
 {
+    // Propriété d'accès au nom du bouton d'action
     public string MyAction { get; set; }
 
+    // Propriété d'accès au type d'item
     public bool IsItem { get; set; }
 
+    // Propriété d'accès à l'index du bouton
     public int MyIndex { get; set; }
 
 

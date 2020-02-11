@@ -14,6 +14,9 @@ public class BagScript : MonoBehaviour
     // Propriété d'accès aux emplacement du sac
     public List<SlotScript> MySlots { get => slots; }
 
+    // Propriété d'accès sur l'index du sac
+    public int MyBagIndex { get; set; }
+
     // Prefab de l'emplacement du sac
     [SerializeField]
     private GameObject slotPrefab = default;

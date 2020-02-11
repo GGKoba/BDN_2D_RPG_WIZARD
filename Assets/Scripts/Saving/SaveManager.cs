@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -84,6 +85,9 @@ public class SaveManager : MonoBehaviour
             // Enregistrement des données des sacs
             SaveBags(data);
 
+            // Enregistrement des données de l'inventaire
+            SaveInventory(data);
+
             // Enregistrement des données du joueur
             SavePlayer(data);
 
@@ -129,6 +133,9 @@ public class SaveManager : MonoBehaviour
 
             // Chargement des données des sacs
             LoadBags(data);
+
+            // Chargement des données de l'inventaire
+            LoadInventory(data);
 
             // Chargement des données du joueur
             LoadPlayer(data);
@@ -240,6 +247,20 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Enregistrement des données de l'inventaire
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveInventory(SaveData data)
+    {
+        List<SlotScript> slots = InventoryScript.MyInstance.GetAllItems();
+
+        foreach (SlotScript slot in slots)
+        {
+            data.MyInventoryData.MyItems.Add(new ItemData(slot.MyItem.MyTitle, slot.MyItems.Count, slot.MyIndex, slot.MyBag.MyBagIndex));
+        }
+    }
+
+    /// <summary>
     /// Chargement des données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
@@ -269,7 +290,7 @@ public class SaveManager : MonoBehaviour
 
             foreach (ItemData itemData in chest.MyItems)
             {
-                Item item = Array.Find(items, aItem => aItem.MyTitle == itemData.MyTitle);
+                Item item = Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower());
                 item.MySlot = c.MyBank.MySlots.Find(slot => slot.MyIndex == itemData.MySlotIndex);
                 c.MyItems.Add(item);
             }
@@ -303,8 +324,8 @@ public class SaveManager : MonoBehaviour
     {
         foreach (EquipmentData equipmentData in data.MyEquipmentData)
         {
-            CharacterButton button = Array.Find(equipmentButtons, btn => btn.name == equipmentData.MyType);
-            button.EquipArmor(Array.Find(items, item => item.MyTitle == equipmentData.MyTitle) as Armor);
+            CharacterButton button = Array.Find(equipmentButtons, btn => btn.name.ToLower() == equipmentData.MyType.ToLower());
+            button.EquipArmor(Array.Find(items, item => item.MyTitle.ToLower() == equipmentData.MyTitle.ToLower()) as Armor);
         }
     }
 
@@ -323,6 +344,23 @@ public class SaveManager : MonoBehaviour
             else
             {
                 actionButtons[actionButtonData.MyIndex].SetUseable(SpellBook.MyInstance.GetSpell(actionButtonData.MyAction));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Chargement des données de l'inventaire
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadInventory(SaveData data)
+    {
+        foreach (ItemData itemData in data.MyInventoryData.MyItems)
+        {
+            Item item = Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower());
+
+            for (int i = 0; i < itemData.MyStackCount; i++)
+            {
+                InventoryScript.MyInstance.PlaceInSlot(item, itemData.MySlotIndex, itemData.MyBagIndex);
             }
         }
     }
