@@ -450,6 +450,31 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Retourne l'item "useable" d'un même type
+    /// </summary>
+    /// <param name="type">Type de l'item "useable"</param>
+    /// <returns></returns>
+    public IUseable GetUseable(string type)
+    {
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est le même type
+                if (!slot.IsEmpty && slot.MyItem.MyTitle == type)
+                {
+                    return slot.MyItem as IUseable;
+                }
+            }
+        }
+
+        // Retourne la stack des items utilisables
+        return null;
+    }
+
+    /// <summary>
     /// Nombre d'items du même nom contenu dans l'inventaire
     /// </summary>
     /// <param name="name">Nom de l'item</param>

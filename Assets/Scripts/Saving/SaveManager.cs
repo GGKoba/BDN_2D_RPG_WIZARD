@@ -20,6 +20,9 @@ public class SaveManager : MonoBehaviour
     // Tableau des boutons d'équipements
     private CharacterButton[] equipmentButtons;
 
+    // Tableau des boutons d'actions
+    private ActionButton[] actionButtons;
+
 
     /// <summary>
     /// Awake
@@ -28,6 +31,7 @@ public class SaveManager : MonoBehaviour
     {
         chests = FindObjectsOfType<Chest>();
         equipmentButtons = FindObjectsOfType<CharacterButton>();
+        actionButtons = FindObjectsOfType<ActionButton>();
     }
 
     /// <summary>
@@ -74,17 +78,20 @@ public class SaveManager : MonoBehaviour
             // Données de sauvegarde
             SaveData data = new SaveData();
 
-            // Enregistre les données des équipements
+            // Enregistrement des données des équipements
             SaveEquipment(data);
 
-            // Enregistre les données des sacs
+            // Enregistrement des données des sacs
             SaveBags(data);
 
-            // Enregistre les données du joueur
+            // Enregistrement des données du joueur
             SavePlayer(data);
 
-            // Enregistre les données des coffres
+            // Enregistrement des données des coffres
             SaveChests(data);
+
+            // Enregistrement des données des boutons d'actions
+            SaveActionButtons(data);
 
             // Serialisation des données
             bf.Serialize(file, data);
@@ -128,6 +135,9 @@ public class SaveManager : MonoBehaviour
 
             // Chargement des données des coffres
             LoadChests(data);
+
+            // Chargement des données des boutons d'actions
+            LoadActionButtons(data);
         }
         catch (System.Exception)
         {
@@ -136,7 +146,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enregistre les données du joueur
+    /// Enregistrement des données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void SavePlayer(SaveData data)
@@ -156,7 +166,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enregistre les données des coffres
+    /// Enregistrement des données des coffres
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void SaveChests(SaveData data)
@@ -176,7 +186,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enregistre les données des sacs
+    /// Enregistrement des données des sacs
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void SaveBags(SaveData data)
@@ -188,7 +198,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enregistre les données des équipements
+    /// Enregistrement des données des équipements
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void SaveEquipment(SaveData data)
@@ -202,9 +212,35 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Enregistrement des données des boutons d'actions
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveActionButtons(SaveData data)
+    {
+        for (int i = 0; i < actionButtons.Length; i++)
+        {
+            if (actionButtons[i].MyUseable != null)
+            {
+                ActionButtonData actionButtonData;
+
+                if (actionButtons[i].MyUseable is Spell)
+                {
+                    actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Spell).MyName, false, i); 
+                }
+                else
+                {
+                    actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Item).MyTitle, true, i);
+                    
+                }
+
+                data.MyActionButtonData.Add(actionButtonData);
+            }
+        }
+    }
 
     /// <summary>
-    /// Charge les données du joueur
+    /// Chargement des données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void LoadPlayer(SaveData data)
@@ -222,7 +258,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Charge les données des coffres
+    /// Chargement des données des coffres
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void LoadChests(SaveData data)
@@ -241,7 +277,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Charge les données des sacs
+    /// Chargement des données des sacs
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void LoadBags(SaveData data)
@@ -260,7 +296,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Charge les données des équipements
+    /// Chargement des données des équipements
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void LoadEquipment(SaveData data)
@@ -269,6 +305,25 @@ public class SaveManager : MonoBehaviour
         {
             CharacterButton button = Array.Find(equipmentButtons, btn => btn.name == equipmentData.MyType);
             button.EquipArmor(Array.Find(items, item => item.MyTitle == equipmentData.MyTitle) as Armor);
+        }
+    }
+
+    /// <summary>
+    /// Chargement des données des boutons d'actions
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadActionButtons(SaveData data)
+    {
+        foreach (ActionButtonData actionButtonData in data.MyActionButtonData)
+        {
+            if (actionButtonData.IsItem)
+            {
+                actionButtons[actionButtonData.MyIndex].SetUseable(InventoryScript.MyInstance.GetUseable(actionButtonData.MyAction));
+            }
+            else
+            {
+                actionButtons[actionButtonData.MyIndex].SetUseable(SpellBook.MyInstance.GetSpell(actionButtonData.MyAction));
+            }
         }
     }
 }

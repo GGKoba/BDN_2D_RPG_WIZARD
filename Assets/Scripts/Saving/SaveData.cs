@@ -22,6 +22,9 @@ public class SaveData
     // Propriété d'accès aux données des équipements
     public List<EquipmentData> MyEquipmentData { get; set; }
 
+    // Propriété d'accès aux données des boutons d'actions
+    public List<ActionButtonData> MyActionButtonData { get; set; }
+
 
     /// <summary>
     /// Constructeur
@@ -31,6 +34,7 @@ public class SaveData
         MyInventoryData = new InventoryData();
         MyChestData = new List<ChestData>();
         MyEquipmentData = new List<EquipmentData>();
+        MyActionButtonData = new List<ActionButtonData>();
     }
 }
 
@@ -200,5 +204,29 @@ public class EquipmentData
     {
         MyTitle = title;
         MyType = type;
+    }
+}
+
+/// <summary>
+/// Classe des données des boutons d'action
+/// </summary>
+[Serializable]
+public class ActionButtonData
+{
+    public string MyAction { get; set; }
+
+    public bool IsItem { get; set; }
+
+    public int MyIndex { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public ActionButtonData(string action, bool itemOrNot, int index)
+    {
+        MyAction = action;
+        IsItem = itemOrNot;
+        MyIndex = index;
     }
 }

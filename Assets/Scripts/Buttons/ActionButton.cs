@@ -152,19 +152,27 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         count = MyUseables.Count;
 
         // Mise à jour de l'image
-        UpdateVisual();
+        UpdateVisual(useable as IMoveable);
 
         // Actualise le tooltip
         UIManager.MyInstance.RefreshTooltip(MyUseable as IDescribable);
     }
-    
+
     /// <summary>
     /// Actualise l'image du bouton d'action
     /// </summary>
-    public void UpdateVisual()
+    /// <param name="moveable">Item déplacé</param>
+    public void UpdateVisual(IMoveable moveable)
     {
+        // Si un item est en train d'être déplacé
+        if (Hand.MyInstance.MyMoveable != null)
+        {
+            // Libère l'item
+            Hand.MyInstance.Drop();
+        }
+
         // Image du bouton
-        MyIcon.sprite = Hand.MyInstance.Put().MyIcon;
+        MyIcon.sprite = moveable.MyIcon;
 
         // Couleur du bouton
         MyIcon.color = Color.white;
