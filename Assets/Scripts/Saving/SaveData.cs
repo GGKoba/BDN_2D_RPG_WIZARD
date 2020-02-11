@@ -25,6 +25,9 @@ public class SaveData
     // Propriété d'accès aux données des boutons d'actions
     public List<ActionButtonData> MyActionButtonData { get; set; }
 
+    // Propriété d'accès aux données des quêtes
+    public List<QuestData> MyQuestData { get; set; }
+
 
     /// <summary>
     /// Constructeur
@@ -35,6 +38,7 @@ public class SaveData
         MyChestData = new List<ChestData>();
         MyEquipmentData = new List<EquipmentData>();
         MyActionButtonData = new List<ActionButtonData>();
+        MyQuestData = new List<QuestData>();
     }
 }
 
@@ -238,5 +242,40 @@ public class ActionButtonData
         MyAction = action;
         IsItem = itemOrNot;
         MyIndex = index;
+    }
+}
+
+/// <summary>
+/// Classe des données des quêtes
+/// </summary>
+[Serializable]
+public class QuestData
+{
+    // Propriété d'accès au titre
+    public string MyTitle { get; set; }
+
+    // Propriété d'accès à la description
+    public string MyDescription { get; set; }
+
+    // Propriété d'accès aux objectifs de collecte
+    public CollectObjective[] MyCollectObjectives { get; set; }
+
+    // Propriété d'accès aux objectifs d'ennemi
+    public KillObjective[] MyKillObjectives { get; set; }
+
+    // Propriété d'accès à l'identifiant du donneur de quêtes
+    public int MyQuestGiverId { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public QuestData(string title, string description, CollectObjective[] collect, KillObjective[] kill, int questGiverId)
+    {
+        MyTitle = title;
+        MyDescription = description;
+        MyCollectObjectives = collect;
+        MyKillObjectives = kill;
+        MyQuestGiverId = questGiverId;
     }
 }

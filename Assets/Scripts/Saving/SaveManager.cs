@@ -97,6 +97,9 @@ public class SaveManager : MonoBehaviour
             // Enregistrement des données des boutons d'actions
             SaveActionButtons(data);
 
+            // Enregistrement des données des quêtes
+            SaveQuests(data);
+
             // Serialisation des données
             bf.Serialize(file, data);
 
@@ -145,6 +148,9 @@ public class SaveManager : MonoBehaviour
 
             // Chargement des données des boutons d'actions
             LoadActionButtons(data);
+
+            // Chargement des données des quêtes
+            LoadQuests(data);
         }
         catch (System.Exception)
         {
@@ -261,6 +267,18 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Enregistrement des données des quêtes
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveQuests(SaveData data)
+    {
+        foreach (Quest quest in QuestWindow.MyInstance.MyQuests)
+        {
+            data.MyQuestData.Add(new QuestData(quest.MyTitle, quest.MyDescription, quest.MyCollectObjectives, quest.MyKillObjectives, quest.MyQuestGiver.MyQuestGiverId));
+        }
+    }
+
+    /// <summary>
     /// Chargement des données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
@@ -362,6 +380,26 @@ public class SaveManager : MonoBehaviour
             {
                 InventoryScript.MyInstance.PlaceInSlot(item, itemData.MySlotIndex, itemData.MyBagIndex);
             }
+        }
+    }
+
+    /// <summary>
+    /// Chargement des données des quêtes
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadQuests(SaveData data)
+    {
+        QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
+
+        
+
+        foreach (QuestData questData in data.MyQuestData)
+        {
+            QuestGiver questGiver = Array.Find(questGivers, qg => qg.MyQuestGiverId == questData.MyQuestGiverId);
+            Quest quest = Array.Find(questGiver.MyQuests, q => q.MyTitle == questData.MyTitle);
+            quest.MyQuestGiver = questGiver;
+
+            QuestWindow.MyInstance.AcceptQuest(quest);
         }
     }
 }

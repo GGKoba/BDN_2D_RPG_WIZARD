@@ -7,14 +7,20 @@
 /// </summary>
 public class QuestGiver : NPC
 {
+    // Identifiant du donneur de quêtes
+    [SerializeField]
+    private int questGiverId = default;
+
+    // Propriété d'accès à l'identifiant du donneur de quêtes
+    public int MyQuestGiverId { get => questGiverId; }
+
     // Liste des quêtes
     [SerializeField]
     private Quest[] quests = default;
 
     // Propriété d'accès à la liste des quêtes
     public Quest[] MyQuests { get => quests; }
-
-
+    
     [Header("Questing Status")]
 
     // Conteneur de l'image

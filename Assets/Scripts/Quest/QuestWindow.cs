@@ -46,7 +46,10 @@ public class QuestWindow : Window
     private readonly List<QuestScript> questScripts = new List<QuestScript>();
 
     // Liste des quêtes
-    private readonly List<Quest> quests = new List<Quest>();
+    private List<Quest> quests = new List<Quest>();
+
+    // Propriété d'accès à la liste des quêtes
+    public List<Quest> MyQuests { get => quests; set => quests = value; }
 
     // Texte du compteur de quêtes
     [SerializeField]
@@ -55,7 +58,6 @@ public class QuestWindow : Window
     // Nombre maximum de quêtes
     [SerializeField]
     private int maxCount = default;
-
 
 
     /// <summary>
