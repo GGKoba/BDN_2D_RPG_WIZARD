@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-
-
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Classe de gestion des sauvegardes
@@ -24,6 +23,10 @@ public class SaveManager : MonoBehaviour
     // Tableau des boutons d'actions
     private ActionButton[] actionButtons;
 
+    // Tableau des sauvegardes
+    [SerializeField]
+    private SavedGame[] saveSlots = default;
+
 
     /// <summary>
     /// Awake
@@ -33,6 +36,11 @@ public class SaveManager : MonoBehaviour
         chests = FindObjectsOfType<Chest>();
         equipmentButtons = FindObjectsOfType<CharacterButton>();
         actionButtons = FindObjectsOfType<ActionButton>();
+
+        foreach (SavedGame savedGame in saveSlots)
+        {
+            ShowSavedFiles(savedGame);
+        }
     }
 
     /// <summary>
@@ -40,6 +48,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        // [DEBUG]
         Debug.Log(Application.persistentDataPath);
     }
 
@@ -48,25 +57,40 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // [DEBUG] : [V] - Sauvegarde
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("SAVE");
-            Save();
-        }
+    }
 
-        // [DEBUG] : [W] - Chargement
-        if (Input.GetKeyDown(KeyCode.W))
+    /// <summary>
+    /// Récupère les informations à partir d'un fichier de sauvegarde
+    /// </summary>
+    /// <param name="savedGame">Emplacement de sauvegarde</param>
+    private void ShowSavedFiles(SavedGame savedGame)
+    {
+        string filePath = Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat";
+
+        // Si le fichier de sauvegarde existe
+        if (File.Exists(filePath))
         {
-            Debug.Log("LOAD");
-            Load();
+            // Formatteur de données
+            BinaryFormatter bf = new BinaryFormatter();
+
+            // Gestion des fichiers
+            FileStream file = File.Open(filePath, FileMode.Open);
+
+            // Données de chargement
+            SaveData data = (SaveData)bf.Deserialize(file);
+
+            // Fermeture du fichier
+            file.Close();
+
+            // Affiche les informations du fichier
+            savedGame.ShowInfo(data);
         }
     }
 
     /// <summary>
     /// Sauvegarde les données
     /// </summary>
-    private void Save()
+    public void Save(SavedGame savedGame)
     {
         try
         {
@@ -74,10 +98,13 @@ public class SaveManager : MonoBehaviour
             BinaryFormatter bf = new BinaryFormatter();
 
             // Gestion des fichiers
-            FileStream file = File.Open(Application.persistentDataPath + "/rpgSaveTest.dat", FileMode.Create);
+            FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Create);
 
             // Données de sauvegarde
             SaveData data = new SaveData();
+
+            // Récupèration du nom de la scène utilisée
+            data.MyScene = SceneManager.GetActiveScene().name;
 
             // Enregistrement des données des équipements
             SaveEquipment(data);
@@ -108,6 +135,9 @@ public class SaveManager : MonoBehaviour
 
             // Fermeture du fichier
             file.Close();
+
+            // Récupèration des informations à partir d'un fichier de sauvegarde
+            ShowSavedFiles(savedGame);
         }
         catch (System.Exception)
         {
@@ -118,7 +148,7 @@ public class SaveManager : MonoBehaviour
     /// <summary>
     /// Charge les données
     /// </summary>
-    private void Load()
+    public void Load(SavedGame savedGame)
     {
         try
         {
@@ -126,7 +156,7 @@ public class SaveManager : MonoBehaviour
             BinaryFormatter bf = new BinaryFormatter();
 
             // Gestion des fichiers
-            FileStream file = File.Open(Application.persistentDataPath + "/rpgSaveTest.dat", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Open);
 
             // Données de chargement
             SaveData data = (SaveData)bf.Deserialize(file);

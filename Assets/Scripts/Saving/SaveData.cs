@@ -31,6 +31,12 @@ public class SaveData
     // Propriété d'accès aux données des donneurs de quêtes
     public List<QuestGiverData> MyQuestGiverData { get; set; }
 
+    // Propriété d'accès sur la date de sauvegarde
+    public DateTime MyDateTime { get; set; }
+
+    // Propriété d'accès sur la scène courante
+    public string MyScene { get; set; }
+
 
     /// <summary>
     /// Constructeur
@@ -43,6 +49,7 @@ public class SaveData
         MyActionButtonData = new List<ActionButtonData>();
         MyQuestData = new List<QuestData>();
         MyQuestGiverData = new List<QuestGiverData>();
+        MyDateTime = DateTime.Now;
     }
 }
 

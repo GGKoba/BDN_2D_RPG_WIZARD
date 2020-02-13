@@ -133,7 +133,6 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
             // L'item est utilisable
             MyUseables = InventoryScript.MyInstance.GetUseables(useable);
 
-            // [DEBUG]
             if (InventoryScript.MyInstance.MyFromSlot != null)
             {
                 // Actualise la couleur de l'emplacement
