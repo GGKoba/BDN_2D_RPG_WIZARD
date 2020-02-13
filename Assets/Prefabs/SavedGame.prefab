@@ -779,7 +779,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Le 26/10/2020 - 23:23
+  m_Text: Date de sauvegarde
 --- !u!114 &2252015881911880062
 MonoBehaviour:
   m_ObjectHideFlags: 0

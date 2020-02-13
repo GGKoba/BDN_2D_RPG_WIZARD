@@ -31,6 +31,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Référence à la caméra
+    private Camera mainCamera;
+
     // Evènement de mort d'un personnage
     public event KillConfirmed KillConfirmedEvent;
 
@@ -45,6 +48,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Text goldText = default;
 
+
+    /// <summary>
+    /// Start
+    /// </summary>
+    private void Start()
+    {
+        mainCamera = Camera.main;   
+    }
 
     /// <summary>
     /// Update
@@ -64,7 +75,7 @@ public class GameManager : MonoBehaviour
     private void ClickTarget()
     {
         // Raycast depuis la position de la souris dans le jeu
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
+        RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
 
         // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())

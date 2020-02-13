@@ -27,6 +27,9 @@ public class SaveManager : MonoBehaviour
     [SerializeField]
     private SavedGame[] saveSlots = default;
 
+    // Action à effectuer
+    private string action;
+
 
     /// <summary>
     /// Awake
@@ -50,13 +53,6 @@ public class SaveManager : MonoBehaviour
     {
         // [DEBUG]
         Debug.Log(Application.persistentDataPath);
-    }
-
-    /// <summary>
-    /// Update
-    /// </summary>
-    private void Update()
-    {
     }
 
     /// <summary>
@@ -90,14 +86,15 @@ public class SaveManager : MonoBehaviour
     /// <summary>
     /// Sauvegarde les données
     /// </summary>
-    public void Save(SavedGame savedGame)
+    /// <param name="savedGame">Emplacement de sauvegarde</param>
+    private void Save(SavedGame savedGame)
     {
         try
         {
             // Formatteur de données
             BinaryFormatter bf = new BinaryFormatter();
 
-            // Gestion des fichiers
+            // Fichier de sauvegarde
             FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Create);
 
             // Données de sauvegarde
@@ -148,14 +145,15 @@ public class SaveManager : MonoBehaviour
     /// <summary>
     /// Charge les données
     /// </summary>
-    public void Load(SavedGame savedGame)
+    /// <param name="savedGame">Emplacement de sauvegarde</param>
+    private void Load(SavedGame savedGame)
     {
         try
         {
             // Formatteur de données
             BinaryFormatter bf = new BinaryFormatter();
 
-            // Gestion des fichiers
+            // Fichier de sauvegarde
             FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Open);
 
             // Données de chargement
@@ -193,6 +191,47 @@ public class SaveManager : MonoBehaviour
             throw;
         }
     }
+
+    /// <summary>
+    /// Supprime les données
+    /// </summary>
+    /// <param name="savedGame">Emplacement de sauvegarde</param>
+    private void Delete(SavedGame savedGame)
+    {
+        // Supprime le fichier de sauvegarde
+        File.Delete(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat");
+
+        // Masque les informations de l'emplacement
+        savedGame.HideVisuals();
+    }
+
+    /// <summary>
+    /// Fenêtre d'interaction
+    /// </summary>
+    /// <param name="clickButton">Emplacement de sauvegarde</param>
+    public void ShowDialog(GameObject clickButton)
+    {
+        action = clickButton.name;
+        SavedGame savedGame = clickButton.GetComponentInParent<SavedGame>();
+
+        switch (action)
+        {
+            // Action de suppression
+            case "Delete":
+                Delete(savedGame);
+                break;
+            // Action de chargement
+            case "Load":
+                Load(savedGame);
+                break;
+            // Action de sauvegarde
+            case "Save":
+                Save(savedGame);
+                break;
+        }
+    }
+
+
 
     /// <summary>
     /// Enregistrement des données du joueur

@@ -55,8 +55,7 @@ public class SavedGame : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        // Masque les visuels
-        visuals.SetActive(false);
+        HideVisuals();
     }
 
     /// <summary>
@@ -73,15 +72,29 @@ public class SavedGame : MonoBehaviour
         // Informations sur la vie du joueur
         healthText.text = saveData.MyPlayerData.MyHealth + "/" + saveData.MyPlayerData.MyMaxHealth;
 
+        // Remplissage de la barre de vie
+        health.fillAmount = saveData.MyPlayerData.MyHealth / saveData.MyPlayerData.MyMaxHealth;
+
         // Informations sur la mana du joueur
         manaText.text = saveData.MyPlayerData.MyMana + "/" + saveData.MyPlayerData.MyMaxMana;
+
+        // Remplissage de la barre de mana
+        mana.fillAmount = saveData.MyPlayerData.MyMana / saveData.MyPlayerData.MyMaxMana;
 
         // Informations sur l'expérience du joueur
         xpText.text = saveData.MyPlayerData.MyXp + "/" + saveData.MyPlayerData.MyMaxXp;
 
+        // Remplissage de la barre d'expérience
+        xp.fillAmount = saveData.MyPlayerData.MyXp / saveData.MyPlayerData.MyMaxXp;
+
         // Informations sur le niveau du joueur
         levelText.text = saveData.MyPlayerData.MyLevel.ToString();
+    }
 
+    public void HideVisuals()
+    {
+        // Masque les visuels
+        visuals.SetActive(false);
     }
 
 }
