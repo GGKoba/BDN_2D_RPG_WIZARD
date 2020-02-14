@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Classe de gestion des sauvegardes
@@ -30,6 +31,18 @@ public class SaveManager : MonoBehaviour
     // Action à effectuer
     private string action;
 
+    // Emplacement de sauvegarde courant;
+    private SavedGame currentSavedGame;
+
+
+    [Header("Dialog")]
+    // Référence sur la fenêtre de confirmation
+    [SerializeField]
+    private GameObject dialog = default;
+
+    // Référence sur la texte de la fenêtre de confirmation
+    [SerializeField]
+    private Text dialogText = default;
 
     /// <summary>
     /// Awake
@@ -53,6 +66,24 @@ public class SaveManager : MonoBehaviour
     {
         // [DEBUG]
         Debug.Log(Application.persistentDataPath);
+
+        // Fermeture de la fenêtre de confirmation
+        CloseDialog();
+
+        // Charge les informations du joueur 
+        if (PlayerPrefs.HasKey("Load"))
+        {
+            // Charge la sauvegarde de l'emplacement mémorisé
+            Load(saveSlots[PlayerPrefs.GetInt("Load")]);
+
+            // Réinitialise l'emplacement de sauvegarde mémorisé
+            PlayerPrefs.DeleteKey("Load");
+        }
+        else
+        {
+            // Valeurs par défaut si pas d'emplacement de sauvegarde mémorisé
+            Player.MyInstance.SetPlayerDefaultValues();
+        }
     }
 
     /// <summary>
@@ -194,9 +225,45 @@ public class SaveManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw;
+            // Supprime la auvegarde en cas d'erreur
+            Delete(savedGame);
+
+            // Réinitialise l'emplacement de sauvegarde mémorisé
+            PlayerPrefs.DeleteKey("Load");
         }
     }
+
+    /// <summary>
+    /// Charge les données d'une scène
+    /// </summary>
+    /// <param name="savedGame">Emplacement de sauvegarde</param>
+    private void LoadScene(SavedGame savedGame)
+    {
+        string filePath = Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat";
+
+        // Si le fichier de sauvegarde existe
+        if (File.Exists(filePath))
+        {
+            // Formatteur de données
+            BinaryFormatter bf = new BinaryFormatter();
+
+            // Gestion des fichiers
+            FileStream file = File.Open(filePath, FileMode.Open);
+
+            // Données de chargement
+            SaveData data = (SaveData)bf.Deserialize(file);
+
+            // Fermeture du fichier
+            file.Close();
+
+            // Enregistre l'emplacement de sauvegarde
+            PlayerPrefs.SetInt("Load", savedGame.MyIndex);
+
+            //Charge la scène
+            SceneManager.LoadScene(data.MyScene);
+        }
+    }
+
 
     /// <summary>
     /// Supprime les données
@@ -219,25 +286,59 @@ public class SaveManager : MonoBehaviour
     {
         action = clickButton.name;
         SavedGame savedGame = clickButton.GetComponentInParent<SavedGame>();
+        currentSavedGame = savedGame;
 
         switch (action)
         {
             // Action de suppression
             case "Delete":
-                Delete(savedGame);
+                dialogText.text = "Effacer la sauvegarde ?";
                 break;
             // Action de chargement
             case "Load":
-                Load(savedGame);
+                dialogText.text = "Charger la sauvegarde ?";
                 break;
             // Action de sauvegarde
             case "Save":
-                Save(savedGame);
+                dialogText.text = "Enregistrer la partie ?";
                 break;
         }
+
+        dialog.SetActive(true);
     }
 
+    /// <summary>
+    /// Fermeture de la fenêtre de confirmation
+    /// </summary>
+    public void CloseDialog()
+    {
+        dialog.SetActive(false);
+    }
 
+    /// <summary>
+    /// Execute l'action de la fenêtre de condirmation
+    /// </summary>
+    public void ExecuteAction()
+    {
+        switch (action)
+        {
+            // Action de suppression
+            case "Delete":
+                Delete(currentSavedGame);
+                break;
+            // Action de chargement
+            case "Load":
+                LoadScene(currentSavedGame);
+                break;
+            // Action de sauvegarde
+            case "Save":
+                Save(currentSavedGame);
+                break;
+        }
+
+        // Fermeture de la fênetre de confirmation
+        CloseDialog();
+    }
 
     /// <summary>
     /// Enregistrement des données du joueur

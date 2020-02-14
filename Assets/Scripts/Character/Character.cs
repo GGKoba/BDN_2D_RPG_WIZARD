@@ -28,7 +28,7 @@ public abstract class Character : MonoBehaviour
 
     // Vie initiale du personnage (readonly)
     [SerializeField]
-    private float initHealth = default;
+    protected float initHealth = default;
 
     [SerializeField]
     // Référence sur la vie du personnage
@@ -79,9 +79,6 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
-        // Initialise les barres
-        health.Initialize(initHealth, initHealth);
-
         // Référence sur l'animator du personnage
         MyAnimator = GetComponent<Animator>();
 

@@ -81,27 +81,6 @@ public class Player : Character
 
 
     /// <summary>
-    /// Start : Surcharge la fonction Start du script Character
-    /// </summary>
-    protected override void Start()
-    {
-        // Initialise l'argent du joueur
-        MyGold = 25;
-
-        // Initialise la barre de mana
-        mana.Initialize(initMana, initMana);
-
-        // Initialise la barre d'XP
-        xp.Initialize(0, GetXPMax());
-
-        // Actualise le texte du niveau du joueur
-        RefreshPlayerLevelText();
-
-        // Appelle Start sur la classe mère (abstraite)
-        base.Start();
-    }
-
-    /// <summary>
     /// Update : Surcharge la fonction Update du script Character
     /// </summary>
     protected override void Update()
@@ -114,6 +93,27 @@ public class Player : Character
 
         // Appelle Update sur la classe mère (abstraite)
         base.Update();
+    }
+
+    /// <summary>
+    /// Initialise les informations du joueur
+    /// </summary>
+    public void SetPlayerDefaultValues()
+    {
+        // Initialise l'argent du joueur
+        MyGold = 25;
+
+        // Initialise les barres
+        health.Initialize(initHealth, initHealth);
+
+        // Initialise la barre de mana
+        mana.Initialize(initMana, initMana);
+
+        // Initialise la barre d'XP
+        xp.Initialize(0, GetXPMax());
+
+        // Actualise le texte du niveau du joueur
+        RefreshPlayerLevelText();
     }
 
     /// <summary>

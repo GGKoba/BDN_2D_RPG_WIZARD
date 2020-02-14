@@ -69,6 +69,9 @@ public class Enemy : Character, IInteractable
     /// </summary>
     protected void Awake()
     {
+        // Initialise les barres
+        health.Initialize(initHealth, initHealth);
+
         // Initialisation de la position de départ de l'ennemi
         MyStartPosition = transform.position;
 
