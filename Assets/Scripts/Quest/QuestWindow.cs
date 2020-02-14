@@ -61,75 +61,12 @@ public class QuestWindow : Window
 
 
     /// <summary>
-    /// Awake
-    /// </summary>
-    private void Awake()
-    {
-        // Référence sur le canvasGroup de la fenêtre des quêtes du joueur
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    /// <summary>
-    /// Start
-    /// </summary>
-    private void Start()
-    {
-        // Fermeture de la fenêtre des quêtes du joueur
-       OpenClose();
-    }
-
-    /// <summary>
     /// Update
     /// </summary>
     private void Update()
     {
-        // [N] : Quêtes
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            // Ouverture/Fermeture de la fenêtre des quêtes
-            OpenClose();
-        }
-
         // Actualise le compteur du nombre de quêtes
         questCount.text = quests.Count + "/" + maxCount;
-    }
-
-    /*
-    /// <summary>
-    /// Ouverture de la fenêtre des quêtes du joueur
-    /// </summary>
-    public void Open()
-    {
-        // Bloque les interactions
-        canvasGroup.blocksRaycasts = true;
-
-        // Affiche la fenêtre des quêtes du joueur
-        canvasGroup.alpha = 1;
-    }
-
-    /// <summary>
-    /// Fermeture de la fenêtre des quêtes du joueur
-    /// </summary>
-    public void Close()
-    {
-        // Débloque les interactions
-        canvasGroup.blocksRaycasts = false;
-
-        // Masque la fenêtre des quêtes du joueur
-        canvasGroup.alpha = 0;
-    }
-    */
-
-    /// <summary>
-    /// Ouverture/Fermeture de la fenêtre des quêtes du joueur
-    /// </summary>
-    public void OpenClose()
-    {
-        // Bloque/débloque les interactions
-        canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
-
-        // Masque(0) /Affiche(1) le menu
-        canvasGroup.alpha = canvasGroup.alpha > 0 ? 0 : 1;
     }
 
     /// <summary>

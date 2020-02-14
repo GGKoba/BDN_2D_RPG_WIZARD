@@ -31,6 +31,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private ActionButton[] actionButtons = default;
 
+    // Tableau des menus
+    [SerializeField]
+    private CanvasGroup[] menus = default;
+/*
     [Header("Menu")]
     // Menu des raccourcis
     [SerializeField]
@@ -43,7 +47,7 @@ public class UIManager : MonoBehaviour
     // Feuille du personnage
     [SerializeField]
     private CharacterPanel characterPanel = default;
-
+*/
     [Header("Target")]
     // Frame de la cible
     [SerializeField]
@@ -102,11 +106,11 @@ public class UIManager : MonoBehaviour
         // Masque la frame de la cible
         HideTargetFrame();
 
-        // Masque le menu Raccourcis
-        OpenClose(keyBindMenu);
-
-        // Masque le menu Sorts
-        OpenClose(spellBookMenu);
+        // Masque les menus
+        foreach (CanvasGroup menu in menus)
+        {
+            CloseMenu(menu);
+        }
 
     }
 
@@ -118,27 +122,29 @@ public class UIManager : MonoBehaviour
         // [Esc] : Menu Raccourci
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            // Ouverture/Fermeture du menu des raccourcis
-            OpenClose(keyBindMenu);
-            /*
-            if (isOpenMenu)
-            {
-                // Fermeture du menu
-                CloseMenu();
-            }
-            else
-            {
-                // Ouverture du menu
-                OpenMenu();
-            }
-            */
+            // Ouverture/Fermeture du menu principal
+            OpenClose(menus[0]);
         }
-
+        
         // [P] : Menu Sorts
         if (Input.GetKeyDown(KeyCode.P))
         {
             // Ouverture/Fermeture du menu des sorts
-            OpenClose(spellBookMenu);
+            OpenClose(menus[1]);
+        }
+
+        // [C] : Profil
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            // Ouverture/Fermeture de la feuille du personnage
+            OpenClose(menus[2]);
+        }
+
+        // [N] : Quêtes
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            // Ouverture/Fermeture de la fenêtre des quêtes
+            OpenClose(menus[3]);
         }
 
         // [B] : Sacs
@@ -148,12 +154,6 @@ public class UIManager : MonoBehaviour
             InventoryScript.MyInstance.OpenClose();
         }
 
-        // [C] : Profil
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            // Ouverture/Fermeture de la feuille du personnage
-            characterPanel.OpenClose();
-        }
     }
 
     /// <summary>
@@ -240,6 +240,52 @@ public class UIManager : MonoBehaviour
     */
 
     /// <summary>
+    /// Ouverture/Fermeture d'un menu
+    /// </summary>
+    /// <param name="canvasGroup"></param>
+    public void OpenClose(CanvasGroup canvasGroup)
+    {
+        // Bloque/débloque les interactions
+        canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
+
+        // Masque(0) /Affiche(1) le menu
+        canvasGroup.alpha = canvasGroup.alpha > 0 ? 0 : 1;
+
+        // Début(0)/fin(1) de pause
+        //Time.timeScale = Time.timeScale > 0 ? 0 : 1;
+    }
+
+    /// <summary>
+    /// Ouverture du menu
+    /// </summary>
+    /// <param name="menu">Menu à ouvrir</param>
+    public void OpenMenu(CanvasGroup menu)
+    {
+        // Pour tous les menus
+        foreach (CanvasGroup canvas in menus)
+        {
+            // Fermeture du menu
+            CloseMenu(canvas);
+        }
+
+        //Ouverture / Fermeture du menu
+        OpenClose(menu);
+    }
+
+    /// <summary>
+    /// Fermeture du menu
+    /// </summary>
+    /// <param name="menu">Menu à fermer</param>
+    public void CloseMenu(CanvasGroup menu)
+    {
+        // Masque le menu
+        menu.alpha = 0;
+
+        // Débloque les interactions
+        menu.blocksRaycasts = false;
+    }
+
+    /// <summary>
     /// Mise à jour du texte des touches
     /// </summary>
     /// <param name="key">Identifiant de la touche</param>
@@ -261,22 +307,6 @@ public class UIManager : MonoBehaviour
     {
         // Déclenchement du clic sur le bouton d'action
         Array.Find(actionButtons, actionButton => actionButton.gameObject.name.ToUpper() == (buttonName + "_Button").ToUpper()).MyActionButton.onClick.Invoke();
-    }
-
-    /// <summary>
-    /// Ouverture/Fermeture d'un menu
-    /// </summary>
-    /// <param name="canvasGroup"></param>
-    public void OpenClose(CanvasGroup canvasGroup)
-    {
-        // Bloque/débloque les interactions
-        canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
-
-        // Masque(0) /Affiche(1) le menu
-        canvasGroup.alpha = canvasGroup.alpha > 0 ? 0 : 1;
-
-        // Début(0)/fin(1) de pause
-        //Time.timeScale = Time.timeScale > 0 ? 0 : 1;
     }
 
     /// <summary>

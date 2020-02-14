@@ -124,8 +124,11 @@ public class SaveManager : MonoBehaviour
             // Enregistrement des données des quêtes
             SaveQuests(data);
 
-            // Enregistrement des données des donneurs dequêtes
+            // Enregistrement des données des donneurs de quêtes
             SaveQuestsGiver(data);
+
+            // Enregistrement des données des raccourcis
+            SaveBinds(data);
 
             // Serialisation des données
             bf.Serialize(file, data);
@@ -183,8 +186,11 @@ public class SaveManager : MonoBehaviour
             // Chargement des données des quêtes
             LoadQuests(data);
 
-            // Chargement des données des donneurs dequêtes
+            // Chargement des données des donneurs de quêtes
             LoadQuestsGiver(data);
+
+            // Chargement des données des raccourcis
+            LoadBinds(data);
         }
         catch (System.Exception)
         {
@@ -368,6 +374,23 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Chargement des données des raccourcis
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveBinds(SaveData data)
+    {
+        foreach (KeyValuePair<string, KeyCode> keyBind in KeyBindManager.MyInstance.KeyBinds)
+        {
+            data.MyKeyBindsData.Add(new KeyBindData(keyBind.Key, keyBind.Value));
+        }
+
+        foreach (KeyValuePair<string, KeyCode> actionBind in KeyBindManager.MyInstance.ActionBinds)
+        {
+            data.MyKeyBindsData.Add(new KeyBindData(actionBind.Key, actionBind.Value));
+        }
+    }
+
+    /// <summary>
     /// Chargement des données du joueur
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
@@ -504,6 +527,18 @@ public class SaveManager : MonoBehaviour
             QuestGiver questGiver = Array.Find(questGivers, qg => qg.MyQuestGiverId == questGiverData.MyQuestGiverId);
             questGiver.MyCompletedQuests = questGiverData.MyCompletedQuests;
             questGiver.UpdateQuestStatus();
+        }
+    }
+
+    /// <summary>
+    /// Chargement des données des raccourcis
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadBinds(SaveData data)
+    {
+        foreach (KeyBindData keyBindData in data.MyKeyBindsData)
+        {
+            KeyBindManager.MyInstance.BindKey(keyBindData.MyKeyName, keyBindData.MyKeyCode);
         }
     }
 }

@@ -31,6 +31,9 @@ public class SaveData
     // Propriété d'accès aux données des donneurs de quêtes
     public List<QuestGiverData> MyQuestGiverData { get; set; }
 
+    // Propriété d'accès aux données des raccourcis
+    public List<KeyBindData> MyKeyBindsData { get; set; }
+
     // Propriété d'accès sur la date de sauvegarde
     public DateTime MyDateTime { get; set; }
 
@@ -50,6 +53,7 @@ public class SaveData
         MyQuestData = new List<QuestData>();
         MyQuestGiverData = new List<QuestGiverData>();
         MyDateTime = DateTime.Now;
+        MyKeyBindsData = new List<KeyBindData>();
     }
 }
 
@@ -312,5 +316,26 @@ public class QuestGiverData
     {
         MyQuestGiverId = questGiverId;
         MyCompletedQuests = completedQuests;
+    }
+}
+
+
+[Serializable]
+public class KeyBindData
+{
+    // Propriété d'accès à la description
+    public string MyKeyName { get; set; }
+
+    // Propriété d'accès à la description
+    public KeyCode MyKeyCode { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public KeyBindData(string key, KeyCode code)
+    {
+        MyKeyName = key;
+        MyKeyCode = code;
     }
 }
