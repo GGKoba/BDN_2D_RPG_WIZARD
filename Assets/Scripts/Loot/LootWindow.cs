@@ -38,16 +38,12 @@ public class LootWindow : MonoBehaviour
     // Tableau des boutons des butins
     [SerializeField]
     private LootButton[] lootButtons = default;
-    /*
-    // [DEBUG] : Tableau des items du butin
-    [SerializeField]
-    private Item[] items = default;
-    */
+
     // Liste des pages de butin
-    private List<List<Item>> pages = new List<List<Item>>();
+    private readonly List<List<Drop>> pages = new List<List<Drop>>();
 
     // Liste des butins
-    private List<Item> droppedLoots = new List<Item>();
+    // private List<Drop> droppedLoots = new List<Drop>();
 
     // Index de la page courante
     private int pageIndex = 0;
@@ -101,13 +97,13 @@ public class LootWindow : MonoBehaviour
                 if (pages[pageIndex][i] != null)
                 {
                     // Actualise l'icone du bouton
-                    lootButtons[i].MyIcon.sprite = pages[pageIndex][i].MyIcon;
+                    lootButtons[i].MyIcon.sprite = pages[pageIndex][i].MyItem.MyIcon;
 
                     // Actualise le titre du bouton
-                    lootButtons[i].MyTitle.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[pages[pageIndex][i].MyQuality], pages[pageIndex][i].MyTitle);
+                    lootButtons[i].MyTitle.text = string.Format("<color={0}>{1}</color>", QualityColor.MyColors[pages[pageIndex][i].MyItem.MyQuality], pages[pageIndex][i].MyItem.MyTitle);
 
                     // Assigne l'item du bouton
-                    lootButtons[i].MyLoot = pages[pageIndex][i];
+                    lootButtons[i].MyLoot = pages[pageIndex][i].MyItem;
 
                     // Affiche le bouton
                     lootButtons[i].gameObject.SetActive(true);
@@ -120,16 +116,16 @@ public class LootWindow : MonoBehaviour
     /// Création de la liste des pages de butin
     /// </summary>
     /// <param name="items">Liste des items du butin</param>
-    public void CreatePages(List<Item> items)
+    public void CreatePages(List<Drop> items)
     {
         // Si la fenêtre de butin n'est pas ouverte
         if (!IsOpen)
         {
             // Référence sur la liste des items du butin
-            droppedLoots = items;
+            // droppedLoots = items;
 
             // Création d'une nouvelle page
-            List<Item> currentPage = new List<Item>();
+            List<Drop> currentPage = new List<Drop>();
 
             // Pour tous les items
             for (int i = 0; i < items.Count; i++)
@@ -144,7 +140,7 @@ public class LootWindow : MonoBehaviour
                     pages.Add(currentPage);
 
                     // Création d'une nouvelle page
-                    currentPage = new List<Item>();
+                    currentPage = new List<Drop>();
                 }
             }
 
@@ -213,11 +209,14 @@ public class LootWindow : MonoBehaviour
     /// <param name="loot">Item à retirer</param>
     public void TakeLoot(Item loot)
     {
-        // Retire l'item de la page
-        pages[pageIndex].Remove(loot);
+        // Trouve l'item
+        Drop drop = pages[pageIndex].Find(x => x.MyItem == loot);
 
-        // Retire l'item de la liste des butins (par référence sur le liste passée dans le CreatePages()
-        droppedLoots.Remove(loot);
+        // Retire l'item de la page
+        pages[pageIndex].Remove(drop);
+
+        // Retire l'item de la liste des butins
+        drop.Remove();
 
         // Si la page n'a plus d'item
         if (pages[pageIndex].Count == 0)
@@ -254,6 +253,9 @@ public class LootWindow : MonoBehaviour
     /// </summary>
     public void Close()
     {
+        // Réinitialise l'index de la page
+        pageIndex = 0;
+
         // Vide la liste des butins
         pages.Clear();
 

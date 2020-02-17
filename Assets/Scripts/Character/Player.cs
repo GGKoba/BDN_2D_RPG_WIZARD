@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,10 +69,10 @@ public class Player : Character
     private int exitIndex = 2;
 
     // Référence sur l'interaction
-    private IInteractable interactable;
+    private List<IInteractable> interactables = new List<IInteractable>();
 
     // Propriété d'accès sur la référence sur l'interaction
-    public IInteractable MyInteractable { get => interactable; set => interactable = value; }
+    public List<IInteractable> MyInteractables { get => interactables; set => interactables = value; }
 
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
@@ -372,19 +373,6 @@ public class Player : Character
     }
 
     /// <summary>
-    /// Interaction du personnage : Surcharge la fonction Interact du script NPC
-    /// </summary>
-    public void Interact()
-    {
-        // S'il y a une interaction du joueur
-        if (MyInteractable != null)
-        {
-            // Début de l'interaction  
-            MyInteractable.Interact();
-        }
-    }
-
-    /// <summary>
     /// Gain d'expérience
     /// </summary>
     /// <param name="amountXp">Expérience gagnée</param>
@@ -466,8 +454,15 @@ public class Player : Character
         // Si le joueur entre en contact avec un ennemi
         if (collision.CompareTag("Enemy") || collision.CompareTag("Interactable"))
         {
-            // Interaction avec l'ennemi
-            MyInteractable = collision.GetComponent<IInteractable>();
+            // Référence sur l'entité en interaction
+            IInteractable interactable = collision.GetComponent<IInteractable>();
+
+            // Si c'est une nouvelle entité en interaction
+            if (!MyInteractables.Contains(interactable))
+            {
+                // Ajoute dans la liste l'entité en interaction
+                MyInteractables.Add(collision.GetComponent<IInteractable>());
+            }
         }
     }
 
@@ -481,13 +476,20 @@ public class Player : Character
         if (collision.CompareTag("Enemy") || collision.CompareTag("Interactable"))
         {
             // S'il y a une interaction du joueur
-            if (MyInteractable != null)
+            if (MyInteractables.Count > 0)
             {
-                // Fin de l'interaction avec l'ennemi
-                MyInteractable.StopInteract();
+                // Référence sur l'entité en interaction
+                IInteractable interactable = MyInteractables.Find(x => x == collision.GetComponent<IInteractable>());
 
-                // Réinitialise l'interaction
-                MyInteractable = null;
+                // S'il y a une interaction
+                if (interactable != null)
+                {
+                    // Fin de l'interaction avec l'ennemi
+                    interactable.StopInteract();
+                }
+
+                // Supprime de la liste l'entité en interaction
+                MyInteractables.Remove(interactable);
             }
         }
     }

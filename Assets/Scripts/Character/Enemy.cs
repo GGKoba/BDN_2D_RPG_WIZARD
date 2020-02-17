@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -157,14 +158,25 @@ public class Enemy : Character, IInteractable
         // Si l'état n'est pas en évasion
         if (!(currentState is EvadeState))
         {
-            // Définit la cible et actualise la portée d'aggro
-            SetTarget(source);
+            // Si le personnage est en vie
+            if (IsAlive)
+            {
+                // Définit la cible et actualise la portée d'aggro
+                SetTarget(source);
 
-            // Appelle TakeDamage sur la classe mère
-            base.TakeDamage(damage, source);
+                // Appelle TakeDamage sur la classe mère
+                base.TakeDamage(damage, source);
 
-            // Déclenche l'évènement de changement de la vie
-            OnHealthChanged(health.MyCurrentValue);
+                // Déclenche l'évènement de changement de la vie
+                OnHealthChanged(health.MyCurrentValue);
+
+                // Si le personnage n'est plus en vie
+                if (!IsAlive)
+                {
+                    // Gagne l'expérience calculée
+                    Player.MyInstance.GainXP(XPManager.CalculateXP(this));
+                }
+            }
         }
     }
 
@@ -237,8 +249,22 @@ public class Enemy : Character, IInteractable
         // Si l'ennemi n'est pas en vie
         if (!IsAlive)
         {
-            // Affiche les butins de l'ennemi
-            lootTable.ShowLoots();
+            // Liste des butins
+            List<Drop> drops = new List<Drop>();
+
+            // Pour toutes les entités en interaction
+            foreach (IInteractable interactable in Player.MyInstance.MyInteractables)
+            {
+                // Si c'est un ennemi et qu'il n'est plus en vie
+                if (interactable is Enemy && !(interactable as Enemy).IsAlive)
+                {
+                    // Ajoute la liste des butins de l'ennemi
+                    drops.AddRange((interactable as Enemy).lootTable.GetLoots());
+                }
+            }
+
+            // Actualise les pages des butins
+            LootWindow.MyInstance.CreatePages(drops);
         }
     }
 

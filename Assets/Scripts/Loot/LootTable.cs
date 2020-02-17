@@ -9,27 +9,30 @@ public class LootTable : MonoBehaviour
     [SerializeField]
     private Loot[] loots = default;
 
-    // Liste des items du butin
-    private List<Item> droppedItems = new List<Item>();
+    // Propriété d'accès à la liste des items du butin
+    public List<Drop> MyDroppedItems { get; set; }
 
     // L'attribution est-elle déjà faite ?
     private bool rolled = false;
 
 
     /// <summary>
-    /// Affiche la fenêtre de butin
+    /// Liste des butins
     /// </summary>
-    public void ShowLoots()
+    public List<Drop> GetLoots()
     {
         // Si l'attribution n'est pas déjà faite
         if (!rolled)
         {
+            // Liste des butins
+            MyDroppedItems = new List<Drop>();
+
             // Attribution du butin
             RollLoot();
         }
 
-        // Création de la liste des pages de butin
-        LootWindow.MyInstance.CreatePages(droppedItems);
+        // Retourne la liste des pages de butin
+        return MyDroppedItems;
     }
 
     // Attribution des loots 
@@ -43,8 +46,8 @@ public class LootTable : MonoBehaviour
             // Si le nombre aléatoire est plus petit que la chance d'obtention de l'item
             if (roll < loot.MyDropChance)
             {
-                // GG : l'item est dans la liste du butin
-                droppedItems.Add(loot.MyItem);
+                // Ajoute l'item dans la liste du butin
+                MyDroppedItems.Add(new Drop(loot.MyItem, this));
             }
         }
 

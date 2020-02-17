@@ -129,10 +129,11 @@ public class SaveManager : MonoBehaviour
             FileStream file = File.Open(Application.persistentDataPath + "/" + savedGame.gameObject.name + ".dat", FileMode.Create);
 
             // Données de sauvegarde
-            SaveData data = new SaveData();
-
-            // Récupèration du nom de la scène utilisée
-            data.MyScene = SceneManager.GetActiveScene().name;
+            SaveData data = new SaveData
+            { 
+                // Récupèration du nom de la scène utilisée
+                MyScene = SceneManager.GetActiveScene().name
+            };
 
             // Enregistrement des données des équipements
             SaveEquipment(data);
@@ -521,7 +522,7 @@ public class SaveManager : MonoBehaviour
 
             foreach (ItemData itemData in chest.MyItems)
             {
-                Item item = Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower());
+                Item item = Instantiate(Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower()));
                 item.MySlot = c.MyBank.MySlots.Find(slot => slot.MyIndex == itemData.MySlotIndex);
                 c.MyItems.Add(item);
             }
@@ -587,7 +588,7 @@ public class SaveManager : MonoBehaviour
     {
         foreach (ItemData itemData in data.MyInventoryData.MyItems)
         {
-            Item item = Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower());
+            Item item = Instantiate(Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower()));
 
             for (int i = 0; i < itemData.MyStackCount; i++)
             {
