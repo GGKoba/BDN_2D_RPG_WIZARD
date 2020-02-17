@@ -31,13 +31,13 @@ class WeaponSocket : GearSocket
             if (y == 1)
             {
                 // L'arme sera derrière le personnage (cachée par sa main)
-                spriteRenderer.sortingOrder = parentSpriteRenderer.sortingOrder - 1;
+                transform.localPosition = new Vector3(0, 0.854f, 0);
             }
             // Vue de face
             else
             {
                 // L'arme sera devant le personnage
-                spriteRenderer.sortingOrder = parentSpriteRenderer.sortingOrder + 5;
+                transform.localPosition = new Vector3(0, 0.849f, 0);
             }
         }
     }
