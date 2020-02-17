@@ -80,6 +80,12 @@ public class Player : Character
     // Propriété d'accès à l'argent du joueur
     public int MyGold { get; set; }
 
+    // Liste des attaquants
+    private List<Enemy> attackers = new List<Enemy>();
+
+    // Propriété d'accès à la liste des attaquants
+    public List<Enemy> MyAttackers { get => attackers; set => attackers = value; }
+
 
     /// <summary>
     /// Update : Surcharge la fonction Update du script Character
@@ -491,6 +497,18 @@ public class Player : Character
                 // Supprime de la liste l'entité en interaction
                 MyInteractables.Remove(interactable);
             }
+        }
+    }
+
+    /// <summary>
+    /// Ajoute une cible dans la liste des attaquants
+    /// </summary>
+    /// <param name="enemy">Cible à ajouter</param>
+    public void AddAttacker(Enemy enemy)
+    {
+        if (!MyAttackers.Contains(enemy))
+        {
+            MyAttackers.Add(enemy);
         }
     }
 }

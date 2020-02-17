@@ -173,6 +173,9 @@ public class Enemy : Character, IInteractable
                 // Si le personnage n'est plus en vie
                 if (!IsAlive)
                 {
+                    // Retire l'ennemi de la liste des attaquants
+                    Player.MyInstance.MyAttackers.Remove(this);
+
                     // Gagne l'expérience calculée
                     Player.MyInstance.GainXP(XPManager.CalculateXP(this));
                 }

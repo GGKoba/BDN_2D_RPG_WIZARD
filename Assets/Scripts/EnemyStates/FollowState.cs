@@ -17,6 +17,9 @@ class FollowState : IState
     public void Enter(Enemy enemyScript)
     {
         enemy = enemyScript;
+
+        // Ajoute l'ennemi dans la liste des attaquants
+        Player.MyInstance.MyAttackers.Add(enemy);
     }
 
     /// <summary>

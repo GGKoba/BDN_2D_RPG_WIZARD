@@ -44,9 +44,12 @@ public class GameManager : MonoBehaviour
     // Cible courante
     private Enemy currentTarget;
 
-    // Référence sur l'argent du joueur;
+    // Référence sur l'argent du joueur
     [SerializeField]
     private Text goldText = default;
+
+    // Index de la cible
+    private int targetIndex;
 
 
     /// <summary>
@@ -65,6 +68,9 @@ public class GameManager : MonoBehaviour
         // Exécute le clic sur une cible
         ClickTarget();
 
+        // Gestion des cibles
+        NextTarget();
+
         // Actualise l'argent du joueur
         goldText.text = player.MyGold.ToString();
     }
@@ -80,28 +86,14 @@ public class GameManager : MonoBehaviour
         // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
-            // S'il y a déjà une cible
-            if (currentTarget != null)
+            // Désélection de la cible courante
+            DeSelectTarget();
+
+            // Si l'on touche un ennemi
+            if (hit.collider != null && hit.collider.CompareTag("Enemy"))
             {
-                // Désélection de la cible courante
-                currentTarget.DeSelect();
-            }
-
-            // Si l'on touche quelque chose
-            if (hit.collider != null)
-            {
-                // Si l'on touche un ennemi
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    // Sélection de la nouvelle cible
-                    currentTarget = hit.collider.GetComponent<Enemy>();
-
-                    // Affecte la nouvelle cible au joueur
-                    player.MyTarget = currentTarget.Select();
-
-                    // Affiche la frame de la cible
-                    UIManager.MyInstance.ShowTargetFrame(currentTarget);
-                }
+                // Sélection de la nouvelle cible
+                SelectTarget(hit.collider.GetComponent<Enemy>());
             }
             // Désélection de la cible
             else
@@ -140,5 +132,62 @@ public class GameManager : MonoBehaviour
             // Déclenchement de l'évènement de la mort d'un personnage
             KillConfirmedEvent.Invoke(character);
         }
+    }
+
+    /// <summary>
+    /// Cible la prochaine cible
+    /// </summary>
+    private void NextTarget()
+    {
+        // [TAB]
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            // Désélectionne la cible
+            DeSelectTarget();
+
+            if (Player.MyInstance.MyAttackers.Count > 0)
+            {
+                // Sélectionne la cible
+                SelectTarget(Player.MyInstance.MyAttackers[targetIndex]);
+
+                // Incrémente l'index de la cible
+                targetIndex++;
+
+                // Si l'index dépasse le nombre de la liste
+                if (targetIndex >= Player.MyInstance.MyAttackers.Count)
+                {
+                    // Réinitialise l'index
+                    targetIndex = 0;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Désélectionne la cible courante
+    /// </summary>
+    private void DeSelectTarget()
+    {
+        // S'il y a une cible
+        if (currentTarget != null)
+        {
+            // Désélectionne la cible
+            currentTarget.DeSelect();
+        }
+    }
+
+    /// <summary>
+    /// Sélectionne la cible
+    /// </summary>
+    private void SelectTarget(Enemy enemy)
+    {
+        // Actualise la cible
+        currentTarget = enemy;
+
+        // Sélectionne la cible
+        player.MyTarget = currentTarget.Select();
+
+        // Affiche la frame de la cible
+        UIManager.MyInstance.ShowTargetFrame(currentTarget);
     }
 }
