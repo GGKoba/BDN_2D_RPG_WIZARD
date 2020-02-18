@@ -3,11 +3,14 @@ using UnityEngine;
 
 
 
+/// <summary>
+/// Classe de gestion de la table des butins
+/// </summary>
 public class LootTable : MonoBehaviour
 {
     // Tableau des butins
     [SerializeField]
-    private Loot[] loots = default;
+    protected Loot[] loots = default;
 
     // Propriété d'accès à la liste des items du butin
     public List<Drop> MyDroppedItems { get; set; }
@@ -35,8 +38,10 @@ public class LootTable : MonoBehaviour
         return MyDroppedItems;
     }
 
-    // Attribution des loots 
-    private void RollLoot()
+    /// <summary>
+    /// Attribution des loots : virtual pour être écrasée pour les autres classes
+    /// </summary>
+    protected virtual void RollLoot()
     {
         foreach (Loot loot in loots)
         {
