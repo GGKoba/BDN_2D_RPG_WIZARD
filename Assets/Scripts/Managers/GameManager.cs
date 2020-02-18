@@ -147,18 +147,27 @@ public class GameManager : MonoBehaviour
 
             if (Player.MyInstance.MyAttackers.Count > 0)
             {
-                // Sélectionne la cible
-                SelectTarget(Player.MyInstance.MyAttackers[targetIndex]);
+                // Si l'index est inférieur au nombre de la liste
+                if (targetIndex < Player.MyInstance.MyAttackers.Count)
+                {
+                    // Sélectionne la cible
+                    SelectTarget(Player.MyInstance.MyAttackers[targetIndex]);
 
-                // Incrémente l'index de la cible
-                targetIndex++;
+                    // Incrémente l'index de la cible
+                    targetIndex++;
 
-                // Si l'index dépasse le nombre de la liste
-                if (targetIndex >= Player.MyInstance.MyAttackers.Count)
+                    // Si l'index dépasse le nombre de la liste
+                    if (targetIndex >= Player.MyInstance.MyAttackers.Count)
+                    {
+                        // Réinitialise l'index
+                        targetIndex = 0;
+                    }
+                }
+                else
                 {
                     // Réinitialise l'index
                     targetIndex = 0;
-                }
+                } 
             }
         }
     }

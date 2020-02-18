@@ -7,11 +7,11 @@
 class WeaponSocket : GearSocket
 {
     // Valeur Y
-    private float currentY = 0;
+    private readonly float currentY = 0;
 
     // Référence sur le SpriteRenderer du personnage
-    [SerializeField]
-    private SpriteRenderer parentSpriteRenderer = default;
+    // [SerializeField]
+    // private SpriteRenderer parentSpriteRenderer = default;
 
 
     /// <summary>
