@@ -54,6 +54,9 @@ public class LootWindow : MonoBehaviour
     // Propriété d'accès sur l'indicateur d'ouverture de la fenêtre des butins
     public bool IsOpen { get => canvasGroup.alpha > 0; }
 
+    // Propriété d'accès sur l'élément interactif
+    public IInteractable MyInteractable { get; set; }
+
 
     /// <summary>
     /// Awake
@@ -267,5 +270,14 @@ public class LootWindow : MonoBehaviour
 
         // Masque la fenêtre des butins
         canvasGroup.alpha = 0;
+
+        // S'il y a un élément interactif
+        if (MyInteractable != null)
+        {
+            MyInteractable.StopInteract();
+        }
+
+        // Réinitialise la référence sur l'élément interactif
+        MyInteractable = null;
     }
 }

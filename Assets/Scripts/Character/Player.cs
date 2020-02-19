@@ -211,6 +211,23 @@ public class Player : Character
     }
 
     /// <summary>
+    /// Incante un sort
+    /// </summary>
+    /// <param name="spellName">Nom du sort</param>
+    public void CastSpell(string spellName)
+    {
+        // Actualise les blocs
+        Block();
+
+        // Vérifie si l'on peut attaquer
+        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
+        {
+            // Démarre la routine d'attaque
+            actionRoutine = StartCoroutine(Attack(spellName));
+        }
+    }
+
+    /// <summary>
     /// Routine d'attaque
     /// </summary>
     /// <param name="spellName">Nom du sort</param>
@@ -253,21 +270,90 @@ public class Player : Character
     }
 
     /// <summary>
-    /// Incante un sort
+    /// Fin de la routine d'attaque
     /// </summary>
-    /// <param name="spellName">Nom du sort</param>
-    public void CastSpell(string spellName)
+    public void StopAttack()
     {
-        // Actualise les blocs
-        Block();
+        // Stoppe l'incantation du sort
+        SpellBook.MyInstance.StopCasting();
 
-        // Vérifie si l'on peut attaquer
-        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
+        // Indique que l'on n'attaque pas
+        IsAttacking = false;
+
+        // Arrête l'animation d'attaque
+        MyAnimator.SetBool("attack", IsAttacking);
+
+        // Pour chaque emplacement de l'equipement sur le personnage
+        foreach (GearSocket socket in gearSockets)
         {
-            // Démarre la routine d'attaque
-            attackRoutine = StartCoroutine(Attack(spellName));
+            // Arrête l'animation d'attaque
+            socket.MyAnimator.SetBool("attack", IsAttacking);
+        }
+
+        // Vérifie qu'il existe une référence à la routine d'attaque
+        if (actionRoutine != null)
+        {
+            // Arrête la routine d'attaque
+            StopCoroutine(actionRoutine);
+
+            // Réinitialise la routine d'attaque
+            actionRoutine = null;
         }
     }
+
+
+    /// <summary>
+    /// Récolte des items
+    /// </summary>
+    /// <param name="skillName">Nom de l'item</param>
+    /// <param name="items">Liste des butins</param>
+    public void Gather(string skillName, List<Drop> items)
+    {
+        // Vérifie si l'on peut attaquer
+        if (!IsAttacking)
+        {
+            // Démarre la routine d'attaque
+            actionRoutine = StartCoroutine(GatherRoutine(skillName, items));
+        }
+    }
+
+
+    /// <summary>
+    /// Routine de récolte
+    /// </summary>
+    /// <param name="skillName">Nom de l'item</param>
+    /// <param name="items">Liste des butins</param>
+    private IEnumerator GatherRoutine(string skillName, List<Drop> items)
+    {
+        // La cible de l'attaque est la cible sélectionnée
+        Transform attackTarget = MyTarget;
+
+        // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
+        Spell mySpell = SpellBook.MyInstance.CastSpell(skillName);
+
+        // Indique que l'on attaque
+        IsAttacking = true;
+
+        // Lance l'animation d'attaque
+        MyAnimator.SetBool("attack", IsAttacking);
+
+        // Pour chaque emplacement de l'equipement sur le personnage
+        foreach (GearSocket socket in gearSockets)
+        {
+            // Lance l'animation d'attaque
+            socket.MyAnimator.SetBool("attack", IsAttacking);
+        }
+
+        // Simule le temps d'incantation
+        yield return new WaitForSeconds(mySpell.MyCastTime);
+
+        // Termine la récolte
+        StopAttack();
+
+        // Création de la liste des pages de butin
+        LootWindow.MyInstance.CreatePages(items);
+    }
+
 
     /// <summary>
     /// Verifie si la cible est dans la ligne de mire
@@ -307,38 +393,6 @@ public class Player : Character
 
         // Active la paire de bloc correspondante à la direction du joueur
         blocks[exitIndex].Activate();
-    }
-
-    /// <summary>
-    /// Fin de l'attaque
-    /// </summary>
-    public void StopAttack()
-    {
-        // Stoppe l'incantation du sort
-        SpellBook.MyInstance.StopCasting();
-
-        // Indique que l'on n'attaque pas
-        IsAttacking = false;
-
-        // Arrête l'animation d'attaque
-        MyAnimator.SetBool("attack", IsAttacking);
-
-        // Pour chaque emplacement de l'equipement sur le personnage
-        foreach (GearSocket socket in gearSockets)
-        {
-            // Arrête l'animation d'attaque
-            socket.MyAnimator.SetBool("attack", IsAttacking);
-        }
-
-        // Vérifie qu'il existe une référence à la routine d'attaque
-        if (attackRoutine != null)
-        {
-            // Arrête la routine d'attaque
-            StopCoroutine(attackRoutine);
-
-            // Réinitialise la routine d'attaque
-            attackRoutine = null;
-        }
     }
 
     /// <summary>
