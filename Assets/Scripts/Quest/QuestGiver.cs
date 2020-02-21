@@ -40,6 +40,25 @@ public class QuestGiver : NPC
     [SerializeField]
     private Sprite exclamation = default;
 
+    [Header("Minimap")]
+
+    // Conteneur de l'image sur la minimap
+    [SerializeField]
+    private SpriteRenderer minimapRenderer = default;
+
+    [SerializeField]
+    // Image "Quête terminée"
+    private Sprite minimapQuestion = default;
+
+    // Image "Quête à rendre"
+    [SerializeField]
+    private Sprite minimapQuestionSilver = default;
+
+    // Image "Quête à prendre"
+    [SerializeField]
+    private Sprite minimapExclamation = default;
+
+
     // Liste des quêtes accomplies
     private List<string> completedQuests = new List<string>();
 
@@ -97,6 +116,9 @@ public class QuestGiver : NPC
                 {
                     // Actualise le status de la quête
                     statusRenderer.sprite = question;
+
+                    // Actualise l'image sur la minimap
+                    minimapRenderer.sprite = minimapQuestion;
                     break;
                 }
                 // Si le joueur n'a pas la quête
@@ -104,6 +126,9 @@ public class QuestGiver : NPC
                 {
                     // Actualise le status de la quête
                     statusRenderer.sprite = exclamation;
+
+                    // Actualise l'image sur la minimap
+                    minimapRenderer.sprite = minimapExclamation;
                     break;
                 }
                 // Si le joueur a déjà la quête mais qu'elle n'est pas terminée
@@ -111,6 +136,9 @@ public class QuestGiver : NPC
                 {
                     // Actualise le status de la quête
                     statusRenderer.sprite = questionSilver;
+                    
+                    // Actualise l'image sur la minimap
+                    minimapRenderer.sprite = minimapQuestionSilver;
                 }
 
                 // [TODO] - Affiche l'image du status
@@ -126,6 +154,9 @@ public class QuestGiver : NPC
                 {
                     // Retire l'image du status
                     statusRenderer.enabled = false;
+
+                    // Retire l'image sur la minimap
+                    minimapRenderer.enabled = false;
                 }
             }
         }

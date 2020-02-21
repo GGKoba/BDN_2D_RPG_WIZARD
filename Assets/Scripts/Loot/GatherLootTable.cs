@@ -20,6 +20,10 @@ public class GatherLootTable : LootTable, IInteractable
     [SerializeField]
     private Sprite gatherSprite = default;
 
+    // Indicateur sur la minimap
+    [SerializeField]
+    private GameObject gatherIndicator = default;
+
 
     /// <summary>
     /// Start
@@ -56,6 +60,9 @@ public class GatherLootTable : LootTable, IInteractable
 
                 // Actualise l'image
                 spriteRenderer.sprite = gatherSprite;
+
+                // Affiche l'indicateur sur la minimap
+                gatherIndicator.SetActive(true);
             }
             else
             {
@@ -93,6 +100,9 @@ public class GatherLootTable : LootTable, IInteractable
 
             // Masque l'objet
             gameObject.SetActive(false);
+
+            // Masque l'indicateur sur la minimap
+            gatherIndicator.SetActive(false);
         }
 
         // Fermeture de la fenêtre des butins

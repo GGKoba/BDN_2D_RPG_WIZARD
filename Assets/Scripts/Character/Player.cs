@@ -50,6 +50,10 @@ public class Player : Character
     [SerializeField]
     private Animator ding = default;
 
+    // Indicateur sur la minimap
+    [SerializeField]
+    private Transform minimapIcon = default;
+
     // Tableau des positions pour lancer les sorts
     [SerializeField]
     private Transform[] exitPoints = default;
@@ -158,6 +162,7 @@ public class Player : Character
         {
             exitIndex = 0;
             MyDirection += Vector2.up;
+            minimapIcon.eulerAngles = new Vector3(0, 0, 0);
         }
 
         // Déplacement en Bas
@@ -165,6 +170,7 @@ public class Player : Character
         {
             exitIndex = 2;
             MyDirection += Vector2.down;
+            minimapIcon.eulerAngles = new Vector3(0, 0, 180);
         }
 
         // Déplacement à Gauche
@@ -172,6 +178,10 @@ public class Player : Character
         {
             exitIndex = 3;
             MyDirection += Vector2.left;
+            if (MyDirection.y == 0)
+            {
+                minimapIcon.eulerAngles = new Vector3(0, 0, 90);
+            }
         }
 
         // Déplacement à Droite
@@ -179,6 +189,10 @@ public class Player : Character
         {
             exitIndex = 1;
             MyDirection += Vector2.right;
+            if (MyDirection.y == 0)
+            {
+                minimapIcon.eulerAngles = new Vector3(0, 0, 270);
+            }
         }
 
         // Stoppe l'attaque s'il y a un déplacement
@@ -325,9 +339,6 @@ public class Player : Character
     /// <param name="items">Liste des butins</param>
     private IEnumerator GatherRoutine(string skillName, List<Drop> items)
     {
-        // La cible de l'attaque est la cible sélectionnée
-        Transform attackTarget = MyTarget;
-
         // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
         Spell mySpell = SpellBook.MyInstance.CastSpell(skillName);
 
