@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 
 
+
 /// <summary>
 /// Classe de gestion des recettes de fabrication
 /// </summary>
@@ -9,10 +10,10 @@ public class Recipe : MonoBehaviour
 {
     // Description de la recette de fabrication
     [SerializeField]
-    private string recipeDescription = default;
+    private string description = default;
 
     // Propriété d'accès à la description de la recette de fabrication
-    public string MyRecipeDescription { get => recipeDescription; }
+    public string MyDescription { get => description; }
 
     // Image de la sélection d'une recette
     [SerializeField]

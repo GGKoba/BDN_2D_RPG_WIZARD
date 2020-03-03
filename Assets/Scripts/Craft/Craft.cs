@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
 
 
 /// <summary>
@@ -6,9 +9,42 @@
 /// </summary>
 public class Craft : MonoBehaviour
 {
-    // Recctte séletionnée
-    private Recipe selectedRecipe;
+    // Titre de la recette
+    [SerializeField]
+    private Text title = default;
 
+    // Description de la recette
+    [SerializeField]
+    private Text description = default;
+
+    // Prefab de la recette
+    [SerializeField]
+    private GameObject materialPrefab = default;
+
+    // Conteneur de la liste des matériaux de la recette
+    [SerializeField]
+    private Transform descriptionArea = default;
+
+    // Liste des materiaux de fabrication
+    private List<GameObject> materials = new List<GameObject>();
+
+    // Recette séletionnée
+    [SerializeField]
+    private Recipe selectedRecipe = default;
+
+    // Texte du Nombre fabricable
+    [SerializeField]
+    private Text countText = default;
+
+    // Script d'informations sur les items
+    [SerializeField]
+    private ItemInfo craftItemInfo = default;
+
+    // Nombre maximum fabricable
+    private int maxAmount;
+
+    // Nombre à fabriquer
+    private int amount;
 
 
     /// <summary>
@@ -17,22 +53,52 @@ public class Craft : MonoBehaviour
     /// <param name="quest">Recette sélectionnée</param>
     public void ShowDescription(Recipe recipe)
     {
-       // S'il y a une recette
-       if (recipe != null)
-       {
-           // S'il y a déjà une recette sélectionnée différente de la recette à afficher
-           if (selectedRecipe != null && selectedRecipe != recipe)
-           {
-               // Désélectionne la recette
-               selectedRecipe.DeSelect();
-           }
+        // S'il y a une recette
+        if (recipe != null)
+        {
+            // S'il y a déjà une recette sélectionnée différente de la recette à afficher
+            if (selectedRecipe != null && selectedRecipe != recipe)
+            {
+                // Désélectionne la recette
+                selectedRecipe.DeSelect();
+            }
 
-           // Actualise la recette sélectionnée
-           selectedRecipe = recipe;
+            // Actualise la recette sélectionnée
+            selectedRecipe = recipe;
 
-           // Sélectionne la recette
-           selectedRecipe.Select();
-       }
+            // Sélectionne la recette
+            selectedRecipe.Select();
+
+            // Réinitialise la liste des matériaux
+            foreach (GameObject go in materials)
+            {
+                Destroy(go);
+            }
+            materials.Clear();
+
+            // Actualise la titre de la recette
+            title.text = recipe.MyCraftedItem.MyTitle;
+
+            // Actualise la description de la recette
+            description.text = recipe.MyDescription;
+
+            // Actualise les informations de l'item de la recette
+            craftItemInfo.Initialize(recipe.MyCraftedItem, 1);
+
+            // Actualise la liste des matériaux de la recette
+            foreach (CraftingMaterial craftingMaterial in recipe.MyMaterials)
+            {
+                // Instantie un objet "Materiel"
+                GameObject material = Instantiate(materialPrefab, descriptionArea);
+
+                // Actualise les informations des matériaux de la recette
+                material.GetComponent<ItemInfo>().Initialize(craftingMaterial.MyItem, craftingMaterial.MyCount);
+
+                // Ajoute l'objet dans la liste des matériaux
+                materials.Add(material);
+            }
+
+        }
 
        /*
        // S'il y a une recette

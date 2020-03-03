@@ -2,6 +2,7 @@
 using UnityEngine;
 
 
+
 /// <summary>
 /// Classe de gestion des matériaux de fabrication
 /// </summary>

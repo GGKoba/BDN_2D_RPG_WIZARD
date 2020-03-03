@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1410643355878012062}
   - component: {fileID: 7483308623898789616}
   m_Layer: 5
-  m_Name: Text
+  m_Name: StackText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: a18f635a7247ce442834dd140e0edb1a, type: 3}
     m_FontSize: 8
     m_FontStyle: 0
     m_BestFit: 0
@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 8509792666378317331}
   - component: {fileID: 2491983455818421149}
   - component: {fileID: 5676696550537807378}
+  - component: {fileID: 3326676666414643308}
   m_Layer: 5
   m_Name: Material
   m_TagString: Untagged
@@ -168,6 +169,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3326676666414643308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2844961042345137750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c74d3055de40e54d9f5eb6f03094801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  image: {fileID: 5676696550537807378}
+  title: {fileID: 2304677087355882783}
+  stack: {fileID: 1410643355878012062}
+  count: 0
 --- !u!1 &4039057164792416368
 GameObject:
   m_ObjectHideFlags: 0
