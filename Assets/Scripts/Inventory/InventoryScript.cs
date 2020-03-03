@@ -167,6 +167,18 @@ public class InventoryScript : MonoBehaviour
             AddItem(healthPotion);
         }
 
+        // [U] : Ajoute un item Minerai d'or dans l'inventaire
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            // Création d'un item Potion
+            GoldNugget goldNugget = (GoldNugget)Instantiate(items[12]);
+
+            // Ajoute l'item HealthPotion dans un sac de l'inventaire
+            AddItem(goldNugget);
+        }
+
+
+
         // [H] : Ajoute un item Armor dans l'inventaire
         if (Input.GetKeyDown(KeyCode.H))
         {

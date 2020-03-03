@@ -197,7 +197,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
     /// <summary>
     /// Actualise le nombre d'éléments du bouton
     /// </summary>
-    /// <param name="item"></param>
+    /// <param name="item">Item du bouton</param>
     public void UpdateItemCount(Item item)
     {
         // Si c'est un item utilisable et qu'il a un ou plusieurs élements dans sa stack

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Calsse de gestion des fabrications
 /// </summary>
-public class Craft : MonoBehaviour
+public class Craft : Window
 {
     // Titre de la recette
     [SerializeField]
@@ -47,6 +47,15 @@ public class Craft : MonoBehaviour
     private int amount;
 
 
+    /// <summary>
+    /// Start
+    /// </summary>
+    private void Start()
+    {
+        // Abonnement sur l'évènement de mise à jour du nombre d'élements de l'item
+        InventoryScript.MyInstance.ItemCountChangedEvent += new ItemCountChanged(UpdateMaterialCount);
+    }
+    
     /// <summary>
     /// Affiche la description d'une recette de fabrication
     /// </summary>
@@ -97,50 +106,26 @@ public class Craft : MonoBehaviour
                 // Ajoute l'objet dans la liste des matériaux
                 materials.Add(material);
             }
-
         }
 
-       /*
-       // S'il y a une recette
-       if (recipe != null)
-       {
-           // S'il y a déjà une quête sélectionnée différente de la quête à afficher
-           if (selected != null && selected != quest)
-           {
-               // Désélectionne la quête
-               selected.MyQuestScript.DeSelect();
-           }
+        // Actualise le nombre d'éléments
+        UpdateMaterialCount(null);
+    }
 
-           // Actualise la quête sélectionnée
-           selected = quest;
+    /// <summary>
+    /// Actualise le nombre d'éléments de l'item
+    /// </summary>
+    /// <param name="item">Item du materiau</param>
+    private void UpdateMaterialCount(Item item)
+    {
+        // Pour chaque materiaux de la liste de fabrication
+        foreach (GameObject material in materials)
+        {
+            //ItemInfo tmp = material.GetComponent<ItemInfo>();
+            //tmp.UpdateStackCount();
 
-           // Description de la quête
-           string description = quest.GetDescription();
-
-           // Ajout des éventuels objectifs
-           if (quest.MyCollectObjectives.Length > 0 || quest.MyKillObjectives.Length > 0)
-           {
-               string objectivesText = string.Format("\n\n<color=#468FC1>Objectifs</color>\n");
-
-               // Pour chaque objectif de collecte
-               foreach (Objective collectObjective in quest.MyCollectObjectives)
-               {
-                   objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", collectObjective.MyType, collectObjective.MyCurrentAmount, collectObjective.MyAmount);
-               }
-
-               // Pour chaque objectif d'ennemi
-               foreach (Objective killObjective in quest.MyKillObjectives)
-               {
-                   objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", killObjective.MyType, killObjective.MyCurrentAmount, killObjective.MyAmount);
-               }
-
-               // Ajoute les objectifs à la description
-               description += objectivesText;
-           }
-
-           // Actualise la description de la quête sélectionnée
-           questDescription.text = description;
-       }
-       */
+            // Mise à jour du nombre d'éléments dans l'inventaire
+            material.GetComponent<ItemInfo>().UpdateStackCount();
+        }
     }
 }

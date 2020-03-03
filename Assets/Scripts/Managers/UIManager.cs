@@ -154,6 +154,13 @@ public class UIManager : MonoBehaviour
             InventoryScript.MyInstance.OpenClose();
         }
 
+        // [V] : Craft
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            // Ouverture/Fermeture de la fenêtre de fabrication
+            OpenClose(menus[6]);
+        }
+
     }
 
     /// <summary>
