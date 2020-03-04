@@ -9,6 +9,13 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
 {
     [Header("Item")]
 
+    // Clé de l'item
+    [SerializeField]
+    private string key = default;
+
+    // Propriété d'accès à la clé de l'item
+    public string MyKey { get => key; }
+
     // Taille empilable de l'item
     [SerializeField]
     private int stackSize = default;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Helmet
   m_EditorClassIdentifier: 
+  key: Helmet
   stackSize: 0
   icon: {fileID: 21300000, guid: b0afa83b34a44814b8c4669c6c0e94ec, type: 3}
   title: Casque de guerrier

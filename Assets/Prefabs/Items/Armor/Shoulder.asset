@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Shoulder
   m_EditorClassIdentifier: 
+  key: Shoulder
   stackSize: 0
   icon: {fileID: 21300000, guid: ec1f16487443de74c8a74a0ff728b5c1, type: 3}
   title: "Epauli\xE8res de guerrier"

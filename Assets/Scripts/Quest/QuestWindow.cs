@@ -99,7 +99,7 @@ public class QuestWindow : Window
             GameObject go = Instantiate(questPrefab, questArea);
 
             // Actualise le titre de la quête
-            go.GetComponent<Text>().text = quest.MyTitle;
+            go.GetComponent<Text>().text = string.Format("[{0}] {1}", quest.MyLevel, quest.MyTitle);
 
             // Script lié à l'objet "Quête"
             QuestScript questScript = go.GetComponent<QuestScript>();
@@ -149,13 +149,13 @@ public class QuestWindow : Window
                 // Pour chaque objectif de collecte
                 foreach (Objective collectObjective in quest.MyCollectObjectives)
                 {
-                    objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", collectObjective.MyType, collectObjective.MyCurrentAmount, collectObjective.MyAmount);
+                    objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", collectObjective.MyTitle, collectObjective.MyCurrentAmount, collectObjective.MyAmount);
                 }
 
                 // Pour chaque objectif d'ennemi
                 foreach (Objective killObjective in quest.MyKillObjectives)
                 {
-                    objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", killObjective.MyType, killObjective.MyCurrentAmount, killObjective.MyAmount);
+                    objectivesText += string.Format("<color=#FFFFF><size=12><i>{0} : {1}/{2}</i></size></color>\n", killObjective.MyTitle, killObjective.MyCurrentAmount, killObjective.MyAmount);
                 }
 
                 // Ajoute les objectifs à la description

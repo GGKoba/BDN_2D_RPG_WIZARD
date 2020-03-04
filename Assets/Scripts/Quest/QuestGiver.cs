@@ -93,7 +93,11 @@ public class QuestGiver : NPC
         // Pour chaque quête
         foreach (Quest quest in quests)
         {
-            quest.MyQuestGiver = this;
+            // Si la quête existe
+            if (quest != null)
+            {
+                quest.MyQuestGiver = this;
+            }
         }
     }
 

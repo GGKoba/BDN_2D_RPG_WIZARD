@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Pant
   m_EditorClassIdentifier: 
+  key: Pant
   stackSize: 0
   icon: {fileID: 21300000, guid: a081fdf6631894744ba2c3985681493f, type: 3}
   title: Tunique de mage

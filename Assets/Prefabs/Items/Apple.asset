@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef7e152a910c1142aba2fe9609220d7, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
+  key: Apple
   stackSize: 10
   icon: {fileID: 21300000, guid: 52d8063a614e7ff4cb7fc7b337f8b107, type: 3}
   title: Pomme

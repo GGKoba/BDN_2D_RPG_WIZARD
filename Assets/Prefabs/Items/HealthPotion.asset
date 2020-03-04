@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445a0f3b4e00e3247b8a9c761f385644, type: 3}
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
+  key: HealthPotion
   stackSize: 5
   icon: {fileID: 21300000, guid: e3aebac8f987dfb46b672476ea0c547d, type: 3}
   title: Potion de vie

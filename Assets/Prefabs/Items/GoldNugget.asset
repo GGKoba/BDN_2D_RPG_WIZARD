@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8f14c84b3e9cbe46b9b7c569ac7985e, type: 3}
   m_Name: GoldNugget
   m_EditorClassIdentifier: 
+  key: GoldNugget
   stackSize: 20
   icon: {fileID: 21300000, guid: 25645f07cd8e3794684e83280eed8960, type: 3}
   title: Minerai d'or

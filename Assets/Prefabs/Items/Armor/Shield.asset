@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
+  key: Shield
   stackSize: 0
   icon: {fileID: 21300000, guid: 412367ffbe1b7ad4e80b91ddcad87fdc, type: 3}
   title: Bouclier de guerrier

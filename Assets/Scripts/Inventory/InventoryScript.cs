@@ -177,8 +177,6 @@ public class InventoryScript : MonoBehaviour
             AddItem(goldNugget);
         }
 
-
-
         // [H] : Ajoute un item Armor dans l'inventaire
         if (Input.GetKeyDown(KeyCode.H))
         {
@@ -474,11 +472,11 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Retourne l'item "useable" d'un même type
+    /// Retourne l'item "useable"
     /// </summary>
-    /// <param name="type">Type de l'item "useable"</param>
+    /// <param name="key">Clé de l'item "useable"</param>
     /// <returns></returns>
-    public IUseable GetUseable(string type)
+    public IUseable GetUseable(string key)
     {
         // Pour tous les sacs
         foreach (Bag bag in bags)
@@ -486,8 +484,8 @@ public class InventoryScript : MonoBehaviour
             // Pour tous les emplacements du sac
             foreach (SlotScript slot in bag.MyBagScript.MySlots)
             {
-                // Si l'emplacement n'est pas vide et que c'est le même type
-                if (!slot.IsEmpty && slot.MyItem.MyTitle.ToLower() == type.ToLower())
+                // Si l'emplacement n'est pas vide et que c'est l'item à la même clé
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == key.ToLower())
                 {
                     return slot.MyItem as IUseable;
                 }
@@ -525,11 +523,11 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
-    /// Nombre d'items du même nom contenu dans l'inventaire
+    /// Nombre d'items similaires contenu dans l'inventaire
     /// </summary>
-    /// <param name="name">Nom de l'item</param>
+    /// <param name="key">Clé de l'item</param>
     /// <returns></returns>
-    public int GetItemCount(string name)
+    public int GetItemCount(string key)
     {
         // Nombre d'éléments
         int count = 0;
@@ -540,8 +538,8 @@ public class InventoryScript : MonoBehaviour
             // Pour tous les emplacements du sac
             foreach (SlotScript slot in bag.MyBagScript.MySlots)
             {
-                // Si l'emplacement n'est pas vide et que c'est le même type
-                if (!slot.IsEmpty && slot.MyItem.GetType().ToString().ToLower() == name.ToLower())
+                // Si l'emplacement n'est pas vide et que c'est l'item à la même clé
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == key.ToLower())
                 {
                     // Ajoute le nombre d'élements de l'emplacement
                     count += slot.MyItems.Count;
@@ -556,10 +554,10 @@ public class InventoryScript : MonoBehaviour
     /// <summary>
     /// Retourne un item du même nom contenu dans l'inventaire, avec une quantité précise
     /// </summary>
-    /// <param name="name">Nom de l'item</param>
+    /// <param name="key">Clé de l'item</param>
     /// <param name="count">Nombre d'item</param>
     /// <returns></returns>
-    public Stack<Item> GetItems(string name, int count)
+    public Stack<Item> GetItems(string key, int count)
     {
         // Stack de l'item
         Stack<Item> items = new Stack<Item>();
@@ -570,8 +568,8 @@ public class InventoryScript : MonoBehaviour
             // Pour tous les emplacements du sac
             foreach (SlotScript slot in bag.MyBagScript.MySlots)
             {
-                // Si l'emplacement n'est pas vide et que c'est le même type
-                if (!slot.IsEmpty && slot.MyItem.GetType().ToString().ToLower() == name.ToLower())
+                // Si l'emplacement n'est pas vide et que c'est l'item à la même clé
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == key.ToLower())
                 {
                     // Pour chaque item du slot
                     foreach (Item item in slot.MyItems)

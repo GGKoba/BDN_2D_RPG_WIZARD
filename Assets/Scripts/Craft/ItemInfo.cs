@@ -55,7 +55,7 @@ public class ItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             stack.enabled = true;
 
             // Actualise les informations en fonction du nombre d'éléments dans l'inventaire 
-            //stack.text = InventoryScript.MyInstance.GetItemCount(item.MyTitle).ToString() + "/" + count.ToString();
+            //stack.text = InventoryScript.MyInstance.GetItemCount(item.MyKey).ToString() + "/" + count.ToString();
             UpdateStackCount();
         }
     }
@@ -65,7 +65,7 @@ public class ItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// </summary>
     public void UpdateStackCount()
     {
-        stack.text = InventoryScript.MyInstance.GetItemCount(item.MyTitle).ToString() + "/" + count.ToString();
+        stack.text = InventoryScript.MyInstance.GetItemCount(item.MyKey).ToString() + "/" + count.ToString();
     }
 
     /// <summary>

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Glove
   m_EditorClassIdentifier: 
+  key: Glove
   stackSize: 0
   icon: {fileID: 21300000, guid: e4ac608c0ead30b40851067c3be55a45, type: 3}
   title: Gants de mage
   quality: 2
+  price: 0
   armorType: 3
   stamina: 8
   intellect: 8

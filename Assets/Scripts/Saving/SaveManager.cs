@@ -377,7 +377,7 @@ public class SaveManager : MonoBehaviour
             {
                 if (chests[i].MyItems.Count > 0)
                 {
-                    data.MyChestData[i].MyItems.Add(new ItemData(item.MyTitle, item.MySlot.MyItems.Count, item.MySlot.MyIndex));
+                    data.MyChestData[i].MyItems.Add(new ItemData(item.MyKey, item.MySlot.MyItems.Count, item.MySlot.MyIndex));
                 }
             }
         }
@@ -405,7 +405,7 @@ public class SaveManager : MonoBehaviour
         {
             if (button.MyEquippedArmor != null)
             {
-                data.MyEquipmentData.Add(new EquipmentData(button.MyEquippedArmor.MyTitle, button.name));
+                data.MyEquipmentData.Add(new EquipmentData(button.MyEquippedArmor.MyKey, button.name));
             }
         }
     }
@@ -428,7 +428,7 @@ public class SaveManager : MonoBehaviour
                 }
                 else
                 {
-                    actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Item).MyTitle, true, i);
+                    actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Item).MyKey, true, i);
                     
                 }
 
@@ -447,7 +447,7 @@ public class SaveManager : MonoBehaviour
 
         foreach (SlotScript slot in slots)
         {
-            data.MyInventoryData.MyItems.Add(new ItemData(slot.MyItem.MyTitle, slot.MyItems.Count, slot.MyIndex, slot.MyBag.MyBagIndex));
+            data.MyInventoryData.MyItems.Add(new ItemData(slot.MyItem.MyKey, slot.MyItems.Count, slot.MyIndex, slot.MyBag.MyBagIndex));
         }
     }
 
@@ -459,7 +459,7 @@ public class SaveManager : MonoBehaviour
     {
         foreach (Quest quest in QuestWindow.MyInstance.MyQuests)
         {
-            data.MyQuestData.Add(new QuestData(quest.MyTitle, quest.MyDescription, quest.MyCollectObjectives, quest.MyKillObjectives, quest.MyQuestGiver.MyQuestGiverId));
+            data.MyQuestData.Add(new QuestData(quest.MyTitle, quest.MyKey, quest.MyDescription, quest.MyCollectObjectives, quest.MyKillObjectives, quest.MyQuestGiver.MyQuestGiverId));
         }
     }
 
@@ -524,7 +524,7 @@ public class SaveManager : MonoBehaviour
 
             foreach (ItemData itemData in chest.MyItems)
             {
-                Item item = Instantiate(Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower()));
+                Item item = Instantiate(Array.Find(items, aItem => aItem.MyKey.ToLower() == itemData.MyKey.ToLower()));
                 item.MySlot = c.MyBank.MySlots.Find(slot => slot.MyIndex == itemData.MySlotIndex);
                 c.MyItems.Add(item);
             }
@@ -559,7 +559,7 @@ public class SaveManager : MonoBehaviour
         foreach (EquipmentData equipmentData in data.MyEquipmentData)
         {
             CharacterButton button = Array.Find(equipmentButtons, btn => btn.name.ToLower() == equipmentData.MyType.ToLower());
-            button.EquipArmor(Array.Find(items, item => item.MyTitle.ToLower() == equipmentData.MyTitle.ToLower()) as Armor);
+            button.EquipArmor(Array.Find(items, item => item.MyKey.ToLower() == equipmentData.MyKey.ToLower()) as Armor);
         }
     }
 
@@ -590,7 +590,7 @@ public class SaveManager : MonoBehaviour
     {
         foreach (ItemData itemData in data.MyInventoryData.MyItems)
         {
-            Item item = Instantiate(Array.Find(items, aItem => aItem.MyTitle.ToLower() == itemData.MyTitle.ToLower()));
+            Item item = Instantiate(Array.Find(items, aItem => aItem.MyKey.ToLower() == itemData.MyKey.ToLower()));
 
             for (int i = 0; i < itemData.MyStackCount; i++)
             {
@@ -610,7 +610,7 @@ public class SaveManager : MonoBehaviour
         foreach (QuestData questData in data.MyQuestData)
         {
             QuestGiver questGiver = Array.Find(questGivers, qg => qg.MyQuestGiverId == questData.MyQuestGiverId);
-            Quest quest = Array.Find(questGiver.MyQuests, q => q.MyTitle == questData.MyTitle);
+            Quest quest = Array.Find(questGiver.MyQuests, q => q.MyKey.ToLower() == questData.MyKey.ToLower());
             quest.MyQuestGiver = questGiver;
             quest.MyKillObjectives = questData.MyKillObjectives;
 

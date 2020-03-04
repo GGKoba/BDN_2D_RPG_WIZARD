@@ -116,8 +116,8 @@ public class PlayerData
 [Serializable]
 public class ItemData
 {
-    // Propriété d'accès sur le titre 
-    public string MyTitle { get; set; }
+    // Propriété d'accès sur la clé 
+    public string MyKey { get; set; }
 
     // Propriété d'accès sur le nombre d'éléments
     public int MyStackCount { get; set; }
@@ -132,9 +132,9 @@ public class ItemData
     /// <summary>
     /// Constructeur
     /// </summary>
-    public ItemData(string title, int stackCount = 0, int slotIndex = 0, int bagIndex = 0)
+    public ItemData(string key, int stackCount = 0, int slotIndex = 0, int bagIndex = 0)
     {
-        MyTitle = title;
+        MyKey = key;
         MyStackCount = stackCount;
         MySlotIndex = slotIndex;
         MyBagIndex = bagIndex;
@@ -217,7 +217,7 @@ public class BagData
 public class EquipmentData
 {
     // Propriété d'accès au nom
-    public string MyTitle { get; set; }
+    public string MyKey { get; set; }
 
     // Propriété d'accès au type
     public string MyType { get; set; }
@@ -226,9 +226,9 @@ public class EquipmentData
     /// <summary>
     /// Constructeur
     /// </summary>
-    public EquipmentData(string title, string type)
+    public EquipmentData(string key, string type)
     {
-        MyTitle = title;
+        MyKey = key;
         MyType = type;
     }
 }
@@ -269,6 +269,9 @@ public class QuestData
     // Propriété d'accès au titre
     public string MyTitle { get; set; }
 
+    // Propriété d'accès à la clé
+    public string MyKey { get; set; }
+
     // Propriété d'accès à la description
     public string MyDescription { get; set; }
 
@@ -285,9 +288,10 @@ public class QuestData
     /// <summary>
     /// Constructeur
     /// </summary>
-    public QuestData(string title, string description, CollectObjective[] collect, KillObjective[] kill, int questGiverId)
+    public QuestData(string title, string key, string description, CollectObjective[] collect, KillObjective[] kill, int questGiverId)
     {
         MyTitle = title;
+        MyKey = key;
         MyDescription = description;
         MyCollectObjectives = collect;
         MyKillObjectives = kill;

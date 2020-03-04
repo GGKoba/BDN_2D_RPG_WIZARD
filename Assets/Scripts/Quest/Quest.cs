@@ -17,6 +17,13 @@ public class Quest
     // Propriété d'accès au titre de la quête
     public string MyTitle { get => title; set => title = value; }
 
+    // Clé de la quête
+    [SerializeField]
+    private string key = default;
+
+    // Propriété d'accès à la clé de la quête
+    public string MyKey { get => key; }
+
     // Description de la quête
     [SerializeField]
     private string description = default;
@@ -110,12 +117,19 @@ public class Quest
 [Serializable]
 public abstract class Objective
 {
-    // Type de l'objectif
+    // Titre de l'objectif
     [SerializeField]
-    private string type = default;
+    private string title = default;
 
-    // Propriété d'accès au type de l'objectif
-    public string MyType { get => type; }
+    // Propriété d'accès su titre de l'objectif
+    public string MyTitle { get => title; }
+
+    // Clé de l'objectif
+    [SerializeField]
+    private string key = default;
+
+    // Propriété d'accès à la clé de l'objectif
+    public string MyKey { get => key; }
 
     // Nombre à atteindre pour l'objectif
     [SerializeField]
@@ -146,7 +160,7 @@ public abstract class Objective
         if (MyCurrentAmount <= MyAmount)
         {
             // Message par défaut
-            message += string.Format("{0} : {1}/{2}", MyType, MyCurrentAmount, MyAmount);
+            message += string.Format("{0} : {1}/{2}", MyTitle, MyCurrentAmount, MyAmount);
         }
 
         // Retourne le message
@@ -188,10 +202,10 @@ public class CollectObjective : Objective
     public void UpdateItemCount(Item item)
     {
         // Si c'est le même item que celui de l'objectif
-        if (MyType.ToLower() == item.GetType().ToString().ToLower())
+        if (MyKey.ToLower() == item.MyKey.ToLower())
         {
             // Item du même type contenu dans l'inventaire
-            MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyType);
+            MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyKey);
 
             // Actualise les informations de la quête
             RefreshObjectives(true);
@@ -204,7 +218,7 @@ public class CollectObjective : Objective
     public void UpdateItemCount()
     {
         // Item du même type contenu dans l'inventaire
-        MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyType);
+        MyCurrentAmount = InventoryScript.MyInstance.GetItemCount(MyKey);
 
         // Actualise les informations de la quête
         RefreshObjectives();
@@ -216,7 +230,7 @@ public class CollectObjective : Objective
     public void Complete()
     {
         // Stack de l'item
-        Stack<Item> items = InventoryScript.MyInstance.GetItems(MyType, MyAmount);
+        Stack<Item> items = InventoryScript.MyInstance.GetItems(MyKey, MyAmount);
 
         // Pour chaque item de la stack
         foreach (Item item in items)
@@ -240,7 +254,7 @@ public class KillObjective : Objective
     public void UpdateKillCount(Character character)
     {
         // Si c'est le même personnage que celui de l'objectif
-        if (MyType.ToLower() == character.MyType.ToLower())
+        if (MyKey.ToLower() == character.MyType.ToLower())
         {
             // Si l'objectif n'est pas encore atteint
             if (MyCurrentAmount < MyAmount)

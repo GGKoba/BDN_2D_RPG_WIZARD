@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
+  key: Sword
   stackSize: 0
   icon: {fileID: 21300000, guid: e4b29ed407378c04ab29892d3b526873, type: 3}
   title: "Ep\xE9e de guerrier"

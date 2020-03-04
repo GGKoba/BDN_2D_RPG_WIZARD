@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
   m_Name: Orb
   m_EditorClassIdentifier: 
+  key: Orb
   stackSize: 0
   icon: {fileID: 21300000, guid: 424c5ceb55be1164b9e1b7bc785b7fe1, type: 3}
   title: Orbe de mage

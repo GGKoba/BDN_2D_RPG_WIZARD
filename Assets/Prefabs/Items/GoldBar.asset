@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77279e28ea86f424b86720444aa13000, type: 3}
   m_Name: GoldBar
   m_EditorClassIdentifier: 
+  key: GoldBar
   stackSize: 20
   icon: {fileID: 21300000, guid: c85c90bd990656f4c90540ab3998aa68, type: 3}
   title: Barre d'or
