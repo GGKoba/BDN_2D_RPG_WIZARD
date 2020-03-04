@@ -53,7 +53,7 @@ public class GearSocket : MonoBehaviour
     }
 
     /// <summary>
-    /// [TODO :  refactoring Duplicated CODE] Active un layer d'animation (Idle/Walk/Attack)
+    /// [TODO : refactoring Duplicated CODE] Active un layer d'animation (Idle/Walk/Attack)
     /// </summary>
     /// <param name="layerName">Nom du layer à activer</param>
     public void ActivateLayer(string layerName)

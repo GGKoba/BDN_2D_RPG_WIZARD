@@ -226,7 +226,9 @@ public class SaveManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            // Supprime la auvegarde en cas d'erreur
+            throw;
+
+            // Supprime la sauvegarde en cas d'erreur
             Delete(savedGame);
 
             // Réinitialise l'emplacement de sauvegarde mémorisé

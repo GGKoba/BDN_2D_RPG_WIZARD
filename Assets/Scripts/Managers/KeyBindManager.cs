@@ -38,14 +38,20 @@ public class KeyBindManager : MonoBehaviour
 
 
     /// <summary>
-    /// Start
+    /// Awake
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         // Initialise les dictionnaires
         KeyBinds = new Dictionary<string, KeyCode>();
         ActionBinds = new Dictionary<string, KeyCode>();
+    }
 
+    /// <summary>
+    /// Start
+    /// </summary>
+    private void Start()
+    {
         /// Raccourcis par défaut
         InitBinds();
     }
