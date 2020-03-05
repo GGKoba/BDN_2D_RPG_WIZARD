@@ -74,7 +74,8 @@ public class ItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// <param name="eventData">Evenement d'entrée</param>
     public void OnPointerEnter(PointerEventData eventData)
     {
-
+        // Affiche le tooltip
+        UIManager.MyInstance.ShowTooltip(new Vector2(0, 0), transform.position, MyItem);
     }
 
     /// <summary>
@@ -83,6 +84,7 @@ public class ItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// <param name="eventData">Evenement de sortie</param>
     public void OnPointerExit(PointerEventData eventData)
     {
-
+        // Masque le tooltip
+        UIManager.MyInstance.HideTooltip();
     }
 }

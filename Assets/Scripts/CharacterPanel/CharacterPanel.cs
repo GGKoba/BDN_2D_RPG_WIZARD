@@ -150,14 +150,4 @@ public class CharacterPanel : MonoBehaviour
                 break;
         }
     }
-
-    /// <summary>
-    /// Déséquipe un item
-    /// </summary>
-    /// <param name="item">Item à équiper</param>
-    public void UnequipArmor(Armor item)
-    {
-
-    }
-
 }
