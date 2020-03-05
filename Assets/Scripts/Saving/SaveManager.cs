@@ -226,8 +226,6 @@ public class SaveManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw;
-
             // Supprime la sauvegarde en cas d'erreur
             Delete(savedGame);
 
