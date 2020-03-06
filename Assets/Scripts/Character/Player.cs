@@ -81,6 +81,9 @@ public class Player : Character
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
+    // Référence sur la routine
+    private Coroutine routine;
+
     // Propriété d'accès à l'argent du joueur
     public int MyGold { get; set; }
 
@@ -198,7 +201,9 @@ public class Player : Character
         // Stoppe l'attaque s'il y a un déplacement
         if (IsMoving)
         {
-            StopAttack();
+            // Stoppe les routines
+            StopActionRoutine();
+            StopRoutine();
         }
 
         // Boutons d'actions
@@ -227,8 +232,8 @@ public class Player : Character
     /// <summary>
     /// Incante un sort
     /// </summary>
-    /// <param name="spellName">Nom du sort</param>
-    public void CastSpell(string spellName)
+    /// <param name="castable">Element incantable</param>
+    public void CastSpell(ICastable castable)
     {
         // Actualise les blocs
         Block();
@@ -236,22 +241,74 @@ public class Player : Character
         // Vérifie si l'on peut attaquer
         if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
         {
-            // Démarre la routine d'attaque
-            actionRoutine = StartCoroutine(Attack(spellName));
+            // Démarre la routine
+            routine = StartCoroutine(CastActionRoutine(castable));
+        }
+    }
+
+    /// <summary>
+    /// Récolte des items
+    /// </summary>
+    /// <param name="castable">Element incantable</param>
+    /// <param name="items">Liste des butins</param>
+    public void Gather(ICastable castable, List<Drop> items)
+    {
+        // Vérifie si l'on peut attaquer
+        if (!IsAttacking)
+        {
+            // Démarre la routine
+            routine = StartCoroutine(GatherActionRoutine(castable, items));
         }
     }
 
     /// <summary>
     /// Routine d'attaque
     /// </summary>
-    /// <param name="spellName">Nom du sort</param>
-    private IEnumerator Attack(string spellName)
+    /// <param name="castable">Element incantable</param>
+    private IEnumerator CastActionRoutine(ICastable castable)
     {
         // La cible de l'attaque est la cible sélectionnée
         Transform attackTarget = MyTarget;
 
-        // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
-        Spell mySpell = SpellBook.MyInstance.CastSpell(spellName);
+        // Routine d'action
+        yield return actionRoutine = StartCoroutine(ActionRoutine(castable));
+
+        // Vérifie que la cible de l'attaque est toujours attaquable 
+        if (attackTarget != null && InLineOfSight())
+        {
+            // Récupère les informations de l'élément incantable
+            Spell spell = SpellBook.MyInstance.GetSpell(castable.MyTitle);
+
+            // Instantie le sort
+            SpellScript spellScript = Instantiate(spell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
+
+            // Affecte la cible et les dégâts du sort
+            spellScript.Initialize(attackTarget, spell.MyDamage, transform);
+        }
+    }
+
+    /// <summary>
+    /// Routine de récolte
+    /// </summary>
+    /// <param name="castable">Element incantable</param>
+    /// <param name="items">Liste des butins</param>
+    private IEnumerator GatherActionRoutine(ICastable castable, List<Drop> items)
+    {
+        // Routine d'action
+        yield return actionRoutine = StartCoroutine(ActionRoutine(castable));
+
+        // Création de la liste des pages de butin
+        LootWindow.MyInstance.CreatePages(items);
+    }
+
+    /// <summary>
+    /// Routine d'action
+    /// </summary>
+    /// <param name="castable">Element incantable</param>
+    private IEnumerator ActionRoutine(ICastable castable)
+    {
+        // Récupére les informations liées à l'action incantable
+        SpellBook.MyInstance.Cast(castable);
 
         // Indique que l'on attaque
         IsAttacking = true;
@@ -267,26 +324,16 @@ public class Player : Character
         }
 
         // Simule le temps d'incantation
-        yield return new WaitForSeconds(mySpell.MyCastTime);
+        yield return new WaitForSeconds(castable.MyCastTime);
 
-        // Vérifie que la cible de l'attaque est toujours attaquable 
-        if (attackTarget != null && InLineOfSight())
-        {
-            // Instantie le sort
-            SpellScript spell = Instantiate(mySpell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
-
-            // Affecte la cible et les dégâts du sort
-            spell.Initialize(attackTarget, mySpell.MyDamage, transform);
-        }
-
-        // Termine l'attaque
-        StopAttack();
+        // Termine la routine d'action
+        StopActionRoutine();
     }
 
     /// <summary>
-    /// Fin de la routine d'attaque
+    /// Fin de la routine d'action
     /// </summary>
-    public void StopAttack()
+    public void StopActionRoutine()
     {
         // Stoppe l'incantation du sort
         SpellBook.MyInstance.StopCasting();
@@ -304,67 +351,23 @@ public class Player : Character
             socket.MyAnimator.SetBool("attack", IsAttacking);
         }
 
-        // Vérifie qu'il existe une référence à la routine d'attaque
+        // Vérifie qu'il existe une référence à la routine d'action
         if (actionRoutine != null)
         {
-            // Arrête la routine d'attaque
+            // Arrête la routine d'action
             StopCoroutine(actionRoutine);
-
-            // Réinitialise la routine d'attaque
-            actionRoutine = null;
         }
     }
 
-
-    /// <summary>
-    /// Récolte des items
-    /// </summary>
-    /// <param name="skillName">Nom de l'item</param>
-    /// <param name="items">Liste des butins</param>
-    public void Gather(string skillName, List<Drop> items)
+    private void StopRoutine()
     {
-        // Vérifie si l'on peut attaquer
-        if (!IsAttacking)
+        // Vérifie qu'il existe une référence à la routine
+        if (routine != null)
         {
-            // Démarre la routine d'attaque
-            actionRoutine = StartCoroutine(GatherRoutine(skillName, items));
+            // Arrête la routine
+            StopCoroutine(routine);
         }
     }
-
-
-    /// <summary>
-    /// Routine de récolte
-    /// </summary>
-    /// <param name="skillName">Nom de l'item</param>
-    /// <param name="items">Liste des butins</param>
-    private IEnumerator GatherRoutine(string skillName, List<Drop> items)
-    {
-        // Récupére un sort avec ses propriétes depuis la bibliothèque des sorts 
-        Spell mySpell = SpellBook.MyInstance.CastSpell(skillName);
-
-        // Indique que l'on attaque
-        IsAttacking = true;
-
-        // Lance l'animation d'attaque
-        MyAnimator.SetBool("attack", IsAttacking);
-
-        // Pour chaque emplacement de l'equipement sur le personnage
-        foreach (GearSocket socket in gearSockets)
-        {
-            // Lance l'animation d'attaque
-            socket.MyAnimator.SetBool("attack", IsAttacking);
-        }
-
-        // Simule le temps d'incantation
-        yield return new WaitForSeconds(mySpell.MyCastTime);
-
-        // Termine la récolte
-        StopAttack();
-
-        // Création de la liste des pages de butin
-        LootWindow.MyInstance.CreatePages(items);
-    }
-
 
     /// <summary>
     /// Verifie si la cible est dans la ligne de mire

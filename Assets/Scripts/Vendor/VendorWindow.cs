@@ -14,7 +14,7 @@ public class VendorWindow : Window
     private VendorButton[] vendorButtons = default;
 
     // Liste des pages des items du vendeur
-    private List<List<VendorItem>> pages = new List<List<VendorItem>>();
+    private readonly List<List<VendorItem>> pages = new List<List<VendorItem>>();
 
     // Référence sur le vendeur
     // private Vendor vendor;

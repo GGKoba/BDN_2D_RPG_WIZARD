@@ -78,7 +78,7 @@ public class GatherLootTable : LootTable, IInteractable
     public void Interact()
     {
         // Lance la routine de récolte
-        Player.MyInstance.Gather("Gather", MyDroppedItems);
+        Player.MyInstance.Gather(SpellBook.MyInstance.GetSpell("Gather"), MyDroppedItems);
 
         // Actualise la référence sur l'élément interactif
         LootWindow.MyInstance.MyInteractable = this;

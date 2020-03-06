@@ -28,7 +28,7 @@ public class QuestGiverWindow : Window
     }
 
     // Liste des quêtes
-    private List<GameObject> quests = new List<GameObject>();
+    private readonly List<GameObject> quests = new List<GameObject>();
 
     // Référence sur le donneur de quêtes
     private QuestGiver questGiver;

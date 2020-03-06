@@ -7,15 +7,21 @@ using UnityEngine;
 /// Classe de l'objet "Sort"
 /// </summary>
 [Serializable]
-public class Spell : IUseable, IMoveable, IDescribable
+public class Spell : IUseable, IMoveable, IDescribable, ICastable
 {
     // Nom du sort
     [SerializeField]
-    private string name = default;
+    private string title = default;
+
+    // Propriété d'accès au nom du sort 
+    public string MyTitle { get => title; }
 
     // Dégâts du sort
     [SerializeField]
     private int damage = default;
+
+    // Propriété d'accès aux dégâts du sort
+    public int MyDamage { get => damage; }
 
     // Description du sort
     [SerializeField]
@@ -25,44 +31,33 @@ public class Spell : IUseable, IMoveable, IDescribable
     [SerializeField]
     private Sprite icon = default;
 
+    // Propriété d'accès à l'image du sort 
+    public Sprite MyIcon { get => icon; }
+
     // Vitesse du sort
     [SerializeField]
     private float speed = default;
+
+    // Propriété d'accès à la vitesse du sort 
+    public float MySpeed { get => speed; }
 
     // Temps d'incantation du sort
     [SerializeField]
     private float castTime = default;
 
+    // Propriété d'accès au temps d'incantation du sort
+    public float MyCastTime { get => castTime; }
+
     // Prefab du sort
     [SerializeField]
     private GameObject prefab = default;
 
+    // Propriété d'accès à la prefab du sort 
+    public GameObject MyPrefab { get => prefab; }
+
     // Couleur de la barre de sort
     [SerializeField]
     private Color barColor = default;
-
-
-    /// <summary>
-    /// Accesseurs sur les propriétés du sort
-    /// </summary>
-
-    // Propriété d'accès au nom du sort 
-    public string MyName { get => name; }
-
-    // Propriété d'accès aux dégâts du sort
-    public int MyDamage { get => damage; }
-
-    // Propriété d'accès à l'image du sort 
-    public Sprite MyIcon { get => icon; }
-
-    // Propriété d'accès à la vitesse du sort 
-    public float MySpeed { get => speed; }
-
-    // Propriété d'accès au temps d'incantation du sort
-    public float MyCastTime { get => castTime; }
-
-    // Propriété d'accès à la prefab du sort 
-    public GameObject MyPrefab { get => prefab; }
 
     // Propriété d'accès à la couleur de la barre 
     public Color MyBarColor { get => barColor; }
@@ -73,7 +68,7 @@ public class Spell : IUseable, IMoveable, IDescribable
     /// </summary>
     public void Use()
     {
-        Player.MyInstance.CastSpell(MyName);
+        Player.MyInstance.CastSpell(this);
     }
 
     /// <summary>
@@ -81,7 +76,7 @@ public class Spell : IUseable, IMoveable, IDescribable
     /// </summary>
     public string GetDescription()
     {
-        string spellTitle = string.Format("<color=#FFD904><b>{0}</b></color>", name);
+        string spellTitle = string.Format("<color=#FFD904><b>{0}</b></color>", title);
         string spellStats = string.Format("<color=#ECECEC>Incantation : {0}s</color>", castTime);
         string spellDescription = string.Format("<color=#E0D0AE>{0}\net cause <color=cyan>{1}</color> points de dégâts</color>", description, damage);
 

@@ -60,7 +60,7 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès à la cible de du personnage
     public Transform MyTarget { get; set; }
 
-    // Référence sur la routine d'attaque
+    // Référence sur la routine d'action
     protected Coroutine actionRoutine;
 
     // Propriété d'accès sur l'indicateur d'attaque du personnage
