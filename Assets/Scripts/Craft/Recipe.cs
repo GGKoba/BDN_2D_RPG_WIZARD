@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion des recettes de fabrication
 /// </summary>
-public class Recipe : MonoBehaviour
+public class Recipe : MonoBehaviour, ICastable
 {
     // Description de la recette de fabrication
     [SerializeField]
@@ -39,6 +39,26 @@ public class Recipe : MonoBehaviour
 
     // Propriété d'accès au nombre d'item à fabriquer
     public int MyCraftedItemCount { get => craftedItemCount; set => craftedItemCount = value; }
+
+    // Propriété d'accès au titre de l'item
+    public string MyTitle { get => craftedItem.MyTitle; }
+
+    // Propriété d'accès à l'image de l'item
+    public Sprite MyIcon { get => craftedItem.MyIcon; }
+
+    // Temps de fabrication
+    [SerializeField]
+    private float craftTime = default;
+
+    // Propriété d'accès au temps de fabrication
+    public float MyCastTime { get => craftTime; }
+
+    // Couleur de la barre d'incantation
+    [SerializeField]
+    private Color barColor = default;
+
+    // Propriété d'accès à la couleur de la barre d'incantation
+    public Color MyBarColor { get => barColor; }
 
 
     /// <summary>

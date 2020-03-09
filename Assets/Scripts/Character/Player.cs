@@ -81,8 +81,8 @@ public class Player : Character
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
-    // Référence sur la routine
-    private Coroutine routine;
+    // Propriété d'accès sur la routine
+    public Coroutine MyRoutine { get; set; }
 
     // Propriété d'accès à l'argent du joueur
     public int MyGold { get; set; }
@@ -242,7 +242,7 @@ public class Player : Character
         if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
         {
             // Démarre la routine
-            routine = StartCoroutine(CastActionRoutine(castable));
+            MyRoutine = StartCoroutine(CastActionRoutine(castable));
         }
     }
 
@@ -257,7 +257,7 @@ public class Player : Character
         if (!IsAttacking)
         {
             // Démarre la routine
-            routine = StartCoroutine(GatherActionRoutine(castable, items));
+            MyRoutine = StartCoroutine(GatherActionRoutine(castable, items));
         }
     }
 
@@ -299,6 +299,19 @@ public class Player : Character
 
         // Création de la liste des pages de butin
         LootWindow.MyInstance.CreatePages(items);
+    }
+
+    /// <summary>
+    /// Routine de fabrication
+    /// </summary>
+    /// <param name="castable">Element incantable</param>
+    public IEnumerator CraftActionRoutine(ICastable castable)
+    {
+        // Routine d'action
+        yield return actionRoutine = StartCoroutine(ActionRoutine(castable));
+
+        // Ajoute l'item dans l'inventaire
+        Craft.MyInstance.AddItemsToInventory();
     }
 
     /// <summary>
@@ -362,10 +375,10 @@ public class Player : Character
     private void StopRoutine()
     {
         // Vérifie qu'il existe une référence à la routine
-        if (routine != null)
+        if (MyRoutine != null)
         {
             // Arrête la routine
-            StopCoroutine(routine);
+            StopCoroutine(MyRoutine);
         }
     }
 

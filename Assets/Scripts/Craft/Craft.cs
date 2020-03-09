@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,24 @@ using UnityEngine.UI;
 /// </summary>
 public class Craft : Window
 {
+    // Instance de classe (singleton)
+    private static Craft instance;
+
+    // Propriété d'accès à l'instance
+    public static Craft MyInstance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                // Retourne l'object de type Craft (doit être unique)
+                instance = FindObjectOfType<Craft>();
+            }
+
+            return instance;
+        }
+    }
+
     // Titre de la recette
     [SerializeField]
     private Text title = default;
@@ -54,6 +73,9 @@ public class Craft : Window
     {
         // Abonnement sur l'évènement de mise à jour du nombre d'élements de l'item
         InventoryScript.MyInstance.ItemCountChangedEvent += new ItemCountChanged(UpdateMaterialCount);
+
+        // Affiche la description de la 1ère recette
+        ShowDescription(selectedRecipe);
     }
     
     /// <summary>
@@ -127,5 +149,33 @@ public class Craft : Window
             // Mise à jour du nombre d'éléments dans l'inventaire
             material.GetComponent<ItemInfo>().UpdateStackCount();
         }
+    }
+
+    /// <summary>
+    /// Fabrique un item
+    /// </summary>
+    public void CraftItem()
+    {
+        // Démarre la routine
+        StartCoroutine(CraftRoutine(0));
+    }
+
+    /// <summary>
+    /// Routine de fabrication
+    /// </summary>
+    /// <param name="castable">Nombre d'item à fabriquer</param>
+    private IEnumerator CraftRoutine(int count)
+    {
+        // Routine de fabrication
+        yield return Player.MyInstance.MyRoutine = StartCoroutine(Player.MyInstance.CraftActionRoutine(selectedRecipe));
+    }
+
+    /// <summary>
+    /// Ajout d'item(s) dans l'inventaire
+    /// </summary>
+    public void AddItemsToInventory()
+    {
+        // Ajoute dans l'inventaire
+        InventoryScript.MyInstance.AddItem(craftItemInfo.MyItem);
     }
 }
