@@ -156,8 +156,12 @@ public class Craft : Window
     /// </summary>
     public void CraftItem()
     {
-        // Démarre la routine
-        StartCoroutine(CraftRoutine(0));
+        // [DEBUG] isAttacking pour ne pas pouvoir spam
+        if (CanCraft() && !Player.MyInstance.IsAttacking)
+        {
+            // Démarre la routine
+            StartCoroutine(CraftRoutine(0));
+        }
     }
 
     /// <summary>
@@ -175,7 +179,42 @@ public class Craft : Window
     /// </summary>
     public void AddItemsToInventory()
     {
-        // Ajoute dans l'inventaire
-        InventoryScript.MyInstance.AddItem(craftItemInfo.MyItem);
+        // Si on peut ajouter dans l'inventaire
+        if (InventoryScript.MyInstance.AddItem(craftItemInfo.MyItem))
+        {
+            // Pour chaque item de fabrication 
+            foreach (CraftingMaterial material in selectedRecipe.MyMaterials)
+            {
+                // Pour chaque élément nécessaire
+                for (int i = 0; i < material.MyCount; i++)
+                {
+                    InventoryScript.MyInstance.RemoveItem(material.MyItem);
+                }
+            }
+        }
+    }
+
+    private bool CanCraft()
+    {
+        bool canCraft = true;
+
+        // Pour chaque item de fabrication 
+        foreach (CraftingMaterial material in selectedRecipe.MyMaterials)
+        {
+            // Nombre d'élements
+            int count = InventoryScript.MyInstance.GetItemCount(material.MyItem.MyKey);
+
+            if (count < material.MyCount)
+            {
+                canCraft = false;
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        return canCraft;
     }
 }

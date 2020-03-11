@@ -291,6 +291,31 @@ public class InventoryScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Retire un item de l'inventaire
+    /// </summary>
+    /// <param name="item">Item à retirer</param>
+    public void RemoveItem(Item item)
+    {
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est le même item
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == item.MyKey.ToLower())
+                {
+                    // Retire l'item
+                    slot.RemoveItem(item);
+
+                    // break;
+                    return;
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Echange les sacs
     /// </summary>
     /// <param name="oldBag">Ancien sac</param>

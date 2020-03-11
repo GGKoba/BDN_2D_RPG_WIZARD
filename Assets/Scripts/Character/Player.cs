@@ -253,7 +253,7 @@ public class Player : Character
     /// <param name="items">Liste des butins</param>
     public void Gather(ICastable castable, List<Drop> items)
     {
-        // Vérifie si l'on peut attaquer
+        // Vérifie si l'on peut récolter
         if (!IsAttacking)
         {
             // Démarre la routine
@@ -323,18 +323,8 @@ public class Player : Character
         // Récupére les informations liées à l'action incantable
         SpellBook.MyInstance.Cast(castable);
 
-        // Indique que l'on attaque
-        IsAttacking = true;
-
-        // Lance l'animation d'attaque
-        MyAnimator.SetBool("attack", IsAttacking);
-
-        // Pour chaque emplacement de l'equipement sur le personnage
-        foreach (GearSocket socket in gearSockets)
-        {
-            // Lance l'animation d'attaque
-            socket.MyAnimator.SetBool("attack", IsAttacking);
-        }
+        // Lance l'attaque
+        SetIsAttacking(true);
 
         // Simule le temps d'incantation
         yield return new WaitForSeconds(castable.MyCastTime);
@@ -351,18 +341,8 @@ public class Player : Character
         // Stoppe l'incantation du sort
         SpellBook.MyInstance.StopCasting();
 
-        // Indique que l'on n'attaque pas
-        IsAttacking = false;
-
-        // Arrête l'animation d'attaque
-        MyAnimator.SetBool("attack", IsAttacking);
-
-        // Pour chaque emplacement de l'equipement sur le personnage
-        foreach (GearSocket socket in gearSockets)
-        {
-            // Arrête l'animation d'attaque
-            socket.MyAnimator.SetBool("attack", IsAttacking);
-        }
+        // Stoppe l'attaque
+        SetIsAttacking(false);
 
         // Vérifie qu'il existe une référence à la routine d'action
         if (actionRoutine != null)
@@ -372,6 +352,34 @@ public class Player : Character
         }
     }
 
+    /// <summary>
+    /// Actualise la propriété d'attaque
+    /// </summary>
+    /// <param name="isAttacking"></param>
+    private void SetIsAttacking(bool isAttacking)
+    {
+        IsAttacking = isAttacking;
+
+        SetAttackAnimations();
+    }
+
+    /// <summary>
+    /// Actualise les animations d'attaque
+    /// </summary>
+    private void SetAttackAnimations()
+    {
+        MyAnimator.SetBool("attack", IsAttacking);
+
+        // Pour chaque emplacement de l'equipement sur le personnage
+        foreach (GearSocket socket in gearSockets)
+        {
+            socket.MyAnimator.SetBool("attack", IsAttacking);
+        }
+    }
+
+    /// <summary>
+    /// Stoppe la routine
+    /// </summary>
     private void StopRoutine()
     {
         // Vérifie qu'il existe une référence à la routine
