@@ -63,7 +63,20 @@ public class Craft : Window
     private int maxAmount;
 
     // Nombre à fabriquer
-    private int amount;
+    // private int amount;
+
+    // Propriété d'accès au nombre à fabriquer
+    private int MyAmount
+    { 
+        set
+        {
+            countText.text = value.ToString();
+            MyAmount = value;
+        }
+    }
+
+    // Liste des nombres à fabriquer
+    private List<int> amounts = new List<int>();
 
 
     /// <summary>
@@ -140,6 +153,8 @@ public class Craft : Window
     /// <param name="item">Item du materiau</param>
     private void UpdateMaterialCount(Item item)
     {
+        amounts.Sort();
+
         // Pour chaque materiaux de la liste de fabrication
         foreach (GameObject material in materials)
         {
@@ -148,6 +163,28 @@ public class Craft : Window
 
             // Mise à jour du nombre d'éléments dans l'inventaire
             material.GetComponent<ItemInfo>().UpdateStackCount();
+        }
+
+        if (CanCraft())
+        {
+            maxAmount = amounts[0];
+
+            // Définit le nombre par défaut
+            if (countText.text == "0")
+            {
+                // Actualise le nombre possible à fabriquer
+                MyAmount = 1;
+            }
+            else if(int.Parse(countText.text) > maxAmount)
+            {
+                // Actualise le nombre possible à fabriquer
+                MyAmount = maxAmount;
+            }
+        }
+        else
+        {
+            // Actualise le nombre possible à fabriquer
+            MyAmount = 0;
         }
     }
 
@@ -197,11 +234,12 @@ public class Craft : Window
     private bool CanCraft()
     {
         bool canCraft = true;
+        amounts = new List<int>();
 
         // Pour chaque item de fabrication 
         foreach (CraftingMaterial material in selectedRecipe.MyMaterials)
         {
-            // Nombre d'élements
+            // Nombre d'éléments
             int count = InventoryScript.MyInstance.GetItemCount(material.MyItem.MyKey);
 
             if (count < material.MyCount)
@@ -211,6 +249,8 @@ public class Craft : Window
             }
             else
             {
+                // Actualise le nombre possible à fabriquer
+                amounts.Add(count / material.MyCount);
                 continue;
             }
         }
