@@ -63,15 +63,16 @@ public class Craft : Window
     private int maxAmount;
 
     // Nombre à fabriquer
-    // private int amount;
+    private int amount;
 
     // Propriété d'accès au nombre à fabriquer
     private int MyAmount
-    { 
+    {
+        get { return amount; }
         set
         {
             countText.text = value.ToString();
-            MyAmount = value;
+            amount = value;
         }
     }
 
@@ -185,19 +186,52 @@ public class Craft : Window
         {
             // Actualise le nombre possible à fabriquer
             MyAmount = 0;
+            maxAmount = 0;
         }
     }
 
     /// <summary>
+    /// Changement du nombre à fabriquer
+    /// </summary>
+    /// <param name="i">Nombre à fabriquer</param>
+    public void ChangeAmount(int i)
+    {
+        // Suivant le nombre à fabriquer
+        if ((amount + i) > 0 && amount + i <= maxAmount)
+        {
+            // Actualise le nombre à fabriquer
+            MyAmount += i;
+        }
+    }
+
+
+    /// <summary>
     /// Fabrique un item
     /// </summary>
-    public void CraftItem()
+    /// <param name="all">Fabriquer TOUT</param>
+    public void CraftItem(bool all)
     {
         // [DEBUG] isAttacking pour ne pas pouvoir spam
         if (CanCraft() && !Player.MyInstance.IsAttacking)
         {
+            int count;
+
+            if (all)
+            {
+                amounts.Sort();
+                countText.text = maxAmount.ToString();
+                
+                // Le nombre à fabriquer devient le nombre maximum à fabriquer 
+                count = amounts[0];
+            }
+            else
+            {
+                // Le nombre à fabriquer devient le nombre saisi 
+                count = MyAmount;
+            }
+
             // Démarre la routine
-            StartCoroutine(CraftRoutine(0));
+            StartCoroutine(CraftRoutine(count));
         }
     }
 
@@ -207,8 +241,12 @@ public class Craft : Window
     /// <param name="castable">Nombre d'item à fabriquer</param>
     private IEnumerator CraftRoutine(int count)
     {
-        // Routine de fabrication
-        yield return Player.MyInstance.MyRoutine = StartCoroutine(Player.MyInstance.CraftActionRoutine(selectedRecipe));
+        // Pour le nombre à fabraiquer
+        for (int i = 0; i < count; i++)
+        {
+            // Routine de fabrication
+            yield return Player.MyInstance.MyRoutine = StartCoroutine(Player.MyInstance.CraftActionRoutine(selectedRecipe));
+        }
     }
 
     /// <summary>
