@@ -64,7 +64,6 @@ public class InventoryScript : MonoBehaviour
             if (value != null)
             {
                 fromSlot.MyCover.enabled = true;
-                // fromSlot.MyIcon.color = Color.grey;
             }
         }
     }
@@ -137,7 +136,7 @@ public class InventoryScript : MonoBehaviour
         {
             // Création d'un sac
             Bag bag = (Bag)Instantiate(items[0]);
-
+            
             // Initialisation du sac
             bag.Initialize(20);
 
@@ -267,6 +266,9 @@ public class InventoryScript : MonoBehaviour
     {
         // Assigne le script au sac
         bag.SetUpScript();
+
+        // Ajoute l'index du sac sur le script
+        bag.MyBagScript.MyBagIndex = bagIndex;
 
         // Ajoute le sac sur l'index du bouton
         bag.MyBagButton = bagButtons[bagIndex];

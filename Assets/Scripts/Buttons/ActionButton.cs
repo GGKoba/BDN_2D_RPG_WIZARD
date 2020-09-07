@@ -182,9 +182,6 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         // Image du bouton
         MyIcon.sprite = moveable.MyIcon;
 
-        // Couleur du bouton
-        MyIcon.color = Color.white;
-
         // Affiche l'image
         MyIcon.enabled = true;
 

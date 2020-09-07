@@ -173,7 +173,11 @@ public class SaveManager : MonoBehaviour
         }
         catch (System.Exception)
         {
-            throw;
+            // Supprime la sauvegarde en cas d'erreur
+            Delete(savedGame);
+
+            // Réinitialise l'emplacement de sauvegarde mémorisé
+            PlayerPrefs.DeleteKey("Load");
         }
     }
 
@@ -231,6 +235,9 @@ public class SaveManager : MonoBehaviour
 
             // Réinitialise l'emplacement de sauvegarde mémorisé
             PlayerPrefs.DeleteKey("Load");
+
+            // Charge la scène de départ
+            SceneManager.LoadScene(0);
         }
     }
 
