@@ -328,11 +328,11 @@ public class UIManager : MonoBehaviour
             // Actualise le texte du nombre d'éléments de l'item
             clickable.MyStackText.text = clickable.MyCount.ToString();
 
-            // Actualise la couleur du texte
-            clickable.MyStackText.color = Color.white;
+            // Affiche le compteur sur l'image
+            clickable.MyStackText.enabled = true;
 
-            // Actualise la couleur de l'image
-            clickable.MyIcon.color = Color.white;
+            // Affiche l'image
+            clickable.MyIcon.enabled = true;
         }
         else
         {
@@ -343,11 +343,11 @@ public class UIManager : MonoBehaviour
         // S'il n'y a plus d'élément
         if (clickable.MyCount == 0)
         {
-            // Réinitialisation de l'image de l'emplacement
-            clickable.MyIcon.sprite = null;
+            // Masque le compteur sur l'image
+            clickable.MyStackText.enabled = false;
 
-            // Réinitialisation de la couleur de l'emplacement
-            clickable.MyIcon.color = new Color(0, 0, 0, 0);
+            // Masque l'image
+            clickable.MyIcon.enabled = false;
         }
     }
 
@@ -359,11 +359,11 @@ public class UIManager : MonoBehaviour
         // Réinitialisation du texte du nombre d'éléments de l'item
         clickable.MyStackText.text = null;
 
-        // Réinitialisation de la couleur du texte du nombre d'éléments de l'item
-        clickable.MyStackText.color = new Color(0, 0, 0, 0);
+        // Masque le compteur sur l'image
+        clickable.MyStackText.enabled = false;
 
-        // Actualise la couleur de l'image
-        clickable.MyIcon.color = Color.white;
+        // Affiche l'image
+        clickable.MyIcon.enabled = true;
     }
 
 

@@ -109,7 +109,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         // Clic gauche
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            // S'il y a un objet à déplacer et qu'il est utlisable
+            // S'il y a un objet à déplacer et qu'il est utilisable
             if (Hand.MyInstance.MyMoveable != null && Hand.MyInstance.MyMoveable is IUseable)
             {
                 // Cast l'objet à déplacer en objet à utiliser
@@ -119,6 +119,8 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
             // Masque le tooltip
             UIManager.MyInstance.HideTooltip();
         }
+
+        // [TODO] : clic droit => remove
     }
 
     /// <summary>
@@ -135,8 +137,11 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
 
             if (InventoryScript.MyInstance.MyFromSlot != null)
             {
-                // Actualise la couleur de l'emplacement
-                InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
+                // Masque l'image de superposition
+                InventoryScript.MyInstance.MyFromSlot.MyCover.enabled = false;
+
+                // Affiche l'image
+                InventoryScript.MyInstance.MyFromSlot.MyIcon.enabled = true;
 
                 // Réinitilisatiion de l'emplacement
                 InventoryScript.MyInstance.MyFromSlot = null;
@@ -179,6 +184,9 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
 
         // Couleur du bouton
         MyIcon.color = Color.white;
+
+        // Affiche l'image
+        MyIcon.enabled = true;
 
         // S'il y a plus d'un élement
         if (count > 1)

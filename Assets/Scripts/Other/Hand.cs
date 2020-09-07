@@ -75,8 +75,8 @@ public class Hand : MonoBehaviour
         // Image de l'objet
         icon.sprite = moveableItem.MyIcon;
 
-        // Couleur de l'objet;
-        icon.color = Color.white;
+        // Affiche l'objet
+        icon.enabled = true;
     }
 
     /// <summary>
@@ -91,8 +91,8 @@ public class Hand : MonoBehaviour
         // Réinitialisation de l'objet
         MyMoveable = null;
 
-        // Redéfinit une couleur noire transparente à l'objet
-        icon.color = new Color(0, 0, 0, 0);
+        // Masque l'objet
+        icon.enabled = false;
 
         // Retourne l'objet
         return item;
@@ -106,8 +106,8 @@ public class Hand : MonoBehaviour
         // Réinitialisation de l'objet
         MyMoveable = null;
 
-        // Redéfinit une couleur noire transparente à l'objet
-        icon.color = new Color(0, 0, 0, 0);
+        // Masque l'objet
+        icon.enabled = false;
 
         // Réinitialisation de l'emplacement
         InventoryScript.MyInstance.MyFromSlot = null;

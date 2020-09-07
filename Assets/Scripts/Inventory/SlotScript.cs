@@ -18,8 +18,15 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     [SerializeField]
     private Image icon;
 
+    // Image de superposition
+    [SerializeField]
+    private Image cover;
+
     // Propriété d'accès à l'image de l'emplacement
     public Image MyIcon { get => icon; set => icon = value; }
+
+    // Propriété d'accès à l'image de superposition
+    public Image MyCover{ get => cover; }
 
     // Texte du nombre d'éléments de l'emplacement
     [SerializeField]
@@ -78,6 +85,9 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
         // Actualise la couleur de l'emplacement
         icon.color = Color.white;
 
+        // Masque l'image de superposition
+        MyCover.enabled = false;
+
         // Assigne l'emplacement à l'item
         item.MySlot = this;
 
@@ -106,7 +116,10 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     {
         // Nombre d'éléments dans la stack des items de l'emplacement
         int initCount = items.Count;
-        
+
+        // Masque l'image de superposition
+        MyCover.enabled = false;
+
         // S'il y a des éléments dans la stack des items de l'emplacement
         if (initCount > 0)
         {
@@ -286,11 +299,14 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     /// <returns></returns>
     private bool PutItemBack()
     {
+        // Masque l'image de superposition
+        MyCover.enabled = false;
+
         // Si c'est le même emplacement
         if (InventoryScript.MyInstance.MyFromSlot == this)
         {
-            // Actualise la couleur de l'emplacement
-            InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
+            // Actualise l'image
+            InventoryScript.MyInstance.MyFromSlot.MyIcon.enabled = true;
 
             // Retourne que c'est OK
             return true;
@@ -340,6 +356,9 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     /// </summary>
     public bool SwapItems(SlotScript from)
     {
+        // Masque l'image de superposition
+        from.MyCover.enabled = false;
+
         if (IsEmpty)
         {
             // Retourne que c'est KO
