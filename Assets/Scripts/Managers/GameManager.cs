@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -41,6 +42,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player = default;
 
+    // Référence sur les layers
+    [SerializeField]
+    private LayerMask clickableLayer = default, groundLayer = default;
+
     // Cible courante
     private Enemy currentTarget;
 
@@ -51,6 +56,11 @@ public class GameManager : MonoBehaviour
     // Index de la cible
     private int targetIndex;
 
+    // Liste des zones "non particables"
+    private HashSet<Vector3Int> blocked = new HashSet<Vector3Int>();
+
+    // Propriété d'accès à la liste des zones "non particables"
+    public HashSet<Vector3Int> MyBlocked { get => blocked; set => blocked = value; }
 
     /// <summary>
     /// Start
@@ -81,7 +91,7 @@ public class GameManager : MonoBehaviour
     private void ClickTarget()
     {
         // Raycast depuis la position de la souris dans le jeu
-        RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Clickable"));
+        RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, clickableLayer);
 
         // Clic gauche et que l'on ne pointe pas sur un élément de l'interface (par exemple un bouton d'action)
         if (Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
@@ -120,7 +130,19 @@ public class GameManager : MonoBehaviour
                     // Interaction avec le personnage
                     entity.Interact();
                 }
-            }            
+            }
+            else
+            {
+                // Raycast depuis la position de la souris dans le jeu
+                RaycastHit2D hitGround = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, groundLayer);
+
+                // S'il y a une entité avec laquelle le joueur est en interaction
+                if (hitGround.collider != null)
+                {
+                    // Calcul le chemin jusqu'au point cliqué
+                    player.GetPath(mainCamera.ScreenToWorldPoint(Input.mousePosition));
+                }
+            }
         }
     }
 

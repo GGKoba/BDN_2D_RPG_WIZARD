@@ -20,7 +20,7 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
 
     // Image de superposition
     [SerializeField]
-    private Image cover;
+    private Image cover = default;
 
     // Propriété d'accès à l'image de l'emplacement
     public Image MyIcon { get => icon; set => icon = value; }

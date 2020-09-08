@@ -22,6 +22,9 @@ public class WaterTile : Tile
     /// <param name="go">Objet de la cellule</param>
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
+        // Ajoute la zone dans la liste des zones "non praticables"
+        GameManager.MyInstance.MyBlocked.Add(position);
+
         // Appelle StartUp sur la classe mère
         return base.StartUp(position, tilemap, go);
     }

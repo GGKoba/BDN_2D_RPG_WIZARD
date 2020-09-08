@@ -81,6 +81,21 @@ public class Player : Character
     // Positions mini/maxi 
     private Vector3 minPosition, maxPosition;
 
+    #region PathFinding
+    // Script de Pathfinding
+    [SerializeField]
+    private AStar astar = default;
+
+    // Stack du chemin
+    private Stack<Vector3> path;
+
+    // Objectif
+    private Vector3 goal;
+
+    // Destination
+    private Vector3 destination;
+    #endregion
+
     // Propriété d'accès sur la routine
     public Coroutine MyRoutine { get; set; }
 
@@ -101,6 +116,9 @@ public class Player : Character
     {
         // Vérifie les interactions
         GetInput();
+
+        // Initialise de déplacement au clic
+        ClickToMove();
 
         // Position du joueur
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, minPosition.x, maxPosition.x), Mathf.Clamp(transform.position.y, minPosition.y, maxPosition.y), transform.position.z);
@@ -539,6 +557,50 @@ public class Player : Character
     {
         levelText.text = MyLevel.ToString();
     }
+
+    /// <summary>
+    /// Trouve le chemin jusqu'à l'objectif
+    /// </summary>
+    /// <param name="aGoal"></param>
+    public void GetPath(Vector3 aGoal)
+    {
+        path = astar.Algorithm(transform.position, aGoal);
+        destination = path.Pop();
+        goal = aGoal;
+    }
+
+    /// <summary>
+    /// Déplacement par clic
+    /// </summary>
+    private void ClickToMove()
+    {
+        // S'il y a un chemin
+        if (path != null)
+        {
+            // Déplacement vers la destination
+            transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, MySpeed * Time.deltaTime);
+
+            // Distance entre la destination et le joueur
+            float distance = Vector2.Distance(destination, transform.parent.position);
+
+            // Si le joueur est sur la destination
+            if (distance <= 0f)
+            {
+                // S'il y a un chemin à faire
+                if (path.Count > 0)
+                {
+                    // Mise à jour de la destination
+                    destination = path.Pop();
+                }
+                else
+                {
+                    // Réinitialise le chemin
+                    path = null;
+                }
+            }
+        }
+    }
+
 
     /// <summary>
     /// Détection de collision du joueur avec des obstables
