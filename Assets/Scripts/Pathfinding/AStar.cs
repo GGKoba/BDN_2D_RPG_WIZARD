@@ -15,6 +15,9 @@ public class AStar : MonoBehaviour
     [SerializeField]
     private Tilemap tilemap = default;
 
+    // Propriété d'accès à la Map
+    public Tilemap MyTilemap { get => tilemap; }
+
     // Noeud courant
     private Node current;
 
@@ -42,8 +45,8 @@ public class AStar : MonoBehaviour
     /// <returns></returns>
     public Stack<Vector3> Algorithm(Vector3 start, Vector3 goal)
     {
-        startPos = tilemap.WorldToCell(start);
-        goalPos = tilemap.WorldToCell(goal);
+        startPos = MyTilemap.WorldToCell(start);
+        goalPos = MyTilemap.WorldToCell(goal);
 
         current = GetNode(startPos);
 
@@ -52,6 +55,13 @@ public class AStar : MonoBehaviour
 
         // Liste des noeuds déjà verifiés
         closedList = new HashSet<Node>();
+
+        //Réinitialise les noeuds
+        foreach (KeyValuePair <Vector3Int, Node> node in allNodes)
+        {
+            node.Value.Parent = null;
+        }
+        allNodes.Clear();
 
         // Ajoute le noeud courant dans la liste à vérifier
         openList.Add(current);
@@ -235,10 +245,10 @@ public class AStar : MonoBehaviour
             Stack<Vector3> finalPath = new Stack<Vector3>();
 
             // Ajout des noeuds du chemin
-            while (current.Position != startPos)
+            while (current != null)
             {
                 // Ajout le noeud courant du chemin
-                finalPath.Push(tilemap.CellToWorld(current.Position));
+                finalPath.Push(MyTilemap.CellToWorld(current.Position));
                
                 // Remontée sur tous les parents jusqu'au départ
                 current = current.Parent;

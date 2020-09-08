@@ -6,10 +6,10 @@
 /// Classe abstraite dont tous les personnages héritent
 /// </summary>
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Character : MonoBehaviour
 {
     // Référence sur le rigidbody
+    [SerializeField]
     private Rigidbody2D rigidbodyCharacter;
 
     // Vitesse de déplacement
@@ -81,9 +81,6 @@ public abstract class Character : MonoBehaviour
     {
         // Référence sur l'animator du personnage
         MyAnimator = GetComponent<Animator>();
-
-        // Référence sur le rigidbody du personnage
-        rigidbodyCharacter = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
@@ -103,9 +100,9 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Déplacement du personnage
+    /// Déplacement du personnage : virtual pour être écrasée pour les autres classes
     /// </summary>
-    public void Move()
+    public virtual void Move()
     {
         // Si le personnage est en vie
         if (IsAlive)

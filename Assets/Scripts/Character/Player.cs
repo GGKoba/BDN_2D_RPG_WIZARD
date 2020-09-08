@@ -94,6 +94,9 @@ public class Player : Character
 
     // Destination
     private Vector3 destination;
+
+    // Noeud courant
+    private Vector3 currentNode;
     #endregion
 
     // Propriété d'accès sur la routine
@@ -234,6 +237,18 @@ public class Player : Character
             }
         }
 
+    }
+
+    /// <summary>
+    /// Déplacement du personnage : Surcharge la fonction Move du script Character
+    /// </summary>
+    public override void Move()
+    {
+        if (path == null)
+        {
+            // Appelle Move sur la classe mère (abstraite)
+            base.Move();
+        }
     }
 
     /// <summary>
@@ -564,8 +579,16 @@ public class Player : Character
     /// <param name="aGoal"></param>
     public void GetPath(Vector3 aGoal)
     {
+        // Récupère le chemin
         path = astar.Algorithm(transform.position, aGoal);
+
+        // Définit le noeud courant (point de départ)
+        currentNode =
+
+        // Récupère le 1er point de destination
         destination = path.Pop();
+
+        // Définit le point d'arrivée
         goal = aGoal;
     }
 
@@ -580,8 +603,41 @@ public class Player : Character
             // Déplacement vers la destination
             transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, MySpeed * Time.deltaTime);
 
+            // Position de la cellule de destination
+            Vector3Int dest = astar.MyTilemap.WorldToCell(destination);
+
+            // Position de la cellule de courante
+            Vector3Int nodeCurrent = astar.MyTilemap.WorldToCell(currentNode);
+
             // Distance entre la destination et le joueur
             float distance = Vector2.Distance(destination, transform.parent.position);
+
+
+            // Direction vers le bas
+            if (nodeCurrent.y > dest.y)
+            {
+                MyDirection = Vector2.down;
+            }
+            // Direction vers le haut
+            else if (nodeCurrent.y < dest.y)
+            {
+                MyDirection = Vector2.up;
+            }
+            
+            if (nodeCurrent.y == dest.y)
+            {
+                // Direction vers la gauche
+                if (nodeCurrent.x > dest.x)
+                {
+                    MyDirection = Vector2.left;
+                }
+                // Direction vers la droite
+                else if (nodeCurrent.x < dest.x)
+                {
+                    MyDirection = Vector2.right;
+                }
+            }
+
 
             // Si le joueur est sur la destination
             if (distance <= 0f)
