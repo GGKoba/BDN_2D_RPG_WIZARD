@@ -10,7 +10,7 @@ public abstract class Character : MonoBehaviour
 {
     // Référence sur le rigidbody
     [SerializeField]
-    private Rigidbody2D rigidbodyCharacter;
+    private Rigidbody2D rigidbodyCharacter = default;
 
     // Vitesse de déplacement
     [SerializeField]

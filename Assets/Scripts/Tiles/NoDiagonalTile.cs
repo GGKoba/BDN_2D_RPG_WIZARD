@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 
 /// <summary>
-/// Classe des éléments de la map de type "Arbre"
+/// Classe des éléments de la map de type "NoDiagonal"
 /// </summary>
-public class TreeTile : Tile
+public class NoDiagonalTile : Tile
 {
     /// <summary>
     /// StartUp : Surcharge la fonction StartUp du script Tile
@@ -17,6 +17,9 @@ public class TreeTile : Tile
     /// <param name="go">Objet de la cellule</param>
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
+        // Ajoute la zone dans la liste des zones "non diagonales"
+        AStar.MyNoDiagonalTiles.Add(position);
+
         // Appelle StartUp sur la classe mère
         return base.StartUp(position, tilemap, go);
     }
@@ -27,11 +30,11 @@ public class TreeTile : Tile
     /// <summary>
     /// Ajoute un sous-menu dans le menu Assets : Tiles > TreeTile à partir de Assets > Create
     /// </summary>
-    [MenuItem("Assets/Create/Tiles/TreeTile")]
+    [MenuItem("Assets/Create/Tiles/NoDiagonalTile")]
     public static void CreateTreeTile()
     {
-        // Affiche la fenêtre de sauvegarde [Titre : Enregistrer TreeTile - Default Name : treeTile - Extension : .asset - Message : Enregistrer TreeTile - Path : Assets]
-        string path = EditorUtility.SaveFilePanelInProject("Enregistrer TreeTile", "treeTile", "asset", "Enregistrer TreeTile", "Assets");
+        // Affiche la fenêtre de sauvegarde [Titre : Enregistrer NoDiagonalTile - Default Name : noDiagonalTile - Extension : .asset - Message : Enregistrer NoDiagonalTile - Path : Assets]
+        string path = EditorUtility.SaveFilePanelInProject("Enregistrer NoDiagonalTile", "noDiagonalTile", "asset", "Enregistrer NoDiagonalTile", "Assets");
 
         if (path == "")
         {
@@ -39,7 +42,7 @@ public class TreeTile : Tile
         }
 
         // Ajoute l'asset "TreeTile"
-        AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<TreeTile>(), path);
+        AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<NoDiagonalTile>(), path);
     }
 #endif
 }

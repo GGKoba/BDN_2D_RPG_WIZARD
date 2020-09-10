@@ -36,6 +36,12 @@ public class AStar : MonoBehaviour
     // Position de départ / d'arrivée
     private Vector3Int startPos, goalPos;
 
+    // Liste des zones où l'on ne peut pas aller en diagonale
+    private static HashSet<Vector3Int> noDiagonalTiles = new HashSet<Vector3Int>();
+
+    // Propriété d'accès à la liste des zones où l'on ne peut pas aller en diagonale
+    public static HashSet<Vector3Int> MyNoDiagonalTiles { get => noDiagonalTiles; }
+
 
     /// <summary>
     /// Algorithme de parcours
@@ -137,6 +143,12 @@ public class AStar : MonoBehaviour
             }
 
             int gScore = DetermineGScore(neighbour.Position, current.Position);
+
+            // On passe la zone si c'est une diagonale
+            if (gScore == 14 && noDiagonalTiles.Contains(neighbour.Position) && noDiagonalTiles.Contains(current.Position))
+            {
+                continue;
+            }
 
             if (openList.Contains(neighbour))
             {

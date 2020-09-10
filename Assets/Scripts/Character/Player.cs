@@ -612,7 +612,6 @@ public class Player : Character
             // Distance entre la destination et le joueur
             float distance = Vector2.Distance(destination, transform.parent.position);
 
-
             // Direction vers le bas
             if (nodeCurrent.y > dest.y)
             {
@@ -638,13 +637,15 @@ public class Player : Character
                 }
             }
 
-
             // Si le joueur est sur la destination
             if (distance <= 0f)
             {
                 // S'il y a un chemin à faire
                 if (path.Count > 0)
                 {
+                    // Mise à jour du noeud courant
+                    currentNode = destination;
+
                     // Mise à jour de la destination
                     destination = path.Pop();
                 }
