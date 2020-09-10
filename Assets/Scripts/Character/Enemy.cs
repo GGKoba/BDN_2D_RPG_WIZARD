@@ -64,6 +64,13 @@ public class Enemy : Character, IInteractable
         }
     }
 
+    // Script AStar
+    [SerializeField]
+    private AStar astar = default;
+
+    // Propriété d'accès au script AStar
+    public AStar MyAstar { get => astar; }
+
 
     /// <summary>
     /// Awake

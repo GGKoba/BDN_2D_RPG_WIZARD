@@ -583,7 +583,7 @@ public class Player : Character
         path = astar.Algorithm(transform.position, aGoal);
 
         // Définit le noeud courant (point de départ)
-        currentNode =
+        currentNode = path.Pop();
 
         // Récupère le 1er point de destination
         destination = path.Pop();

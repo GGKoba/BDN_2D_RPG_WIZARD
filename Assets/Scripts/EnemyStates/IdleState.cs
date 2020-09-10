@@ -34,7 +34,7 @@ class IdleState : IState
         if (enemy.MyTarget != null)
         {
             // Passage à l'état de poursuite
-            enemy.ChangeState(new FollowState());
+            enemy.ChangeState(new PathState());
         }
     }
 }
