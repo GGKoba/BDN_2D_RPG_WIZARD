@@ -23,6 +23,7 @@ public class PathState : IState
     // Objet à manipuler
     private Transform transform;
 
+    // Vitesse de déplacement
     private float speed;
 
 

@@ -64,8 +64,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // [DEBUG]
-        Debug.Log(Application.persistentDataPath);
+        // [DEBUG] => Debug.Log(Application.persistentDataPath);
 
         // Fermeture de la fenêtre de confirmation
         CloseDialog();
