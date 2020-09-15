@@ -131,6 +131,14 @@ public class Player : Character
     }
 
     /// <summary>
+    /// FixedUpdate : Update utilisé pour le Rigibody
+    /// </summary>
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
+    /// <summary>
     /// Initialise les informations du joueur
     /// </summary>
     public void SetPlayerDefaultValues()
@@ -237,18 +245,6 @@ public class Player : Character
             }
         }
 
-    }
-
-    /// <summary>
-    /// Déplacement du personnage : Surcharge la fonction Move du script Character
-    /// </summary>
-    public override void Move()
-    {
-        if (path == null)
-        {
-            // Appelle Move sur la classe mère (abstraite)
-            base.Move();
-        }
     }
 
     /// <summary>
@@ -658,6 +654,22 @@ public class Player : Character
         }
     }
 
+    /// <summary>
+    /// Déplacement du personnage
+    /// </summary>
+    public void Move()
+    {
+        // S'il y a un chemin
+        if (path == null)
+        {
+            // Si le personnage est en vie
+            if (IsAlive)
+            {
+                // Déplace le personnage
+                rigidbodyCharacter.velocity = MyDirection.normalized * MySpeed;
+            }
+        }
+    }
 
     /// <summary>
     /// Détection de collision du joueur avec des obstables

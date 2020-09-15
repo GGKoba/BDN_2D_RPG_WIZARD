@@ -10,7 +10,7 @@ public abstract class Character : MonoBehaviour
 {
     // Référence sur le rigidbody
     [SerializeField]
-    private Rigidbody2D rigidbodyCharacter = default;
+    protected Rigidbody2D rigidbodyCharacter = default;
 
     // Vitesse de déplacement
     [SerializeField]
@@ -89,27 +89,6 @@ public abstract class Character : MonoBehaviour
     protected virtual void Update()
     {
         HandleLayers();
-    }
-
-    /// <summary>
-    /// FixedUpdate : Update utilisé pour le Rigibody
-    /// </summary>
-    private void FixedUpdate()
-    {
-        Move();
-    }
-
-    /// <summary>
-    /// Déplacement du personnage : virtual pour être écrasée pour les autres classes
-    /// </summary>
-    public virtual void Move()
-    {
-        // Si le personnage est en vie
-        if (IsAlive)
-        {
-            // Déplace le personnage
-            rigidbodyCharacter.velocity = direction.normalized * speed;
-        }
     }
 
     /// <summary>

@@ -26,12 +26,18 @@ public class PathState : IState
     // Vitesse de déplacement
     private float speed;
 
+    // Ennemi
+    private Enemy parent;
+
 
     /// <summary>
     /// Entrée dans l'état "PATH"
     /// </summary>
     public void Enter(Enemy enemyScript)
     {
+        // Définit l'ennemi
+        parent = enemyScript;
+
         // Définit l'objet à déplacer
         transform = enemyScript.transform;
 
@@ -70,8 +76,40 @@ public class PathState : IState
             // Déplacement vers la destination
             transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, speed * Time.deltaTime);
 
+            // Position de la cellule de destination
+            Vector3Int dest = parent.MyAstar.MyTilemap.WorldToCell(destination);
+
+            // Position de la cellule de courante
+            Vector3Int nodeCurrent = parent.MyAstar.MyTilemap.WorldToCell(currentNode);
+
             // Distance à parcourir
             float distance = Vector2.Distance(destination, transform.parent.position);
+
+            // Direction vers le bas
+            if (nodeCurrent.y > dest.y)
+            {
+                parent.MyDirection = Vector2.down;
+            }
+            // Direction vers le haut
+            else if (nodeCurrent.y < dest.y)
+            {
+                parent.MyDirection = Vector2.up;
+            }
+
+            if (nodeCurrent.y == dest.y)
+            {
+                // Direction vers la gauche
+                if (nodeCurrent.x > dest.x)
+                {
+                    parent.MyDirection = Vector2.left;
+                }
+                // Direction vers la droite
+                else if (nodeCurrent.x < dest.x)
+                {
+                    parent.MyDirection = Vector2.right;
+                }
+            }
+
 
             // Si la distance est nulle
             if (distance <= 0f)
