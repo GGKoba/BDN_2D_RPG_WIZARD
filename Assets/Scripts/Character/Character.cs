@@ -72,6 +72,8 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès sur la vie du personnage
     public bool IsAlive { get => health.MyCurrentValue > 0; }
 
+    // Propriété d'accès sur la tile courante
+    public Transform MyCurrentTile { get; set; }
 
 
     /// <summary>

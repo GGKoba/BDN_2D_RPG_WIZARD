@@ -29,6 +29,9 @@ public class PathState : IState
     // Ennemi
     private Enemy parent;
 
+    // Position de la cible
+    private Vector3 targetPosition;
+
 
     /// <summary>
     /// Entrée dans l'état "PATH"
@@ -38,23 +41,39 @@ public class PathState : IState
         // Définit l'ennemi
         parent = enemyScript;
 
-        // Définit l'objet à déplacer
-        transform = enemyScript.transform;
-
-        // Définit le chemin
-        path = enemyScript.MyAstar.Algorithm(enemyScript.transform.parent.position, enemyScript.MyTarget.position);
-
-        // Définit le point de départ
-        currentNode = path.Pop();
-
-        // Définit la 1ere destination
-        destination = path.Pop();
-
-        // Définit le point d'arrivée
-        goal = enemyScript.MyTarget.parent.position;
-
         // Définit la vitesse
         speed = enemyScript.MySpeed;
+
+        // Définit l'objet à déplacer
+        transform = enemyScript.transform.parent;
+
+        // Définit la position de la cible
+        targetPosition = Player.MyInstance.MyCurrentTile.position;
+
+        // Si la cible n'est pas au même endroit
+        if(targetPosition != enemyScript.MyCurrentTile.position)
+        {
+            // Définit le chemin
+            path = enemyScript.MyAstar.Algorithm(enemyScript.MyCurrentTile.position, targetPosition);
+        }
+
+        // S'il y a un chemin
+        if (path != null)
+        {
+            // Définit le point de départ
+            currentNode = path.Pop();
+
+            // Définit la 1ere destination
+            destination = path.Pop();
+
+            // Définit le point d'arrivée
+            goal = parent.MyCurrentTile.position;
+        }
+        else
+        {
+            // Changement d'état
+            parent.ChangeState(new EvadeState());
+        }
     }
 
     /// <summary>
@@ -62,7 +81,8 @@ public class PathState : IState
     /// </summary>
     public void Exit()
     {
-
+        // Réinitialise le chemin
+        path = null;
     }
 
     /// <summary>
@@ -74,7 +94,7 @@ public class PathState : IState
         if (path != null)
         {
             // Déplacement vers la destination
-            transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
             // Position de la cellule de destination
             Vector3Int dest = parent.MyAstar.MyTilemap.WorldToCell(destination);
@@ -83,7 +103,7 @@ public class PathState : IState
             Vector3Int nodeCurrent = parent.MyAstar.MyTilemap.WorldToCell(currentNode);
 
             // Distance à parcourir
-            float distance = Vector2.Distance(destination, transform.parent.position);
+            float distance = Vector2.Distance(destination, transform.position);
 
             // Direction vers le bas
             if (nodeCurrent.y > dest.y)
@@ -110,7 +130,6 @@ public class PathState : IState
                 }
             }
 
-
             // Si la distance est nulle
             if (distance <= 0f)
             {
@@ -122,11 +141,22 @@ public class PathState : IState
 
                     // Mise à jour de la destination
                     destination = path.Pop();
+
+                    // Si la cible n'est pas au même endroit
+                    if (targetPosition != Player.MyInstance.MyCurrentTile.position)
+                    {
+                        // Changement d'état
+                        parent.ChangeState(new PathState());
+                    }
+
                 }
                 else
                 {
                     // Réinitialise le chemin
                     path = null;
+
+                    // Changement d'état
+                    parent.ChangeState(new EvadeState());
                 }
             }
         } 

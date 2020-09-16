@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - KeyBind
   - Interactable
+  - Ground
   layers:
   - Default
   - TransparentFX

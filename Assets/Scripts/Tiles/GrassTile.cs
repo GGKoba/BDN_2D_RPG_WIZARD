@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 
 /// <summary>
-/// Classe des éléments de la map de type "NoDiagonal"
+/// Classe des éléments de la map de type "Grass"
 /// </summary>
-public class NoDiagonalTile : Tile
+public class GrassTile : Tile
 {
     /// <summary>
     /// StartUp : Surcharge la fonction StartUp du script Tile
@@ -17,9 +17,6 @@ public class NoDiagonalTile : Tile
     /// <param name="go">Objet de la cellule</param>
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
-        // Ajoute la zone dans la liste des zones "non diagonales"
-        AStar.MyNoDiagonalTiles.Add(position);
-
         // Appelle StartUp sur la classe mère
         return base.StartUp(position, tilemap, go);
     }
@@ -30,11 +27,11 @@ public class NoDiagonalTile : Tile
     /// <summary>
     /// Ajoute un sous-menu dans le menu Assets : Tiles > TreeTile à partir de Assets > Create
     /// </summary>
-    [MenuItem("Assets/Create/Tiles/NoDiagonalTile")]
-    public static void CreateNoDiagonalTile()
+    [MenuItem("Assets/Create/Tiles/GrassTile")]
+    public static void CreateGrassTile()
     {
-        // Affiche la fenêtre de sauvegarde [Titre : Enregistrer NoDiagonalTile - Default Name : noDiagonalTile - Extension : .asset - Message : Enregistrer NoDiagonalTile - Path : Assets]
-        string path = EditorUtility.SaveFilePanelInProject("Enregistrer NoDiagonalTile", "noDiagonalTile", "asset", "Enregistrer NoDiagonalTile", "Assets");
+        // Affiche la fenêtre de sauvegarde [Titre : Enregistrer GrassTile - Default Name : grassTile - Extension : .asset - Message : Enregistrer GrassTile - Path : Assets]
+        string path = EditorUtility.SaveFilePanelInProject("Enregistrer GrassTile", "grassTile", "asset", "Enregistrer GrassTile", "Assets");
 
         if (path == "")
         {
