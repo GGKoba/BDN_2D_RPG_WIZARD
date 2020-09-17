@@ -423,7 +423,6 @@ GameObject:
   - component: {fileID: 7683267644322279833}
   - component: {fileID: 4160220664395063928}
   - component: {fileID: 7683267644322279834}
-  - component: {fileID: 7683267644322279835}
   - component: {fileID: 6466533495720311737}
   m_Layer: 9
   m_Name: Enemy
@@ -539,7 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35af22e6a4a4cd4fbe0a5e2e6e137db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbodyCharacter: {fileID: 7683267644322279835}
+  rigidbodyCharacter: {fileID: 0}
   speed: 2
   type: Skeleton
   initHealth: 13
@@ -551,6 +550,9 @@ MonoBehaviour:
   lootTable: {fileID: 4160220664395063928}
   portrait: {fileID: 21300000, guid: 0a194022d744b2946bdf92093e157333, type: 3}
   astar: {fileID: 6466533495720311737}
+  lineOfSightMask:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &4160220664395063928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,27 +593,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!50 &7683267644322279835
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7683267644322279831}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &6466533495720311737
 MonoBehaviour:
   m_ObjectHideFlags: 0

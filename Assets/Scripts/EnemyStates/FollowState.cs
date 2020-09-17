@@ -8,7 +8,7 @@
 class FollowState : IState
 {
     // Référence sur le script Enemy
-    private Enemy enemy;
+    private Enemy parent;
 
     // Marage d'alignement
     private Vector3 offset;
@@ -17,12 +17,16 @@ class FollowState : IState
     /// <summary>
     /// Entrée dans l'état "FOLLOW"
     /// </summary>
+    /// <param name="enemyScript">le parent de l'ennemi</param>
     public void Enter(Enemy enemyScript)
     {
-        enemy = enemyScript;
+        parent = enemyScript;
 
         // Ajoute l'ennemi dans la liste des attaquants
-        Player.MyInstance.MyAttackers.Add(enemy);
+        Player.MyInstance.MyAttackers.Add(parent);
+
+        // Réinitialise le chemin
+        parent.MyPath = null;
     }
 
     /// <summary>
@@ -30,8 +34,9 @@ class FollowState : IState
     /// </summary>
     public void Exit()
     {
-        // Réinitialise la direction
-        enemy.MyDirection = Vector2.zero;
+        // Réinitialise la direction/mouvement
+        parent.MyDirection = Vector2.zero;
+        parent.MyRigidbodyCharacter.velocity = Vector2.zero;
     }
 
     /// <summary>
@@ -40,15 +45,15 @@ class FollowState : IState
     public void Update()
     {
         // S'il y a une cible
-        if (enemy.MyTarget != null)
+        if (parent.MyTarget != null)
         {
             // Trouve la direction de la cible
-            enemy.MyDirection = ((enemy.MyTarget.position + offset) - enemy.transform.position).normalized;
+            parent.MyDirection = ((parent.MyTarget.position + offset) - parent.transform.position).normalized;
 
             // Distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(enemy.MyTarget.position + offset, enemy.transform.position);
+            float distance = Vector2.Distance(parent.MyTarget.position + offset, parent.transform.position);
 
-            string animationName = enemy.MySpriteRenderer.sprite.name;
+            string animationName = parent.MySpriteRenderer.sprite.name;
 
             // Verification du sprite
             if (animationName.Contains("right"))
@@ -69,18 +74,24 @@ class FollowState : IState
             }
 
             // Si la cible est à portée d'attaque
-            if (distance <= enemy.MyAttackRange)
+            if (distance <= parent.MyAttackRange)
             {
                 // Passage à l'état d'attaque
-                enemy.ChangeState(new AttackState());
+                parent.ChangeState(new AttackState());
             }
         }
 
         // Si la cible n'est plus à portée
-        if (!enemy.InRange)
+        if (!parent.InRange)
         {
             // Passage à l'état d'évasion
-            enemy.ChangeState(new EvadeState());
+            parent.ChangeState(new EvadeState());
+        }
+        // Si l'ennemi ne peut pas voir le joueur
+        else if (!parent.CanSeePlayer())
+        {
+            // Passage à l'état de recherche
+            parent.ChangeState(new PathState());
         }
     }
 }

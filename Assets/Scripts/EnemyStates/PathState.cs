@@ -33,6 +33,7 @@ public class PathState : IState
     /// <summary>
     /// Entrée dans l'état "PATH"
     /// </summary>
+    /// <param name="enemyScript">le parent de l'ennemi</param>
     public void Enter(Enemy enemyScript)
     {
         // Définit l'ennemi
@@ -153,7 +154,7 @@ public class PathState : IState
                     // Si la cible n'est pas au même endroit
                     if (targetPosition != Player.MyInstance.MyCurrentTile.position)
                     {
-                        // Passage à l'état de poursuite
+                        // Passage à l'état de recherche
                         parent.ChangeState(new PathState());
                     }
                     // Si l'ennemi est sur la même tile mais trop loin du joueur

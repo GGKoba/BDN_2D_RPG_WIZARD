@@ -71,6 +71,10 @@ public class Enemy : Character, IInteractable
     // Propriété d'accès au script AStar
     public AStar MyAstar { get => astar; }
 
+    // Masque de la ligne de mire
+    [SerializeField]
+    private LayerMask lineOfSightMask = default;
+ 
 
     /// <summary>
     /// Awake
@@ -315,5 +319,26 @@ public class Enemy : Character, IInteractable
 
         // Destruction du personnage
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Le joueur est-il visible
+    /// </summary>
+    public bool CanSeePlayer()
+    {
+        // Direction de la cible
+        Vector3 targetDirection = (MyTarget.transform.position - transform.position).normalized;
+
+        // Rayon de vision
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), lineOfSightMask);
+
+        // Pas de vision sur le joueur
+        if (hit.collider != null)
+        {
+            return false;
+        }
+
+        // Joueur visible
+        return true;
     }
 }

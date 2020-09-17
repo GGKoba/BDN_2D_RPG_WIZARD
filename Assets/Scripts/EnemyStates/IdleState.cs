@@ -4,18 +4,19 @@
 class IdleState : IState
 {
     // Référence sur le script Enemy
-    private Enemy enemy;
+    private Enemy parent;
 
 
     /// <summary>
     /// Entrée dans l'état "IDLE"
     /// </summary>
+    /// <param name="enemyScript">le parent de l'ennemi</param>
     public void Enter(Enemy enemyScript)
     {
-        enemy = enemyScript;
+        parent = enemyScript;
 
         // Réinitialise les données de l'ennemi
-        enemy.Reset();
+        parent.Reset();
     }
 
     /// <summary>
@@ -31,10 +32,10 @@ class IdleState : IState
     public void Update()
     {
         // S'il y a une cible
-        if (enemy.MyTarget != null)
+        if (parent.MyTarget != null)
         {
-            // Passage à l'état de poursuite
-            enemy.ChangeState(new PathState());
+            // Passage à l'état de recherche
+            parent.ChangeState(new PathState());
         }
     }
 }
