@@ -36,7 +36,7 @@ public class SpellBook : MonoBehaviour
     [Header("CastBar")]
     // Référence à la barre de cast du joueur
     [SerializeField]
-    public Image castingBar;
+    public Image castingBar = default;
 
     // Référence à l'image du sort de la barre de cast du joueur
     [SerializeField]

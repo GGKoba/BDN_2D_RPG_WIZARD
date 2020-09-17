@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbodyCharacter: {fileID: 7683267644322279835}
-  speed: 0.8
+  speed: 2
   type: Skeleton
   initHealth: 13
   health: {fileID: 7683267642312155945}

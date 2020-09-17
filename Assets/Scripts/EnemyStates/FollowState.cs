@@ -10,6 +10,9 @@ class FollowState : IState
     // Référence sur le script Enemy
     private Enemy enemy;
 
+    // Marage d'alignement
+    private Vector3 offset;
+
 
     /// <summary>
     /// Entrée dans l'état "FOLLOW"
@@ -40,13 +43,30 @@ class FollowState : IState
         if (enemy.MyTarget != null)
         {
             // Trouve la direction de la cible
-            enemy.MyDirection = (enemy.MyTarget.position - enemy.transform.position).normalized;
-
-            // Déplacement vers la cible
-            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, enemy.MyTarget.position, enemy.MySpeed * Time.deltaTime);
+            enemy.MyDirection = ((enemy.MyTarget.position + offset) - enemy.transform.position).normalized;
 
             // Distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(enemy.MyTarget.position, enemy.transform.position);
+            float distance = Vector2.Distance(enemy.MyTarget.position + offset, enemy.transform.position);
+
+            string animationName = enemy.MySpriteRenderer.sprite.name;
+
+            // Verification du sprite
+            if (animationName.Contains("right"))
+            {
+                offset = new Vector3(0.5f, 0.8f);
+            }
+            else if (animationName.Contains("left"))
+            {
+                offset = new Vector3(-0.5f, 0.8f);
+            }
+            else if (animationName.Contains("up"))
+            {
+                offset = new Vector3(0f, 1.2f);
+            }
+            else if (animationName.Contains("down"))
+            {
+                offset = new Vector3(0, 0);
+            }
 
             // Si la cible est à portée d'attaque
             if (distance <= enemy.MyAttackRange)

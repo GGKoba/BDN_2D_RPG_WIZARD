@@ -8,9 +8,6 @@ using UnityEngine;
 /// </summary>
 public class PathState : IState
 {
-    // Stack du chemin
-    private Stack<Vector3> path;
-
     // Objectif
     private Vector3 goal;
 
@@ -42,36 +39,36 @@ public class PathState : IState
         parent = enemyScript;
 
         // Définit la vitesse
-        speed = enemyScript.MySpeed;
+        speed = parent.MySpeed;
 
         // Définit l'objet à déplacer
-        transform = enemyScript.transform.parent;
+        transform = parent.transform.parent;
 
         // Définit la position de la cible
         targetPosition = Player.MyInstance.MyCurrentTile.position;
 
         // Si la cible n'est pas au même endroit
-        if(targetPosition != enemyScript.MyCurrentTile.position)
+        if(targetPosition != parent.MyCurrentTile.position)
         {
             // Définit le chemin
-            path = enemyScript.MyAstar.Algorithm(enemyScript.MyCurrentTile.position, targetPosition);
+            parent.MyPath = parent.MyAstar.Algorithm(parent.MyCurrentTile.position, targetPosition);
         }
 
         // S'il y a un chemin
-        if (path != null)
+        if (parent.MyPath != null)
         {
             // Définit le point de départ
-            currentNode = path.Pop();
+            currentNode = parent.MyPath.Pop();
 
             // Définit la 1ere destination
-            destination = path.Pop();
+            destination = parent.MyPath.Pop();
 
             // Définit le point d'arrivée
             goal = parent.MyCurrentTile.position;
         }
         else
         {
-            // Changement d'état
+            // Passage à l'état d'évasion
             parent.ChangeState(new EvadeState());
         }
     }
@@ -82,7 +79,7 @@ public class PathState : IState
     public void Exit()
     {
         // Réinitialise le chemin
-        path = null;
+        parent.MyPath = null;
     }
 
     /// <summary>
@@ -91,7 +88,7 @@ public class PathState : IState
     public void Update()
     {
         // S'il y a un chemin
-        if (path != null)
+        if (parent.MyPath != null)
         {
             // Déplacement vers la destination
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
@@ -104,6 +101,9 @@ public class PathState : IState
 
             // Distance à parcourir
             float distance = Vector2.Distance(destination, transform.position);
+
+            // Distance totale
+            float totalDistance = Vector2.Distance(parent.MyTarget.position, transform.position);
 
             // Direction vers le bas
             if (nodeCurrent.y > dest.y)
@@ -130,32 +130,45 @@ public class PathState : IState
                 }
             }
 
+            // Si on dans dans la zone d'attaque
+            if (totalDistance <= parent.MyAttackRange)
+            {
+                // Passage à l'état d'attaque
+                parent.ChangeState(new AttackState());
+            }
+
+
             // Si la distance est nulle
             if (distance <= 0f)
             {
                 // S'il y a un chemin à faire
-                if (path.Count > 0)
+                if (parent.MyPath.Count > 0)
                 {
                     // Mise à jour du noeud courant
                     currentNode = destination;
 
                     // Mise à jour de la destination
-                    destination = path.Pop();
+                    destination = parent.MyPath.Pop();
 
                     // Si la cible n'est pas au même endroit
                     if (targetPosition != Player.MyInstance.MyCurrentTile.position)
                     {
-                        // Changement d'état
+                        // Passage à l'état de poursuite
                         parent.ChangeState(new PathState());
                     }
-
+                    // Si l'ennemi est sur la même tile mais trop loin du joueur
+                    else if (Player.MyInstance.MyCurrentTile.position == parent.MyCurrentTile.position)
+                    {
+                        // Passage à l'état de poursuite
+                        parent.ChangeState(new FollowState());
+                    }
                 }
                 else
                 {
                     // Réinitialise le chemin
-                    path = null;
+                    parent.MyPath = null;
 
-                    // Changement d'état
+                    // Passage à l'état d'évasion
                     parent.ChangeState(new EvadeState());
                 }
             }

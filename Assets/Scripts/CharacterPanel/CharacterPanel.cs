@@ -27,7 +27,7 @@ public class CharacterPanel : MonoBehaviour
 
     // CanvasGroup de la feuille du personnage
     [SerializeField]
-    private CanvasGroup canvasGroup;
+    private CanvasGroup canvasGroup = default;
 
     // Propriété d'accès sur l'indicateur d'ouverture de la feuille du personnage
     public bool IsOpen { get => canvasGroup.alpha > 0; }

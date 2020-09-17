@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -10,7 +11,10 @@ public abstract class Character : MonoBehaviour
 {
     // Référence sur le rigidbody
     [SerializeField]
-    protected Rigidbody2D rigidbodyCharacter = default;
+    private Rigidbody2D rigidbodyCharacter = default;
+
+    // Propriété d'accès à la référence sur le rigidbody
+    public Rigidbody2D MyRigidbodyCharacter { get => rigidbodyCharacter; }
 
     // Vitesse de déplacement
     [SerializeField]
@@ -39,7 +43,7 @@ public abstract class Character : MonoBehaviour
 
     [SerializeField]
     // Référence sur le niveau du personnage
-    private int level;
+    private int level = default;
 
     // Propriété d'accès au niveau du personnage
     public int MyLevel { get => level; set => level = value; }
@@ -56,6 +60,9 @@ public abstract class Character : MonoBehaviour
 
     // Propriété d'accès sur l'animator
     public Animator MyAnimator { get; set; }
+
+    // Propriété d'accès sur le sprinte renderer
+    public SpriteRenderer MySpriteRenderer { get; set; }
 
     // Propriété d'accès à la cible de du personnage
     public Transform MyTarget { get; set; }
@@ -75,6 +82,9 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès sur la tile courante
     public Transform MyCurrentTile { get; set; }
 
+    // Propriété d'accès au chemin de déplacement
+    public Stack<Vector3> MyPath { get; set; }
+
 
     /// <summary>
     /// Start
@@ -83,6 +93,9 @@ public abstract class Character : MonoBehaviour
     {
         // Référence sur l'animator du personnage
         MyAnimator = GetComponent<Animator>();
+
+        // Référence sur le sprite renderer du personnage
+        MySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
@@ -91,6 +104,14 @@ public abstract class Character : MonoBehaviour
     protected virtual void Update()
     {
         HandleLayers();
+    }
+
+    /// <summary>
+    /// FixedUpdate : Update utilisé pour le Rigibody
+    /// </summary>
+    public void FixedUpdate()
+    {
+        Move();
     }
 
     /// <summary>
@@ -167,7 +188,7 @@ public abstract class Character : MonoBehaviour
             direction = Vector2.zero;
 
             // Stoppe le déplacement
-            rigidbodyCharacter.velocity = direction;
+            MyRigidbodyCharacter.velocity = direction;
 
             // Déclenche l'évènement de disparition du personnage
             GameManager.MyInstance.OnKillConfirmed(this);
@@ -188,5 +209,22 @@ public abstract class Character : MonoBehaviour
 
         // Affiche un texte
         CombatTextManager.MyInstance.CreateText(transform.position, amount.ToString(), CombatTextType.Heal, true);
+    }
+
+    /// <summary>
+    /// Déplacement du personnage
+    /// </summary>
+    public void Move()
+    {
+        // S'il y a un chemin
+        if (MyPath == null)
+        {
+            // Si le personnage est en vie
+            if (IsAlive)
+            {
+                // Déplace le personnage
+                MyRigidbodyCharacter.velocity = MyDirection.normalized * MySpeed;
+            }
+        }
     }
 }

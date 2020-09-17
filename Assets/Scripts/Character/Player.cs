@@ -86,9 +86,6 @@ public class Player : Character
     [SerializeField]
     private AStar astar = default;
 
-    // Stack du chemin
-    private Stack<Vector3> path;
-
     // Objectif
     private Vector3 goal;
 
@@ -128,14 +125,6 @@ public class Player : Character
 
         // Appelle Update sur la classe mère (abstraite)
         base.Update();
-    }
-
-    /// <summary>
-    /// FixedUpdate : Update utilisé pour le Rigibody
-    /// </summary>
-    private void FixedUpdate()
-    {
-        Move();
     }
 
     /// <summary>
@@ -576,13 +565,13 @@ public class Player : Character
     public void GetPath(Vector3 aGoal)
     {
         // Récupère le chemin
-        path = astar.Algorithm(transform.position, aGoal);
+        MyPath = astar.Algorithm(transform.position, aGoal);
 
         // Définit le noeud courant (point de départ)
-        currentNode = path.Pop();
+        currentNode = MyPath.Pop();
 
         // Récupère le 1er point de destination
-        destination = path.Pop();
+        destination = MyPath.Pop();
 
         // Définit le point d'arrivée
         goal = aGoal;
@@ -594,7 +583,7 @@ public class Player : Character
     private void ClickToMove()
     {
         // S'il y a un chemin
-        if (path != null)
+        if (MyPath != null)
         {
             // Déplacement vers la destination
             transform.parent.position = Vector2.MoveTowards(transform.parent.position, destination, MySpeed * Time.deltaTime);
@@ -637,36 +626,19 @@ public class Player : Character
             if (distance <= 0f)
             {
                 // S'il y a un chemin à faire
-                if (path.Count > 0)
+                if (MyPath.Count > 0)
                 {
                     // Mise à jour du noeud courant
                     currentNode = destination;
 
                     // Mise à jour de la destination
-                    destination = path.Pop();
+                    destination = MyPath.Pop();
                 }
                 else
                 {
                     // Réinitialise le chemin
-                    path = null;
+                    MyPath = null;
                 }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Déplacement du personnage
-    /// </summary>
-    public void Move()
-    {
-        // S'il y a un chemin
-        if (path == null)
-        {
-            // Si le personnage est en vie
-            if (IsAlive)
-            {
-                // Déplace le personnage
-                rigidbodyCharacter.velocity = MyDirection.normalized * MySpeed;
             }
         }
     }

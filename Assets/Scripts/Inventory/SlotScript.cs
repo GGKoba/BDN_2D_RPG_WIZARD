@@ -16,7 +16,7 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     
     // Image de l'emplacement
     [SerializeField]
-    private Image icon;
+    private Image icon = default;
 
     // Image de superposition
     [SerializeField]

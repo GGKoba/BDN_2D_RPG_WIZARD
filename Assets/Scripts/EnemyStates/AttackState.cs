@@ -26,6 +26,10 @@ class AttackState : IState
     public void Enter(Enemy enemyScript)
     {
         enemy = enemyScript;
+
+        // Stoppe le mouvement
+        enemy.MyRigidbodyCharacter.velocity = Vector2.zero;
+        enemy.MyDirection = Vector2.zero;
     }
 
     /// <summary>
@@ -55,7 +59,7 @@ class AttackState : IState
         if (enemy.MyTarget != null)
         {
             // Distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(enemy.MyTarget.position, enemy.transform.position);
+            float distance = Vector2.Distance(enemy.MyTarget.parent.position, enemy.transform.parent.position);
 
             // Si la cible est à portée d'attaque
             if (distance >= enemy.MyAttackRange + extraRange && !enemy.IsAttacking)

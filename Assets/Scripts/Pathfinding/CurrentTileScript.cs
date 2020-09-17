@@ -9,7 +9,7 @@ public class CurrentTileScript : MonoBehaviour
 {
     // Personnage
     [SerializeField]
-    private Character character;
+    private Character character = default;
 
 
     // <summary>

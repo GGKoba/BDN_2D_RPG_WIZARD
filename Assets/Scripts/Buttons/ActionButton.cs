@@ -18,7 +18,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
     
     // Image du bouton
     [SerializeField]
-    private Image icon;
+    private Image icon = default;
 
     // Propriété d'accès à l'image du bouton
     public Image MyIcon { get => icon; set => icon = value; }
