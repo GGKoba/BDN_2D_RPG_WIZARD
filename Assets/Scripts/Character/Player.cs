@@ -38,7 +38,7 @@ public class Player : Character
     // Expérience du joueur
     [SerializeField]
     private Stat xp = default;
-    
+
     // Propriété d'accès sur l'expérience du joueur
     public Stat MyXp { get => xp; set => xp = value; }
 
@@ -68,7 +68,7 @@ public class Player : Character
 
     // Mana initiale du joueur (readonly)
     private readonly float initMana = 50;
-    
+
     // Index de la position d'attaque (2 = down)
     private int exitIndex = 2;
 
@@ -108,6 +108,9 @@ public class Player : Character
     // Propriété d'accès à la liste des attaquants
     public List<Enemy> MyAttackers { get => attackers; set => attackers = value; }
 
+    // Position de départ du joueur
+    private Vector2 initPosition;
+
 
     /// <summary>
     /// Update : Surcharge la fonction Update du script Character
@@ -135,7 +138,7 @@ public class Player : Character
         // Initialise l'argent du joueur
         MyGold = 25;
 
-        // Initialise les barres
+        // Initialise la barre de vie
         health.Initialize(initHealth, initHealth);
 
         // Initialise la barre de mana
@@ -146,6 +149,9 @@ public class Player : Character
 
         // Actualise le texte du niveau du joueur
         RefreshPlayerLevelText();
+
+        // Initialise la position de départ du joueur
+        initPosition = transform.parent.position;
     }
 
     /// <summary>
@@ -439,10 +445,10 @@ public class Player : Character
     private void Block()
     {
         foreach (Block bloc in blocks)
-	    {
+        {
             // Désactive toutes les paires blocs
             bloc.Deactivate();
-	    }
+        }
 
         // Active la paire de bloc correspondante à la direction du joueur
         blocks[exitIndex].Activate();
@@ -607,7 +613,7 @@ public class Player : Character
             {
                 MyDirection = Vector2.up;
             }
-            
+
             if (nodeCurrent.y == dest.y)
             {
                 // Direction vers la gauche
@@ -702,5 +708,32 @@ public class Player : Character
         {
             MyAttackers.Add(enemy);
         }
+    }
+
+    /// <summary>
+    /// Routine de repop
+    /// </summary>
+    public IEnumerator Respawn()
+    {
+        // Désactive le joueur
+        MySpriteRenderer.enabled = false;
+
+        // Délai d'attente
+        yield return new WaitForSeconds(5f);
+
+        // Initialise la barre de vie
+        health.Initialize(initHealth, initHealth);
+
+        // Initialise la barre de mana
+        mana.Initialize(initMana, initMana);
+
+        // Replace le joueur
+        transform.parent.position = initPosition;
+
+        // Active le joueur
+        MySpriteRenderer.enabled = true;
+
+        // Déclenche l'animation de repop
+        MyAnimator.SetTrigger("respawn");
     }
 }

@@ -40,14 +40,11 @@ class EvadeState : IState
         // Direction entre la position de départ et la position courante de l'ennemi
         parent.MyDirection = (parent.MyStartPosition - parent.transform.position).normalized;
 
-        // Déplacement vers la position de départ
-        parent.transform.position = Vector2.MoveTowards(parent.transform.position, parent.MyStartPosition, parent.MySpeed * Time.deltaTime);
-
         // Distance entre la position de départ et la position courante de l'ennemi
         float distance = Vector2.Distance(parent.MyStartPosition, parent.transform.position);
 
         // Si l'ennemi est à sa position de départ
-        if (distance <= 0)
+        if (distance <= 0.1f)
         {
             // Passage à l'état d'attente
             parent.ChangeState(new IdleState());
