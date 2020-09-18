@@ -74,7 +74,14 @@ public class Enemy : Character, IInteractable
     // Masque de la ligne de mire
     [SerializeField]
     private LayerMask lineOfSightMask = default;
- 
+
+    // Dégâts
+    [SerializeField]
+    private int damage = default;
+
+    // Dégats possibles
+    private bool canAttack = true;
+
 
     /// <summary>
     /// Awake
@@ -126,6 +133,13 @@ public class Enemy : Character, IInteractable
 
             // Appelle Update sur l'état courant
             currentState.Update();
+        }
+
+        // Si l'ennemi a une cible et qu'elle n'est plus en vie
+        if (MyTarget != null && !Player.MyInstance.IsAlive)
+        {
+            // Passage à l'état d'évasion
+            ChangeState(new EvadeState());
         }
 
         // Appelle Update sur la classe mère
@@ -192,6 +206,27 @@ public class Enemy : Character, IInteractable
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Attaque de l'ennemi
+    /// </summary>
+    public void Attack()
+    {
+        // Si l'ennemi peut attaquer
+        if (canAttack)
+        {
+            Player.MyInstance.TakeDamage(damage, transform);
+            canAttack = false;
+        }
+    }
+
+    /// <summary>
+    /// Possibilité d'attaquer
+    /// </summary>
+    public void CanAttack()
+    {
+        canAttack = true;
     }
 
     /// <summary>
