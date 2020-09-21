@@ -66,6 +66,10 @@ public class Player : Character
     [SerializeField]
     private GearSocket[] gearSockets = default;
 
+    // Tableau des objets de l'équipement
+    [SerializeField]
+    private SpriteRenderer[] gearRenderers = default;
+
     // Mana initiale du joueur (readonly)
     private readonly float initMana = 50;
 
@@ -735,5 +739,34 @@ public class Player : Character
 
         // Déclenche l'animation de repop
         MyAnimator.SetTrigger("respawn");
+
+        // Affiche l'équipement du joueur
+        ShowGear();
+    }
+
+    /// <summary>
+    /// Masque l'équipement du joueur
+    /// </summary>
+    public void HideGear()
+    {
+        // Pour chaque équipement
+        foreach (SpriteRenderer item in gearRenderers)
+        {
+            // Masque l'item
+            item.enabled = false;
+        }
+    }
+
+    /// <summary>
+    /// Affiche l'équipement du joueur
+    /// </summary>
+    public void ShowGear()
+    {
+        // Pour chaque équipement
+        foreach (SpriteRenderer item in gearRenderers)
+        {
+            // Masque l'item
+            item.enabled = true;
+        }
     }
 }
