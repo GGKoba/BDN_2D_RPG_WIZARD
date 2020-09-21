@@ -34,8 +34,12 @@ public class Enemy : Character, IInteractable
     // Propriété d'accès au temps d'attaque de l'ennemi
     public float MyAttackTime { get; set; }
 
+    // Portée d'attaque de l'ennemi
+    [SerializeField]
+    private float attackRange = default;
+
     // Propriété d'accès à la portée d'attaque de l'ennemi
-    public float MyAttackRange { get; set; }
+    public float MyAttackRange { get => attackRange; set => attackRange = value; }
 
     // Propriété d'accès à la portée d'aggro de l'ennemi
     public float MyAggroRange { get; set; }
@@ -75,9 +79,9 @@ public class Enemy : Character, IInteractable
     [SerializeField]
     private LayerMask lineOfSightMask = default;
 
-    // Dégâts
+    // Dégâts de l'ennemi
     [SerializeField]
-    private int damage = default;
+    protected int damage = default;
 
     // Dégats possibles
     private bool canAttack = true;
@@ -91,11 +95,12 @@ public class Enemy : Character, IInteractable
         // Initialise les barres
         health.Initialize(initHealth, initHealth);
 
+        // Affiche l'ennemi
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.enabled = true;
+
         // Initialisation de la position de départ de l'ennemi
         MyStartPosition = transform.position;
-
-        // Initialisation de la portée d'attaque de l'ennemi
-        MyAttackRange = 1.39f;
 
         // Initialisation de la portée d'aggro de l'ennemi
         MyAggroRange = initialAggroRange;
@@ -114,6 +119,9 @@ public class Enemy : Character, IInteractable
 
         // Appelle Start sur la classe mère
         base.Start();
+
+        // Définit l'animator
+        MyAnimator.SetFloat("y", -1);
     }
 
     /// <summary>

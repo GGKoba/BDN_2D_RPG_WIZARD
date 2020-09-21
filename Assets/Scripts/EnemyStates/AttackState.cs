@@ -65,8 +65,17 @@ class AttackState : IState
             // Si la cible est à portée d'attaque
             if (distance >= parent.MyAttackRange + extraRange && !parent.IsAttacking)
             {
-                // Passage à l'état de poursuite
-                parent.ChangeState(new FollowState());
+                // Si c'est un ennemi distant
+                if (parent is EnemyRanged)
+                {
+                    // Passage à l'état de recherche
+                    parent.ChangeState(new PathState());
+                }
+                else
+                {
+                    // Passage à l'état de poursuite
+                    parent.ChangeState(new FollowState());
+                }
             }
         }
         else
