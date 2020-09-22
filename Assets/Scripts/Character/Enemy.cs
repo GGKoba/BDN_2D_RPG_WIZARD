@@ -49,7 +49,7 @@ public class Enemy : Character, IInteractable
     private float initialAggroRange = default;
 
     // Propriété d'accès à la portée de l'ennemi
-    public bool InRange { get => Vector2.Distance(transform.position, MyTarget.position) < MyAggroRange; }
+    public bool InRange { get => Vector2.Distance(transform.position, MyTarget.transform.position) < MyAggroRange; }
 
     // Table des butins de l'ennemi
     [SerializeField]
@@ -172,13 +172,13 @@ public class Enemy : Character, IInteractable
     /// <summary>
     /// Sélection d'un ennemi
     /// </summary>
-    public Transform Select()
+    public Character Select()
     {
         // Affiche la barre de vie
         healthGroup.alpha = 1;
 
-        // Appelle Select sur la classe mère
-        return hitBox;
+        // Retourne l'ennemi
+        return this;
     }
 
     /// <summary>
@@ -186,7 +186,7 @@ public class Enemy : Character, IInteractable
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
     /// <param name="source">Source de l'attaque</param>
-    public override void TakeDamage(float damage, Transform source)
+    public override void TakeDamage(float damage, Character source)
     {
         // Si l'état n'est pas en évasion
         if (!(currentState is EvadeState))
@@ -224,7 +224,7 @@ public class Enemy : Character, IInteractable
         // Si l'ennemi peut attaquer
         if (canAttack)
         {
-            Player.MyInstance.TakeDamage(damage, transform);
+            MyTarget.TakeDamage(damage, this);
             canAttack = false;
         }
     }
@@ -261,13 +261,13 @@ public class Enemy : Character, IInteractable
     /// Définit la cible
     /// </summary>
     /// <param name="target">Cible</param>
-    public void SetTarget(Transform sourceTarget)
+    public void SetTarget(Character sourceTarget)
     {
         // S'il n'y a pas de cible et que l'état n'est pas en évasion
         if (MyTarget == null && !(currentState is EvadeState))
         {
             // Calcul de la distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(transform.position, sourceTarget.position);
+            float distance = Vector2.Distance(transform.position, sourceTarget.transform.position);
 
             // Réinitialise la portée d'aggro de l'ennemi
             MyAggroRange = initialAggroRange;

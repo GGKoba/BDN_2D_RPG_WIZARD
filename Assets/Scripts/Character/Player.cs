@@ -296,7 +296,7 @@ public class Player : Character
     private IEnumerator CastActionRoutine(ICastable castable)
     {
         // La cible de l'attaque est la cible sélectionnée
-        Transform attackTarget = MyTarget;
+        Transform attackTarget = MyTarget.MyHitBox;
 
         // Routine d'action
         yield return actionRoutine = StartCoroutine(ActionRoutine(castable));
@@ -311,7 +311,7 @@ public class Player : Character
             SpellScript spellScript = Instantiate(spell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
 
             // Affecte la cible et les dégâts du sort
-            spellScript.Initialize(attackTarget, spell.MyDamage, transform);
+            spellScript.Initialize(attackTarget, spell.MyDamage, this);
         }
     }
 
@@ -427,7 +427,7 @@ public class Player : Character
         if (MyTarget != null)
         {
             // Calcule la direction de la cible
-            Vector2 targetDirection = (MyTarget.position - transform.position).normalized;
+            Vector2 targetDirection = (MyTarget.transform.position - transform.position).normalized;
 
             // Lance un raycast dans la direction de la cible  [Debug.DrawRay(transform.position, targetDirection, Color.red);]
             RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position), LayerMask.GetMask("Block"));

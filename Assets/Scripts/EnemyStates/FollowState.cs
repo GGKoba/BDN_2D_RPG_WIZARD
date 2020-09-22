@@ -48,10 +48,10 @@ class FollowState : IState
         if (parent.MyTarget != null)
         {
             // Trouve la direction de la cible
-            parent.MyDirection = ((parent.MyTarget.position + offset) - parent.transform.position).normalized;
+            parent.MyDirection = ((parent.MyTarget.transform.position + offset) - parent.transform.position).normalized;
 
             // Distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(parent.MyTarget.position + offset, parent.transform.position);
+            float distance = Vector2.Distance(parent.MyTarget.transform.position + offset, parent.transform.position);
 
             string animationName = parent.MySpriteRenderer.sprite.name;
 

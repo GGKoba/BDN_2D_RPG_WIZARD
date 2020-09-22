@@ -25,6 +25,6 @@ public class EnemyRanged : Enemy
         SpellScript arrow = Instantiate(arrowPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
 
         // Affecte la cible et les dégâts de la flèche
-        arrow.Initialize(MyTarget, damage, transform);
+        arrow.Initialize(MyTarget.MyHitBox, damage, this);
     }
 }

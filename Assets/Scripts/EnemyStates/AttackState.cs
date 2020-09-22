@@ -60,7 +60,7 @@ class AttackState : IState
         if (parent.MyTarget != null)
         {
             // Distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(parent.MyTarget.parent.position, parent.transform.parent.position);
+            float distance = Vector2.Distance(parent.MyTarget.transform.parent.position, parent.transform.parent.position);
 
             // Si la cible est à portée d'attaque
             if (distance >= parent.MyAttackRange + extraRange && !parent.IsAttacking)

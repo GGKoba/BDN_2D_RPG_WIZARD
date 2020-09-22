@@ -50,7 +50,10 @@ public abstract class Character : MonoBehaviour
 
     // Référence sur la hitBox du personnage
     [SerializeField]
-    protected Transform hitBox = default;
+    private Transform hitBox = default;
+
+    // Propriété d'accès à la hitBox du personnage
+    public Transform MyHitBox { get => hitBox; set => hitBox = value; }
 
     // Direction du personnage
     private Vector2 direction;
@@ -65,7 +68,7 @@ public abstract class Character : MonoBehaviour
     public SpriteRenderer MySpriteRenderer { get; set; }
 
     // Propriété d'accès à la cible de du personnage
-    public Transform MyTarget { get; set; }
+    public Character MyTarget { get; set; }
 
     // Référence sur la routine d'action
     protected Coroutine actionRoutine;
@@ -173,7 +176,7 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
     /// <param name="source">Source de l'attaque</param>
-    public virtual void TakeDamage(float damage, Transform source)
+    public virtual void TakeDamage(float damage, Character source)
     {
         // Réduction de la vie du personnage
         health.MyCurrentValue -= damage;

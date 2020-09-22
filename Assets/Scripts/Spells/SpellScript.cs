@@ -21,7 +21,7 @@ public class SpellScript : MonoBehaviour
     public Transform MyTarget { get; private set; }
 
     // Source du sort
-    public Transform source;
+    public Character source;
 
 
 
@@ -39,7 +39,7 @@ public class SpellScript : MonoBehaviour
     /// </summary>
     /// <param name="spellTarget">Cible du sort</param>
     /// <param name="spellDamage">Dégâts du sort</param>
-    public void Initialize(Transform spellTarget, int spellDamage, Transform spellSource)
+    public void Initialize(Transform spellTarget, int spellDamage, Character spellSource)
     {
         // Initialisation de la cible du sort
         MyTarget = spellTarget;

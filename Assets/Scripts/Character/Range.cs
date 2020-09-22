@@ -27,7 +27,7 @@ public class Range : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             // Définit la cible
-            enemyScript.SetTarget(collision.transform);
+            enemyScript.SetTarget(collision.GetComponent<Character>());
         }
     }
 }

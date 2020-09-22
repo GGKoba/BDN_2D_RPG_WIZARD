@@ -94,6 +94,9 @@ public class PathState : IState
             // Déplacement vers la destination
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
+            // Active le layer
+            parent.ActivateLayer("WalkLayer");
+
             // Position de la cellule de destination
             Vector3Int dest = parent.MyAstar.MyTilemap.WorldToCell(destination);
 
@@ -104,7 +107,7 @@ public class PathState : IState
             float distance = Vector2.Distance(destination, transform.position);
 
             // Distance totale
-            float totalDistance = Vector2.Distance(parent.MyTarget.position, transform.position);
+            float totalDistance = Vector2.Distance(parent.MyTarget.transform.parent.position, transform.position);
 
             // Direction vers le bas
             if (nodeCurrent.y > dest.y)
