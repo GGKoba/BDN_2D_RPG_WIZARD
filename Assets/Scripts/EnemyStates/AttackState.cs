@@ -85,8 +85,6 @@ class AttackState : IState
         }
     }
 
-
-
     /// <summary>
     /// Routine d'attaque
     /// </summary>

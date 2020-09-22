@@ -56,21 +56,21 @@ class FollowState : IState
             string animationName = parent.MySpriteRenderer.sprite.name;
 
             // Verification du sprite
-            if (animationName.Contains("right"))
-            {
-                offset = new Vector3(0.5f, 0.8f);
-            }
-            else if (animationName.Contains("left"))
-            {
-                offset = new Vector3(-0.5f, 0.8f);
-            }
-            else if (animationName.Contains("up"))
+            if (animationName.Contains("up"))
             {
                 offset = new Vector3(0f, 1.2f);
             }
             else if (animationName.Contains("down"))
             {
                 offset = new Vector3(0, 0);
+            }
+            else if (animationName.Contains("left"))
+            {
+                offset = new Vector3(-0.5f, 0.8f);
+            }
+            else if(animationName.Contains("right"))
+            {
+                offset = new Vector3(0.5f, 0.8f);
             }
 
             // Si la cible est à portée d'attaque

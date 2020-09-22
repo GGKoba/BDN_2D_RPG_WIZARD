@@ -110,7 +110,7 @@ public class Enemy : Character, IInteractable
     }
     
     /// <summary>
-    /// Start : Surcharge la fonction Start du script NPC
+    /// Start : Surcharge la fonction Start du script Character
     /// </summary>
     protected override void Start()
     {
@@ -125,7 +125,7 @@ public class Enemy : Character, IInteractable
     }
 
     /// <summary>
-    /// Update : Surcharge la fonction Update du script NPC
+    /// Update : Surcharge la fonction Update du script Character
     /// </summary>
     protected override void Update()
     {
@@ -365,7 +365,7 @@ public class Enemy : Character, IInteractable
     }
 
     /// <summary>
-    /// Le joueur est-il visible
+    /// Le joueur est-il visible ?
     /// </summary>
     public bool CanSeePlayer()
     {
