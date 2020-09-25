@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 
 
+/// <summary>
+/// Classe des gestion des informations des items
+/// </summary>
 public class ItemInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Item à afficher
