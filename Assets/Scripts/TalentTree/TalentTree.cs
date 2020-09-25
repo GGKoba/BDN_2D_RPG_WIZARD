@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -14,6 +15,26 @@ public class TalentTree : MonoBehaviour
     // Tableau des talents déverouillés par défaut
     [SerializeField]
     private Talent[] unlockedByDefault = default;
+
+    // Nombre de points de talent
+    private int points = 5;
+
+    // Propriété d'accès au nombre de points de talent
+    public int MyPoints
+    {
+        get => points;
+        set
+        { 
+            points = value;
+            
+            // Actualise le nombre de points
+            UpdateTalentPointText();
+        }
+    }
+
+    // Texte du total des points
+    [SerializeField]
+    private Text talentPointText;
 
 
     /// <summary>
@@ -36,8 +57,24 @@ public class TalentTree : MonoBehaviour
     /// <summary>
     /// Réinitialisation des talents
     /// </summary>
+    public void TryUseTalent(Talent talent)
+    {
+        // Si on a des points à utiliser
+        if (MyPoints > 0 && talent.Click())
+        {
+            // Décrémentation du compteur
+            MyPoints--;
+        }
+    }
+
+    /// <summary>
+    /// Réinitialisation des talents
+    /// </summary>
     private void ResetTalents()
     {
+        // Actualise le compteur des points
+        UpdateTalentPointText();
+
         // Pour tous les talents
         foreach (Talent talent in talents)
         {
@@ -51,5 +88,14 @@ public class TalentTree : MonoBehaviour
             // Activation du talent
             talent.Unlock();
         }
+    }
+
+    /// <summary>
+    /// Actualisation du nombre de points
+    /// </summary>
+    private void UpdateTalentPointText()
+    {
+        // MAJ du nombre de points
+        talentPointText.text = MyPoints.ToString();
     }
 }

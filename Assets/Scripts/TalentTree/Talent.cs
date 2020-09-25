@@ -13,8 +13,15 @@ public class Talent : MonoBehaviour
 
     // Texte du compteur
     [SerializeField]
-    private Text countText;
-  
+    private Text countText = default;
+
+    // Point(s) maximum sur le talent
+    [SerializeField]
+    private int maxCount;
+
+    // Point(s) sur le talent
+    private int currentCount;
+
 
     /// <summary>
     /// Awake
@@ -23,6 +30,23 @@ public class Talent : MonoBehaviour
     {
         sprite = GetComponent<Image>();
     }
+
+    /// <summary>
+    /// Start
+    /// </summary>
+    private void Start()
+    {
+        countText.text = getCountText();
+    }
+
+    /// <summary>
+    /// Texte des points du talent
+    /// </summary>
+    /// <returns></returns>
+    public string getCountText()
+    {
+        return currentCount + "/" + maxCount;
+    } 
 
     /// <summary>
     /// Verrouillage d'un talent
@@ -46,5 +70,23 @@ public class Talent : MonoBehaviour
 
         // Verrouille le texte (fond blanc)
         countText.color = Color.white;
+    }
+
+    // Clic sur le talent
+    public bool Click()
+    {
+        // Si on peut utiliser des points
+        if (currentCount < maxCount)
+        {
+            // Ajoute un point au talent
+            currentCount++;
+
+            // Actualise le texte
+            countText.text = getCountText();
+
+            return true;
+        }
+
+        return false;
     }
 }
