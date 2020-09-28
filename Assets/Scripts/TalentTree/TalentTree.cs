@@ -17,7 +17,7 @@ public class TalentTree : MonoBehaviour
     private Talent[] unlockedByDefault = default;
 
     // Nombre de points de talent
-    private int points = 5;
+    private int points = 10;
 
     // Propriété d'accès au nombre de points de talent
     public int MyPoints
@@ -65,6 +65,23 @@ public class TalentTree : MonoBehaviour
             // Décrémentation du compteur
             MyPoints--;
         }
+
+        // Si on n'a plus de points
+        if (MyPoints == 0)
+        {
+            // Pour tous les talents
+            foreach (Talent t in talents)
+            {
+                // Si le talent n'a pas de point
+                if (t.MyCurrentCount == 0)
+                {
+                    // Verrouille du talent
+                    t.Lock();
+                }
+            }
+
+        }
+
     }
 
     /// <summary>

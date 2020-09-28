@@ -22,21 +22,46 @@ public class Talent : MonoBehaviour
     // Point(s) sur le talent
     private int currentCount;
 
+    // propriété d'accès sur le nombre de points du talent
+    public int MyCurrentCount { get => currentCount; set => currentCount = value; }
+
+    // Talent débloqué ?
+    [SerializeField]
+    private bool unlocked = default;
+
+    // Talent enfant
+    [SerializeField]
+    private Talent childTalent = default;
+
+    // Image de la flèche
+    [SerializeField]
+    private Image arrowImage = default;
+
+    // Sprite de la flèche inactive
+    [SerializeField]
+    private Sprite arrowSpriteLocked = default;
+
+    // Sprite de la flèche active
+    [SerializeField]
+    private Sprite arrowSpriteUnlocked = default;
+
 
     /// <summary>
     /// Awake
     /// </summary>
     private void Awake()
     {
+        // Référence sur l'image du talent
         sprite = GetComponent<Image>();
-    }
 
-    /// <summary>
-    /// Start
-    /// </summary>
-    private void Start()
-    {
+        // Actualise le texte du compteur
         countText.text = getCountText();
+
+        // Déverouille le talent
+        if (unlocked)
+        {
+            Unlock();
+        }
     }
 
     /// <summary>
@@ -45,7 +70,7 @@ public class Talent : MonoBehaviour
     /// <returns></returns>
     public string getCountText()
     {
-        return currentCount + "/" + maxCount;
+        return MyCurrentCount + "/" + maxCount;
     } 
 
     /// <summary>
@@ -54,10 +79,19 @@ public class Talent : MonoBehaviour
     public void Lock()
     {
         // Verrouille l'image (fond gris)
-        sprite.color = Color.grey;
+        sprite.color = Color.gray;
 
         // Verrouille le texte (fond gris)
-        countText.color = Color.grey;
+        if (countText != null)
+        {
+            countText.color = Color.gray;
+        }
+
+        // S'il y a une jonction avec un talent enfant
+        if (arrowImage != null)
+        {
+            arrowImage.sprite = arrowSpriteLocked;
+        }
     }
 
     /// <summary>
@@ -65,24 +99,47 @@ public class Talent : MonoBehaviour
     /// </summary>
     public void Unlock()
     {
-        // Verrouille l'image (fond blanc)
+        // Déverrouille l'image (fond blanc)
         sprite.color = Color.white;
 
-        // Verrouille le texte (fond blanc)
-        countText.color = Color.white;
+        // Déverrouille le texte (fond blanc)
+        if (countText != null)
+        {
+            countText.color = Color.white;
+        }
+
+        // S'il y a une jonction avec un talent enfant
+        if (arrowImage != null)
+        {
+            arrowImage.sprite = arrowSpriteUnlocked;
+        }
+
+        // Flag le talent comme "Déverrouillé"
+        unlocked = true;
     }
 
     // Clic sur le talent
     public bool Click()
     {
         // Si on peut utiliser des points
-        if (currentCount < maxCount)
+        if (MyCurrentCount < maxCount && unlocked)
         {
             // Ajoute un point au talent
-            currentCount++;
+            MyCurrentCount++;
 
             // Actualise le texte
             countText.text = getCountText();
+
+            // Si on atteint le nombre de points max pour le talent
+            if (MyCurrentCount == maxCount)
+            {
+                // Si le talent à un enfant
+                if (childTalent != null)
+                {
+                    // Déverrouille le talent enfant
+                    childTalent.Unlock();
+                }
+            }
 
             return true;
         }
