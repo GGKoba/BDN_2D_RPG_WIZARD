@@ -31,6 +31,10 @@ public class MessageFeedManager : MonoBehaviour
     private GameObject messagePrefab = default;
 
 
+    /// <summary>
+    /// Envoi un message
+    /// </summary>
+    /// <param name="message">Message</param>
     public void WriteMessage(string message)
     {
         // Si le message n'est pas vide
@@ -41,6 +45,33 @@ public class MessageFeedManager : MonoBehaviour
 
             // Actualise le texte du message
             messageObject.GetComponent<Text>().text = message;
+
+            // Positionne le nouveau message en haut de liste
+            messageObject.transform.SetAsFirstSibling();
+
+            // Détruit le message après 3s
+            Destroy(messageObject, 2);
+        }
+    }
+
+    /// <summary>
+    /// Envoi un message
+    /// </summary>
+    /// <param name="message">Message</param>
+    public void WriteMessage(string message, Color color)
+    {
+        // Si le message n'est pas vide
+        if (message != string.Empty)
+        {
+            // Instantie un objet de message
+            GameObject messageObject = Instantiate(messagePrefab, transform);
+
+            // Récupère la zone de texte
+            Text textObject = messageObject.GetComponent<Text>();
+
+            // Actualise le texte et la couleur du message
+            textObject.text = message;
+            textObject.color = color;
 
             // Positionne le nouveau message en haut de liste
             messageObject.transform.SetAsFirstSibling();

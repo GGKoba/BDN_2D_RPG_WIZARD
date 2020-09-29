@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -267,7 +268,7 @@ public class Player : Character
         Block();
 
         // Vérifie si l'on peut attaquer
-        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive)
+        if (MyTarget != null && !IsAttacking && !IsMoving && InLineOfSight() && MyTarget.GetComponentInParent<Character>().IsAlive && InRange(castable as Spell, MyTarget.transform.position))
         {
             // Démarre la routine
             MyRoutine = StartCoroutine(CastActionRoutine(castable));
@@ -768,5 +769,26 @@ public class Player : Character
             // Masque l'item
             item.enabled = true;
         }
+    }
+
+    /// <summary>
+    /// Définit si la cible est à portée du sort
+    /// </summary>
+    /// <param name="spell">Sort à incanter</param>
+    /// <param name="targetPosition">Position de la cible</param>
+    /// <returns></returns>
+    private bool InRange(Spell spell, Vector2 targetPosition)
+    {
+        if (Vector2.Distance(targetPosition, transform.position) <= spell.MyRange)
+        {
+            // Retourne OK
+            return true;
+        }
+
+        // Message "Hors de portée"
+        MessageFeedManager.MyInstance.WriteMessage("Hors de portée !!", Color.red);
+
+        // Retourne KO
+        return false;
     }
 }
