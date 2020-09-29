@@ -118,8 +118,8 @@ public class Talent : MonoBehaviour
         unlocked = true;
     }
 
-    // Clic sur le talent
-    public bool Click()
+    // Clic sur le talent : Virtual pour être écrasée pour les autres classes
+    public virtual bool Click()
     {
         // Si on peut utiliser des points
         if (MyCurrentCount < maxCount && unlocked)
@@ -141,9 +141,11 @@ public class Talent : MonoBehaviour
                 }
             }
 
+            // Clic possible
             return true;
         }
 
+        // Clic impossible
         return false;
     }
 }

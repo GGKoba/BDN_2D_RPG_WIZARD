@@ -42,7 +42,7 @@ public class Window : MonoBehaviour
     }
 
     /// <summary>
-    /// Fermeture de la fenêtre : virtual pour être écrasée pour les autres classes
+    /// Fermeture de la fenêtre : Virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual void Close()
     {

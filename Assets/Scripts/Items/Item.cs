@@ -89,7 +89,7 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
     }
 
     /// <summary>
-    /// Retourne le titre de l'item : virtual pour être écrasée pour les autres classes
+    /// Retourne le titre de l'item : Virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual string GetDescription()
     {

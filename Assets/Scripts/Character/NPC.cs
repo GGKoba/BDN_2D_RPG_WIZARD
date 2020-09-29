@@ -16,7 +16,7 @@ public class NPC : MonoBehaviour, IInteractable
 
 
     /// <summary>
-    /// Interaction avec le personnage : virtual pour être écrasée pour les autres classes
+    /// Interaction avec le personnage : Virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual void Interact()
     {
@@ -32,7 +32,7 @@ public class NPC : MonoBehaviour, IInteractable
     }
 
     /// <summary>
-    /// Fin de l'interaction avec le personnage : virtual pour être écrasée pour les autres classes
+    /// Fin de l'interaction avec le personnage : Virtual pour être écrasée pour les autres classes
     /// </summary>
     public virtual void StopInteract()
     {

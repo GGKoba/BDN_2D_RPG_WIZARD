@@ -39,7 +39,7 @@ public class LootTable : MonoBehaviour
     }
 
     /// <summary>
-    /// Attribution des loots : virtual pour être écrasée pour les autres classes
+    /// Attribution des loots : Virtual pour être écrasée pour les autres classes
     /// </summary>
     protected virtual void RollLoot()
     {

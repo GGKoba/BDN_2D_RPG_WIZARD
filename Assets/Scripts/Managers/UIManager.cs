@@ -34,20 +34,7 @@ public class UIManager : MonoBehaviour
     // Tableau des menus
     [SerializeField]
     private CanvasGroup[] menus = default;
-/*
-    [Header("Menu")]
-    // Menu des raccourcis
-    [SerializeField]
-    private CanvasGroup keyBindMenu = default;
 
-    // Menu des sorts
-    [SerializeField]
-    private CanvasGroup spellBookMenu = default;
-
-    // Feuille du personnage
-    [SerializeField]
-    private CharacterPanel characterPanel = default;
-*/
     [Header("Target")]
     // Frame de la cible
     [SerializeField]
@@ -161,6 +148,12 @@ public class UIManager : MonoBehaviour
             OpenClose(menus[6]);
         }
 
+        // [V] : Craft
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            // Ouverture/Fermeture de la fenêtre des talents
+            OpenClose(menus[7]);
+        }
     }
 
     /// <summary>

@@ -42,7 +42,7 @@ public class GearSocket : MonoBehaviour
     }
 
     /// <summary>
-    /// Actualise les paramètres de l'animation  : virtual pour être écrasée pour les autres classes
+    /// Actualise les paramètres de l'animation  : Virtual pour être écrasée pour les autres classes
     /// </summary>
     /// <param name="x">X</param>
     /// <param name="y">Y</param>

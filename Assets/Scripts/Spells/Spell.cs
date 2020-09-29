@@ -46,7 +46,7 @@ public class Spell : IUseable, IMoveable, IDescribable, ICastable
     private float castTime = default;
 
     // Propriété d'accès au temps d'incantation du sort
-    public float MyCastTime { get => castTime; }
+    public float MyCastTime { get => castTime; set => castTime = value; }
 
     // Prefab du sort
     [SerializeField]
