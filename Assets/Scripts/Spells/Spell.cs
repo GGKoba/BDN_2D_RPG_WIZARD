@@ -18,10 +18,10 @@ public class Spell : IUseable, IMoveable, IDescribable, ICastable
 
     // Dégâts du sort
     [SerializeField]
-    private int damage = default;
+    private float damage = default;
 
     // Propriété d'accès aux dégâts du sort
-    public int MyDamage { get => damage; }
+    public float MyDamage { get => Mathf.Ceil(damage); set => damage = value; }
 
     // Portée du sort
     [SerializeField]
@@ -86,7 +86,7 @@ public class Spell : IUseable, IMoveable, IDescribable, ICastable
         string spellTitle = string.Format("<color=#FFD904><b>{0}</b></color>", title);
         string spellStats = string.Format("<color=#ECECEC>Incantation : {0}s</color>", castTime);
         string spellRange = string.Format("<color=#ECECEC>Portée : {0}m</color>", range);
-        string spellDescription = string.Format("<color=#E0D0AE>{0}\net cause <color=cyan>{1}</color> points de dégâts</color>", description, damage);
+        string spellDescription = string.Format("<color=#E0D0AE>{0}\net cause <color=cyan>{1}</color> points de dégâts</color>", description, MyDamage);
 
         return string.Format("{0}\n\n{1}\n{2}\n\n{3}", spellTitle, spellStats, spellRange, spellDescription);
     }

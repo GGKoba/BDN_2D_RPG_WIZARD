@@ -4,18 +4,24 @@ using UnityEngine.EventSystems;
 
 
 /// <summary>
-/// Classe de gestion du talent Feu
+/// Classe de gestion du talent Eclair
 /// </summary>
-public class ImprovedFireball : Talent, IPointerEnterHandler, IPointerExitHandler, IDescribable
+public class ImprovedThunderbolt : Talent, IPointerEnterHandler, IPointerExitHandler, IDescribable
 {
+    // % d'augmentation
+    private int percent = 5;
+
+
     // Clic sur le talent : Surcharge la fonction Click du script Talent
     public override bool Click()
     {
         // Appelle Click sur la classe mère
         if (base.Click())
         {
+            Spell thunderbolt = SpellBook.MyInstance.GetSpell("Thunderbolt");
+
             // Ajoute l'abilité du talent
-            SpellBook.MyInstance.GetSpell("Fireball").MyCastTime -= 0.1f;
+            thunderbolt.MyDamage += (thunderbolt.MyDamage / 100) * percent;
 
             // Clic possible
             return true;
@@ -27,7 +33,7 @@ public class ImprovedFireball : Talent, IPointerEnterHandler, IPointerExitHandle
 
     public string GetDescription()
     {
-        return string.Format("Improved Fireball\n<color=#FFD100>Réduit le temps d'incantation\nde Fireball de 0,1s.</color>");
+        return string.Format($"Improved Thunderbolt\n<color=#FFD100>Augmente les dégâts \nde Thunderbolt de { percent }%.</color>");
     }
 
     /// <summary>

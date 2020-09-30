@@ -1854,7 +1854,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 332538387}
   maxCount: 3
-  unlocked: 1
   childTalent: {fileID: 0}
   arrowImage: {fileID: 0}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -2054,7 +2053,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2090,7 +2089,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 18
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2180,7 +2179,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2333,7 +2332,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2432,7 +2431,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 17
+      m_TileSpriteIndex: 23
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2522,7 +2521,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 23
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2658,7 +2657,7 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 5
+  - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 666e8fc18b346be45b7dd10fcc48c55f, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 073edd353c497184fbb30426d30ffd13, type: 3}
@@ -2670,7 +2669,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 9f209008e4a564244bf2bea8001729b0, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: 21300000, guid: 8516f29cd3697a048b0209ed0cf72767, type: 3}
-  - m_RefCount: 10
+  - m_RefCount: 13
     m_Data: {fileID: 21300000, guid: fee2885df28f8664fad7b24572a42192, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: 21300000, guid: c376d3c81da11594db26b4408541a622, type: 3}
@@ -6577,7 +6576,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 2075255648}
   maxCount: 1
-  unlocked: 0
   childTalent: {fileID: 0}
   arrowImage: {fileID: 1655561726}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -9192,7 +9190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 940943325}
   maxCount: 3
-  unlocked: 0
   childTalent: {fileID: 1365424970}
   arrowImage: {fileID: 2121604726}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -20964,7 +20961,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 1111982803}
   maxCount: 3
-  unlocked: 0
   childTalent: {fileID: 369445972}
   arrowImage: {fileID: 542280051}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -27129,7 +27125,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 383163551}
   maxCount: 1
-  unlocked: 0
   childTalent: {fileID: 0}
   arrowImage: {fileID: 504983535}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -29180,7 +29175,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 540539165}
   m_HandleRect: {fileID: 540539164}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -30730,7 +30725,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 1746282299}
   maxCount: 1
-  unlocked: 0
   childTalent: {fileID: 0}
   arrowImage: {fileID: 2138596894}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -33015,12 +33009,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1522186621}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86124f503dc01a947a1f4ac2bca1cb5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 42286dad1e026e343973d2753cc8c11c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   countText: {fileID: 680528700}
   maxCount: 3
-  unlocked: 1
   childTalent: {fileID: 1611307546}
   arrowImage: {fileID: 0}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -34269,7 +34262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 1790661061}
   maxCount: 3
-  unlocked: 0
   childTalent: {fileID: 1167202689}
   arrowImage: {fileID: 1709241042}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -35760,8 +35752,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1921852310}
   m_HandleRect: {fileID: 1921852309}
   m_Direction: 2
-  m_Value: 0.96528226
-  m_Size: 0.55365646
+  m_Value: 0.9652823
+  m_Size: 0.5536565
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -37888,7 +37880,7 @@ MonoBehaviour:
       type: 3}
     barColor: {r: 0.3764706, g: 0.6745098, b: 0.9254902, a: 1}
   - title: Thunderbolt
-    damage: 5
+    damage: 50
     range: 7
     description: Lance un sort de foudre sur l'ennemi
     icon: {fileID: 21300000, guid: 7c34dfebf0abca047892bef7cbac8192, type: 3}
@@ -39703,7 +39695,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 708131412}
   maxCount: 3
-  unlocked: 1
   childTalent: {fileID: 800363959}
   arrowImage: {fileID: 0}
   arrowSpriteLocked: {fileID: 21300000, guid: 9c7b086a9e270f24691866690ea2593c, type: 3}
@@ -43241,7 +43232,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1702093762}
   m_HandleRect: {fileID: 1702093761}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

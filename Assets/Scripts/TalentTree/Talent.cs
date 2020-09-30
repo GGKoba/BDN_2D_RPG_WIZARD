@@ -25,9 +25,8 @@ public class Talent : MonoBehaviour
     // propriété d'accès sur le nombre de points du talent
     public int MyCurrentCount { get => currentCount; set => currentCount = value; }
 
-    // Talent débloqué ?
-    [SerializeField]
-    private bool unlocked = default;
+    // Talent débloqué ou non
+    private bool unlocked;
 
     // Talent enfant
     [SerializeField]

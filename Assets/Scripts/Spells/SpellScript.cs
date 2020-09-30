@@ -15,7 +15,7 @@ public class SpellScript : MonoBehaviour
     private Rigidbody2D myRigidbody;
 
     // Dégâts du sort
-    private int damage;
+    private float damage;
 
     // Propriété d'accès à la cible du sort
     public Transform MyTarget { get; private set; }
@@ -39,7 +39,7 @@ public class SpellScript : MonoBehaviour
     /// </summary>
     /// <param name="spellTarget">Cible du sort</param>
     /// <param name="spellDamage">Dégâts du sort</param>
-    public void Initialize(Transform spellTarget, int spellDamage, Character spellSource)
+    public void Initialize(Transform spellTarget, float spellDamage, Character spellSource)
     {
         // Initialisation de la cible du sort
         MyTarget = spellTarget;
