@@ -19,6 +19,12 @@ public class TalentTree : Window
     // Nombre de points de talent
     private int points = 10;
 
+    // Propriété d'accès au tableau des talents
+    public Talent[] MyTalents
+    {
+        get => talents;
+    }
+
     // Propriété d'accès au nombre de points de talent
     public int MyPoints
     {

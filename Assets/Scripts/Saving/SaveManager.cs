@@ -24,6 +24,10 @@ public class SaveManager : MonoBehaviour
     // Tableau des boutons d'actions
     private ActionButton[] actionButtons;
 
+    // Tableau des talents
+    private Talent[] talentsTree;
+
+
     // Tableau des sauvegardes
     [SerializeField]
     private SavedGame[] saveSlots = default;
@@ -52,6 +56,7 @@ public class SaveManager : MonoBehaviour
         chests = FindObjectsOfType<Chest>();
         equipmentButtons = FindObjectsOfType<CharacterButton>();
         actionButtons = FindObjectsOfType<ActionButton>();
+        talentsTree = FindObjectOfType<TalentTree>().MyTalents;
 
         foreach (SavedGame savedGame in saveSlots)
         {
@@ -64,7 +69,8 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // [DEBUG] => Debug.Log(Application.persistentDataPath);
+        // [DEBUG] => 
+        Debug.Log(Application.persistentDataPath);
 
         // Fermeture de la fenêtre de confirmation
         CloseDialog();
@@ -161,6 +167,9 @@ public class SaveManager : MonoBehaviour
             // Enregistrement des données des raccourcis
             SaveBinds(data);
 
+            // Enregistrement des données des talents
+            // SaveTalents(data);
+
             // Serialisation des données
             bf.Serialize(file, data);
 
@@ -226,6 +235,9 @@ public class SaveManager : MonoBehaviour
 
             // Chargement des données des raccourcis
             LoadBinds(data);
+
+            // Chargement des données des talents
+            // LoadTalents(data);
         }
         catch (System.Exception)
         {
@@ -482,7 +494,7 @@ public class SaveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Chargement des données des raccourcis
+    /// Enregistrement des données des raccourcis
     /// </summary>
     /// <param name="data">Données de sauvegarde</param>
     private void SaveBinds(SaveData data)
@@ -497,6 +509,19 @@ public class SaveManager : MonoBehaviour
             data.MyKeyBindsData.Add(new KeyBindData(actionBind.Key, actionBind.Value));
         }
     }
+
+    /// <summary>
+    /// Enregistrement des données des talents
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void SaveTalents(SaveData data)
+    {
+        foreach (Talent talent in talentsTree)
+        {
+            data.MyTalentsData.Add(new TalentData(talent.name, talent.MyCurrentCount));
+        }
+    }
+
 
     /// <summary>
     /// Chargement des données du joueur
@@ -647,6 +672,29 @@ public class SaveManager : MonoBehaviour
         foreach (KeyBindData keyBindData in data.MyKeyBindsData)
         {
             KeyBindManager.MyInstance.BindKey(keyBindData.MyKeyName, keyBindData.MyKeyCode);
+        }
+    }
+
+
+    /// <summary>
+    /// Chargement des données des talents
+    /// </summary>
+    /// <param name="data">Données de sauvegarde</param>
+    private void LoadTalents(SaveData data)
+    {
+        foreach (TalentData talentData in data.MyTalentsData)
+        {
+            Talent talent = Array.Find(talentsTree, t => t.name.Equals(talentData.MyName));
+            
+            if (talentData.MyCurrentPoints > 0)
+            {
+                talent.Unlock();
+
+                for (int i = 1; i <= talentData.MyCurrentPoints; i++)
+                {
+                    talent.Click();
+                }
+            }
         }
     }
 }

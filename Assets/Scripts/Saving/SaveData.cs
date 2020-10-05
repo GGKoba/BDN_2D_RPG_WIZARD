@@ -34,6 +34,9 @@ public class SaveData
     // Propriété d'accès aux données des raccourcis
     public List<KeyBindData> MyKeyBindsData { get; set; }
 
+    // Propriété d'accès aux données des talents
+    public List<TalentData> MyTalentsData { get; set; }
+
     // Propriété d'accès sur la date de sauvegarde
     public DateTime MyDateTime { get; set; }
 
@@ -54,6 +57,7 @@ public class SaveData
         MyQuestGiverData = new List<QuestGiverData>();
         MyDateTime = DateTime.Now;
         MyKeyBindsData = new List<KeyBindData>();
+        MyTalentsData = new List<TalentData>();
     }
 }
 
@@ -341,5 +345,26 @@ public class KeyBindData
     {
         MyKeyName = key;
         MyKeyCode = code;
+    }
+}
+
+
+[Serializable]
+public class TalentData
+{
+    // Propriété d'accès au nom du talent
+    public string MyName { get; set; }
+
+    // Propriété d'accès au nombre de points
+    public int MyCurrentPoints { get; set; }
+
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    public TalentData(string name, int points)
+    {
+        MyName = name;
+        MyCurrentPoints = points;
     }
 }

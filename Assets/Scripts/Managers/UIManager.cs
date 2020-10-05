@@ -148,7 +148,7 @@ public class UIManager : MonoBehaviour
             OpenClose(menus[6]);
         }
 
-        // [V] : Craft
+        // [Y] : Talents
         if (Input.GetKeyDown(KeyCode.Y))
         {
             // Ouverture/Fermeture de la fenêtre des talents
@@ -248,7 +248,7 @@ public class UIManager : MonoBehaviour
         // Bloque/débloque les interactions
         canvasGroup.blocksRaycasts = !canvasGroup.blocksRaycasts;
 
-        // Masque(0) /Affiche(1) le menu
+        // Masque(0) / Affiche(1) le menu
         canvasGroup.alpha = canvasGroup.alpha > 0 ? 0 : 1;
 
         // Début(0)/fin(1) de pause

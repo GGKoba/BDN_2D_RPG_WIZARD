@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-
-
-
-/// <summary>
+﻿/// <summary>
 /// Classe de gestion de l'expérience
 /// </summary>
 static class XPManager
@@ -81,9 +77,6 @@ static class XPManager
 
         return 0;
     }
-
-
-
 
     /// <summary>
     /// Calcul du "ZeroDifference"
@@ -165,7 +158,6 @@ static class XPManager
         // Niveau du joueur entre 6 et 49
         else if (Player.MyInstance.MyLevel >= 6 && Player.MyInstance.MyLevel <= 49)
         {
-            Debug.Log(Player.MyInstance.MyLevel - (Player.MyInstance.MyLevel / 10) - 5);
             return Player.MyInstance.MyLevel - (Player.MyInstance.MyLevel / 10) - 5;
         }
         // Niveau du joueur égal à 50
