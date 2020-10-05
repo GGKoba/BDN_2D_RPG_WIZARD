@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion de l'arbre des talents
 /// </summary>
-public class TalentTree : MonoBehaviour
+public class TalentTree : Window
 {
     // Tableau des talents
     [SerializeField]
