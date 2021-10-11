@@ -30,7 +30,7 @@ public class Stat : MonoBehaviour
 
     // Propriété d'accès à la valeur maximum
     public float MyOverflow
-    { 
+    {
         get
         {
             float tmp = overflow;
@@ -124,7 +124,7 @@ public class Stat : MonoBehaviour
             // Référence à l'image de la barre
             content = gameObject.GetComponent<Image>();
         }
-        
+
         // Valeur de remplissage de la barre
         content.fillAmount = MyCurrentValue / MyMaxValue;
     }

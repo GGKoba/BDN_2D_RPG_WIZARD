@@ -91,7 +91,7 @@ public class Craft : Window
         // Affiche la description de la 1ère recette
         ShowDescription(selectedRecipe);
     }
-    
+
     /// <summary>
     /// Affiche la description d'une recette de fabrication
     /// </summary>
@@ -176,7 +176,7 @@ public class Craft : Window
                 // Actualise le nombre possible à fabriquer
                 MyAmount = 1;
             }
-            else if(int.Parse(countText.text) > maxAmount)
+            else if (int.Parse(countText.text) > maxAmount)
             {
                 // Actualise le nombre possible à fabriquer
                 MyAmount = maxAmount;
@@ -220,7 +220,7 @@ public class Craft : Window
             {
                 amounts.Sort();
                 countText.text = maxAmount.ToString();
-                
+
                 // Le nombre à fabriquer devient le nombre maximum à fabriquer 
                 count = amounts[0];
             }

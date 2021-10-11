@@ -39,4 +39,9 @@ public class HealthPotion : Item, IUseable
         // Appelle GetDescription sur la classe mère et ajoute la description de l'item
         return base.GetDescription() + string.Format("\n\n<color=#ECECEC><color=#FFF2BE>Utiliser :</color> Restaure <color=cyan>{0}</color> points de vie</color>", health);
     }
+
+    void IUseable.Use()
+    {
+        throw new System.NotImplementedException();
+    }
 }

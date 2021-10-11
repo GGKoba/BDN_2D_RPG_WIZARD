@@ -78,7 +78,7 @@ public class Bag : Item, IUseable
     public void SetUpScript()
     {
         MyBagScript = Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
-        
+
         // Ajoute les emplacements
         MyBagScript.AddSlots(slotsCount);
     }

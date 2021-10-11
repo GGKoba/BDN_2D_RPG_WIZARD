@@ -17,7 +17,7 @@ public class Talent : MonoBehaviour
 
     // Point(s) maximum sur le talent
     [SerializeField]
-    private int maxCount;
+    private int maxCount = 0;
 
     // Point(s) sur le talent
     private int currentCount;
@@ -70,7 +70,7 @@ public class Talent : MonoBehaviour
     public string getCountText()
     {
         return MyCurrentCount + "/" + maxCount;
-    } 
+    }
 
     /// <summary>
     /// Verrouillage d'un talent

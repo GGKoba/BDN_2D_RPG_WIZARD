@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine.EventSystems;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+
 
 /// <summary>
 /// Classe de gestion des emplacements des sacs
@@ -13,7 +14,7 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
 
     // Propriété d'accès à la stack des items de l'emplacement
     public ObservableStack<Item> MyItems { get => items; }
-    
+
     // Image de l'emplacement
     [SerializeField]
     private Image icon = default;
@@ -26,7 +27,7 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
     public Image MyIcon { get => icon; set => icon = value; }
 
     // Propriété d'accès à l'image de superposition
-    public Image MyCover{ get => cover; }
+    public Image MyCover { get => cover; }
 
     // Texte du nombre d'éléments de l'emplacement
     [SerializeField]
@@ -219,7 +220,7 @@ public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPoin
                 }
             }
             // Si un item est en train d'être déplacé
-            else if(InventoryScript.MyInstance.MyFromSlot != null)
+            else if (InventoryScript.MyInstance.MyFromSlot != null)
             {
                 // Si l'item est sur le même emplacement ou qu'il change d'emplacement
                 if (PutItemBack() || MergeItems(InventoryScript.MyInstance.MyFromSlot) || SwapItems(InventoryScript.MyInstance.MyFromSlot) || MoveStackItems(InventoryScript.MyInstance.MyFromSlot.items))

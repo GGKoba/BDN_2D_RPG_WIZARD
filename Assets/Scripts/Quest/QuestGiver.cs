@@ -21,7 +21,7 @@ public class QuestGiver : NPC
 
     // Propriété d'accès à la liste des quêtes
     public Quest[] MyQuests { get => quests; }
-    
+
     [Header("Questing Status")]
 
     // Conteneur de l'image
@@ -63,8 +63,8 @@ public class QuestGiver : NPC
     private List<string> completedQuests = new List<string>();
 
     // Propriété d'accès à la liste des quêtes accomplies
-    public List<string> MyCompletedQuests 
-    { 
+    public List<string> MyCompletedQuests
+    {
         get => completedQuests;
         set
         {
@@ -140,7 +140,7 @@ public class QuestGiver : NPC
                 {
                     // Actualise le status de la quête
                     statusRenderer.sprite = questionSilver;
-                    
+
                     // Actualise l'image sur la minimap
                     minimapRenderer.sprite = minimapQuestionSilver;
                 }

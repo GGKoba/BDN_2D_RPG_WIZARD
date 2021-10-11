@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        mainCamera = Camera.main;   
+        mainCamera = Camera.main;
     }
 
     /// <summary>
@@ -192,7 +192,7 @@ public class GameManager : MonoBehaviour
                 {
                     // Réinitialise l'index
                     targetIndex = 0;
-                } 
+                }
             }
         }
     }

@@ -68,7 +68,7 @@ class FollowState : IState
             {
                 offset = new Vector3(-0.5f, 0.8f);
             }
-            else if(animationName.Contains("right"))
+            else if (animationName.Contains("right"))
             {
                 offset = new Vector3(0.5f, 0.8f);
             }

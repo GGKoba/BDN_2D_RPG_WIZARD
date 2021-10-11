@@ -1,6 +1,8 @@
-﻿using UnityEngine.EventSystems;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+
 
 /// <summary>
 /// Classe de gestion des boutons des items du vendeur

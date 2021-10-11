@@ -15,7 +15,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
 
     // Propriété d'accès au bouton d'action
     public Button MyActionButton { get; private set; }
-    
+
     // Image du bouton
     [SerializeField]
     private Image icon = default;
@@ -28,7 +28,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
 
     // Propriété d'accès à la Stack des items de l'emplacement
     public Stack<IUseable> MyUseables
-    { 
+    {
         get => useables;
         set
         {
@@ -99,7 +99,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
             }
         }
     }
-    
+
     /// <summary>
     /// Gestion du clic
     /// </summary>
@@ -248,7 +248,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler, IClickable, IPo
         if (describable != null)
         {
             // Affiche le tooltip
-            UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, describable);
+            UIManager.MyInstance.ShowTooltip(new Vector2(1,0), transform.position, describable);
         }
     }
 

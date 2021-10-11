@@ -30,7 +30,7 @@ public class VendorWindow : Window
     [SerializeField]
     private GameObject previousButton = default, nextButton = default;
 
- 
+
     /// <summary>
     /// Création de la liste des pages du vendeur
     /// </summary>
@@ -107,28 +107,28 @@ public class VendorWindow : Window
     /// </summary>
     private void AddVendorItems()
     {
-       // S'il y a au moins une page
-       if (pages.Count > 0)
-       {
-           // Actualise les informations de pagination
-           pageNumber.text = string.Format("{0}/{1}", pageIndex + 1, pages.Count);
+        // S'il y a au moins une page
+        if (pages.Count > 0)
+        {
+            // Actualise les informations de pagination
+            pageNumber.text = string.Format("{0}/{1}", pageIndex + 1, pages.Count);
 
-           // Affichage du bouton "Précédent"
-           previousButton.SetActive(pageIndex > 0);
+            // Affichage du bouton "Précédent"
+            previousButton.SetActive(pageIndex > 0);
 
-           // Affichage du bouton "Suivant"
-           nextButton.SetActive(pages.Count > 1 && pageIndex < pages.Count - 1);
+            // Affichage du bouton "Suivant"
+            nextButton.SetActive(pages.Count > 1 && pageIndex < pages.Count - 1);
 
-           // Pour tous les items de la page
-           for (int i = 0; i < pages[pageIndex].Count; i++)
-           {
-               // S'il y a un item
-               if (pages[pageIndex][i] != null)
-               {
+            // Pour tous les items de la page
+            for (int i = 0; i < pages[pageIndex].Count; i++)
+            {
+                // S'il y a un item
+                if (pages[pageIndex][i] != null)
+                {
                     // Ajoute un item
                     vendorButtons[i].AddItem(pages[pageIndex][i]);
                 }
-           }
+            }
         }
     }
 

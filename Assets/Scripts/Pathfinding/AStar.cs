@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Linq;
 
 
 
@@ -63,7 +63,7 @@ public class AStar : MonoBehaviour
         closedList = new HashSet<Node>();
 
         //Réinitialise les noeuds
-        foreach (KeyValuePair <Vector3Int, Node> node in allNodes)
+        foreach (KeyValuePair<Vector3Int, Node> node in allNodes)
         {
             node.Value.Parent = null;
         }
@@ -162,10 +162,10 @@ public class AStar : MonoBehaviour
                 CalcValues(current, neighbour, goalPos, gScore);
 
                 // Vérfiier si la liste ne contient pas déjà le noeud
-                if (!openList.Contains(neighbour)) 
+                if (!openList.Contains(neighbour))
                 {
                     // Ajoute le noeud dans la liste à vérifier
-                    openList.Add(neighbour); 
+                    openList.Add(neighbour);
                 }
             }
         }
@@ -236,7 +236,7 @@ public class AStar : MonoBehaviour
         closedList.Add(current);
 
         // Si le noeud est dans la liste à verifier, on trie sur les valeurs de F
-        if (openList.Count > 0) 
+        if (openList.Count > 0)
         {
             // Tri sur les valeurs de F pour récupérer la valeur la plus petite
             current = openList.OrderBy(x => x.F).First();
@@ -261,7 +261,7 @@ public class AStar : MonoBehaviour
             {
                 // Ajout le noeud courant du chemin
                 finalPath.Push(MyTilemap.CellToWorld(current.Position));
-               
+
                 // Remontée sur tous les parents jusqu'au départ
                 current = current.Parent;
             }

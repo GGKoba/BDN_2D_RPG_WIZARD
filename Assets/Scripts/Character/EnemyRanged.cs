@@ -1,6 +1,7 @@
-﻿
+﻿using UnityEngine;
 
-using UnityEngine;
+
+
 /// <summary>
 /// Classe contenant les fonctionnalités spécifiques aux ennemis à distance
 /// </summary>
@@ -97,7 +98,7 @@ public class EnemyRanged : Enemy
 
             // Sprite utilisé
             string spriteName = MySpriteRenderer.sprite.name;
-            
+
             // Verification du sprite
             if (spriteName.Contains("up"))
             {

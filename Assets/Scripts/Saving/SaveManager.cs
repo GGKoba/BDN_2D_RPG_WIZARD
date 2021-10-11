@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
+
 
 /// <summary>
 /// Classe de gestion des sauvegardes
@@ -135,7 +137,7 @@ public class SaveManager : MonoBehaviour
 
             // Données de sauvegarde
             SaveData data = new SaveData
-            { 
+            {
                 // Récupèration du nom de la scène utilisée
                 MyScene = SceneManager.GetActiveScene().name
             };
@@ -440,12 +442,12 @@ public class SaveManager : MonoBehaviour
 
                 if (actionButtons[i].MyUseable is Spell)
                 {
-                    actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Spell).MyTitle, false, i); 
+                    actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Spell).MyTitle, false, i);
                 }
                 else
                 {
                     actionButtonData = new ActionButtonData((actionButtons[i].MyUseable as Item).MyKey, true, i);
-                    
+
                 }
 
                 data.MyActionButtonData.Add(actionButtonData);
@@ -685,7 +687,7 @@ public class SaveManager : MonoBehaviour
         foreach (TalentData talentData in data.MyTalentsData)
         {
             Talent talent = Array.Find(talentsTree, t => t.name.Equals(talentData.MyName));
-            
+
             if (talentData.MyCurrentPoints > 0)
             {
                 talent.Unlock();

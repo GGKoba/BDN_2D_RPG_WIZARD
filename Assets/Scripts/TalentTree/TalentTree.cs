@@ -30,9 +30,9 @@ public class TalentTree : Window
     {
         get => points;
         set
-        { 
+        {
             points = value;
-            
+
             // Actualise le nombre de points
             UpdateTalentPointText();
         }
@@ -40,7 +40,7 @@ public class TalentTree : Window
 
     // Texte du total des points
     [SerializeField]
-    private Text talentPointText;
+    private Text talentPointText = default;
 
 
     /// <summary>
@@ -57,7 +57,7 @@ public class TalentTree : Window
     /// </summary>
     void Update()
     {
-        
+
     }
 
     /// <summary>

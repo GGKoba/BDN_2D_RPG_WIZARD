@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 
+
 /// <summary>
 /// Classe de gestion des emplacements des armes du personnage
 /// </summary>

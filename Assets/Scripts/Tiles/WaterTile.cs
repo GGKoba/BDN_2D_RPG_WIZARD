@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
@@ -368,7 +368,7 @@ public class WaterTile : Tile
     }
 
 
-// Exécution seulement dans l'éditeur UNITY
+    // Exécution seulement dans l'éditeur UNITY
 #if UNITY_EDITOR
     /// <summary>
     /// Ajoute un sous-menu dans le menu Assets : Tiles > WaterTile à partir de Assets > Create

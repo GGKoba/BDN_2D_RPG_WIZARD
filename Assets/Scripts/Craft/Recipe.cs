@@ -31,7 +31,7 @@ public class Recipe : MonoBehaviour, ICastable
     private Item craftedItem = default;
 
     // Propriété d'accès à l'item fabriqué
-    public Item MyCraftedItem { get => craftedItem;}
+    public Item MyCraftedItem { get => craftedItem; }
 
     // Nombre d'item à fabriquer
     [SerializeField]
@@ -80,7 +80,7 @@ public class Recipe : MonoBehaviour, ICastable
         Color color = highlight.color;
         color.a = 0.3f;
         highlight.color = color;
- 
+
         // Affiche la description de la quête sélectionnée
         //QuestWindow.MyInstance.ShowDescription(MyQuest);
     }

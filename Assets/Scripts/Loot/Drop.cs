@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-
-
-
-/// <summary>
+﻿/// <summary>
 /// Classe de gestion de récupération des butins
 /// </summary>
 public class Drop

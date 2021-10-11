@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
             return instance;
         }
     }
-       
+
     // Tableau des boutons d'action
     [SerializeField]
     private ActionButton[] actionButtons = default;
@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
             // Ouverture/Fermeture du menu principal
             OpenClose(menus[0]);
         }
-        
+
         // [P] : Menu Sorts
         if (Input.GetKeyDown(KeyCode.P))
         {

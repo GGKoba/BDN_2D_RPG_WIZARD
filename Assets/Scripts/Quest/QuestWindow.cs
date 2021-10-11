@@ -173,7 +173,7 @@ public class QuestWindow : Window
     public void UpdateSelected()
     {
         //Affiche la description d'une quête
-        ShowDescription(selected);           
+        ShowDescription(selected);
     }
 
     /// <summary>
@@ -210,7 +210,7 @@ public class QuestWindow : Window
     {
         // Retire le script de la quête de la liste des scripts des quêtes
         questScripts.Remove(qs);
-        
+
         // Detruit l'objet
         Destroy(qs.gameObject);
 

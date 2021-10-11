@@ -136,7 +136,7 @@ public class InventoryScript : MonoBehaviour
         {
             // Création d'un sac
             Bag bag = (Bag)Instantiate(items[0]);
-            
+
             // Initialisation du sac
             bag.Initialize(20);
 

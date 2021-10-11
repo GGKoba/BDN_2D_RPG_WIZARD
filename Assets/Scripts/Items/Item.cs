@@ -63,7 +63,7 @@ public abstract class Item : ScriptableObject, IMoveable, IDescribable
 
     // Propriété d'accès à l'emplacement de l'item sur la feuille du personnage
     public CharacterButton MyCharacterButton
-    { 
+    {
         get => characterButton;
         set
         {

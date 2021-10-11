@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-
-
 /// <summary>
 /// Classe de gestion des vendeurs
 /// </summary>

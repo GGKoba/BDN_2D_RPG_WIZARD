@@ -8,7 +8,7 @@
 public interface IUseable
 {
     // Propriété d'accès à l'image liée au bouton d'action
-    Sprite MyIcon { get;  }
+    Sprite MyIcon { get; }
 
     // Fonction d'utilisation (lancement d'un sort, consommation d'un item, ...)
     void Use();

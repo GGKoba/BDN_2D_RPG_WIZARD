@@ -2,6 +2,8 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+
 /// <summary>
 /// Classe de gestion des boutons de la feuille du personnage
 /// </summary>
@@ -85,7 +87,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
                 CharacterPanel.MyInstance.MySelectedButton = this;
 
                 // Grise l'image de l'item
-                icon.color = Color.grey; 
+                icon.color = Color.grey;
             }
         }
         // Clic droit

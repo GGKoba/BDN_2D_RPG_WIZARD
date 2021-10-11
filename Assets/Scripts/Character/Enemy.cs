@@ -108,7 +108,7 @@ public class Enemy : Character, IInteractable
         // Passage à l'état d'attente
         ChangeState(new IdleState());
     }
-    
+
     /// <summary>
     /// Start : Surcharge la fonction Start du script Character
     /// </summary>

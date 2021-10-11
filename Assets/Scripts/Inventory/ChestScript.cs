@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-
-
-
-/// <summary>
+﻿/// <summary>
 /// Classe de gestion des coffres
 /// </summary>
 public class ChestScript : BagScript

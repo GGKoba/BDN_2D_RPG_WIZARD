@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 
+
 /// <summary>
 /// Classe de gestion des minerais d'or
 /// </summary>

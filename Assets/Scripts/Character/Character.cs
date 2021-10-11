@@ -162,10 +162,10 @@ public abstract class Character : MonoBehaviour
     {
         // Boucle sur les layers d'animations
         for (int i = 0; i < MyAnimator.layerCount; i++)
-		{
+        {
             // Réinitialise le layer courant
             MyAnimator.SetLayerWeight(i, 0);
-		}
+        }
 
         // Active le layer correspond au nom passé en paramètre
         MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);

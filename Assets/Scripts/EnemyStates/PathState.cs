@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 
@@ -49,7 +48,7 @@ public class PathState : IState
         targetPosition = Player.MyInstance.MyCurrentTile.position;
 
         // Si la cible n'est pas au même endroit
-        if(targetPosition != parent.MyCurrentTile.position)
+        if (targetPosition != parent.MyCurrentTile.position)
         {
             // Définit le chemin
             parent.MyPath = parent.MyAstar.Algorithm(parent.MyCurrentTile.position, targetPosition);
@@ -176,6 +175,6 @@ public class PathState : IState
                     parent.ChangeState(new EvadeState());
                 }
             }
-        } 
+        }
     }
 }

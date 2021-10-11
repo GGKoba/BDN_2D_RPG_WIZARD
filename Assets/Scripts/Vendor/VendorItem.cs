@@ -2,11 +2,12 @@
 using UnityEngine;
 
 
+
 /// <summary>
 /// Classe de gestion des items du vendeur
 /// </summary>
 [Serializable]
-public class VendorItem 
+public class VendorItem
 {
     // Item du vendeur
     [SerializeField]
@@ -18,7 +19,7 @@ public class VendorItem
     // Quantité de l'item
     [SerializeField]
     private int quantity = default;
-    
+
     // Propriété d'accès à la quantité
     public int MyQuantity { get => quantity; set => quantity = value; }
 
