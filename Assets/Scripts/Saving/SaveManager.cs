@@ -71,7 +71,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // [DEBUG] => 
+        // [DEBUG] => Chemin d'enregistrement
         Debug.Log(Application.persistentDataPath);
 
         // Fermeture de la fenêtre de confirmation
