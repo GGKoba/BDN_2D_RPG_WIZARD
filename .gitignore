@@ -27,6 +27,7 @@ ExportedObj/
 *.user
 *.userprefs
 .vsconfig
+_config.yml
 
 
 # Unity3D generated meta files
