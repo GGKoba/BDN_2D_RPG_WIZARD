@@ -51,7 +51,7 @@ TextureImporter:
       213: 7399430774384625540
     second: shoulders_walk_back_15
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -71,6 +71,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -79,9 +81,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -102,9 +104,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -503,6 +509,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      shoulders_walk_back_9: 2602453868988845632
+      shoulders_walk_back_15: 7399430774384625540
+      shoulders_walk_back_11: 6094045871886735983
+      shoulders_walk_back_6: -8499680507037518872
+      shoulders_walk_back_8: 7395745293467065737
+      shoulders_walk_back_7: 152068679765859882
+      shoulders_walk_back_14: -8840503032633879559
+      shoulders_walk_back_3: 2889816188862807503
+      shoulders_walk_back_13: 9082872385875042346
+      shoulders_walk_back_1: 1772563716001541933
+      shoulders_walk_back_2: -4622510443360788531
+      shoulders_walk_back_5: 680117564271677524
+      shoulders_walk_back_4: 988011862373501809
+      shoulders_walk_back_0: -9154245999339534722
+      shoulders_walk_back_10: 7416981579816166988
+      shoulders_walk_back_12: 5777253311717675153
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

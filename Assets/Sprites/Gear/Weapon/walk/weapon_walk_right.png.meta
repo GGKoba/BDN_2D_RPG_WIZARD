@@ -51,7 +51,7 @@ TextureImporter:
       213: 3247588868662436225
     second: weapon_walk_right_15
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -71,6 +71,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -79,9 +81,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -102,9 +104,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -503,6 +509,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      weapon_walk_right_1: 8914503944318564687
+      weapon_walk_right_14: 9191088975142886252
+      weapon_walk_right_6: 1457818470535090300
+      weapon_walk_right_2: -1371318935695044819
+      weapon_walk_right_12: -8033668596847022284
+      weapon_walk_right_3: 2855489596815112141
+      weapon_walk_right_0: 8966312665532584733
+      weapon_walk_right_5: -8961919480131438919
+      weapon_walk_right_15: 3247588868662436225
+      weapon_walk_right_7: -5041095932319660203
+      weapon_walk_right_13: -1766108935453865111
+      weapon_walk_right_10: 2927181931658826816
+      weapon_walk_right_9: -6062183165572251546
+      weapon_walk_right_4: 6757650229904601936
+      weapon_walk_right_11: -1820831849184131324
+      weapon_walk_right_8: -1147643251535883376
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -39,7 +39,7 @@ TextureImporter:
       213: -8197194790800902727
     second: shoulders_idle_left_11
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -59,6 +59,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -67,9 +69,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -90,9 +92,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -407,6 +413,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      shoulders_idle_left_5: 1547570228526046672
+      shoulders_idle_left_8: 7602139221431194423
+      shoulders_idle_left_1: -2384093054626896192
+      shoulders_idle_left_6: 5228643780723498090
+      shoulders_idle_left_11: -8197194790800902727
+      shoulders_idle_left_2: -4166470451453163918
+      shoulders_idle_left_3: 3550925022744225522
+      shoulders_idle_left_4: -7030297353071156870
+      shoulders_idle_left_0: -9033639200015500341
+      shoulders_idle_left_9: -3896805460103015844
+      shoulders_idle_left_10: -4784705680274537535
+      shoulders_idle_left_7: -7732792055848145449
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

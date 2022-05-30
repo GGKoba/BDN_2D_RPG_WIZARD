@@ -39,7 +39,7 @@ TextureImporter:
       213: -8836602809132022796
     second: weapon_idle_left_11
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -59,6 +59,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -67,9 +69,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -90,9 +92,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -407,6 +413,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      weapon_idle_left_6: -1877185646417485864
+      weapon_idle_left_8: -3858434002041612033
+      weapon_idle_left_4: -2043222301580628309
+      weapon_idle_left_5: 5378774403970614031
+      weapon_idle_left_0: -4691675007805498870
+      weapon_idle_left_2: -8070370665731318065
+      weapon_idle_left_11: -8836602809132022796
+      weapon_idle_left_7: -1521400546051211640
+      weapon_idle_left_3: 918193705232954140
+      weapon_idle_left_9: -6646969289156087793
+      weapon_idle_left_1: -8674761636261991971
+      weapon_idle_left_10: 2202108917579491120
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

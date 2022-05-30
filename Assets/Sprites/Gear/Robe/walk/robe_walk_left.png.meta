@@ -51,7 +51,7 @@ TextureImporter:
       213: 3196161365570475011
     second: robe_walk_left_15
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -71,6 +71,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -79,9 +81,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -102,9 +104,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -503,6 +509,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      robe_walk_left_10: -6994850444211492012
+      robe_walk_left_4: 2859629045111518003
+      robe_walk_left_2: -4464094646558700915
+      robe_walk_left_0: -3557840649249371842
+      robe_walk_left_3: 953196596200754301
+      robe_walk_left_7: 6142439801481985111
+      robe_walk_left_8: 3354931474965848989
+      robe_walk_left_9: -8141189544190899451
+      robe_walk_left_14: 1622402806771816400
+      robe_walk_left_6: -2990228518999537579
+      robe_walk_left_15: 3196161365570475011
+      robe_walk_left_5: 178829342039752985
+      robe_walk_left_12: 5847328219937815407
+      robe_walk_left_11: -4646409863871856412
+      robe_walk_left_1: 3734171977944368229
+      robe_walk_left_13: 994039762236725584
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

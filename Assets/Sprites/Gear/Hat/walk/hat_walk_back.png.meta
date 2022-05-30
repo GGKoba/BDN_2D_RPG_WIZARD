@@ -51,7 +51,7 @@ TextureImporter:
       213: -3247750528807433528
     second: hat_walk_back_15
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -71,6 +71,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -79,9 +81,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -102,9 +104,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -503,6 +509,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      hat_walk_back_12: -8934618427984040928
+      hat_walk_back_3: 8427934763851706226
+      hat_walk_back_5: 1118701837808964428
+      hat_walk_back_10: 8295627047558249786
+      hat_walk_back_2: 5744118592389794160
+      hat_walk_back_8: 7085672980397021346
+      hat_walk_back_14: 187955398576181237
+      hat_walk_back_7: -8175972192408302102
+      hat_walk_back_15: -3247750528807433528
+      hat_walk_back_11: -1707098367743875680
+      hat_walk_back_6: 5475043961059346831
+      hat_walk_back_1: -6120822905487612644
+      hat_walk_back_0: -7551243587000284993
+      hat_walk_back_9: 6540262249282542910
+      hat_walk_back_13: 3933156793276600255
+      hat_walk_back_4: -5592495139219946192
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

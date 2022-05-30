@@ -39,7 +39,7 @@ TextureImporter:
       213: 4405753319253357081
     second: robe_idle_right_11
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -59,6 +59,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -67,9 +69,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -90,9 +92,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -407,6 +413,19 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      robe_idle_right_11: 4405753319253357081
+      robe_idle_right_0: 1159571895867600811
+      robe_idle_right_7: 4715448684603166415
+      robe_idle_right_2: 8513060476141302675
+      robe_idle_right_1: -2872118310620678855
+      robe_idle_right_8: 611370295627782345
+      robe_idle_right_3: -5903522325258823171
+      robe_idle_right_9: -2168183606984035110
+      robe_idle_right_6: -3278003877283758124
+      robe_idle_right_10: -2645129481420809338
+      robe_idle_right_5: 8764713377438891291
+      robe_idle_right_4: -4764147586633180496
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

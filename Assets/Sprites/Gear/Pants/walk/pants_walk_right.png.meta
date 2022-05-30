@@ -51,7 +51,7 @@ TextureImporter:
       213: 282624683513099977
     second: pants_walk_right_15
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -71,6 +71,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -79,9 +81,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -100
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -102,9 +104,13 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -503,6 +509,23 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      pants_walk_right_6: 8966339626237176839
+      pants_walk_right_15: 282624683513099977
+      pants_walk_right_1: -2978826945007540596
+      pants_walk_right_5: -6177465679254535564
+      pants_walk_right_11: -8004059486308250567
+      pants_walk_right_8: -8511241814191538967
+      pants_walk_right_4: -4015212183472562451
+      pants_walk_right_12: 1740026313965698667
+      pants_walk_right_10: -3539939976233715070
+      pants_walk_right_2: 6827406331532513138
+      pants_walk_right_13: -7277789571404462190
+      pants_walk_right_9: 8553239615664735275
+      pants_walk_right_3: -1234803595971695481
+      pants_walk_right_14: 1148166622290657100
+      pants_walk_right_7: -4715174931886507607
+      pants_walk_right_0: 4450018614229920747
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
