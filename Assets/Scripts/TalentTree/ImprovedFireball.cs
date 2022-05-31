@@ -1,20 +1,17 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-
-
-
-/// <summary>
+﻿/// <summary>
 /// Classe de gestion du talent Feu
 /// </summary>
-public class ImprovedFireball : Talent, IPointerEnterHandler, IPointerExitHandler, IDescribable
+public class ImprovedFireball : Talent
 {
-    // Clic sur le talent : Surcharge la fonction Click du script Talent
+    /// <summary>
+    /// Clic sur le talent : Surcharge la fonction Click du script Talent
+    /// </summary>
     public override bool Click()
     {
         // Appelle Click sur la classe mère
         if (base.Click())
         {
-            // Ajoute l'abilité du talent
+            // Ajoute l'habilité du talent
             SpellBook.MyInstance.GetSpell("Fireball").MyCastTime -= 0.1f;
 
             // Clic possible
@@ -25,28 +22,12 @@ public class ImprovedFireball : Talent, IPointerEnterHandler, IPointerExitHandle
         return false;
     }
 
-    public string GetDescription()
+    /// <summary>
+    /// Description du talent : Surcharge la fonction Click du script Talent
+    /// </summary>
+    /// <returns></returns>
+    public override string GetDescription()
     {
         return string.Format("Improved Fireball\n<color=#FFD100>Réduit le temps d'incantation\nde Fireball de 0,1s.</color>");
-    }
-
-    /// <summary>
-    /// Entrée du curseur
-    /// </summary>
-    /// <param name="eventData">Evenement d'entrée</param>
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        // Affiche le tooltip
-        UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, this);
-    }
-
-    /// <summary>
-    /// Sortie du curseur
-    /// </summary>
-    /// <param name="eventData">Evenement de sortie</param>
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // Masque le tooltip
-        UIManager.MyInstance.HideTooltip();
     }
 }

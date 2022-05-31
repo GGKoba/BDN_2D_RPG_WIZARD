@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Classe de gestion des talents
 /// </summary>
-public class Talent : MonoBehaviour
+public class Talent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDescribable
 {
     // Image du talent
     private Image sprite;
@@ -117,7 +118,9 @@ public class Talent : MonoBehaviour
         unlocked = true;
     }
 
-    // Clic sur le talent : Virtual pour être écrasée pour les autres classes
+    /// <summary>
+    /// Clic sur le talent : Virtual pour être écrasée pour les autres classes
+    /// </summary>
     public virtual bool Click()
     {
         // Si on peut utiliser des points
@@ -146,5 +149,35 @@ public class Talent : MonoBehaviour
 
         // Clic impossible
         return false;
+    }
+
+
+    /// <summary>
+    /// Entrée du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement d'entrée</param>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Affiche le tooltip
+        UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, this);
+    }
+
+    /// <summary>
+    /// Sortie du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement de sortie</param>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Masque le tooltip
+        UIManager.MyInstance.HideTooltip();
+    }
+
+    /// <summary>
+    /// Description du talent : Virtual pour être écrasée pour les autres classes
+    /// </summary>
+    /// <returns></returns>
+    public virtual string GetDescription()
+    {
+        return string.Empty;
     }
 }

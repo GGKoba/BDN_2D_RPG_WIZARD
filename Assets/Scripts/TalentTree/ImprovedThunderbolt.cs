@@ -1,26 +1,24 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-
-
-
-/// <summary>
+﻿/// <summary>
 /// Classe de gestion du talent Eclair
 /// </summary>
-public class ImprovedThunderbolt : Talent, IPointerEnterHandler, IPointerExitHandler, IDescribable
+public class ImprovedThunderbolt : Talent
 {
     // % d'augmentation
     private int percent = 5;
 
 
-    // Clic sur le talent : Surcharge la fonction Click du script Talent
+    /// <summary>
+    /// Clic sur le talent : Surcharge la fonction Click du script Talent
+    /// </summary>
     public override bool Click()
     {
         // Appelle Click sur la classe mère
         if (base.Click())
         {
+            // Récupère le sort
             Spell thunderbolt = SpellBook.MyInstance.GetSpell("Thunderbolt");
 
-            // Ajoute l'abilité du talent
+            // Ajoute l'habilité du talent
             thunderbolt.MyDamage += (thunderbolt.MyDamage / 100) * percent;
 
             // Clic possible
@@ -31,28 +29,12 @@ public class ImprovedThunderbolt : Talent, IPointerEnterHandler, IPointerExitHan
         return false;
     }
 
-    public string GetDescription()
-    {
-        return string.Format($"Improved Thunderbolt\n<color=#FFD100>Augmente les dégâts \nde Thunderbolt de { percent }%.</color>");
-    }
-
     /// <summary>
-    /// Entrée du curseur
+    /// Description du talent : Surcharge la fonction Click du script Talent
     /// </summary>
-    /// <param name="eventData">Evenement d'entrée</param>
-    public void OnPointerEnter(PointerEventData eventData)
+    /// <returns></returns>
+    public override string GetDescription()
     {
-        // Affiche le tooltip
-        UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, this);
-    }
-
-    /// <summary>
-    /// Sortie du curseur
-    /// </summary>
-    /// <param name="eventData">Evenement de sortie</param>
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // Masque le tooltip
-        UIManager.MyInstance.HideTooltip();
+        return string.Format($"Improved Thunderbolt\n<color=#FFD100>Augmente les dégâts\nde Thunderbolt de { percent }%.</color>");
     }
 }

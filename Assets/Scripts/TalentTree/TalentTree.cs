@@ -61,7 +61,7 @@ public class TalentTree : Window
     }
 
     /// <summary>
-    /// Réinitialisation des talents
+    /// Utilisation des talents
     /// </summary>
     public void TryUseTalent(Talent talent)
     {
