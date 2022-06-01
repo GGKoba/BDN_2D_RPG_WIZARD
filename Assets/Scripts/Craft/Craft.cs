@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 /// <summary>
-/// Calsse de gestion des fabrications
+/// Classe de gestion des fabrications
 /// </summary>
 public class Craft : Window
 {
@@ -211,7 +211,7 @@ public class Craft : Window
     /// <param name="all">Fabriquer TOUT</param>
     public void CraftItem(bool all)
     {
-        // [DEBUG] isAttacking pour ne pas pouvoir spam
+        // [DEBUG] : isAttacking pour ne pas pouvoir spam
         if (CanCraft() && !Player.MyInstance.IsAttacking)
         {
             int count;

@@ -296,13 +296,13 @@ public class Player : Character
     private IEnumerator CastActionRoutine(ICastable castable)
     {
         // La cible de l'attaque est la cible sélectionnée
-        Transform attackTarget = MyTarget.MyHitBox;
+        Transform currentTarget = MyTarget.MyHitBox;
 
         // Routine d'action
         yield return actionRoutine = StartCoroutine(ActionRoutine(castable));
 
         // Vérifie que la cible de l'attaque est toujours attaquable 
-        if (attackTarget != null && InLineOfSight())
+        if (currentTarget != null && InLineOfSight())
         {
             // Récupère les informations de l'élément incantable
             Spell spell = SpellBook.MyInstance.GetSpell(castable.MyTitle);
@@ -310,8 +310,8 @@ public class Player : Character
             // Instantie le sort
             SpellScript spellScript = Instantiate(spell.MyPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();
 
-            // Affecte la cible et les dégâts du sort
-            spellScript.Initialize(attackTarget, spell.MyDamage, this);
+            // Initialiase le sort (cible, dégats, source, débuff)
+            spellScript.Initialize(currentTarget, spell.MyDamage, this, spell.MyDebuff);
         }
     }
 

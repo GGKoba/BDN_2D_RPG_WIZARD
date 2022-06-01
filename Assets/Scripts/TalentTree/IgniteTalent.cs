@@ -3,6 +3,9 @@
 /// </summary>
 public class IgniteTalent : Talent
 {
+    // Débuff de feu
+    IgniteDebuff debuff = new IgniteDebuff();
+
     // Dégats du débuff
     private float tickDamage = 5;
 
@@ -11,12 +14,6 @@ public class IgniteTalent : Talent
 
     // Description du rang suivant
     private string nextRank = string.Empty;
-
-    // Durée du débuff
-    private float tmpDuration = 20;
-
-    // Dégats temporaire du débuff
-    private float tmpDamage = 5;
 
 
     /// <summary>
@@ -28,13 +25,13 @@ public class IgniteTalent : Talent
         if (base.Click())
         {
             // Actualise les dégâts
-            tmpDamage = tickDamage;
+            debuff.MyTickDamage = tickDamage;
 
             if (MyCurrentCount < 3)
             {
                 // Mise à jour des dégâts pour le rang suivant
                 tickDamage += damageIncrease;
-                nextRank = $"<color=#CCCCCC>\n\nRang suivant :</color>\n<color=#FFD100>Fireball applique un débuff\nà la cible qui inflige\n{tickDamage * tmpDuration} points de dégâts sur {tmpDuration} secondes.</color>\n<color=red>Dégâts par secondes : {tickDamage}</color>";
+                nextRank = $"<color=#CCCCCC>\n\nRang suivant :</color>\n<color=#FFD100>Fireball applique un débuff\nà la cible qui inflige\n{tickDamage * debuff.MyDuration} points de dégâts sur {debuff.MyDuration} secondes.</color>\n<color=red>Dégâts par secondes : {tickDamage}</color>";
             } 
             else
             {
@@ -43,6 +40,9 @@ public class IgniteTalent : Talent
 
             // Rafraîchit le tooltip
             UIManager.MyInstance.RefreshTooltip(this);
+
+            // Ajoute l'habilité du talent (Ajoute un débuff sur le sort de feu)
+            SpellBook.MyInstance.GetSpell("Fireball").MyDebuff = debuff;
 
             // Clic possible
             return true;
@@ -58,6 +58,6 @@ public class IgniteTalent : Talent
     /// <returns></returns>
     public override string GetDescription()
     {
-        return $"Ignite<color=#FFD100>\nFireball applique un débuff\nà la cible qui inflige\n{tmpDamage * tmpDuration} points de dégâts sur {tmpDuration} secondes.</color>\n<color=red>Dégâts par secondes : {tmpDamage}</color>{nextRank}";
+        return $"Ignite<color=#FFD100>\nFireball applique un débuff\nà la cible qui inflige\n{debuff.MyTickDamage * debuff.MyDuration} points de dégâts sur {debuff.MyDuration} secondes.</color>\n<color=red>Dégâts par secondes : {debuff.MyTickDamage}</color>{nextRank}";
     }
 }

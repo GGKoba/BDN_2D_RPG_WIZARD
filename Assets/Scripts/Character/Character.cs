@@ -88,6 +88,15 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès au chemin de déplacement
     public Stack<Vector3> MyPath { get; set; }
 
+    // Liste des débuffs
+    private List<Debuff> debuffs = new List<Debuff>();
+
+    // Liste des nouveaux débuffs
+    private List<Debuff> newDebuffs = new List<Debuff>();
+
+    // Liste des débuffs expirés
+    private List<Debuff> expiredDebuffs = new List<Debuff>();
+
 
     /// <summary>
     /// Start
@@ -107,6 +116,9 @@ public abstract class Character : MonoBehaviour
     protected virtual void Update()
     {
         HandleLayers();
+
+        // Mise à jour des débuffs
+        HandleDebuffs();
     }
 
     /// <summary>
@@ -228,6 +240,65 @@ public abstract class Character : MonoBehaviour
                 // Déplace le personnage
                 MyRigidbodyCharacter.velocity = MyDirection.normalized * MySpeed;
             }
+        }
+    }
+
+    /// <summary>
+    /// Applique un debuff sur le personnage
+    /// </summary>
+    /// <param name="debuff">Débuff à appliquer sur le personnage</param>
+    public void ApplyDebuff(Debuff debuff)
+    {
+        // Ajoute le débuff dans la liste des nouveaux débuffs
+        newDebuffs.Add(debuff);
+    }
+
+    /// <summary>
+    /// Retire un debuff sur le personnage
+    /// </summary>
+    /// <param name="debuff">Débuff à retirer sur le personnage</param>
+    public void RemoveDebuff(Debuff debuff)
+    {
+        // Ajoute le débuff dans la liste des débuffs expirés
+        expiredDebuffs.Add(debuff);
+    }
+
+    /// <summary>
+    /// Retire un debuff sur le personnage
+    /// </summary>
+    private void HandleDebuffs()
+    {
+        // S'il y a des débuffs, on les applique
+        if (debuffs.Count > 0)
+        {
+            foreach (Debuff debuff in debuffs)
+            {
+                // Applique le débuff
+                debuff.Update();
+            }
+        }
+
+        // S'il y a de nouveaux débuffs, on les ajoute
+        if (newDebuffs.Count > 0)
+        {
+            // Ajoute les nouveaux debuffs dans la liste des débuffs
+            debuffs.AddRange(newDebuffs);
+
+            // Vide la liste des nouveaux débuffs
+            newDebuffs.Clear();
+        }
+
+        // S'il y a des débuffs expirés, on les retire
+        if (expiredDebuffs.Count > 0)
+        {
+            foreach (Debuff debuff in expiredDebuffs)
+            {
+                // Retire le débuff de la liste des débuffs
+                debuffs.Remove(debuff);
+            }
+
+            // Vide la liste des débuffs expirés
+            expiredDebuffs.Clear();
         }
     }
 }

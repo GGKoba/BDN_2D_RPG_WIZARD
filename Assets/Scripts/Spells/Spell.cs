@@ -69,6 +69,9 @@ public class Spell : IUseable, IMoveable, IDescribable, ICastable
     // Propriété d'accès à la couleur de la barre 
     public Color MyBarColor { get => barColor; }
 
+    // Propriété d'accès au débuff du sort
+    public Debuff MyDebuff { get; set; }
+
 
     /// <summary>
     /// Utilisation du sort

@@ -186,6 +186,7 @@ public class Enemy : Character, IInteractable
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
     /// <param name="source">Source de l'attaque</param>
+    /// [DEBUG] : source utilisée ?
     public override void TakeDamage(float damage, Character source)
     {
         // Si l'état n'est pas en évasion

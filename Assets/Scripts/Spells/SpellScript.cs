@@ -17,6 +17,9 @@ public class SpellScript : MonoBehaviour
     // Dégâts du sort
     private float damage;
 
+    // Débuff du sort
+    private Debuff debuff;
+
     // Propriété d'accès à la cible du sort
     public Transform MyTarget { get; private set; }
 
@@ -52,6 +55,30 @@ public class SpellScript : MonoBehaviour
     }
 
     /// <summary>
+    /// Initialisation des données du sort
+    /// </summary>
+    /// <param name="spellTarget">Cible du sort</param>
+    /// <param name="spellDamage">Dégâts du sort</param>
+    /// <param name="debuff">Débuff du sort</param>
+    public void Initialize(Transform spellTarget, float spellDamage, Character spellSource, Debuff spellDebuff)
+    {
+        // Initialisation de la cible du sort
+        MyTarget = spellTarget;
+
+        // Initialisation des dégâts du sort
+        damage = spellDamage;
+
+        // Initialisation de la source du sort
+        source = spellSource;
+
+        // Initialisation du débuff du sort
+        debuff = spellDebuff;
+    }
+
+
+
+
+    /// <summary>
     /// FixedUpdate : Update utilisé pour le Rigibody
     /// </summary>
     private void FixedUpdate()
@@ -82,14 +109,20 @@ public class SpellScript : MonoBehaviour
         // Si la collision de la cible a le tag Hitbox
         if (collision.CompareTag("HitBox") && collision.transform == MyTarget)
         {
-            // Source de l'attaque
-            Character character = collision.GetComponentInParent<Character>();
+            // Cible de l'attaque
+            Character characterAttacked = collision.GetComponentInParent<Character>();
 
             // Stoppe le déplacement du sort
             speed = 0;
 
-            // Appelle la fonction de dégats sur le personnage
-            character.TakeDamage(damage, source);
+            // Appelle la fonction de dégats sur le personnage ciblé
+            characterAttacked.TakeDamage(damage, source);
+
+            // Applique le débuff s'il existe
+            if (debuff != null)
+            {
+                debuff.Apply(characterAttacked);
+            }
 
             // Activation du trigger "impact"
             GetComponent<Animator>().SetTrigger("impact");
