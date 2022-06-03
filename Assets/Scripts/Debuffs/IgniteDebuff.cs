@@ -10,6 +10,13 @@ class IgniteDebuff : Debuff
     // Propriété d'accès aux dégats par tick du débuff
     public float MyTickDamage { get; set; }
 
+    // Propriété d'accès au nom du débuff : Surcharge la propriété MyName du script Debuff
+    public override string MyName
+    {
+        get => "Ignite";
+    }
+
+
     // Temps d'application du débuff
     private float elapsed;
 
@@ -57,6 +64,19 @@ class IgniteDebuff : Debuff
 
         // Appelle Remove sur la classe mère
         base.Remove();
+    }
+
+
+    /// <summary>
+    /// Clone le debuff actuel : Surcharge la fonction Clone du script Debuff
+    /// </summary>
+    public override Debuff Clone()
+    {
+        // Clone le debuff actuel
+        IgniteDebuff clone = (IgniteDebuff)this.MemberwiseClone();
+
+        // Retourne le débuff cloné
+        return clone;
     }
 }
 

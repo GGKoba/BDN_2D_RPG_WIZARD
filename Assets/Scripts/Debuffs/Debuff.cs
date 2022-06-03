@@ -19,6 +19,9 @@ public abstract class Debuff
     // Personnage portant le débuff
     protected Character character;
 
+    // Propriété d'accès au nom du débuff : Abstraite pour être réécrite par ses enfants
+    public abstract string MyName { get; }
+
 
     /// <summary>
     /// Update : Virtual pour être écrasée pour les autres classes
@@ -61,5 +64,11 @@ public abstract class Debuff
         // Réinitialise le temps d'application du débuff
         elapsed = 0;
     }
+
+    /// <summary>
+    /// Clone le debuff actuel : Abstraite pour être réécrite par ses enfants
+    /// </summary>
+    /// <returns></returns>
+    public abstract Debuff Clone();
 }
 

@@ -249,6 +249,14 @@ public abstract class Character : MonoBehaviour
     /// <param name="debuff">Débuff à appliquer sur le personnage</param>
     public void ApplyDebuff(Debuff debuff)
     {
+        Debuff debuffExists = debuffs.Find(debuff => debuff.MyName.Equals(debuff.MyName));
+
+        // S'il y a déja le même débuff, ce dernier expire
+        if (debuffExists != null)
+        {
+            expiredDebuffs.Add(debuffExists);
+        }
+
         // Ajoute le débuff dans la liste des nouveaux débuffs
         newDebuffs.Add(debuff);
     }

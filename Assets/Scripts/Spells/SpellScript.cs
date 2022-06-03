@@ -121,7 +121,11 @@ public class SpellScript : MonoBehaviour
             // Applique le débuff s'il existe
             if (debuff != null)
             {
-                debuff.Apply(characterAttacked);
+                // Clone le débuff
+                Debuff clone = debuff.Clone();
+
+                // Applique le débuff
+                clone.Apply(characterAttacked);
             }
 
             // Activation du trigger "impact"
