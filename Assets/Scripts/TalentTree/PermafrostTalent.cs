@@ -10,7 +10,7 @@ class PermafrostTalent : Talent
     private float speedReduction = 20;
 
     // Augmentation de la réducution de vitesse du débuff
-    private float reductionIncrease = 10;
+    private float reductionIncrease = 20;
 
     // Description du rang suivant
     private string nextRank = string.Empty;

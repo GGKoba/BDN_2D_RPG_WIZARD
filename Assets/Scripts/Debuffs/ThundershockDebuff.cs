@@ -16,9 +16,6 @@ public class ThundershockDebuff : Debuff
         get => "Thundershock";
     }
 
-    // Temps d'application du débuff
-    private float elapsed;
-
 
     // Constructeur
     public ThundershockDebuff()
@@ -26,7 +23,6 @@ public class ThundershockDebuff : Debuff
         // Par défaut, le débuff dure 3s
         MyDuration = 3;
     }
-
 
     /// <summary>
     /// Clone le debuff actuel : Surcharge la fonction Clone du script Debuff
