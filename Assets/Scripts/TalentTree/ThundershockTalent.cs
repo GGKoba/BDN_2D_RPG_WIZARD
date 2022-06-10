@@ -4,7 +4,7 @@
 public class ThundershockTalent : Talent
 {
     // Débuff de foudre
-    ThundershockDebuff debuff = new ThundershockDebuff();
+    ThundershockDebuff debuff;
 
     // Chance de proc du débuff
     private float procChance;
@@ -21,7 +21,10 @@ public class ThundershockTalent : Talent
     /// </summary>
     public void Start()
     {
-        // Initialise le debuff : Par défaut, la chance de proc est de 5%;
+        // Initialise le debuff
+        debuff = new ThundershockDebuff(icon);
+        
+        // Par défaut, la chance de proc est de 5%;
         procChance = 5;
         debuff.MyProcChance = procChance;
 

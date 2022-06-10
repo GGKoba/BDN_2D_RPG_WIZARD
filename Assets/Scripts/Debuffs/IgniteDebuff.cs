@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -21,7 +22,7 @@ class IgniteDebuff : Debuff
 
 
     // Constructeur
-    public IgniteDebuff()
+    public IgniteDebuff(Image icon) : base(icon)
     {
         // Par défaut, le débuff dure 20s
         MyDuration = 20;

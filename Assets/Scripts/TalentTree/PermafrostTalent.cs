@@ -4,7 +4,7 @@
 class PermafrostTalent : Talent
 {
     // Débuff de glace
-    PermafrostDebuff debuff = new PermafrostDebuff();
+    PermafrostDebuff debuff;
 
     // Valeur de réduction de vitesse
     private float speedReduction = 20;
@@ -21,7 +21,10 @@ class PermafrostTalent : Talent
     /// </summary>
     public void Start()
     {
-        // Initialise le debuff : Par défaut, le débuff réduit la vitesse de 20%
+        // Initialise le debuff
+        debuff = new PermafrostDebuff(icon);
+
+        // Par défaut, le débuff réduit la vitesse de 20%
         debuff.MySpeedReduction = speedReduction;  
     }
 

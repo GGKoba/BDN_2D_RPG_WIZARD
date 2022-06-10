@@ -1,4 +1,5 @@
-using UnityEngine;
+using UnityEngine.UI;
+
 
 
 /// <summary>
@@ -18,7 +19,7 @@ public class ThundershockDebuff : Debuff
 
 
     // Constructeur
-    public ThundershockDebuff()
+    public ThundershockDebuff(Image icon) : base(icon)
     {
         // Par défaut, le débuff dure 3s
         MyDuration = 3;

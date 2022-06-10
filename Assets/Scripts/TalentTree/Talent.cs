@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Talent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDescribable
 {
     // Image du talent
-    private Image sprite;
+    protected Image icon;
 
     // Texte du compteur
     [SerializeField]
@@ -52,7 +52,7 @@ public class Talent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     private void Awake()
     {
         // Référence sur l'image du talent
-        sprite = GetComponent<Image>();
+        icon = GetComponent<Image>();
 
         // Actualise le texte du compteur
         countText.text = getCountText();
@@ -79,7 +79,7 @@ public class Talent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     public void Lock()
     {
         // Verrouille l'image (fond gris)
-        sprite.color = Color.gray;
+        icon.color = Color.gray;
 
         // Verrouille le texte (fond gris)
         if (countText != null)
@@ -100,7 +100,7 @@ public class Talent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
     public void Unlock()
     {
         // Déverrouille l'image (fond blanc)
-        sprite.color = Color.white;
+        icon.color = Color.white;
 
         // Déverrouille le texte (fond blanc)
         if (countText != null)

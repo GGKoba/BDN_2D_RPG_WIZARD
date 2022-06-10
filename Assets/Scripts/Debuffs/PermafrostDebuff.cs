@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using UnityEngine.UI;
 
 
 
@@ -22,7 +22,7 @@ class PermafrostDebuff : Debuff
 
 
     // Constructeur
-    public PermafrostDebuff()
+    public PermafrostDebuff(Image icon) : base(icon)
     {
         // Par défaut, le débuff dure 3s
         MyDuration = 3;

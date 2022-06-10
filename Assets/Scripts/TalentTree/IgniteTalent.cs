@@ -4,7 +4,7 @@
 public class IgniteTalent : Talent
 {
     // Débuff de feu
-    IgniteDebuff debuff = new IgniteDebuff();
+    IgniteDebuff debuff;
 
     // Dégats du débuff
     private float tickDamage = 5;
@@ -21,7 +21,10 @@ public class IgniteTalent : Talent
     /// </summary>
     public void Start()
     {
-        // Initialise le debuff : Par défaut, le débuff cause 5 points de dégâts par tick
+        // Initialise le debuff
+        debuff = new IgniteDebuff(icon);
+
+        // Par défaut, le débuff cause 5 points de dégâts par tick
         debuff.MyTickDamage = tickDamage;
     }
 

@@ -269,6 +269,9 @@ public abstract class Character : MonoBehaviour
     {
         // Ajoute le débuff dans la liste des débuffs expirés
         expiredDebuffs.Add(debuff);
+
+        // Actualise la frame de la cible
+        UIManager.MyInstance.RemoveDebuffToTargetFrame(debuff);
     }
 
     /// <summary>

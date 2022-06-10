@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -13,15 +14,29 @@ public abstract class Debuff
     // Propriété d'accès à la chance de proc du débuff
     public float MyProcChance { get; set; }
 
+    // Propriété d'accès à l'image du débuff
+    public Image MyIcon { get; set; }
+
+
     // Propriété d'accès au nom du débuff : Abstraite pour être réécrite par ses enfants
     public abstract string MyName { get; }
 
-    // Temps d'application du débuff
-    private float elapsed;
+    // Propriété d'accès au yemps d'application du débuff
+    public float MyElapsed { get; set; }
 
     // Personnage portant le débuff
     protected Character character;
 
+
+    /// <summary>
+    /// Constructeur
+    /// </summary>
+    /// <param name="image">Image du débuff</param>
+    public Debuff(Image image)
+    {
+        // Mise à jour de l'image du débuff
+        MyIcon = image;
+    }
 
     /// <summary>
     /// Update : Virtual pour être écrasée pour les autres classes
@@ -29,10 +44,10 @@ public abstract class Debuff
     public virtual void Update()
     {
         // Actualise le temps d'application du débuff
-        elapsed += Time.deltaTime;
+        MyElapsed += Time.deltaTime;
 
         // Si le temps du débuff est écoulé
-        if (elapsed >= MyDuration)
+        if (MyElapsed >= MyDuration)
         {
             // Retire le debuff
             Remove();
@@ -50,6 +65,9 @@ public abstract class Debuff
 
         // Applique le débuff au personnage
         characterDebuffed.ApplyDebuff(this);
+
+        // Actualise la frame de la cible
+        UIManager.MyInstance.AddDebuffToTargetFrame(this);
     }
 
 
@@ -62,7 +80,7 @@ public abstract class Debuff
         character.RemoveDebuff(this);
 
         // Réinitialise le temps d'application du débuff
-        elapsed = 0;
+        MyElapsed = 0;
     }
 
     /// <summary>

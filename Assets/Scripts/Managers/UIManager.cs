@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +69,17 @@ public class UIManager : MonoBehaviour
 
     // Tableau des boutons des touches
     private GameObject[] keyBindButtons;
+
+    // Prefab du composant des Debuffs de la cible
+    [SerializeField]
+    private TargetDebuff targetDebuffPrefab;
+
+    // Composant des Debuffs de la cible
+    [SerializeField]
+    private Transform targetDebuffsTransform;
+
+    // Liste des débuffs de la cible
+    private List<TargetDebuff> targetDebuffs = new List<TargetDebuff>();
 
 
     /// <summary>
@@ -426,6 +438,50 @@ public class UIManager : MonoBehaviour
         else
         {
             levelText.color = Color.grey;
+        }
+    }
+
+    /// <summary>
+    /// Ajoute le débuff dans la frame de la cible
+    /// </summary>
+    /// <param name="debuff">Débuff courant</param>
+    public void AddDebuffToTargetFrame(Debuff debuff)
+    {
+        // Si la frame de la cible est active
+        if (targetFrame.activeSelf)
+        {
+            // Instancie un targetDebuff
+            TargetDebuff debuffOnTarget = Instantiate(targetDebuffPrefab, targetDebuffsTransform);
+
+            // Initialise le débuff
+            debuffOnTarget.Initialize(debuff);
+
+            // Ajoute le débuff dans la liste
+            targetDebuffs.Add(debuffOnTarget);
+        }
+    }
+
+    /// <summary>
+    /// Retire le débuff dans la frame de la cible
+    /// </summary>
+    /// <param name="debuff">Débuff courant</param>
+    public void RemoveDebuffToTargetFrame(Debuff debuff)
+    {
+        // Si la frame de la cible est active
+        if (targetFrame.activeSelf)
+        {
+            // Recherche le débuff dans la liste
+            TargetDebuff debuffOnTarget = targetDebuffs.Find(currentDebuff => currentDebuff.MyDebuff.MyName.Equals(debuff.MyName));
+
+            // S'il existe
+            if (debuffOnTarget != null)
+            {
+                // Retire le débuff dans la liste
+                targetDebuffs.Remove(debuffOnTarget);
+
+                // Destruction du composant
+                Destroy(debuffOnTarget.gameObject);
+            }
         }
     }
 }
