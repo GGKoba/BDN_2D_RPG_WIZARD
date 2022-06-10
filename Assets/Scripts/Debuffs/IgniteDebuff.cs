@@ -16,7 +16,6 @@ class IgniteDebuff : Debuff
         get => "Ignite";
     }
 
-
     // Temps d'application du débuff
     private float elapsed;
 
@@ -26,9 +25,6 @@ class IgniteDebuff : Debuff
     {
         // Par défaut, le débuff dure 20s
         MyDuration = 20;
-
-        // Par défaut, le débuff cause 5 points de dégâts par tick
-        MyTickDamage = 5;
     }
 
     /// <summary>
@@ -79,4 +75,3 @@ class IgniteDebuff : Debuff
         return clone;
     }
 }
-

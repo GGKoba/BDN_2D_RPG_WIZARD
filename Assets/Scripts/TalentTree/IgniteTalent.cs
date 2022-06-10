@@ -17,6 +17,15 @@ public class IgniteTalent : Talent
 
 
     /// <summary>
+    /// Start
+    /// </summary>
+    public void Start()
+    {
+        // Initialise le debuff : Par défaut, le débuff cause 5 points de dégâts par tick
+        debuff.MyTickDamage = tickDamage;
+    }
+
+    /// <summary>
     /// Clic sur le talent : Surcharge la fonction Click du script Talent
     /// </summary>
     public override bool Click()
