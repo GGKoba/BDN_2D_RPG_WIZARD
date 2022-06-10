@@ -11,16 +11,16 @@ public abstract class Debuff
     public float MyDuration { get; set; }
 
     // Propriété d'accès à la chance de proc du débuff
-    public int ProcChance { get; set; }
+    public float MyProcChance { get; set; }
+
+    // Propriété d'accès au nom du débuff : Abstraite pour être réécrite par ses enfants
+    public abstract string MyName { get; }
 
     // Temps d'application du débuff
     private float elapsed;
 
     // Personnage portant le débuff
     protected Character character;
-
-    // Propriété d'accès au nom du débuff : Abstraite pour être réécrite par ses enfants
-    public abstract string MyName { get; }
 
 
     /// <summary>
@@ -71,4 +71,3 @@ public abstract class Debuff
     /// <returns></returns>
     public abstract Debuff Clone();
 }
-

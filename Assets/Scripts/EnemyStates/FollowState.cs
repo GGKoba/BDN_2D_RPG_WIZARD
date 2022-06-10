@@ -30,7 +30,7 @@ class FollowState : IState
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "FOLLOW"
+    /// Sortie de l'état "FOLLOW"
     /// </summary>
     public void Exit()
     {
@@ -40,7 +40,7 @@ class FollowState : IState
     }
 
     /// <summary>
-    /// Sortie de l'état "FOLLOW"
+    /// Mise à jour dans l'état "FOLLOW"
     /// </summary>
     public void Update()
     {

@@ -12,7 +12,7 @@ class EvadeState : IState
 
 
     /// <summary>
-    /// Entrée dans l'état "IDLE"
+    /// Entrée dans l'état "EVADE"
     /// </summary>
     /// <param name="enemyScript">le parent de l'ennemi</param>
     public void Enter(Enemy enemyScript)
@@ -21,7 +21,7 @@ class EvadeState : IState
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "EVADE"
+    /// Sortie de l'état "EVADE"
     /// </summary>
     public void Exit()
     {
@@ -33,7 +33,7 @@ class EvadeState : IState
     }
 
     /// <summary>
-    /// Sortie de l'état "IDLE"
+    /// Mise à jour dans l'état "EVADE"
     /// </summary>
     public void Update()
     {

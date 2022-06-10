@@ -74,7 +74,7 @@ public class PathState : IState
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "PATH"
+    /// Sortie de l'état "PATH"
     /// </summary>
     public void Exit()
     {
@@ -83,7 +83,7 @@ public class PathState : IState
     }
 
     /// <summary>
-    /// Sortie de l'état "PATH"
+    /// Mise à jour dans l'état "PATH"
     /// </summary>
     public void Update()
     {

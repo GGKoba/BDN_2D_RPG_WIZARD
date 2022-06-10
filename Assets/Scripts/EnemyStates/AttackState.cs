@@ -20,7 +20,7 @@ class AttackState : IState
 
 
     /// <summary>
-    /// Entrée dans l'état "IDLE"
+    /// Entrée dans l'état "ATTACK"
     /// </summary>
     /// <param name="enemyScript">le parent de l'ennemi</param>
     public void Enter(Enemy enemyScript)
@@ -33,14 +33,14 @@ class AttackState : IState
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "IDLE"
+    /// Sortie de l'état "ATTACK"
     /// </summary>
     public void Exit()
     {
     }
 
     /// <summary>
-    /// Sortie de l'état "IDLE"
+    /// Mise à jour dans l'état "ATTACK"
     /// </summary>
     public void Update()
     {

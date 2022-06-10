@@ -20,14 +20,14 @@ class IdleState : IState
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "IDLE"
+    /// Sortie de l'état "IDLE"
     /// </summary>
     public void Exit()
     {
     }
 
     /// <summary>
-    /// Sortie de l'état "IDLE"
+    /// Mise à jour dans l'état "IDLE"
     /// </summary>
     public void Update()
     {

@@ -24,7 +24,7 @@ class PermafrostDebuff : Debuff
     // Constructeur
     public PermafrostDebuff()
     {
-        // Par défaut, le débuff dure 20s
+        // Par défaut, le débuff dure 3s
         MyDuration = 3;
     }
 
