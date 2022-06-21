@@ -16,6 +16,12 @@ public class TargetDebuff : MonoBehaviour
     [SerializeField]
     private Image icon = default;
 
+    // Image du débuff
+    [SerializeField]
+    private Text timeText = default;
+
+
+
     // Propriété d'accès au débuff
     public Debuff MyDebuff { get; private set; }
 
@@ -33,6 +39,9 @@ public class TargetDebuff : MonoBehaviour
 
         // Initialise l'image du compteur de durée
         durationImage.fillAmount = 0;
+
+        // Initialise la durée du débuff
+        timeText.text = $"{string.Format("{0:0.0}", MyDebuff.MyDuration)}s";
     }
 
     /// <summary>
@@ -42,5 +51,8 @@ public class TargetDebuff : MonoBehaviour
     {
         // Actualise l'image du compteur de durée (remplissage en fonction du temps : temps passé sur temps total)
         durationImage.fillAmount = MyDebuff.MyElapsed / MyDebuff.MyDuration;
+
+        // Actualise la durée du débuff
+        timeText.text = $"{string.Format("{0:0.0}", MyDebuff.MyDuration - MyDebuff.MyElapsed)}s";
     }
 }

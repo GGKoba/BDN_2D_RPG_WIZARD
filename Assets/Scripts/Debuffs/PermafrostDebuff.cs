@@ -24,8 +24,8 @@ class PermafrostDebuff : Debuff
     // Constructeur
     public PermafrostDebuff(Image icon) : base(icon)
     {
-        // Par défaut, le débuff dure 3s
-        MyDuration = 3;
+        // Par défaut, le débuff dure 5s
+        MyDuration = 5;
     }
 
     /// <summary>

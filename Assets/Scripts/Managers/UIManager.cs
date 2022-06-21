@@ -450,13 +450,16 @@ public class UIManager : MonoBehaviour
         // Si la frame de la cible est active
         if (targetFrame.activeSelf)
         {
+            // Retire le le débuff existant s'il existe
+            RemoveDebuffToTargetFrame(debuff);
+
             // Instancie un targetDebuff
             TargetDebuff debuffOnTarget = Instantiate(targetDebuffPrefab, targetDebuffsTransform);
 
             // Initialise le débuff
             debuffOnTarget.Initialize(debuff);
 
-            // Ajoute le débuff dans la liste
+            // Ajoute le débuff dans la liste des débuffs de la cible
             targetDebuffs.Add(debuffOnTarget);
         }
     }
@@ -470,18 +473,41 @@ public class UIManager : MonoBehaviour
         // Si la frame de la cible est active
         if (targetFrame.activeSelf)
         {
-            // Recherche le débuff dans la liste
-            TargetDebuff debuffOnTarget = targetDebuffs.Find(currentDebuff => currentDebuff.MyDebuff.MyName.Equals(debuff.MyName));
+            // Recherche le débuff dans la liste des débuffs de la cible
+            TargetDebuff debuffOnTarget = getTargetDebuff(debuff);
 
             // S'il existe
             if (debuffOnTarget != null)
             {
-                // Retire le débuff dans la liste
-                targetDebuffs.Remove(debuffOnTarget);
-
-                // Destruction du composant
-                Destroy(debuffOnTarget.gameObject);
+                // Retire le débuff dans la liste des débuffs de la cible
+                RemoveTargetDebuff(debuffOnTarget);
             }
         }
     }
+
+
+    /// <summary>
+    /// Cherche si le debuff est dans la liste des débuffs de la cible
+    /// </summary>
+    /// <param name="debuff">Débuff courant</param>
+    /// <returns>Le debuff appliqué sur la cible</returns>
+    public TargetDebuff getTargetDebuff(Debuff debuff)
+    {
+        // Recherche le débuff dans la liste
+        return targetDebuffs.Find(currentDebuff => currentDebuff.MyDebuff.MyName.Equals(debuff.MyName));
+    }
+
+    /// <summary>
+    /// Retire le débuff de la liste des débuffs de la cible
+    /// </summary>
+    /// <param name="debuff">Débuff courant</param>
+    public void RemoveTargetDebuff(TargetDebuff targetDebuff)
+    {
+        // Retire le débuff dans la liste
+        targetDebuffs.Remove(targetDebuff);
+
+        // Destruction du composant
+        Destroy(targetDebuff.gameObject);
+    }
+
 }

@@ -17,7 +17,7 @@ public class TalentTree : Window
     private Talent[] unlockedByDefault = default;
 
     // Nombre de points de talent
-    private int points = 10;
+    private int points = 20;
 
     // Propriété d'accès au tableau des talents
     public Talent[] MyTalents
