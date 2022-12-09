@@ -69,7 +69,7 @@ public class LevelManager : MonoBehaviour
                 {
                     // Récupération de la couleur du pixel
                     Color cellColor = mapData[i].GetPixel(x, y);
-   
+
                     // Vérification qu'il existe un élément qui a la couleur du pixel
                     MapElement newElement = Array.Find(mapElements, e => ColorUtility.ToHtmlStringRGB(e.MyTileColor) == ColorUtility.ToHtmlStringRGB(cellColor));
 
@@ -91,7 +91,7 @@ public class LevelManager : MonoBehaviour
                         {
                             // MAJ de son positionnement sur le layer (z-index)
                             // Permet d'avoir un espace entre 2 arbres (height * 2 - y * 2) et que les arbres de derrière ne passent pas au-dessus des arbres de devant]
-                            gameObjectElement.GetComponent<SpriteRenderer>().sortingOrder = height * 2 - y * 2;   
+                            gameObjectElement.GetComponent<SpriteRenderer>().sortingOrder = height * 2 - y * 2;
                         }
 
                         // Si l'objet est a un tag "Water"
@@ -120,7 +120,7 @@ public class LevelManager : MonoBehaviour
         foreach (KeyValuePair<Point, GameObject> tile in waterTiles)
         {
             string composition = TileCheck(tile.Key);
-            
+
             //         T
             //   | 2 | 4 | 7 |
             // L | 1 |   | 6 | R
@@ -235,7 +235,7 @@ public class LevelManager : MonoBehaviour
             {
                 UpdateTileSprite(tile.Value, "17", true);
             }
-           
+
             // Cellule entourée d'eau en haut, en bas, à gauche et à droite
             if (composition[1] == 'W' && composition[3] == 'W' && composition[4] == 'W' && composition[6] == 'W')
             {
@@ -304,7 +304,7 @@ public class LevelManager : MonoBehaviour
     private void UpdateTileSprite(GameObject tile, string atlasIndex, bool useCopy = false)
     {
         GameObject updatedTile;
-        
+
         if (useCopy)
         {
             // Copie la cellule à la même position
@@ -352,7 +352,7 @@ public class MapElement
     [SerializeField]
     private GameObject tilePrefab = default;
 
-    
+
     // Propriété d'accès au tag de l'élément
     public string MyTileTag { get => tileTag; }
 

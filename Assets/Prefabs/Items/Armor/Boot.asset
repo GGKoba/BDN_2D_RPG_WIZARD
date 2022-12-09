@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
+  m_Name: Boot
+  m_EditorClassIdentifier: 
+  key: Boot
+  stackSize: 0
+  icon: {fileID: 21300000, guid: 6eeedae7f44987a4aaea5fbe32e558e8, type: 3}
+  title: Bottes de mage
+  quality: 2
+  price: 20
+  armorType: 5
+  stamina: 8
+  intellect: 10
+  strengh: 0
+  animationClips:
+  - {fileID: 7400000, guid: 325c4b09cc3b23e4391636d908b30dbf, type: 2}
+  - {fileID: 7400000, guid: 05bdfbea4058339479b2d04ed2ef5d6c, type: 2}
+  - {fileID: 7400000, guid: 170913025c5783648a4de0e1e01b140b, type: 2}
+  - {fileID: 7400000, guid: 0d8bd3f5bb79ac445a7db8449a0eca1e, type: 2}
+  - {fileID: 7400000, guid: 5b710df4b3c7de340a81d9ec31cd55a1, type: 2}
+  - {fileID: 7400000, guid: cbe7562b372e81d43960d3363667bb17, type: 2}
+  - {fileID: 7400000, guid: 7b8f274135dbca142927524bdd1515da, type: 2}
+  - {fileID: 7400000, guid: 803bbec87a29d68408a73ff4362c8fca, type: 2}
+  - {fileID: 7400000, guid: 1c766589f9208524fbd98d522a5da845, type: 2}
+  - {fileID: 7400000, guid: 648868b94aa71024f892d702aec8b3bb, type: 2}
+  - {fileID: 7400000, guid: 19915c865cbf1ec43a023febaf6c15a7, type: 2}
+  - {fileID: 7400000, guid: 0018b7fb595d7d046af66e83a58e467a, type: 2}

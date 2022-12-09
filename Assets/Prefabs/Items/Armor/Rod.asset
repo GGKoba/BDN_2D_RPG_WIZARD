@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
+  m_Name: Rod
+  m_EditorClassIdentifier: 
+  key: Rod
+  stackSize: 0
+  icon: {fileID: 21300000, guid: 11c8bdcae681296478fb6a003849fefd, type: 3}
+  title: Baguette de mage
+  quality: 4
+  price: 30
+  armorType: 6
+  stamina: 9
+  intellect: 11
+  strengh: 0
+  animationClips:
+  - {fileID: 7400000, guid: 9a1890672c2816b48ac4667810061b00, type: 2}
+  - {fileID: 7400000, guid: 54e9591707d86794b939c0358d08d4f0, type: 2}
+  - {fileID: 7400000, guid: e32a67ad61422864b84d6e63d4d6d62a, type: 2}
+  - {fileID: 7400000, guid: cc7bff5cc5c68984c8f2480bfe739f6f, type: 2}
+  - {fileID: 7400000, guid: 966a611bf644f6c49916ed9fd71bb521, type: 2}
+  - {fileID: 7400000, guid: 6d82161c60dcbf24d9a932b6adb2cf96, type: 2}
+  - {fileID: 7400000, guid: 88baa046e0a8208428f6703355df9ae1, type: 2}
+  - {fileID: 7400000, guid: ad36e2b19611a5e4c922ab60c29027f6, type: 2}
+  - {fileID: 7400000, guid: d3d21297a4072304b80fa0349d7086cc, type: 2}
+  - {fileID: 7400000, guid: cc2134fbcd1613143a18397b2b69841e, type: 2}
+  - {fileID: 7400000, guid: 1af3d723b25cb5542a19750387e2afd2, type: 2}
+  - {fileID: 7400000, guid: 659e54e7b556b1447a289a6eaa712cde, type: 2}

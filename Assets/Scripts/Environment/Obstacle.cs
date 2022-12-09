@@ -72,4 +72,34 @@ public class Obstacle : MonoBehaviour, IComparable<Obstacle>
     {
         MySpriteRenderer.color = defaultColor;
     }
+
+
+
+    /// <summary>
+    /// Détection de collision du joueur avec des obstables
+    /// </summary>
+    /// <param name="collision">L'objet de collision</param>
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Collision avec le joueur
+        if (collision.name == "OstacleCollider")
+        {
+            // Masque partiellement l'obstacle
+            FadeOut();
+        }
+    }
+
+    /// <summary>
+    /// Détection de fin de collision du joueur avec des obstables
+    /// </summary>
+    /// <param name="collision">L'objet de collision</param>
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        // Collision avec le joueur
+        if (collision.name == "OstacleCollider")
+        {
+            // Affiche l'obstacle
+            FadeIn();
+        }
+    }
 }

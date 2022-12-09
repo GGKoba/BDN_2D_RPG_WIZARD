@@ -14,6 +14,9 @@ public class BagScript : MonoBehaviour
     // Propriété d'accès aux emplacement du sac
     public List<SlotScript> MySlots { get => slots; }
 
+    // Propriété d'accès sur l'index du sac
+    public int MyBagIndex { get; set; }
+
     // Prefab de l'emplacement du sac
     [SerializeField]
     private GameObject slotPrefab = default;
@@ -66,8 +69,11 @@ public class BagScript : MonoBehaviour
             // Instantiation d'un objet Slot
             SlotScript slot = Instantiate(slotPrefab, transform).GetComponent<SlotScript>();
 
-            //Assigne le sac à l'emplacement
+            // Assigne le sac à l'emplacement
             slot.MyBag = this;
+
+            // Assigne l'index de l'emplacement
+            slot.MyIndex = i;
 
             // Ajoute l'emplacement dans la liste des emplacements du sac
             slots.Add(slot);
@@ -136,5 +142,16 @@ public class BagScript : MonoBehaviour
 
         // Retourne la liste
         return items;
+    }
+
+    // Vide le contenu du sac
+    public void Clear()
+    {
+        // Pour tous les emplacements du sac
+        foreach (SlotScript slot in slots)
+        {
+            // Vide l'emplacement
+            slot.Clear();
+        }
     }
 }

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
@@ -17,13 +17,6 @@ public class TreeTile : Tile
     /// <param name="go">Objet de la cellule</param>
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
-        // MAJ de son positionnement sur le layer (z-index)
-        // Permet d'avoir un espace entre 2 arbres (-position.y * 2) et que les arbres de derrière ne passent pas au-dessus des arbres de devant]
-        if (go != null)
-        {
-            go.GetComponent<SpriteRenderer>().sortingOrder = -position.y * 2;
-        }
-
         // Appelle StartUp sur la classe mère
         return base.StartUp(position, tilemap, go);
     }

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
+
 /// <summary>
 /// Classe de gestion des boutons des sacs
 /// </summary>
@@ -13,7 +14,7 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
 
     // Propriété d'accès au sac
     public Bag MyBag
-    { 
+    {
         get => bag;
         set
         {
@@ -21,6 +22,13 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
             bag = value;
         }
     }
+
+    // Index du sac équipé
+    [SerializeField]
+    private int bagIndex = default;
+
+    // Propriété d'accès à l'index du sac
+    public int MyBagIndex { get => bagIndex; set => bagIndex = value; }
 
     // Image du sac équipé
     [SerializeField]
@@ -51,8 +59,8 @@ public class BagButton : MonoBehaviour, IPointerClickHandler
                 else
                 {
                     // Cast l'objet en "Sac"
-                    Bag aBag =(Bag)Hand.MyInstance.MyMoveable;
-                    
+                    Bag aBag = (Bag)Hand.MyInstance.MyMoveable;
+
                     // Assigne le bouton au sac
                     aBag.MyBagButton = this;
 

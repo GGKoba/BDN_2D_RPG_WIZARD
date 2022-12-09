@@ -38,14 +38,20 @@ public class KeyBindManager : MonoBehaviour
 
 
     /// <summary>
-    /// Start
+    /// Awake
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         // Initialise les dictionnaires
         KeyBinds = new Dictionary<string, KeyCode>();
         ActionBinds = new Dictionary<string, KeyCode>();
+    }
 
+    /// <summary>
+    /// Start
+    /// </summary>
+    private void Start()
+    {
         /// Raccourcis par défaut
         InitBinds();
     }
@@ -57,7 +63,7 @@ public class KeyBindManager : MonoBehaviour
     {
         BindKey("UP", KeyCode.Z);
         BindKey("DOWN", KeyCode.S);
-        BindKey("LEFT", KeyCode.Q); 
+        BindKey("LEFT", KeyCode.Q);
         BindKey("RIGHT", KeyCode.D);
         BindKey("ACT1", KeyCode.Alpha1);
         BindKey("ACT2", KeyCode.Alpha2);
@@ -98,7 +104,7 @@ public class KeyBindManager : MonoBehaviour
 
             // Enlève la valeur de la clé existante
             currentDictionary[existingKey] = KeyCode.None;
-            
+
             // Mise à jour du texte de la touche
             UIManager.MyInstance.UpdateKeyText(existingKey, KeyCode.None);
         }

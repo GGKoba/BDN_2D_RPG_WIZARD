@@ -31,12 +31,12 @@ public class SpellBook : MonoBehaviour
 
     // Tableau des sorts
     [SerializeField]
-    private SpellData[] spells = default;
+    private Spell[] spells = default;
 
-    [Header("Barre de cast")]
+    [Header("CastBar")]
     // Référence à la barre de cast du joueur
     [SerializeField]
-    public Image castingBar;
+    public Image castingBar = default;
 
     // Référence à l'image du sort de la barre de cast du joueur
     [SerializeField]
@@ -71,34 +71,28 @@ public class SpellBook : MonoBehaviour
     }
 
     /// <summary>
-    /// Retourne un sort avec ses propriétés
+    /// Incantation d'un sort
     /// </summary>
-    /// <param name="spellToCast">Nom du sort</param>
-    public SpellData CastSpell(string spellToCast)
+    /// <param name="castable">Element incantable</param>
+    public void Cast(ICastable castable)
     {
-        // Sort correspondant au nom du sort dans le tableau
-        SpellData spell = GetSpell(spellToCast);
-
         // Initialise le remplissage de la barre à vide
         castingBar.fillAmount = 0;
 
         // Adapte la couleur de la barre avec celle qui est liée au sort
-        castingBar.color = spell.MyBarColor;
+        castingBar.color = castable.MyBarColor;
 
         // Adapte l'image de la barre avec celle qui est liée au sort
-        icon.sprite = spell.MyIcon;
+        icon.sprite = castable.MyIcon;
 
         // Adapte le nom du sort de la barre avec celui qui est liée au sort
-        spellName.text = spell.MyName;
+        spellName.text = castable.MyTitle;
 
         // Démarre la routine d'incantation du sort
-        spellRoutine = StartCoroutine(Progress(spell.MyCastTime));
+        spellRoutine = StartCoroutine(Progress(castable.MyCastTime));
 
         // Démarre la routine d'apparition de la barre de cast
         fadeRoutine = StartCoroutine(FadeBar());
-
-        // Retourne le sort à incanter
-        return spell;
     }
 
     /// <summary>
@@ -201,9 +195,9 @@ public class SpellBook : MonoBehaviour
     /// Retourne un sort avec ses informations
     /// </summary>
     /// <param name="spellName"></param>
-    public SpellData GetSpell(string spellName)
+    public Spell GetSpell(string spellName)
     {
-        return Array.Find(spells, aSpell => aSpell.MyName == spellName);
+        return Array.Find(spells, aSpell => aSpell.MyTitle.ToLower() == spellName.ToLower());
     }
 
 }

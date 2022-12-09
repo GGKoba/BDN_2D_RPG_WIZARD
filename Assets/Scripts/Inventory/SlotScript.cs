@@ -1,25 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine.EventSystems;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+
+
 
 /// <summary>
 /// Classe de gestion des emplacements des sacs
 /// </summary>
-public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
+public class SlotScript : MonoBehaviour, IClickable, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // Liste (Stack) des items de l'emplacement
     private readonly ObservableStack<Item> items = new ObservableStack<Item>();
 
     // Propriété d'accès à la stack des items de l'emplacement
     public ObservableStack<Item> MyItems { get => items; }
-    
+
     // Image de l'emplacement
     [SerializeField]
-    private Image icon;
+    private Image icon = default;
+
+    // Image de superposition
+    [SerializeField]
+    private Image cover = default;
 
     // Propriété d'accès à l'image de l'emplacement
     public Image MyIcon { get => icon; set => icon = value; }
+
+    // Propriété d'accès à l'image de superposition
+    public Image MyCover { get => cover; }
 
     // Texte du nombre d'éléments de l'emplacement
     [SerializeField]
@@ -43,6 +51,9 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     // Propriété d'accès sur le sac qui contient l'emplacement
     public BagScript MyBag { get; set; }
 
+    // Propriété d'accès sur l'index de l'emplacement
+    public int MyIndex { get; set; }
+
 
     /// <summary>
     /// Awake
@@ -50,13 +61,13 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     public void Awake()
     {
         // Abonnement sur l'évènement d'ajout dans la stack d'un emplacement
-        items.OnPush += new StackUpdated(UpdateSlot);
+        items.PushEvent += new StackUpdated(UpdateSlot);
 
         // Abonnement sur l'évènement de retrait dans la stack d'un emplacement
-        items.OnPop += new StackUpdated(UpdateSlot);
+        items.PopEvent += new StackUpdated(UpdateSlot);
 
         // Abonnement sur l'évènement de nettoyage de la stack d'un emplacement
-        items.OnClear += new StackUpdated(UpdateSlot);
+        items.ClearEvent += new StackUpdated(UpdateSlot);
     }
 
     /// <summary>
@@ -75,6 +86,9 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         // Actualise la couleur de l'emplacement
         icon.color = Color.white;
 
+        // Masque l'image de superposition
+        MyCover.enabled = false;
+
         // Assigne l'emplacement à l'item
         item.MySlot = this;
 
@@ -91,8 +105,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
         // S'il y a un item sur l'emplacement
         if (!IsEmpty)
         {
-            // Enleve l'item situé en haut de la Stack
-            items.Pop();
+            // Appelle l'évènement de mise à jour du nombre d'élements de l'item en enlevant l'item situé en haut de la Stack
+            InventoryScript.MyInstance.OnItemCountChanged(items.Pop());
         }
     }
 
@@ -101,15 +115,23 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// </summary>
     public void Clear()
     {
-        // S'il y a des éléments dans la stack
-        if (items.Count > 0)
+        // Nombre d'éléments dans la stack des items de l'emplacement
+        int initCount = items.Count;
+
+        // Masque l'image de superposition
+        MyCover.enabled = false;
+
+        // S'il y a des éléments dans la stack des items de l'emplacement
+        if (initCount > 0)
         {
-            // Retire tous les éléments de la stack
-            items.Clear();
+            // Pour tous les éléments de la stack des items de l'emplacement
+            for (int i = 0; i < initCount; i++)
+            {
+                // Appelle l'évènement de mise à jour du nombre d'élements de l'item en enlevant l'item situé en haut de la Stack
+                InventoryScript.MyInstance.OnItemCountChanged(items.Pop());
+            }
         }
     }
-
-
 
     /// <summary>
     /// Gestion du clic
@@ -123,14 +145,31 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             // Si rien n'est en train d'être déplacé et que l'emplacement n'est pas vide
             if (InventoryScript.MyInstance.MyFromSlot == null && !IsEmpty)
             {
-                // S'il y a un oject à manipuler et que c'est un sac
-                if (Hand.MyInstance.MyMoveable != null && Hand.MyInstance.MyMoveable is Bag)
+                // S'il y a un objet manipulé
+                if (Hand.MyInstance.MyMoveable != null)
                 {
-                    // Si c'est un sac
-                    if (MyItem is Bag)
+                    // Si l'objet manipulé est un item Bag
+                    if (Hand.MyInstance.MyMoveable is Bag)
                     {
-                        // Echange des sacs
-                        InventoryScript.MyInstance.SwapBags(Hand.MyInstance.MyMoveable as Bag, MyItem as Bag);
+                        // S'il on clique sur un item Bag
+                        if (MyItem is Bag)
+                        {
+                            // Echange des items Bag
+                            InventoryScript.MyInstance.SwapBags(Hand.MyInstance.MyMoveable as Bag, MyItem as Bag);
+                        }
+                    }
+                    // Si l'objet manipulé est un item Armor
+                    else if (Hand.MyInstance.MyMoveable is Armor)
+                    {
+                        // S'il on clique sur un item Armor et que les items ont le même type d'équipement
+                        if (MyItem is Armor && (MyItem as Armor).MyArmorType == (Hand.MyInstance.MyMoveable as Armor).MyArmorType)
+                        {
+                            // Equipe l'item cliqué
+                            (MyItem as Armor).Equip();
+
+                            // Libère l'item
+                            Hand.MyInstance.Drop();
+                        }
                     }
                 }
                 else
@@ -142,27 +181,46 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
                     InventoryScript.MyInstance.MyFromSlot = this;
                 }
             }
-            // Si rien n'est en train d'être déplacé et que l'emplacement est vide et que l'objet sac manipulé vient de la barre des sacs
-            else if (InventoryScript.MyInstance.MyFromSlot == null && IsEmpty && Hand.MyInstance.MyMoveable is Bag)
+            // Si rien n'est en train d'être déplacé et que l'emplacement est vide
+            else if (InventoryScript.MyInstance.MyFromSlot == null && IsEmpty)
             {
-                // Cast l'item en type Bag
-                Bag bag = (Bag)Hand.MyInstance.MyMoveable;
-
-                // Si le sac n'est pas a déposer dans un de ses emplacements et qu'il y a assez de place pour contenir ce que contient le sac
-                if(bag.MyBagScript != MyBag && InventoryScript.MyInstance.MyEmptySlotCount - bag.MySlotsCount > 0)
+                //  Si l'objet manipulé est un item Bag
+                if (Hand.MyInstance.MyMoveable is Bag)
                 {
-                    // Ajoute un item sur l'emplacement
-                    AddItem(bag);
+                    // Cast l'item en type Bag
+                    Bag bag = Hand.MyInstance.MyMoveable as Bag;
 
-                    // Déséquipe le sac de la liste des sacs
-                    bag.MyBagButton.RemoveBag();
+                    // Si le sac n'est pas a déposer dans un de ses emplacements et qu'il y a assez de place pour contenir ce que contient le sac
+                    if (bag.MyBagScript != MyBag && InventoryScript.MyInstance.MyEmptySlotCount - bag.MySlotsCount > 0)
+                    {
+                        // Ajoute l'item dans l'inventaire
+                        AddItem(bag);
+
+                        // Déséquipe le sac de la liste des sacs
+                        bag.MyBagButton.RemoveBag();
+
+                        // Libère l'item
+                        Hand.MyInstance.Drop();
+                    }
+                }
+                //  Si l'objet manipulé est un item Armor
+                else if (Hand.MyInstance.MyMoveable is Armor)
+                {
+                    // Cast l'item en type Armor
+                    Armor armor = Hand.MyInstance.MyMoveable as Armor;
+
+                    // Déséquipe l'item
+                    CharacterPanel.MyInstance.MySelectedButton.UnequipArmor();
+
+                    // Ajoute l'item dans l'inventaire
+                    AddItem(armor);
 
                     // Libère l'item
                     Hand.MyInstance.Drop();
                 }
             }
             // Si un item est en train d'être déplacé
-            else if(InventoryScript.MyInstance.MyFromSlot != null)
+            else if (InventoryScript.MyInstance.MyFromSlot != null)
             {
                 // Si l'item est sur le même emplacement ou qu'il change d'emplacement
                 if (PutItemBack() || MergeItems(InventoryScript.MyInstance.MyFromSlot) || SwapItems(InventoryScript.MyInstance.MyFromSlot) || MoveStackItems(InventoryScript.MyInstance.MyFromSlot.items))
@@ -176,8 +234,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             }
         }
 
-        // Clic droit
-        if (eventData.button == PointerEventData.InputButton.Right)
+        // Clic droit et rien n'est en train d'être déplacé
+        if (eventData.button == PointerEventData.InputButton.Right && Hand.MyInstance.MyMoveable == null)
         {
             // Utilisation de l'item
             UseItem();
@@ -195,6 +253,12 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             // Utilisation de l'item
             (MyItem as IUseable).Use();
         }
+        // Si l'item est un équipement
+        else if (MyItem is Armor)
+        {
+            // Equipement de l'item
+            (MyItem as Armor).Equip();
+        }
     }
 
     /// <summary>
@@ -204,8 +268,8 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// <returns></returns>
     public bool StackItem(Item item)
     {
-        // S'il y a un item sur l'emplacement et qu'il a le même nom que l'item à stacker et que la taille de la Stack de l'emplacement est inférieure au nombre de stack de l'item
-        if (!IsEmpty && item.name == MyItem.name && items.Count < MyItem.MyStackSize)
+        // S'il y a un item sur l'emplacement et qu'il a le même type que l'item à stacker et que la taille de la Stack de l'emplacement est inférieure au nombre de stack de l'item
+        if (!IsEmpty && item.GetType() == MyItem.GetType() && items.Count < MyItem.MyStackSize)
         {
             // Ajoute l'item dans la Stack des items de l'emplacement
             items.Push(item);
@@ -226,7 +290,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// </summary>
     private void UpdateSlot()
     {
-        // Mise à jour de la Stack de l'emplacement de l'item
+        // Mise à jour du nombre d'éléments de l'emplacement de l'item cliquable
         UIManager.MyInstance.UpdateStackSize(this);
     }
 
@@ -236,11 +300,14 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// <returns></returns>
     private bool PutItemBack()
     {
+        // Masque l'image de superposition
+        MyCover.enabled = false;
+
         // Si c'est le même emplacement
         if (InventoryScript.MyInstance.MyFromSlot == this)
         {
-            // Actualise la couleur de l'emplacement
-            InventoryScript.MyInstance.MyFromSlot.MyIcon.color = Color.white;
+            // Actualise l'image
+            InventoryScript.MyInstance.MyFromSlot.MyIcon.enabled = true;
 
             // Retourne que c'est OK
             return true;
@@ -290,13 +357,16 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
     /// </summary>
     public bool SwapItems(SlotScript from)
     {
+        // Masque l'image de superposition
+        from.MyCover.enabled = false;
+
         if (IsEmpty)
         {
             // Retourne que c'est KO
             return false;
         }
 
-        //Si les items sont de type différents ou que le total des 2 items est supérieur au maximum d'éléments de la Stack
+        // Si les items sont de type différents ou que le total des 2 items est supérieur au maximum d'éléments de la Stack
         if (from.MyItem.GetType() != MyItem.GetType() || from.MyCount + MyCount > MyItem.MyStackSize)
         {
             // Stack de l'item à deplacer
@@ -333,7 +403,7 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
             return false;
         }
 
-        //Si les items sont de même type et que l'emplacement n'est pas plein
+        // Si les items sont de même type et que l'emplacement n'est pas plein
         if (from.MyItem.GetType() == MyItem.GetType() && !IsFull)
         {
             // Emplacement(s) restant(s) dans la stack
@@ -351,5 +421,29 @@ public class SlotScript : MonoBehaviour, IPointerClickHandler, IClickable
 
         // Retourne que c'est KO
         return false;
+    }
+
+    /// <summary>
+    /// Entrée du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement d'entrée</param>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // S'il y a un item dans l'emplacement
+        if (!IsEmpty)
+        {
+            // Affiche le tooltip
+            UIManager.MyInstance.ShowTooltip(new Vector2(1, 0), transform.position, MyItem);
+        }
+    }
+
+    /// <summary>
+    /// Sortie du curseur
+    /// </summary>
+    /// <param name="eventData">Evenement de sortie</param>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Masque le tooltip
+        UIManager.MyInstance.HideTooltip();
     }
 }

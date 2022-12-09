@@ -3,11 +3,18 @@ using UnityEngine;
 
 
 
+// Gestion de la mise à jour du nombre d'élements de l'item
+public delegate void ItemCountChanged(Item item);
+
+
 /// <summary>
 /// Classe de gestion de l'inventaire
 /// </summary>
 public class InventoryScript : MonoBehaviour
 {
+    // Evènement de mise à jour du nombre d'élements de l'item
+    public event ItemCountChanged ItemCountChangedEvent;
+
     // Instance de classe (singleton)
     private static InventoryScript instance;
 
@@ -29,6 +36,9 @@ public class InventoryScript : MonoBehaviour
     // Liste des sacs de l'inventaire
     private readonly List<Bag> bags = new List<Bag>();
 
+    // Propriété d'accès à la liste des sacs de l'inventaire
+    public List<Bag> MyBags { get => bags; }
+
     // Tableau des boutons des sacs
     [SerializeField]
     private BagButton[] bagButtons = default;
@@ -45,7 +55,7 @@ public class InventoryScript : MonoBehaviour
 
     // Propriété d'accès sur la référence sur un emplacement
     public SlotScript MyFromSlot
-    { 
+    {
         get => fromSlot;
         set
         {
@@ -53,7 +63,7 @@ public class InventoryScript : MonoBehaviour
 
             if (value != null)
             {
-                fromSlot.MyIcon.color = Color.grey;
+                fromSlot.MyCover.enabled = true;
             }
         }
     }
@@ -77,7 +87,7 @@ public class InventoryScript : MonoBehaviour
 
     // Propriété d'accès au nombre d'emplacements du sac
     public int MyTotalSlotCount
-    { 
+    {
         get
         {
             int count = 0;
@@ -101,7 +111,6 @@ public class InventoryScript : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Awake
     /// </summary>
@@ -122,8 +131,8 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // [J] : Utilise un sac (Ajoute le sac sur un emplacement)
-        if (Input.GetKeyDown(KeyCode.J))
+        // [L] : Utilise un sac (Ajoute le sac sur un emplacement)
+        if (Input.GetKeyDown(KeyCode.L))
         {
             // Création d'un sac
             Bag bag = (Bag)Instantiate(items[0]);
@@ -138,7 +147,7 @@ public class InventoryScript : MonoBehaviour
         // [K] : Ajoute un item Sac dans l'inventaire
         if (Input.GetKeyDown(KeyCode.K))
         {
-            // Création d'un Item sac
+            // Création d'un item Sac
             Bag bag = (Bag)Instantiate(items[0]);
 
             // Initialisation du sac
@@ -148,14 +157,63 @@ public class InventoryScript : MonoBehaviour
             AddItem(bag);
         }
 
-        // [L] : Ajoute un item Potion dans l'inventaire
-        if (Input.GetKeyDown(KeyCode.L))
+        // [J] : Ajoute un item Potion dans l'inventaire
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            // Création d'un Item sac
+            // Création d'un item Potion
             HealthPotion healthPotion = (HealthPotion)Instantiate(items[1]);
 
             // Ajoute l'item HealthPotion dans un sac de l'inventaire
             AddItem(healthPotion);
+        }
+
+        // [U] : Ajoute un item Minerai d'or dans l'inventaire
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            // Création d'un item Potion
+            GoldNugget goldNugget = (GoldNugget)Instantiate(items[12]);
+
+            // Ajoute l'item HealthPotion dans un sac de l'inventaire
+            AddItem(goldNugget);
+        }
+
+        // [H] : Ajoute un item Armor dans l'inventaire
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            // Création d'un sac
+            Bag bag = (Bag)Instantiate(items[0]);
+
+            // Initialisation du sac
+            bag.Initialize(12);
+
+            // Utilise le sac
+            bag.Use();
+
+            // Création des items Armor
+            Armor helmet = (Armor)Instantiate(items[2]);
+            Armor shoulders = (Armor)Instantiate(items[3]);
+            Armor chest = (Armor)Instantiate(items[4]);
+            Armor gloves = (Armor)Instantiate(items[5]);
+            Armor pants = (Armor)Instantiate(items[6]);
+            Armor boots = (Armor)Instantiate(items[7]);
+            Armor sword = (Armor)Instantiate(items[8]);
+            Armor shield = (Armor)Instantiate(items[9]);
+            Armor rod = (Armor)Instantiate(items[10]);
+            Armor orb = (Armor)Instantiate(items[11]);
+
+            // Ajoute les items Armor dans un sac de l'inventaire
+            bag.MyBagScript.AddItem(helmet);
+            bag.MyBagScript.AddItem(shoulders);
+            bag.MyBagScript.AddItem(chest);
+            bag.MyBagScript.AddItem(gloves);
+            bag.MyBagScript.AddItem(pants);
+            bag.MyBagScript.AddItem(boots);
+            bag.MyBagScript.AddItem(sword);
+            bag.MyBagScript.AddItem(shield);
+            bag.MyBagScript.AddItem(rod);
+            bag.MyBagScript.AddItem(orb);
+
+            bag.MyBagScript.OpenClose();
         }
     }
 
@@ -178,6 +236,9 @@ public class InventoryScript : MonoBehaviour
                 // Ajoute le sac dans la liste
                 bags.Add(bag);
 
+                // Assignation de l'index du sac
+                bag.MyBagScript.transform.SetSiblingIndex(bagButton.MyBagIndex);
+
                 break;
             }
         }
@@ -188,13 +249,36 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     public void AddBag(Bag bag, BagButton bagButton)
     {
+        // Ajoute le sac sur un bouton
+        bagButton.MyBag = bag;
+
         // Ajoute un sac à sur la barre des sacs
         bags.Add(bag);
 
-        // Ajoute le sac sur un bouton
-        bagButton.MyBag = bag;
+        // Assignation de l'index du sac
+        bag.MyBagScript.transform.SetSiblingIndex(bagButton.MyBagIndex);
     }
 
+    /// <summary>
+    /// Ajoute un sac à sur un index spécifique 
+    /// </summary>
+    public void AddBag(Bag bag, int bagIndex)
+    {
+        // Assigne le script au sac
+        bag.SetUpScript();
+
+        // Ajoute l'index du sac sur le script
+        bag.MyBagScript.MyBagIndex = bagIndex;
+
+        // Ajoute le sac sur l'index du bouton
+        bag.MyBagButton = bagButtons[bagIndex];
+
+        // Ajoute un sac à sur la barre des sacs
+        bags.Add(bag);
+
+        // Assignation du sac au bouton
+        bagButtons[bagIndex].MyBag = bag;
+    }
 
     /// <summary>
     /// Retire un sac à sur la barre des sacs
@@ -207,6 +291,31 @@ public class InventoryScript : MonoBehaviour
 
         // Détruit l'objet
         Destroy(bag.MyBagScript.gameObject);
+    }
+
+    /// <summary>
+    /// Retire un item de l'inventaire
+    /// </summary>
+    /// <param name="item">Item à retirer</param>
+    public void RemoveItem(Item item)
+    {
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est le même item
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == item.MyKey.ToLower())
+                {
+                    // Retire l'item
+                    slot.RemoveItem(item);
+
+                    // break;
+                    return;
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -234,7 +343,7 @@ public class InventoryScript : MonoBehaviour
             newBag.Use();
 
             // Pour tous les elemnts du sac
-            foreach(Item item in bagItems)
+            foreach (Item item in bagItems)
             {
                 // Si l'item est différent de mon sac
                 if (item != newBag)
@@ -243,7 +352,7 @@ public class InventoryScript : MonoBehaviour
                     AddItem(oldBag);
                 }
             }
-            
+
             // Libère l'item
             Hand.MyInstance.Drop();
 
@@ -276,7 +385,7 @@ public class InventoryScript : MonoBehaviour
     /// </summary>
     /// <param name="item">Item à ajouter</param>
     /// <returns></returns>
-    public void AddItem(Item item)
+    public bool AddItem(Item item)
     {
         // Si l'item est stackable
         if (item.MyStackSize > 0)
@@ -284,13 +393,13 @@ public class InventoryScript : MonoBehaviour
             // Si l'item peut se stacker sur un emplacement
             if (PlaceInStack(item))
             {
-                // Pas besoin d'aller plus loin
-                return;
+                // Retourne que c'est OK
+                return true;
             }
         }
 
         // Place l'item dans un nouvel emplacement
-        PlaceInEmpty(item);
+        return PlaceInEmpty(item);
     }
 
     /// <summary>
@@ -309,6 +418,9 @@ public class InventoryScript : MonoBehaviour
                 // Si l'item peut être ajouté dans la stack de l'emplacement
                 if (slot.StackItem(item))
                 {
+                    // Déclenche l'évènement de mise à jour du nombre d'élements de l'item
+                    OnItemCountChanged(item);
+
                     // Retourne que c'est OK
                     return true;
                 }
@@ -323,7 +435,7 @@ public class InventoryScript : MonoBehaviour
     /// Place l'item dans un nouvel emplacement
     /// </summary>
     /// <param name="item">Item à placer</param>
-    private void PlaceInEmpty(Item item)
+    private bool PlaceInEmpty(Item item)
     {
         // Pour tous les sacs de l'inventaire
         foreach (Bag bag in bags)
@@ -331,16 +443,34 @@ public class InventoryScript : MonoBehaviour
             // Si l'ajout dans le sac est OK
             if (bag.MyBagScript.AddItem(item))
             {
-                // Pas besoin d'aller plus loin
-                return;
+                // Déclenche l'évènement de mise à jour du nombre d'élements de l'item
+                OnItemCountChanged(item);
+
+                // Retourne que c'est OK
+                return true;
             }
         }
+
+        // Retourne que c'est KO
+        return false;
     }
 
     /// <summary>
-    /// Retourne les items "useable"
+    /// Place l'item dans un emplacement déterminé
     /// </summary>
-    /// <param name="useable">Lite des items "useable"</param>
+    /// <param name="item">Item à placer</param>
+    /// <param name="slotIndex">Index du slot</param>
+    /// <param name="bagIndex">Index du slot</param>
+    public void PlaceInSlot(Item item, int slotIndex, int bagIndex)
+    {
+        // Ajoute l'item dans l'emplacement du sac
+        bags[bagIndex].MyBagScript.MySlots[slotIndex].AddItem(item);
+    }
+
+    /// <summary>
+    /// Retourne les items "useable" d'un même type
+    /// </summary>
+    /// <param name="useable">Item "useable"</param>
     /// <returns></returns>
     public Stack<IUseable> GetUseables(IUseable useable)
     {
@@ -367,5 +497,140 @@ public class InventoryScript : MonoBehaviour
 
         // Retourne la stack des items utilisables
         return items;
+    }
+
+    /// <summary>
+    /// Retourne l'item "useable"
+    /// </summary>
+    /// <param name="key">Clé de l'item "useable"</param>
+    /// <returns></returns>
+    public IUseable GetUseable(string key)
+    {
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est l'item à la même clé
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == key.ToLower())
+                {
+                    return slot.MyItem as IUseable;
+                }
+            }
+        }
+
+        // Retourne la stack des items utilisables
+        return null;
+    }
+
+    /// <summary>
+    /// Liste des emplacements avec leurs items
+    /// </summary>
+    public List<SlotScript> GetAllItems()
+    {
+        List<SlotScript> slots = new List<SlotScript>();
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide
+                if (!slot.IsEmpty)
+                {
+                    // Ajoute l'emplacement
+                    slots.Add(slot);
+                }
+            }
+        }
+
+        // Retourne la liste des emplacements
+        return slots;
+    }
+
+    /// <summary>
+    /// Nombre d'items similaires contenu dans l'inventaire
+    /// </summary>
+    /// <param name="key">Clé de l'item</param>
+    /// <returns></returns>
+    public int GetItemCount(string key)
+    {
+        // Nombre d'éléments
+        int count = 0;
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est l'item à la même clé
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == key.ToLower())
+                {
+                    // Ajoute le nombre d'élements de l'emplacement
+                    count += slot.MyItems.Count;
+                }
+            }
+        }
+
+        // Retourne le nombre d'éléments
+        return count;
+    }
+
+    /// <summary>
+    /// Retourne un item du même nom contenu dans l'inventaire, avec une quantité précise
+    /// </summary>
+    /// <param name="key">Clé de l'item</param>
+    /// <param name="count">Nombre d'item</param>
+    /// <returns></returns>
+    public Stack<Item> GetItems(string key, int count)
+    {
+        // Stack de l'item
+        Stack<Item> items = new Stack<Item>();
+
+        // Pour tous les sacs
+        foreach (Bag bag in bags)
+        {
+            // Pour tous les emplacements du sac
+            foreach (SlotScript slot in bag.MyBagScript.MySlots)
+            {
+                // Si l'emplacement n'est pas vide et que c'est l'item à la même clé
+                if (!slot.IsEmpty && slot.MyItem.MyKey.ToLower() == key.ToLower())
+                {
+                    // Pour chaque item du slot
+                    foreach (Item item in slot.MyItems)
+                    {
+                        // Ajoute l'item dans la stack
+                        items.Push(item);
+
+                        // Si le nombre d'items correspond au nombre demandé 
+                        if (items.Count == count)
+                        {
+                            // Retourne la Stack de l'item
+                            return items;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Retourne la Stack de l'item
+        return items;
+    }
+
+    /// <summary>
+    /// Appelle l'évènement de mise à jour du nombre d'élements de l'item
+    /// </summary>
+    /// <param name="item">Item courant</param>
+    public void OnItemCountChanged(Item item)
+    {
+        // S'il existe un abonnement à cet évènement
+        if (ItemCountChangedEvent != null)
+        {
+            // Déclenchement de mise à jour du nombre d'élements de l'item
+            ItemCountChangedEvent.Invoke(item);
+        }
     }
 }

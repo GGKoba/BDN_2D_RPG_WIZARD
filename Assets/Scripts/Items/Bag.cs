@@ -8,15 +8,18 @@
 [CreateAssetMenu(fileName = "Bag", menuName = "Items/Bag", order = 1)]
 public class Bag : Item, IUseable
 {
-    // Nombre d'emplacements
-    private int slotsCount;
+    [Header("Bag")]
 
-    // Propriété d'accès au nombre d'emplacements du sac
-    public int MySlotsCount { get => slotsCount; }
-    
     // Prefab du sac
     [SerializeField]
     private GameObject bagPrefab = default;
+
+    // Nombre d'emplacements
+    [SerializeField]
+    private int slotsCount = default;
+
+    // Propriété d'accès au nombre d'emplacements du sac
+    public int MySlotsCount { get => slotsCount; }
 
     // Propriété d'accès au script Bag
     public BagScript MyBagScript { get; set; }
@@ -52,17 +55,40 @@ public class Bag : Item, IUseable
             // Ajoute le nombre d'emplacements au sac
             MyBagScript.AddSlots(slotsCount);
 
-            // s'il n'y a pas d'emplacement
-            if( MyBagButton == null)
+            // S'il n'y a pas d'emplacement
+            if (MyBagButton == null)
             {
-                // Ajoute le sac sur un emplacement (BagButton
+                // Ajoute le sac sur un emplacement (BagButton)
                 InventoryScript.MyInstance.AddBag(this);
             }
             else
             {
-                // Ajoute le sac sur un emplacement donné => BagButton
+                // Ajoute le sac sur un emplacement (BagButton) spécifique
                 InventoryScript.MyInstance.AddBag(this, MyBagButton);
             }
+
+            // Renseigne l'index du sac
+            MyBagScript.MyBagIndex = MyBagButton.MyBagIndex;
         }
+    }
+
+    /// <summary>
+    /// Assigne le script à un sac
+    /// </summary>
+    public void SetUpScript()
+    {
+        MyBagScript = Instantiate(bagPrefab, InventoryScript.MyInstance.transform).GetComponent<BagScript>();
+
+        // Ajoute les emplacements
+        MyBagScript.AddSlots(slotsCount);
+    }
+
+    /// <summary>
+    /// Retourne la description de l'item : Surcharge la fonction GetDescription du script Item
+    /// </summary>
+    public override string GetDescription()
+    {
+        // Appelle GetDescription sur la classe mère et ajoute la description de l'item
+        return base.GetDescription() + string.Format("\n\n<color=#ECECEC>Ajoute <color=cyan>{0}</color> emplacements</color>", MySlotsCount);
     }
 }

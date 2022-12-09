@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
+  m_Name: Glove
+  m_EditorClassIdentifier: 
+  key: Glove
+  stackSize: 0
+  icon: {fileID: 21300000, guid: e4ac608c0ead30b40851067c3be55a45, type: 3}
+  title: Gants de mage
+  quality: 2
+  price: 0
+  armorType: 3
+  stamina: 8
+  intellect: 8
+  strengh: 3
+  animationClips: []

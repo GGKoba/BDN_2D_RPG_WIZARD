@@ -8,6 +8,8 @@
 [CreateAssetMenu(fileName = "HealthPotion", menuName = "Items/Potion", order = 1)]
 public class HealthPotion : Item, IUseable
 {
+    [Header("HealthPotion")]
+
     // Points de vie de la potion
     [SerializeField]
     private int health = default;
@@ -25,7 +27,21 @@ public class HealthPotion : Item, IUseable
             Remove();
 
             // Ajoute de la vie au joueur
-            Player.MyInstance.MyHealth.MyCurrentValue += health;
+            Player.MyInstance.GetHealth(health);
         }
+    }
+
+    /// <summary>
+    /// Retourne la description de l'item : Surcharge la fonction GetDescription du script Item
+    /// </summary>
+    public override string GetDescription()
+    {
+        // Appelle GetDescription sur la classe mère et ajoute la description de l'item
+        return base.GetDescription() + string.Format("\n\n<color=#ECECEC><color=#FFF2BE>Utiliser :</color> Restaure <color=cyan>{0}</color> points de vie</color>", health);
+    }
+
+    void IUseable.Use()
+    {
+        throw new System.NotImplementedException();
     }
 }

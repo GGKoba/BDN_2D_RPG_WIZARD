@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 
 
@@ -22,6 +22,9 @@ public class WaterTile : Tile
     /// <param name="go">Objet de la cellule</param>
     public override bool StartUp(Vector3Int position, ITilemap tilemap, GameObject go)
     {
+        // Ajoute la zone dans la liste des zones "non praticables"
+        GameManager.MyInstance.MyBlocked.Add(position);
+
         // Appelle StartUp sur la classe mère
         return base.StartUp(position, tilemap, go);
     }
@@ -365,7 +368,7 @@ public class WaterTile : Tile
     }
 
 
-// Exécution seulement dans l'éditeur UNITY
+    // Exécution seulement dans l'éditeur UNITY
 #if UNITY_EDITOR
     /// <summary>
     /// Ajoute un sous-menu dans le menu Assets : Tiles > WaterTile à partir de Assets > Create

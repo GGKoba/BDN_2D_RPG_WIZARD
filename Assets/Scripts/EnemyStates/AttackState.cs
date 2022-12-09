@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 
@@ -10,7 +9,7 @@ using UnityEngine;
 class AttackState : IState
 {
     // Référence sur le script Enemy
-    private Enemy enemy;
+    private Enemy parent;
 
     // Cooldown d'attaque
     private readonly float attackCooldown = 3;
@@ -21,57 +20,69 @@ class AttackState : IState
 
 
     /// <summary>
-    /// Entrée dans l'état "IDLE"
+    /// Entrée dans l'état "ATTACK"
     /// </summary>
+    /// <param name="enemyScript">le parent de l'ennemi</param>
     public void Enter(Enemy enemyScript)
     {
-        enemy = enemyScript;
+        parent = enemyScript;
+
+        // Réinitialise la direction/mouvement
+        parent.MyDirection = Vector2.zero;
+        parent.MyRigidbodyCharacter.velocity = Vector2.zero;
     }
 
     /// <summary>
-    /// Mise à jour dans l'état "IDLE"
+    /// Sortie de l'état "ATTACK"
     /// </summary>
     public void Exit()
     {
     }
 
     /// <summary>
-    /// Sortie de l'état "IDLE"
+    /// Mise à jour dans l'état "ATTACK"
     /// </summary>
     public void Update()
     {
         // Vérifie si l'on peut attaquer
-        if (enemy.MyAttackTime >= attackCooldown && !enemy.IsAttacking)
+        if (parent.MyAttackTime >= attackCooldown && !parent.IsAttacking)
         {
             // Réinitialise le temps d'attaque
-            enemy.MyAttackTime = 0;
+            parent.MyAttackTime = 0;
 
-            // Lancement de l'attaque
-            enemy.StartCoroutine(Attack());
+            // Démarre la routine d'attaque
+            parent.StartCoroutine(Attack());
         }
 
 
         // S'il y a une cible
-        if (enemy.MyTarget != null)
+        if (parent.MyTarget != null)
         {
             // Distance entre l'ennemi et la cible
-            float distance = Vector2.Distance(enemy.MyTarget.position, enemy.transform.position);
+            float distance = Vector2.Distance(parent.MyTarget.transform.parent.position, parent.transform.parent.position);
 
             // Si la cible est à portée d'attaque
-            if (distance >= enemy.MyAttackRange + extraRange && !enemy.IsAttacking)
+            if (distance >= parent.MyAttackRange + extraRange && !parent.IsAttacking)
             {
-                // Passage à l'état de poursuite
-                enemy.ChangeState(new FollowState());
+                // Si c'est un ennemi distant
+                if (parent is EnemyRanged)
+                {
+                    // Passage à l'état de recherche
+                    parent.ChangeState(new PathState());
+                }
+                else
+                {
+                    // Passage à l'état de poursuite
+                    parent.ChangeState(new FollowState());
+                }
             }
         }
         else
         {
             // Passage à l'état d'attente
-            enemy.ChangeState(new IdleState());
+            parent.ChangeState(new IdleState());
         }
     }
-
-
 
     /// <summary>
     /// Routine d'attaque
@@ -79,15 +90,15 @@ class AttackState : IState
     private IEnumerator Attack()
     {
         // Indique que l'on attaque
-        enemy.IsAttacking = true;
+        parent.IsAttacking = true;
 
         // Lance l'animation d'attaque
-        enemy.MyAnimator.SetTrigger("attack");
+        parent.MyAnimator.SetTrigger("attack");
 
         // Attente de la fin de l'animation
-        yield return new WaitForSeconds(enemy.MyAnimator.GetCurrentAnimatorStateInfo(2).length);
+        yield return new WaitForSeconds(parent.MyAnimator.GetCurrentAnimatorStateInfo(2).length);
 
         // Termine l'attaque
-        enemy.IsAttacking = false;
+        parent.IsAttacking = false;
     }
 }

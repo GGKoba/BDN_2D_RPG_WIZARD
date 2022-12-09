@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 
 
@@ -6,11 +7,14 @@
 /// Classe abstraite dont tous les personnages héritent
 /// </summary>
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Character : MonoBehaviour
 {
     // Référence sur le rigidbody
-    private Rigidbody2D rigidbodyCharacter;
+    [SerializeField]
+    private Rigidbody2D rigidbodyCharacter = default;
+
+    // Propriété d'accès à la référence sur le rigidbody
+    public Rigidbody2D MyRigidbodyCharacter { get => rigidbodyCharacter; }
 
     // Vitesse de déplacement
     [SerializeField]
@@ -19,20 +23,37 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès à la vitesse du personnage
     public float MySpeed { get => speed; set => speed = value; }
 
+    // Type du personnage
+    [SerializeField]
+    private string type = default;
+
+    // Propriété d'accès à la vitesse du personnage
+    public string MyType { get => type; }
+
     // Vie initiale du personnage (readonly)
     [SerializeField]
-    private float initHealth = default;
+    protected float initHealth = default;
 
     [SerializeField]
     // Référence sur la vie du personnage
     protected Stat health = default;
 
     // Propriété d'accès à la vie du personnage
-    public Stat MyHealth { get => health; }
+    public Stat MyHealth { get => health; set => health = value; }
+
+    [SerializeField]
+    // Référence sur le niveau du personnage
+    private int level = default;
+
+    // Propriété d'accès au niveau du personnage
+    public int MyLevel { get => level; set => level = value; }
 
     // Référence sur la hitBox du personnage
     [SerializeField]
-    protected Transform hitBox = default;
+    private Transform hitBox = default;
+
+    // Propriété d'accès à la hitBox du personnage
+    public Transform MyHitBox { get => hitBox; set => hitBox = value; }
 
     // Direction du personnage
     private Vector2 direction;
@@ -43,11 +64,14 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès sur l'animator
     public Animator MyAnimator { get; set; }
 
-    // Propriété d'accès à la cible de du personnage
-    public Transform MyTarget { get; set; }
+    // Propriété d'accès sur le sprinte renderer
+    public SpriteRenderer MySpriteRenderer { get; set; }
 
-    // Référence sur la routine d'attaque
-    protected Coroutine attackRoutine;
+    // Propriété d'accès à la cible de du personnage
+    public Character MyTarget { get; set; }
+
+    // Référence sur la routine d'action
+    protected Coroutine actionRoutine;
 
     // Propriété d'accès sur l'indicateur d'attaque du personnage
     public bool IsAttacking { get; set; }
@@ -58,6 +82,20 @@ public abstract class Character : MonoBehaviour
     // Propriété d'accès sur la vie du personnage
     public bool IsAlive { get => health.MyCurrentValue > 0; }
 
+    // Propriété d'accès sur la tile courante
+    public Transform MyCurrentTile { get; set; }
+
+    // Propriété d'accès au chemin de déplacement
+    public Stack<Vector3> MyPath { get; set; }
+
+    // Liste des débuffs
+    private List<Debuff> debuffs = new List<Debuff>();
+
+    // Liste des nouveaux débuffs
+    private List<Debuff> newDebuffs = new List<Debuff>();
+
+    // Liste des débuffs expirés
+    private List<Debuff> expiredDebuffs = new List<Debuff>();
 
 
     /// <summary>
@@ -65,49 +103,36 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
-        // Initialise les barres
-        health.Initialize(initHealth, initHealth);
-
         // Référence sur l'animator du personnage
         MyAnimator = GetComponent<Animator>();
 
-        // Référence sur le rigidbody du personnage
-        rigidbodyCharacter = GetComponent<Rigidbody2D>();
+        // Référence sur le sprite renderer du personnage
+        MySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
-    /// Update : virtual pour être écrasée pour les sous-classes
+    /// Update : Virtual pour être écrasée pour les autres classes
     /// </summary>
     protected virtual void Update()
     {
         HandleLayers();
+
+        // Mise à jour des débuffs
+        HandleDebuffs();
     }
 
     /// <summary>
     /// FixedUpdate : Update utilisé pour le Rigibody
     /// </summary>
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         Move();
     }
 
     /// <summary>
-    /// Déplacement du personnage
+    /// Utilise le layer d'animation adapté : Virtual pour être écrasée pour les autres classes
     /// </summary>
-    public void Move()
-    {
-        // Si le personnage est en vie
-        if (IsAlive)
-        {
-            // Déplace le personnage
-            rigidbodyCharacter.velocity = direction.normalized * speed;
-        }
-    }
-
-    /// <summary>
-    /// Utilise le layer d'animation adapté
-    /// </summary>
-    public void HandleLayers()
+    public virtual void HandleLayers()
     {
         // Si le personnage est en vie
         if (IsAlive)
@@ -142,32 +167,35 @@ public abstract class Character : MonoBehaviour
     }
 
     /// <summary>
-    /// Active un Layer d'animation (Idle/Walk/Attack)
+    /// Active un layer d'animation (Idle/Walk/Attack) : Virtual pour être écrasée pour les autres classes
     /// </summary>
     /// <param name="layerName">Nom du layer à activer</param>
-    public void ActivateLayer(string layerName)
+    public virtual void ActivateLayer(string layerName)
     {
         // Boucle sur les layers d'animations
         for (int i = 0; i < MyAnimator.layerCount; i++)
-		{
+        {
             // Réinitialise le layer courant
             MyAnimator.SetLayerWeight(i, 0);
-		}
+        }
 
         // Active le layer correspond au nom passé en paramètre
         MyAnimator.SetLayerWeight(MyAnimator.GetLayerIndex(layerName), 1);
     }
 
     /// <summary>
-    /// Dégâts liée à une attaque
+    /// Dégâts liée à une attaque : Virtual pour être écrasée pour les autres classes
     /// </summary>
     /// <param name="damage">Montant des dégâts</param>
     /// <param name="source">Source de l'attaque</param>
-    public virtual void TakeDamage(float damage, Transform source)
+    public virtual void TakeDamage(float damage, Character source)
     {
         // Réduction de la vie du personnage
         health.MyCurrentValue -= damage;
-          
+
+        // Affiche un texte
+        CombatTextManager.MyInstance.CreateText(transform.position, damage.ToString(), CombatTextType.Damage, false);
+
         // Si le personnage n'a plus de vie
         if (health.MyCurrentValue <= 0)
         {
@@ -175,10 +203,113 @@ public abstract class Character : MonoBehaviour
             direction = Vector2.zero;
 
             // Stoppe le déplacement
-            rigidbodyCharacter.velocity = direction;
+            MyRigidbodyCharacter.velocity = direction;
+
+            // Déclenche l'évènement de disparition du personnage
+            GameManager.MyInstance.OnKillConfirmed(this);
 
             // Activation du trigger "die"
             MyAnimator.SetTrigger("die");
+        }
+    }
+
+    /// <summary>
+    /// Accès à la vie du personnage
+    /// </summary>
+    /// <param name="amount">Points de vie à ajouter au personnage</param>
+    public void GetHealth(int amount)
+    {
+        // Actualise la vie du personnage
+        health.MyCurrentValue += amount;
+
+        // Affiche un texte
+        CombatTextManager.MyInstance.CreateText(transform.position, amount.ToString(), CombatTextType.Heal, true);
+    }
+
+    /// <summary>
+    /// Déplacement du personnage
+    /// </summary>
+    public void Move()
+    {
+        // S'il y a un chemin
+        if (MyPath == null)
+        {
+            // Si le personnage est en vie
+            if (IsAlive)
+            {
+                // Déplace le personnage
+                MyRigidbodyCharacter.velocity = MyDirection.normalized * MySpeed;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Applique un debuff sur le personnage
+    /// </summary>
+    /// <param name="debuff">Débuff à appliquer sur le personnage</param>
+    public void ApplyDebuff(Debuff debuff)
+    {
+        Debuff debuffExists = debuffs.Find(debuff => debuff.MyName.Equals(debuff.MyName));
+
+        // S'il y a déja le même débuff, ce dernier expire
+        if (debuffExists != null)
+        {
+            expiredDebuffs.Add(debuffExists);
+        }
+
+        // Ajoute le débuff dans la liste des nouveaux débuffs
+        newDebuffs.Add(debuff);
+    }
+
+    /// <summary>
+    /// Retire un debuff sur le personnage
+    /// </summary>
+    /// <param name="debuff">Débuff à retirer sur le personnage</param>
+    public void RemoveDebuff(Debuff debuff)
+    {
+        // Ajoute le débuff dans la liste des débuffs expirés
+        expiredDebuffs.Add(debuff);
+
+        // Actualise la frame de la cible
+        UIManager.MyInstance.RemoveDebuffToTargetFrame(debuff);
+    }
+
+    /// <summary>
+    /// Retire un debuff sur le personnage
+    /// </summary>
+    private void HandleDebuffs()
+    {
+        // S'il y a des débuffs, on les applique
+        if (debuffs.Count > 0)
+        {
+            foreach (Debuff debuff in debuffs)
+            {
+                // Applique le débuff
+                debuff.Update();
+            }
+        }
+
+        // S'il y a de nouveaux débuffs, on les ajoute
+        if (newDebuffs.Count > 0)
+        {
+            // Ajoute les nouveaux debuffs dans la liste des débuffs
+            debuffs.AddRange(newDebuffs);
+
+            // Vide la liste des nouveaux débuffs
+            newDebuffs.Clear();
+        }
+
+        // S'il y a des débuffs expirés, on les retire
+        if (expiredDebuffs.Count > 0)
+        {
+            foreach (Debuff debuff in expiredDebuffs)
+            {
+                // Retire le débuff de la liste des débuffs
+                debuffs.Remove(debuff);
+            }
+
+            // Vide la liste des débuffs expirés
+            expiredDebuffs.Clear();
         }
     }
 }

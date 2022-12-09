@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
+  m_Name: Pant
+  m_EditorClassIdentifier: 
+  key: Pant
+  stackSize: 0
+  icon: {fileID: 21300000, guid: a081fdf6631894744ba2c3985681493f, type: 3}
+  title: Tunique de mage
+  quality: 3
+  price: 27
+  armorType: 4
+  stamina: 7
+  intellect: 9
+  strengh: 4
+  animationClips:
+  - {fileID: 7400000, guid: 52881d1403cbcc9469eca7a59ac6657a, type: 2}
+  - {fileID: 7400000, guid: aa7dd6de795cf564faa12040a5ff2ef4, type: 2}
+  - {fileID: 7400000, guid: a9f02688eac082e4b865c772ff2b76fe, type: 2}
+  - {fileID: 7400000, guid: a02389a5b8440c34387c374f3ba278a7, type: 2}
+  - {fileID: 7400000, guid: 4d4ddf46a2214e4478e99b145f0c749a, type: 2}
+  - {fileID: 7400000, guid: 81f9de27ed987744eb294f3abdbdd872, type: 2}
+  - {fileID: 7400000, guid: 0237494e8bd473540a3971eb6f4d364a, type: 2}
+  - {fileID: 7400000, guid: d482cd53f6a9e274abde0471e22533f4, type: 2}
+  - {fileID: 7400000, guid: 9b872a62ffd289f43b1ee7720b8ec827, type: 2}
+  - {fileID: 7400000, guid: b4f23874f296a1b49be0e068b92a4c07, type: 2}
+  - {fileID: 7400000, guid: 0a66231a773205742a9b245ba48af166, type: 2}
+  - {fileID: 7400000, guid: 1da8576466a78d0498c11f26283cd925, type: 2}

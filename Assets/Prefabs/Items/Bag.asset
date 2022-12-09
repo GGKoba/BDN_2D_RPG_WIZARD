@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7036a4242de48134d8d53cdef2992b41, type: 3}
   m_Name: Bag
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 3b37cccbc06ba764a836a97e5fc8a2f1, type: 3}
+  key: Bag
   stackSize: 0
+  icon: {fileID: 21300000, guid: 3b37cccbc06ba764a836a97e5fc8a2f1, type: 3}
+  title: Sac
+  quality: 2
+  price: 10
   bagPrefab: {fileID: 1740023239915727957, guid: 97cdf383ced72844aaafdf30ba416e0f,
     type: 3}
+  slotsCount: 10

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ece677cfa8934b74cafe4754df9f0d4f, type: 3}
+  m_Name: Chest
+  m_EditorClassIdentifier: 
+  key: Chest
+  stackSize: 0
+  icon: {fileID: 21300000, guid: 8971b5d2154f8424386356903421a655, type: 3}
+  title: Torse de guerrier
+  quality: 3
+  price: 25
+  armorType: 2
+  stamina: 12
+  intellect: 4
+  strengh: 10
+  animationClips:
+  - {fileID: 7400000, guid: 6f7b6739eba8cfb489012cfff91c3d73, type: 2}
+  - {fileID: 7400000, guid: 83d134bbffe18ab45999872d894ede14, type: 2}
+  - {fileID: 7400000, guid: a9e52a93bf7cd5742943fadc2c27cfc3, type: 2}
+  - {fileID: 7400000, guid: 7ceb337e5743418419fc7cee53f2bd21, type: 2}
+  - {fileID: 7400000, guid: c85d4a2375019e34dabc88ddbf013083, type: 2}
+  - {fileID: 7400000, guid: 30073e973de75c243b424f93c64e8dd9, type: 2}
+  - {fileID: 7400000, guid: 59ac4bd22ac30e145a4a85b9923ef4c7, type: 2}
+  - {fileID: 7400000, guid: 5beb7fcb14a201b449ebab407d3a233c, type: 2}
+  - {fileID: 7400000, guid: 576f9c0d72eb674419eee060523dff8a, type: 2}
+  - {fileID: 7400000, guid: 110462731b2a3ef46b2238b9368bcbe1, type: 2}
+  - {fileID: 7400000, guid: 73cd5cfe6e087434eaa3b5702aa6c450, type: 2}
+  - {fileID: 7400000, guid: 27b8cf6a2fafde74ab626f74f54bf417, type: 2}
